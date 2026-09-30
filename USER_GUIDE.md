@@ -29,12 +29,13 @@
 | **最新部署版（推荐）** | **https://universal-system-final.surge.sh/** |
 | GitHub Pages（全球 CDN） | https://littlezombie241314.github.io/universal-system-v2/ |
 | doubaoapps 应用版（安装 App） | https://xb4r414nb9.doubaoapps.com/app/app_17f4htz1kfy |
+| **Cloudflare Workers（全球边缘节点）** | **https://universal-equality.universal-equality.workers.dev/** |
 | 官方原版 | https://universal-system-latest.surge.sh/ |
 | 备用域名 | https://universal-system.surge.sh/ |
 | 历史版本 | https://universal-system-deploy.surge.sh/ |
 | GitHub 源码仓库 | https://github.com/littlezombie241314/universal-system-v2 |
 | 本地 / 内网 | `http://<服务器IP>:8080/` |
-| 自部署（Cloudflare Workers） | `https://<你的项目>.workers.dev/` |
+| 自部署（Cloudflare Workers 模板） | `https://<你的项目>.workers.dev/` |
 | PWA 安装 | 浏览器打开上面任意链接 → 菜单 → 添加到主屏幕 / 安装应用 |
 
 > 手机/平板/工控板直接复制链接到浏览器地址栏打开。
