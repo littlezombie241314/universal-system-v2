@@ -1,0 +1,30 @@
+# 全宇宙恒等系统 · Caddy 配置
+# 自动 HTTPS (若用域名) / HTTP (仅 IP 或本地)
+:80 {
+	root * /srv
+	file_server
+	encode gzip zstd
+
+	# 首页与 HTML: 短缓存
+	@html path *.html /
+	header @html Cache-Control "no-cache"
+
+	# Service Worker: 禁止长缓存, 保证更新即时生效
+	@sw path sw.js
+	header @sw Cache-Control "no-cache, no-store, must-revalidate"
+
+	# manifest: 短缓存
+	@manifest path manifest.json
+	header @manifest Cache-Control "max-age=300"
+
+	# 静态资源: 一天
+	@assets path /assets/* /icons/* /favicon*
+	header @assets Cache-Control "public, max-age=86400"
+
+	# PWA 安全头
+	header {
+		Service-Worker-Allowed "/"
+		X-Content-Type-Options nosniff
+		Referrer-Policy strict-origin-when-cross-origin
+	}
+}

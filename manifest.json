@@ -1,0 +1,28 @@
+{
+  "name": "全宇宙恒等系统 · UNIVERSAL EQUALITY SYSTEM",
+  "short_name": "全宇宙恒等",
+  "description": "UNIVERSAL EQUALITY SYSTEM v∞ — 跨云、跨节点、跨 ARM SoC、跨 Android/iOS/鸿蒙 工控板运行的全宇宙恒等系统",
+  "id": "/",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "theme_color": "#02060f",
+  "background_color": "#02060f",
+  "lang": "zh-CN",
+  "dir": "ltr",
+  "categories": ["productivity", "utilities", "system"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    {
+      "name": "启动系统",
+      "short_name": "启动",
+      "url": "./?shortcut=boot",
+      "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}

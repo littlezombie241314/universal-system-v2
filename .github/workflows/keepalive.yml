@@ -1,0 +1,27 @@
+# 全宇宙恒等系统 · 后端保活
+# 每 10 分钟 ping 一次 Render 免费实例，防止它休眠（Render 免费版 15 分钟无请求会休眠，冷启动 30-60 秒）
+# 用法: 把本仓库推到 GitHub，Actions 会自动启用。无需 Secrets。
+name: Keep Backend Alive
+
+on:
+  schedule:
+    # 每 10 分钟一次（cron 最小粒度）
+    - cron: '*/10 * * * *'
+  workflow_dispatch: {}  # 支持手动触发
+
+jobs:
+  keepalive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping backend health endpoint
+        run: |
+          URL="https://universal-pay-backend.onrender.com/health"
+          echo "Pinging $URL at $(date -Iseconds)"
+          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" --max-time 90 "$URL" || echo "000")
+          echo "HTTP $HTTP_CODE"
+          # 200/404 都算服务在线（/health 可能返回 404 但服务在跑）
+          if [ "$HTTP_CODE" = "000" ]; then
+            echo "::warning::后端无响应，可能正在冷启动"
+          else
+            echo "✓ 后端在线"
+          fi
