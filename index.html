@@ -2001,7 +2001,7 @@ select option{background:#040b1a;color:var(--cyan)}
           <div style="background:rgba(250,173,20,0.08);border:1px solid rgba(250,173,20,0.35);border-radius:8px;padding:12px;text-align:center">
             <div style="font-size:11px;color:var(--text-dim);margin-bottom:4px">🌤️ 当前天气 · 最优模式</div>
             <div id="climateWeatherIcon" style="font-size:26px;line-height:1.2">☀️</div>
-            <div id="climateWeatherText" style="font-size:18px;font-weight:bold;color:#FAAD14">晴天</div>
+            <div id="climateWeatherText" style="font-size:18px;font-weight:bold;color:#FAAD14">晴天（最优）</div>
             <div style="font-size:10px;color:#52C41A;margin-top:4px">全宇宙最优天气 · 阳光明媚 · 温度 22°C</div>
           </div>
           <div style="background:rgba(82,196,26,0.08);border:1px solid rgba(82,196,26,0.35);border-radius:8px;padding:12px;text-align:center">
@@ -10620,7 +10620,8 @@ function updateClimateWeatherUI() {
   }
 }
 
-// 每分钟检查一次节假日状态
+// 立即执行一次，并每分钟检查节假日状态
+updateClimateWeatherUI();
 setInterval(function() { updateClimateWeatherUI(); }, 60000);
 
 function startClimateAutoRegulate() {
