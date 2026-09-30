@@ -27,6 +27,7 @@
 | 环境 | 链接 / 地址 |
 |---|---|
 | **最新部署版（推荐）** | **https://universal-system-final.surge.sh/** |
+| GitHub Pages（全球 CDN） | https://littlezombie241314.github.io/universal-system-v2/ |
 | doubaoapps 应用版（安装 App） | https://xb4r414nb9.doubaoapps.com/app/app_17f4htz1kfy |
 | 官方原版 | https://universal-system-latest.surge.sh/ |
 | 备用域名 | https://universal-system.surge.sh/ |
