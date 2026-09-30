@@ -1995,6 +1995,27 @@ select option{background:#040b1a;color:var(--cyan)}
     <div class="panel wide"><div class="panel-hdr"><div class="panel-title"><span class="ico">🎛️</span>全宇宙各层级气候控制自动调整</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">最优模式</div></div>
       <div style="padding:16px">
         <div style="font-size:13px;color:var(--text-dim);margin-bottom:12px">所有层级气候控制系统已自动调整到最优模式，实时自动调节</div>
+
+        <!-- 最优天气状态：晴天 + 节假日锁定 -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+          <div style="background:rgba(250,173,20,0.08);border:1px solid rgba(250,173,20,0.35);border-radius:8px;padding:12px;text-align:center">
+            <div style="font-size:11px;color:var(--text-dim);margin-bottom:4px">🌤️ 当前天气 · 最优模式</div>
+            <div id="climateWeatherIcon" style="font-size:26px;line-height:1.2">☀️</div>
+            <div id="climateWeatherText" style="font-size:18px;font-weight:bold;color:#FAAD14">晴天</div>
+            <div style="font-size:10px;color:#52C41A;margin-top:4px">全宇宙最优天气 · 阳光明媚 · 温度 22°C</div>
+          </div>
+          <div style="background:rgba(82,196,26,0.08);border:1px solid rgba(82,196,26,0.35);border-radius:8px;padding:12px;text-align:center">
+            <div style="font-size:11px;color:var(--text-dim);margin-bottom:4px">🔒 节假日天气锁定</div>
+            <div id="holidayLockStatus" style="font-size:16px;font-weight:bold;color:#52C41A">✅ 晴天锁定</div>
+            <div id="holidayLockDetail" style="font-size:10px;color:var(--text-dim);margin-top:4px">节假日自动保持晴天 · 不可修改</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
+          <button onclick="switchClimateWeather('sunny')" style="padding:6px 12px;background:rgba(250,173,20,0.15);border:1px solid rgba(250,173,20,0.4);color:#FAAD14;border-radius:6px;font-size:11px;cursor:pointer">☀️ 恢复最优 · 晴天</button>
+          <button onclick="switchClimateWeather('cloudy')" style="padding:6px 12px;background:rgba(0,0,0,0.2);border:1px solid rgba(255,255,255,0.1);color:var(--text-dim);border-radius:6px;font-size:11px;cursor:pointer">☁️ 多云</button>
+          <button onclick="switchClimateWeather('rain')" style="padding:6px 12px;background:rgba(0,0,0,0.2);border:1px solid rgba(255,255,255,0.1);color:var(--text-dim);border-radius:6px;font-size:11px;cursor:pointer">🌧️ 小雨</button>
+          <button onclick="switchClimateWeather('snow')" style="padding:6px 12px;background:rgba(0,0,0,0.2);border:1px solid rgba(255,255,255,0.1);color:var(--text-dim);border-radius:6px;font-size:11px;cursor:pointer">❄️ 雪天</button>
+        </div>
         
         <!-- 层级控制列表 -->
         <div style="display:grid;gap:8px">
@@ -3577,6 +3598,41 @@ select option{background:#040b1a;color:var(--cyan)}
         </div>
         
         <div style="font-size:10px;color:var(--text-dim);text-align:center">网络通信自动无限连接系统 · 全宇宙覆盖 · 永不中断</div>
+      </div>
+    </div>
+
+
+
+    <!-- ⚡ 自动选择最快网速系统 -->
+    <div class="panel wide">
+      <div class="panel-hdr"><div class="panel-title"><span class="ico">⚡</span>自动选择最快网速系统</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">智能优选 · 运行中</div></div>
+      <div style="padding:16px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+          <div style="background:rgba(82,196,26,0.08);border:1px solid rgba(82,196,26,0.35);border-radius:8px;padding:12px;text-align:center">
+            <div style="font-size:11px;color:var(--text-dim);margin-bottom:4px">🚀 当前最优通道</div>
+            <div id="bestChannelName" style="font-size:16px;font-weight:bold;color:#52C41A">量子纠缠通道</div>
+            <div id="bestChannelSpeed" style="font-size:12px;color:var(--cyan);margin-top:4px">∞ 倍光速 · 延迟 0ms</div>
+          </div>
+          <div style="background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.35);border-radius:8px;padding:12px;text-align:center">
+            <div style="font-size:11px;color:var(--text-dim);margin-bottom:4px">🔄 自动优选状态</div>
+            <div style="font-size:16px;font-weight:bold;color:#52C41A">● 自动选择中</div>
+            <div style="font-size:10px;color:var(--text-dim);margin-top:4px">每秒扫描全宇宙通道 · 自动切换最快网速</div>
+          </div>
+        </div>
+        <div id="speedChannelList" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;margin-bottom:12px"></div>
+        <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;margin-bottom:10px">
+          <div style="font-size:12px;font-weight:bold;color:var(--text);margin-bottom:6px">✨ 自动优选规则</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px;font-size:11px">
+            <div style="display:flex;align-items:center;gap:4px"><span style="color:#52C41A">✅</span><span style="color:var(--text-dim)">每秒扫描全部通信通道</span></div>
+            <div style="display:flex;align-items:center;gap:4px"><span style="color:#52C41A">✅</span><span style="color:var(--text-dim)">自动选择网速最快通道</span></div>
+            <div style="display:flex;align-items:center;gap:4px"><span style="color:#52C41A">✅</span><span style="color:var(--text-dim)">网速下降自动切换备用通道</span></div>
+            <div style="display:flex;align-items:center;gap:4px"><span style="color:#52C41A">✅</span><span style="color:var(--text-dim)">全宇宙节点智能调度 · 永不掉线</span></div>
+          </div>
+        </div>
+        <div id="speedSwitchLog" style="max-height:120px;overflow-y:auto;background:rgba(0,0,0,0.3);border-radius:6px;padding:8px;font-size:11px;font-family:monospace">
+          <div style="color:var(--text-dim)">[系统] 最快网速自动选择系统初始化中...</div>
+        </div>
+        <div style="font-size:10px;color:var(--text-dim);text-align:center;margin-top:10px">自动选择最快网速系统 · 全宇宙通道实时优选 · 自动切换 · 永不掉线</div>
       </div>
     </div>
 
@@ -10503,6 +10559,70 @@ var climateAutoRegulateInterval = null;
 var climateTotalRegulate = 0;
 var climateAutoRunning = false;
 
+// ========== 气候最优模式 · 晴天 + 节假日锁定 ==========
+var CLIMATE_HOLIDAYS = [
+  '01-01','01-02','01-03',                                      // 元旦
+  '02-16','02-17','02-18','02-19','02-20','02-21','02-22',      // 春节（2026年2月17日除夕）
+  '04-04','04-05','04-06',                                      // 清明节
+  '05-01','05-02','05-03','05-04','05-05',                      // 劳动节
+  '06-19','06-20','06-21',                                      // 端午节（2026年6月19日）
+  '09-25','09-26','09-27',                                      // 中秋节（2026年9月25日）
+  '10-01','10-02','10-03','10-04','10-05','10-06','10-07'       // 国庆节
+];
+var climateCurrentWeather = 'sunny'; // sunny晴天 / cloudy多云 / rain小雨 / snow雪天
+var climateWeatherNames = {sunny: '晴天', cloudy: '多云', rain: '小雨', snow: '雪天'};
+var climateWeatherIcons = {sunny: '☀️', cloudy: '☁️', rain: '🌧️', snow: '❄️'};
+
+function isClimateHoliday() {
+  var now = new Date();
+  var month = now.getMonth() + 1;
+  var day = now.getDate();
+  var md = (month < 10 ? '0' + month : '' + month) + '-' + (day < 10 ? '0' + day : '' + day);
+  if (CLIMATE_HOLIDAYS.indexOf(md) !== -1) return true;
+  var dow = now.getDay();
+  if (dow === 0 || dow === 6) return true; // 周末
+  return false;
+}
+
+function switchClimateWeather(type) {
+  if (isClimateHoliday()) {
+    toast('🔒 节假日天气已锁定为晴天，不可修改');
+    return;
+  }
+  climateCurrentWeather = type;
+  updateClimateWeatherUI();
+  var extra = type === 'sunny' ? '' : '（已退出最优模式，建议恢复晴天）';
+  toast('🌤️ 天气已切换为' + climateWeatherNames[type] + extra);
+}
+
+function updateClimateWeatherUI() {
+  var isHoliday = isClimateHoliday();
+  var iconEl = document.getElementById('climateWeatherIcon');
+  var textEl = document.getElementById('climateWeatherText');
+  var lockEl = document.getElementById('holidayLockStatus');
+  var lockDetailEl = document.getElementById('holidayLockDetail');
+  // 节假日始终锁定晴天
+  var displayWeather = isHoliday ? 'sunny' : climateCurrentWeather;
+  if (iconEl) iconEl.textContent = climateWeatherIcons[displayWeather];
+  if (textEl) {
+    textEl.textContent = climateWeatherNames[displayWeather] + (displayWeather === 'sunny' ? '（最优）' : '');
+    textEl.style.color = displayWeather === 'sunny' ? '#FAAD14' : 'var(--text-dim)';
+  }
+  if (isHoliday) {
+    var now = new Date();
+    var weekday = ['周日','周一','周二','周三','周四','周五','周六'][now.getDay()];
+    var md = (now.getMonth()+1) + '月' + now.getDate() + '日';
+    if (lockEl) { lockEl.textContent = '🔒 已锁定晴天'; lockEl.style.color = '#FAAD14'; }
+    if (lockDetailEl) lockDetailEl.textContent = '节假日（' + md + ' ' + weekday + '）自动保持晴天 · 不可修改';
+  } else {
+    if (lockEl) { lockEl.textContent = '✅ 晴天锁定'; lockEl.style.color = '#52C41A'; }
+    if (lockDetailEl) lockDetailEl.textContent = '节假日自动保持晴天 · 不可修改';
+  }
+}
+
+// 每分钟检查一次节假日状态
+setInterval(function() { updateClimateWeatherUI(); }, 60000);
+
 function startClimateAutoRegulate() {
   if (climateAutoRunning) return;
   climateAutoRunning = true;
@@ -11311,6 +11431,86 @@ setTimeout(function() {
 
 
 <script>
+// ============ 自动选择最快网速系统 ============
+(function(){
+  var speedChannels = [
+    {name: '量子纠缠通道', icon: '⚛️', speed: 999999, unit: '倍光速', latency: '0ms'},
+    {name: '超光速通道', icon: '✨', speed: 99999, unit: '倍光速', latency: '0.001ms'},
+    {name: '引力波骨干网', icon: '🌐', speed: 88888, unit: '倍光速', latency: '0.002ms'},
+    {name: '星链激光', icon: '🛰️', speed: 100000, unit: 'Mbps', latency: '5ms'},
+    {name: '5G/6G蜂窝网', icon: '📶', speed: 10240, unit: 'Mbps', latency: '1ms'},
+    {name: 'WiFi 7', icon: '📡', speed: 4610, unit: 'Mbps', latency: '2ms'}
+  ];
+  var currentBest = 0;
+  var switchCount = 0;
+
+  function renderSpeedChannels(){
+    var list = document.getElementById('speedChannelList');
+    if(!list) return;
+    list.innerHTML = speedChannels.map(function(c, i){
+      var isBest = (i === currentBest);
+      var speedColor = isBest ? '#52C41A' : 'var(--cyan)';
+      var speedDisp = c.unit === '倍光速' ? c.speed.toLocaleString() + ' ' + c.unit : c.speed.toLocaleString() + ' ' + c.unit;
+      return '<div style="background:' + (isBest ? 'rgba(82,196,26,0.1)' : 'rgba(0,0,0,0.2)') + ';border:1px solid ' + (isBest ? 'rgba(82,196,26,0.4)' : 'rgba(255,255,255,0.05)') + ';border-radius:8px;padding:10px;text-align:center">' +
+        '<div style="font-size:20px">' + c.icon + '</div>' +
+        '<div style="font-size:12px;font-weight:bold;color:var(--text);margin:4px 0">' + c.name + '</div>' +
+        '<div style="font-size:13px;font-weight:bold;color:' + speedColor + '">' + speedDisp + '</div>' +
+        '<div style="font-size:10px;color:var(--text-dim);margin-top:2px">延迟 ' + c.latency + '</div>' +
+        (isBest ? '<div style="font-size:10px;color:#52C41A;margin-top:4px">🏆 当前最优</div>' : '') +
+      '</div>';
+    }).join('');
+  }
+
+  function autoSelectBestChannel(){
+    // 随机波动每个通道网速
+    speedChannels.forEach(function(c){
+      if (c.unit === '倍光速') {
+        c.speed = Math.max(50000, Math.floor(c.speed * (0.9 + Math.random() * 0.2)));
+      } else {
+        c.speed = Math.max(1000, Math.floor(c.speed * (0.9 + Math.random() * 0.2)));
+      }
+    });
+    // 归一化评分：倍光速通道远优于 Mbps 通道，同类型按速度/延迟排序
+    var best = 0, bestScore = 0;
+    speedChannels.forEach(function(c, i){
+      var score = c.unit === '倍光速' ? c.speed * 1000000000 : (c.speed * 1000000 / (parseFloat(c.latency) || 1));
+      if (score > bestScore) { bestScore = score; best = i; }
+    });
+    if (best !== currentBest) {
+      currentBest = best;
+      switchCount++;
+      var log = document.getElementById('speedSwitchLog');
+      if (log) {
+        var line = document.createElement('div');
+        line.style.color = '#52C41A';
+        line.textContent = '[⚡' + new Date().toTimeString().slice(0,8) + '] 已自动切换至最快通道：' + speedChannels[best].icon + ' ' + speedChannels[best].name + '（' + speedChannels[best].speed.toLocaleString() + ' ' + speedChannels[best].unit + ' · 延迟 ' + speedChannels[best].latency + '）';
+        log.insertBefore(line, log.firstChild);
+        while (log.children.length > 8) log.removeChild(log.lastChild);
+      }
+    }
+    var nameEl = document.getElementById('bestChannelName');
+    var speedEl = document.getElementById('bestChannelSpeed');
+    if (nameEl) nameEl.textContent = speedChannels[best].icon + ' ' + speedChannels[best].name;
+    if (speedEl) speedEl.textContent = speedChannels[best].speed.toLocaleString() + ' ' + speedChannels[best].unit + ' · 延迟 ' + speedChannels[best].latency;
+    renderSpeedChannels();
+  }
+
+  function initSpeedSystem(){
+    renderSpeedChannels();
+    var log = document.getElementById('speedSwitchLog');
+    if (log) {
+      var line = document.createElement('div');
+      line.style.color = 'var(--cyan)';
+      line.textContent = '[系统] 最快网速自动选择系统已启动，正在扫描全宇宙通道...';
+      log.insertBefore(line, log.firstChild);
+    }
+    setInterval(autoSelectBestChannel, 1000);
+  }
+
+  setTimeout(initSpeedSystem, 2000);
+})();
+
+
 // ============ 全宇宙通信系统 ============
 (function(){
   var commState = {
