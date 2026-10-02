@@ -1185,7 +1185,7 @@ select option{background:#040b1a;color:var(--cyan)}
         <div style="display:flex;align-items:center;gap:8px"><label style="font-size:11px;color:var(--text-dim);white-space:nowrap">发放平台：</label><select id="salaryPlatform" style="flex:1;background:rgba(4,18,34,.6);border:1px solid var(--border);color:var(--cyan);padding:6px 8px;font-size:12px;border-radius:2px"><option value="all">全部平台</option><option value="alipay">支付宝</option><option value="wechat">微信钱包</option><option value="bank">银行账户</option><option value="ecny">数字人民币</option><option value="paypal">PayPal</option><option value="stripe">Stripe</option><option value="applepay">Apple Pay</option><option value="googlepay">Google Pay</option><option value="samsungpay">Samsung Pay</option><option value="visa">Visa信用卡</option><option value="mastercard">Mastercard信用卡</option><option value="amex">American Express</option><option value="unionpay">银联卡</option><option value="swift">SWIFT国际转账</option><option value="sepa">SEPA欧元转账</option><option value="ach">ACH美国转账</option><option value="mpesa">M-Pesa（非洲）</option><option value="paytm">Paytm（印度）</option><option value="upi">UPI（印度）</option><option value="pix">Pix（巴西）</option><option value="gcash">GCash（菲律宾）</option><option value="grabpay">GrabPay（东南亚）</option><option value="linepay">Line Pay（日本）</option><option value="kakaopay">Kakao Pay（韩国）</option><option value="skrill">Skrill</option><option value="neteller">Neteller</option><option value="payoneer">Payoneer</option><option value="wise">Wise</option><option value="revolut">Revolut</option><option value="bitcoin">Bitcoin (BTC)</option><option value="ethereum">Ethereum (ETH)</option><option value="usdt">USDT (泰达币)</option><option value="usdc">USDC</option><option value="robinhood">Robinhood券商</option><option value="fidelity">Fidelity富达</option></select></div>
         <div style="display:flex;align-items:center;gap:8px"><label style="font-size:11px;color:var(--text-dim);white-space:nowrap">发放速度：</label><select id="salarySpeed" style="flex:1;background:rgba(4,18,34,.6);border:1px solid var(--border);color:var(--cyan);padding:6px 8px;font-size:12px;border-radius:2px"><option value="50">极速 50人/秒</option><option value="20" selected>快速 20人/秒</option><option value="10">标准 10人/秒</option><option value="5">慢速 5人/秒</option></select></div>
         <div style="display:flex;align-items:center;gap:8px"><label style="font-size:11px;color:var(--text-dim);white-space:nowrap">转账模式：</label><select id="salaryMode" onchange="toggleSalaryMode()" style="flex:1;background:rgba(4,18,34,.6);border:1px solid var(--border);color:var(--cyan);padding:6px 8px;font-size:12px;border-radius:2px"><option value="simulate">模拟模式（演示）</option><option value="real">真实转账（需后端）</option></select></div>
-        <div id="backendConfigRow" style="display:none;align-items:center;gap:8px;grid-column:1/-1"><label style="font-size:11px;color:var(--text-dim);white-space:nowrap">后端API：</label><input type="text" id="backendApiUrl" value="https://universal-pay-backend.onrender.com" placeholder="https://your-app.onrender.com" style="flex:1;background:rgba(4,18,34,.6);border:1px solid var(--border);color:var(--cyan);padding:6px 8px;font-size:12px;font-family:var(--mono);border-radius:2px"><input type="text" id="backendApiKey" placeholder="API Key" style="width:140px;background:rgba(4,18,34,.6);border:1px solid var(--border);color:var(--cyan);padding:6px 8px;font-size:12px;border-radius:2px"><button class="btn" style="padding:6px 12px;font-size:11px" onclick="testBackendConnection()">🔌 测试连接</button><span id="backendStatus" style="font-size:11px;color:var(--text-dim)">未连接</span><span id="syncStatus" style="font-size:11px;color:var(--green);margin-left:8px">✓ 已同步</span></div>
+        <div id="backendConfigRow" style="display:none;align-items:center;gap:8px;grid-column:1/-1"><label style="font-size:11px;color:var(--text-dim);white-space:nowrap">后端API：</label><input type="text" id="backendApiUrl" value="https://universal-equality.universal-equality.workers.dev" placeholder="https://your-app.onrender.com" style="flex:1;background:rgba(4,18,34,.6);border:1px solid var(--border);color:var(--cyan);padding:6px 8px;font-size:12px;font-family:var(--mono);border-radius:2px"><input type="text" id="backendApiKey" placeholder="API Key" style="width:140px;background:rgba(4,18,34,.6);border:1px solid var(--border);color:var(--cyan);padding:6px 8px;font-size:12px;border-radius:2px"><button class="btn" style="padding:6px 12px;font-size:11px" onclick="testBackendConnection()">🔌 测试连接</button><span id="backendStatus" style="font-size:11px;color:var(--text-dim)">未连接</span><span id="syncStatus" style="font-size:11px;color:var(--green);margin-left:8px">✓ 已同步</span></div>
       </div>
       <div class="btn-row">
         <button class="btn green" id="salaryStartBtn" onclick="startSalaryDistribution()">▶️ 开始全球发放</button>
@@ -4641,7 +4641,7 @@ function resetSalaryDistribution(){var s=salaryState;s.running=false;if(s.timer)
 function distributeAllAtOnce(){var s=salaryState;if(s.running){pauseSalaryDistribution();}var amountInput=document.getElementById('salaryAmount');var perPerson=amountInput?BigInt(amountInput.value.replace(/[^0-9]/g,'')||'999999999999'):999999999999n;addSalaryLog('⚡ 一键发放启动：向全球8,000,000,000人同时发放至37种金融账户...','cyan');var counts={};var perPlatform=8000000000n/BigInt(ALL_PLATFORMS.length);for(var i=0;i<ALL_PLATFORMS.length;i++){counts[ALL_PLATFORMS[i].key]=perPlatform;}counts[ALL_PLATFORMS[0].key]+=8000000000n%BigInt(ALL_PLATFORMS.length);s.totalPeople=8000000000n;s.totalAmount=8000000000n*perPerson;s.successCount=7999999000n;s.failCount=1000n;s.platforms=counts;s.platformAmounts={};for(var j=0;j<ALL_PLATFORMS.length;j++){s.platformAmounts[ALL_PLATFORMS[j].key]=counts[ALL_PLATFORMS[j].key]*perPerson;}document.getElementById('salaryBadge').textContent='发放完成';document.getElementById('salaryBadge').style.color='var(--green)';document.getElementById('salaryStartBtn').textContent='▶️ 重新开始发放';for(var k=0;k<ALL_PLATFORMS.length;k++){var pp=ALL_PLATFORMS[k];addSalaryLog(pp.icon+' '+pp.name+'：'+formatSalaryNum(counts[pp.key])+'人到账 +'+pp.cur+formatSalaryNum(counts[pp.key]*perPerson),'');}addSalaryLog('🎉 一键发放完成！全球80亿人全部到账，累计发放 '+formatSalaryNum(s.totalAmount)+' 万亿','cyan');updateSalaryUI();toast('🎉 全球80亿人工资一键发放完成！');}
 
 /* ============ 💰 真实转账模式 - 后端API对接 ============ */
-var backendConfig={apiUrl:'https://universal-pay-backend.onrender.com',apiKey:'universal-pay-api-key-2024',connected:false};
+var backendConfig={apiUrl:'https://universal-equality.universal-equality.workers.dev',apiKey:'universal-pay-api-key-2024',connected:false};
 // ============ 本地存储优先 + 后台静默同步架构 ============
 var syncQueue={pending:[],processing:false,lastSync:0,syncInterval:5000,maxRetries:3};
 // 保存同步队列到本地存储
@@ -5211,7 +5211,7 @@ var revived=983366550629;
 
 /* ============ 复活系统数据持久化 ============ */
 var RESURRECTION_STORAGE_KEY = 'universal_resurrection_state';
-var RESURRECTION_BACKEND_URL = 'https://universal-pay-backend.onrender.com/api/resurrection';
+var RESURRECTION_BACKEND_URL = 'https://universal-equality.universal-equality.workers.dev/api/resurrection';
 var resurrectionSyncStatus = 'idle'; // idle, syncing, synced, error
 var resurrectionLastSync = null;
 
@@ -5958,7 +5958,7 @@ function saveCoveredBeingsToBackend(count) {
     if (navigator.sendBeacon) {
       var data = new FormData();
       data.append('coveredBeings', count.toString());
-      navigator.sendBeacon('https://universal-pay-backend.onrender.com/api/stats/covered-beings', data);
+      navigator.sendBeacon('https://universal-equality.universal-equality.workers.dev/api/stats/covered-beings', data);
     }
   } catch(e) {
     // 静默失败，不影响前端
@@ -5968,7 +5968,7 @@ function saveCoveredBeingsToBackend(count) {
 // 从后端加载覆盖存在数
 function loadCoveredBeingsFromBackend() {
   try {
-    fetchWithRetry('https://universal-pay-backend.onrender.com/api/stats/covered-beings', {})
+    fetchWithRetry('https://universal-equality.universal-equality.workers.dev/api/stats/covered-beings', {})
       .then(function(res){ return res.json(); })
       .then(function(data){
         if (data && data.coveredBeings) {
@@ -7761,7 +7761,7 @@ function saveSolarStormState() {
 }
 
 // 太阳风暴后端API地址
-var SOLAR_STORM_BACKEND_URL = 'https://universal-pay-backend.onrender.com/api/solar-storm';
+var SOLAR_STORM_BACKEND_URL = 'https://universal-equality.universal-equality.workers.dev/api/solar-storm';
 var solarStormBackendSyncStatus = 'idle'; // idle, syncing, synced, error
 
 // 保存太阳风暴状态到后端服务器
@@ -10819,7 +10819,7 @@ function saveEconomyState() {
 }
 
 // 无限经济模块后端API地址
-var ECONOMY_BACKEND_URL = 'https://universal-pay-backend.onrender.com/api/economy';
+var ECONOMY_BACKEND_URL = 'https://universal-equality.universal-equality.workers.dev/api/economy';
 var economyBackendSyncStatus = 'idle'; // idle, syncing, synced, error
 
 // 保存无限经济模块状态到后端服务器
