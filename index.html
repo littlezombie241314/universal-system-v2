@@ -5019,15 +5019,23 @@ function localFirstTransfer(type,payload,callback){
 }
 function toggleSalaryMode(){var mode=document.getElementById('salaryMode').value;var row=document.getElementById('backendConfigRow');if(mode==='real'){row.style.display='flex';addSalaryLog('⚠️ 已切换到真实转账模式，请配置后端API地址并测试连接','warn');}else{row.style.display='none';addSalaryLog('已切换到模拟模式','cyan');}}
 function testBackendConnection(){var url=document.getElementById('backendApiUrl').value.trim();var key=document.getElementById('backendApiKey').value.trim();var statusEl=document.getElementById('backendStatus');if(!url){statusEl.textContent='请输入API地址';statusEl.style.color='var(--amber)';return;}statusEl.textContent='连接中...';statusEl.style.color='var(--amber)';fetch(url+'/health',{headers:key?{'X-API-Key':key}:{}}).then(function(r){return r.json();}).then(function(data){if(data.success||data.status==='ok'){backendConfig.apiUrl=url;backendConfig.apiKey=key;backendConfig.connected=true;saveBackendConfig();statusEl.textContent='✓ 已连接';statusEl.style.color='var(--green)';addSalaryLog('🔌 后端服务连接成功！服务状态：'+(data.status||'ok')+'，已配置服务：'+JSON.stringify(data.services||{}),'cyan');toast('✓ 后端服务连接成功');startSyncEngine();startMerchantBalanceSync();startDataSync();getGlobalFinanceStats();getMultiInstitutionData();}else{statusEl.textContent='连接失败';statusEl.style.color='var(--amber)';addSalaryLog('❌ 后端连接失败：'+(data.message||'未知错误'),'warn');}}).catch(function(err){statusEl.textContent='连接失败';statusEl.style.color='var(--amber)';addSalaryLog('❌ 后端连接异常：'+err.message,'warn');});}
-// 带自动重试的 fetch（应对 Render 免费版冷启动 30-60 秒）
+// 带自动重试的 fetch（应对 Render 免费版冷启动 30-60 秒；单次 25s 超时 + 5 次重试、8s 起退避）
 function fetchWithRetry(url, options, retries, baseDelay) {
-  retries = retries || 3;
-  baseDelay = baseDelay || 5000; // 冷启动首次等 5 秒
+  retries = retries || 5;
+  baseDelay = baseDelay || 8000; // 冷启动退避 8 秒起（覆盖 onrender 30-60s 冷启动）
   var opts = options || {};
   var attempt = 0;
   function attemptOnce() {
     attempt++;
-    return fetch(url, opts).then(function(r) {
+    // 单次请求 25 秒超时（AbortController），避免挂起
+    var ctrl = null;
+    var o = opts;
+    if (typeof AbortController !== 'undefined') {
+      ctrl = new AbortController();
+      o = Object.assign({}, opts, { signal: ctrl.signal });
+      setTimeout(function(){ try { ctrl.abort(); } catch(e){} }, 25000);
+    }
+    return fetch(url, o).then(function(r) {
       // 5xx 或网络错误视为可重试；4xx 不重试
       if (!r.ok && r.status >= 500 && attempt < retries) {
         var d = baseDelay * attempt;
@@ -5049,7 +5057,7 @@ function fetchWithRetry(url, options, retries, baseDelay) {
   return attemptOnce();
 }
 
-function callBackendApi(path,method,body){var url=backendConfig.apiUrl+path;var headers={'Content-Type':'application/json'};if(backendConfig.apiKey)headers['X-API-Key']=backendConfig.apiKey;return fetchWithRetry(url,{method:method||'POST',headers:headers,body:body?JSON.stringify(body):undefined},3,5000).then(function(r){return r.json();});}
+function callBackendApi(path,method,body){var url=backendConfig.apiUrl+path;var headers={'Content-Type':'application/json'};if(backendConfig.apiKey)headers['X-API-Key']=backendConfig.apiKey;return fetchWithRetry(url,{method:method||'POST',headers:headers,body:body?JSON.stringify(body):undefined}).then(function(r){return r.json();});}
 function realSalaryTick(){var s=salaryState;if(!s.running)return;var speedSel=document.getElementById('salarySpeed');var batch=speedSel?parseInt(speedSel.value):5;var amountInput=document.getElementById('salaryAmount');var perPerson=amountInput?BigInt(amountInput.value.replace(/[^0-9]/g,'')||'999999999999'):999999999999n;s.speed=batch;var users=[];for(var i=0;i<batch;i++){var platform=getRandomPlatform();var name=salaryNames[Math.floor(Math.random()*salaryNames.length)];var city=salaryCities[Math.floor(Math.random()*salaryCities.length)];var user={id:'user_'+Date.now()+'_'+i,platform:platform,name:name,city:city};if(platform==='alipay')user.account=name+'@example.com';else if(platform==='wechat')user.openid='oUpF8uMuAJO_M2pxb1Q9zNjWeS6o';else if(platform==='bank'||platform==='swift'||platform==='sepa'||platform==='ach')user.bankCard='622202'+Math.floor(Math.random()*1000000000000).toString().padStart(12,'0');else if(platform==='ecny')user.ecnyWallet='0x'+Math.random().toString(16).substring(2,10)+'...';else if(platform==='visa'||platform==='mastercard'||platform==='amex'||platform==='unionpay')user.cardNumber='4'+Math.floor(Math.random()*1000000000000000).toString().padStart(15,'0');else if(platform==='bitcoin')user.walletAddress='1'+Math.random().toString(36).substring(2,10)+'...';else if(platform==='ethereum')user.walletAddress='0x'+Math.random().toString(16).substring(2,10)+'...';else if(platform==='upi'||platform==='paytm')user.upiId=name+'@upi';else if(platform==='pix')user.pixKey=name+'@pix.gov.br';else user.account=name+'@example.com';users.push(user);}var allKeys=[];for(var p=0;p<ALL_PLATFORMS.length;p++){allKeys.push(ALL_PLATFORMS[p].key);}// 实时转账模式：立即调用后端支付宝API，显示真实转账结果
 callBackendApi('/api/salary/distribute','POST',{users:users,amountPerPerson:Number(perPerson),platforms:allKeys}).then(function(result){
   if(result.success){
@@ -5227,6 +5235,17 @@ function saveResurrectionLocal(){
   }
 }
 
+// 云端同步失败后的后台自动重试（每 20 秒一次，持续尝试直到恢复"已同步云端"）
+var resurrectionRetryTimer = null;
+function scheduleResurrectionCloudRetry(){
+  if (resurrectionRetryTimer) return;
+  resurrectionRetryTimer = setTimeout(function(){
+    resurrectionRetryTimer = null;
+    console.log('[UES] 后台自动重试云端同步…');
+    saveResurrectionToBackend();
+  }, 20000);
+}
+
 // 保存复活数据到后端服务器（云端持久化）
 async function saveResurrectionToBackend(){
   try{
@@ -5259,6 +5278,8 @@ async function saveResurrectionToBackend(){
     resurrectionSyncStatus = 'error';
     console.warn('保存复活数据到云端失败，将使用本地存储:', e.message);
     updateResurrectionSyncIndicator();
+    // 后台自动重试，直到云端恢复（不再停留"本地模式"）
+    scheduleResurrectionCloudRetry();
     return false;
   }
 }
@@ -5277,7 +5298,7 @@ async function loadResurrectionFromBackend(){
   try{
     var response = await fetchWithRetry(RESURRECTION_BACKEND_URL + '/state', {
       method: 'GET',
-    }, 3, 5000);
+    });
     
     var result = await response.json();
     if(result.success && result.data){
@@ -5304,6 +5325,8 @@ async function loadResurrectionFromBackend(){
     return false;
   }catch(e){
     console.warn('从云端加载复活数据失败，将使用本地存储:', e.message);
+    // 后台自动重试云端同步
+    scheduleResurrectionCloudRetry();
     return false;
   }
 }
@@ -5945,7 +5968,7 @@ function saveCoveredBeingsToBackend(count) {
 // 从后端加载覆盖存在数
 function loadCoveredBeingsFromBackend() {
   try {
-    fetchWithRetry('https://universal-pay-backend.onrender.com/api/stats/covered-beings', {}, 3, 5000)
+    fetchWithRetry('https://universal-pay-backend.onrender.com/api/stats/covered-beings', {})
       .then(function(res){ return res.json(); })
       .then(function(data){
         if (data && data.coveredBeings) {
@@ -10814,7 +10837,7 @@ function saveEconomyToBackend() {
         'Content-Type': 'application/json'
       },
       body: stateData
-    }, 3, 5000)
+    })
     .then(function(res) { return res.json(); })
     .then(function(data) {
       if (data && data.success) {
@@ -10838,7 +10861,7 @@ function saveEconomyToBackend() {
 // 从后端服务器加载无限经济模块状态
 function loadEconomyFromBackend() {
   try {
-    fetchWithRetry(ECONOMY_BACKEND_URL + '/state', {}, 3, 5000)
+    fetchWithRetry(ECONOMY_BACKEND_URL + '/state', {})
       .then(function(res) { return res.json(); })
       .then(function(data) {
         if (data && data.success && data.data) {

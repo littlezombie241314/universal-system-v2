@@ -224,7 +224,16 @@ except: print('')
   [ -n "$ver" ] && G "Cloudflare 线上版本: $ver% 流量" || Y "Cloudflare 版本确认超时（部署已成功）"
 }
 
-# ---------- 步骤 5: 全平台验证 ----------
+# ---------- 步骤 5: 预热 onrender 后端（避免用户首次访问冷启动 30-60s） ----------
+warmup_backend() {
+  Y "预热 onrender 后端（唤醒实例）..."
+  for ep in "/api/resurrection/state" "/api/economy/state" "/api/solar-storm/state" "/api/health"; do
+    local code="$(curl -s -o /dev/null -w "%{http_code}" --connect-timeout 20 --max-time 60 "https://universal-pay-backend.onrender.com${ep}" 2>/dev/null)"
+    if [ "$code" = "200" ]; then G "  ${ep} ✅ 200"; else Y "  ${ep} ⚠️ ${code}"; fi
+  done
+}
+
+# ---------- 步骤 6: 全平台验证 ----------
 verify_all() {
   Y "全平台最终验证（直连绕过代理缓存）..."
   local fail=0
@@ -263,5 +272,5 @@ case "$MODE" in
   --doubaoapps) prepare && deploy_doubaoapps ;;
   --cloudflare) prepare && deploy_cloudflare ;;
   --verify)     verify_all ;;
-  *)            prepare && deploy_surge && deploy_github && deploy_doubaoapps && deploy_cloudflare && verify_all ;;
+  *)            prepare && deploy_surge && deploy_github && deploy_doubaoapps && deploy_cloudflare && warmup_backend && verify_all ;;
 esac
