@@ -121,18 +121,32 @@ deploy_github() {
     return 1
   fi
   G "gh-pages 推送成功"
-  # 校验 Pages 线上（CDN 有延迟，最多等 90s）
-  local md5="" ok=0
-  for i in $(seq 1 9); do
-    md5="$(curl -sL --compressed --noproxy "*" --connect-timeout 15 --max-time 90 "https://littlezombie241314.github.io/universal-system-v2/?v=$(date +%s)" 2>/dev/null | md5sum | awk '{print $1}')"
-    if [ "$md5" = "$EXPECTED_MD5" ]; then ok=1; break; fi
-    Y "  Pages CDN 同步中(第${i}次, ${md5:0:8})，10s 后重查"
-    sleep 10
-  done
-  if [ "$ok" = "1" ]; then
-    G "GitHub Pages 线上校验一致"
+  # 校验 Pages 线上：仓库含 CNAME 指向 Surge 时 github.io 会 301 重定向（内容实时来自 Surge）
+  local md5="" ok=0 loc=""
+  loc="$(curl -sI --noproxy "*" --connect-timeout 15 --max-time 30 "https://littlezombie241314.github.io/universal-system-v2/" 2>/dev/null | grep -i '^location:' | tr -d '\r' | awk '{print $2}')"
+  if [ -n "$loc" ] && echo "$loc" | grep -q "surge.sh"; then
+    # CNAME 重定向模式：Pages 入口实时指向 Surge，直接校验重定向目标
+    local target="${loc/http:/https:}"
+    md5="$(curl -sL --compressed --noproxy "*" --connect-timeout 15 --max-time 60 "$target" 2>/dev/null | md5sum | awk '{print $1}')"
+    if [ "$md5" = "$EXPECTED_MD5" ]; then
+      G "GitHub Pages → CNAME 重定向到 $target，实时指向最新版 ✅"
+      ok=1
+    else
+      Y "Pages 重定向目标 $target 校验不一致（${md5:0:8} vs ${EXPECTED_MD5:0:8}）"
+    fi
   else
-    Y "GitHub Pages 线上仍在 CDN 缓存中（分支已推送，稍后会同步）"
+    # 无重定向：常规 CDN 校验（最多 9 次 × 10s）
+    for i in $(seq 1 9); do
+      md5="$(curl -sL --compressed --noproxy "*" --connect-timeout 15 --max-time 90 "https://littlezombie241314.github.io/universal-system-v2/?v=$(date +%s)" 2>/dev/null | md5sum | awk '{print $1}')"
+      if [ "$md5" = "$EXPECTED_MD5" ]; then ok=1; break; fi
+      Y "  Pages CDN 同步中(第${i}次, ${md5:0:8})，10s 后重查"
+      sleep 10
+    done
+    if [ "$ok" = "1" ]; then
+      G "GitHub Pages 线上校验一致"
+    else
+      Y "GitHub Pages 线上仍在 CDN 缓存中（分支已推送，稍后会同步）"
+    fi
   fi
 }
 
@@ -220,9 +234,19 @@ verify_all() {
     md5="$(md5sum /tmp/v_surge.html | awk '{print $1}')"
     if [ "$md5" = "$EXPECTED_MD5" ]; then G "  $domain.surge.sh ✅ ${md5:0:8}"; else R "  $domain.surge.sh ❌ ${md5:0:8}"; fail=1; fi
   done
-  curl_retry /tmp/v_gh.html "https://littlezombie241314.github.io/universal-system-v2/?v=$(date +%s)"
-  local gh_md5="$(md5sum /tmp/v_gh.html | awk '{print $1}')"
-  if [ "$gh_md5" = "$EXPECTED_MD5" ]; then G "  GitHub Pages ✅ ${gh_md5:0:8}"; else Y "  GitHub Pages ⏳ ${gh_md5:0:8}（CDN 缓存中）"; fi
+  # GitHub Pages：CNAME 重定向模式则实时指向 Surge，直接校验重定向目标
+  local gh_loc="" gh_target=""
+  gh_loc="$(curl -sI --noproxy "*" --connect-timeout 15 --max-time 30 "https://littlezombie241314.github.io/universal-system-v2/" 2>/dev/null | grep -i '^location:' | tr -d '\r' | awk '{print $2}')"
+  if [ -n "$gh_loc" ] && echo "$gh_loc" | grep -q "surge.sh"; then
+    gh_target="${gh_loc/http:/https:}"
+    curl_retry /tmp/v_gh.html "$gh_target"
+    local gh_md5="$(md5sum /tmp/v_gh.html | awk '{print $1}')"
+    if [ "$gh_md5" = "$EXPECTED_MD5" ]; then G "  GitHub Pages → 实时指向 $gh_target ✅ ${gh_md5:0:8}"; else Y "  GitHub Pages → $gh_target ⏳ ${gh_md5:0:8}（重定向目标校验中）"; fi
+  else
+    curl_retry /tmp/v_gh.html "https://littlezombie241314.github.io/universal-system-v2/?v=$(date +%s)"
+    local gh_md5="$(md5sum /tmp/v_gh.html | awk '{print $1}')"
+    if [ "$gh_md5" = "$EXPECTED_MD5" ]; then G "  GitHub Pages ✅ ${gh_md5:0:8}"; else Y "  GitHub Pages ⏳ ${gh_md5:0:8}（CDN 缓存中）"; fi
+  fi
   curl_retry /tmp/v_doubao.html "https://xb4r414nb9.doubaoapps.com/app/app_17f4htz1kfy/"
   local climate="$(grep -c 'climateWeatherIcon' /tmp/v_doubao.html)"
   local speed="$(grep -c 'speedChannelList' /tmp/v_doubao.html)"
