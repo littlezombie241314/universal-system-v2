@@ -116,7 +116,8 @@ deploy_github() {
     return 1
   fi
   G "master 推送成功"
-  if ! retry_cmd 3 5 git push origin gh-pages >/dev/null 2>&1; then
+  # gh-pages 始终 = master（强制推送，避免本地 gh-pages 分支落后导致 non-fast-forward）
+  if ! retry_cmd 3 5 git push -f origin master:gh-pages >/dev/null 2>&1; then
     R "gh-pages 推送失败"
     return 1
   fi
