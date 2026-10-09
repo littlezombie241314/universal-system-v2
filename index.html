@@ -10596,6 +10596,101 @@ var climateCurrentWeather = 'sunny'; // sunny晴天 / cloudy多云 / rain小雨 
 var climateWeatherNames = {sunny: '晴天', cloudy: '多云', rain: '小雨', snow: '雪天'};
 var climateWeatherIcons = {sunny: '☀️', cloudy: '☁️', rain: '🌧️', snow: '❄️'};
 
+// ========== 气候模块 · 云端真实驱动（workers.dev 全球边缘节点）==========
+var CLIMATE_BACKEND_URL = 'https://universal-equality.universal-equality.workers.dev/api/climate';
+var climateCloudSync = 'idle'; // idle/syncing/synced/error
+var climateCloudRetryTimer = null;
+
+function updateClimateCloudIndicator(){
+  try{
+    var el = document.getElementById('climateSyncStatus');
+    if(!el) return;
+    switch(climateCloudSync){
+      case 'syncing': el.textContent = '同步中...'; el.style.color = '#FAAD14'; break;
+      case 'synced':  el.textContent = '已同步云端'; el.style.color = '#52C41A'; break;
+      case 'error':   el.textContent = '本地模式'; el.style.color = '#EA6668'; break;
+      default:        el.textContent = '待同步'; el.style.color = '#6B7280';
+    }
+  }catch(e){}
+}
+
+// 保存天气状态到云端（workers.dev KV，由全宇宙系统数据驱动）
+function saveClimateToBackend(){
+  try{
+    climateCloudSync = 'syncing';
+    updateClimateCloudIndicator();
+    return fetchWithRetry(CLIMATE_BACKEND_URL + '/state', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        weather: climateCurrentWeather,
+        holidayLock: true,
+        updatedAt: new Date().toISOString()
+      })
+    }).then(function(r){ return r.json(); }).then(function(result){
+      if(result.success){
+        climateCloudSync = 'synced';
+        updateClimateCloudIndicator();
+        return true;
+      }
+      climateCloudSync = 'error';
+      updateClimateCloudIndicator();
+      scheduleClimateCloudRetry();
+      return false;
+    }).catch(function(){
+      climateCloudSync = 'error';
+      updateClimateCloudIndicator();
+      scheduleClimateCloudRetry();
+      return false;
+    });
+  }catch(e){
+    climateCloudSync = 'error';
+    updateClimateCloudIndicator();
+    scheduleClimateCloudRetry();
+    return false;
+  }
+}
+
+// 从云端加载天气状态驱动显示（多端一致）
+function loadClimateFromBackend(){
+  try{
+    return fetchWithRetry(CLIMATE_BACKEND_URL + '/state', { method: 'GET' })
+      .then(function(r){ return r.json(); })
+      .then(function(result){
+        if(result.success && result.data){
+          var d = result.data;
+          if(d.weather && climateWeatherNames[d.weather]){
+            climateCurrentWeather = d.weather;
+            updateClimateWeatherUI();
+          }
+          climateCloudSync = 'synced';
+          updateClimateCloudIndicator();
+          return true;
+        }
+        climateCloudSync = 'error';
+        updateClimateCloudIndicator();
+        return false;
+      })
+      .catch(function(){
+        climateCloudSync = 'error';
+        updateClimateCloudIndicator();
+        return false;
+      });
+  }catch(e){ return false; }
+}
+
+// 云端失败后台自动重试（每 20 秒）
+function scheduleClimateCloudRetry(){
+  if (climateCloudRetryTimer) return;
+  climateCloudRetryTimer = setTimeout(function(){
+    climateCloudRetryTimer = null;
+    saveClimateToBackend();
+  }, 20000);
+}
+
+// 启动时加载云端气候数据
+setTimeout(function(){ loadClimateFromBackend(); }, 1200);
+
 function isClimateHoliday() {
   var now = new Date();
   var month = now.getMonth() + 1;
@@ -10616,6 +10711,8 @@ function switchClimateWeather(type) {
   updateClimateWeatherUI();
   var extra = type === 'sunny' ? '' : '（已退出最优模式，建议恢复晴天）';
   toast('🌤️ 天气已切换为' + climateWeatherNames[type] + extra);
+  // 由宇宙恒等系统数据驱动：切换结果实时保存到云端，多端一致
+  saveClimateToBackend();
 }
 
 function updateClimateWeatherUI() {
@@ -10658,8 +10755,10 @@ function startClimateAutoRegulate() {
     climateTotalRegulate += 100000000000;
     var totalEl = document.getElementById('climateTotalRegulate');
     if (totalEl) { totalEl.textContent = climateTotalRegulate.toLocaleString(); }
-    var syncEl = document.getElementById('climateSyncStatus');
-    if (syncEl) { syncEl.textContent = '已同步云端'; syncEl.style.color = '#52C41A'; }
+    // 同步状态由云端真实驱动（updateClimateCloudIndicator 反映实际读写结果）
+    updateClimateCloudIndicator();
+    // 每 30 秒与云端校准一次
+    if (Math.floor(Date.now() / 1000) % 30 === 0) { saveClimateToBackend(); }
   }, 1000);
 }
 
