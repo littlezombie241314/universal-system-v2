@@ -2002,7 +2002,7 @@ select option{background:#040b1a;color:var(--cyan)}
             <div style="font-size:11px;color:var(--text-dim);margin-bottom:4px">🌤️ 当前天气 · 最优模式</div>
             <div id="climateWeatherIcon" style="font-size:26px;line-height:1.2">☀️</div>
             <div id="climateWeatherText" style="font-size:18px;font-weight:bold;color:#FAAD14">晴天（最优）</div>
-            <div style="font-size:10px;color:#52C41A;margin-top:4px">全宇宙最优天气 · 阳光明媚 · 温度 22°C</div>
+            <div id="climateFeelsLikeText" style="font-size:10px;color:#52C41A;margin-top:4px">🌡️ 体感温度 · 舒适 · 22°C · 全宇宙最优天气 · 阳光明媚</div>
           </div>
           <div style="background:rgba(82,196,26,0.08);border:1px solid rgba(82,196,26,0.35);border-radius:8px;padding:12px;text-align:center">
             <div style="font-size:11px;color:var(--text-dim);margin-bottom:4px">🔒 节假日天气锁定</div>
@@ -10529,6 +10529,14 @@ var CLIMATE_HOLIDAYS = [
 var climateCurrentWeather = 'sunny'; // sunny晴天 / cloudy多云 / rain小雨 / snow雪天
 var climateWeatherNames = {sunny: '晴天', cloudy: '多云', rain: '小雨', snow: '雪天'};
 var climateWeatherIcons = {sunny: '☀️', cloudy: '☁️', rain: '🌧️', snow: '❄️'};
+// 体感温度配置（最优模式=晴天=舒适状态）
+var climateFeelsLikeConfig = {
+  sunny:  { status: '舒适', temp: 22, icon: '🌡️' },
+  cloudy: { status: '舒适', temp: 21, icon: '🌡️' },
+  rain:   { status: '凉爽', temp: 18, icon: '🌧️' },
+  snow:   { status: '寒冷', temp: 5,  icon: '❄️' }
+};
+var climateFeelsLike = { status: '舒适', temp: 22, icon: '🌡️' };
 
 // ========== 气候模块 · 宇宙恒等系统数据驱动（数据由系统自身持久化驱动，不依赖外部后端）==========
 var CLIMATE_BACKEND_URL = '';
@@ -10555,6 +10563,7 @@ function saveClimateToBackend(){
     try {
       localStorage.setItem('universal_climate_state', JSON.stringify({
         weather: climateCurrentWeather,
+        feelsLike: climateFeelsLike,
         holidayLock: true,
         updatedAt: new Date().toISOString()
       }));
@@ -10579,8 +10588,11 @@ function loadClimateFromBackend(){
         var d = JSON.parse(raw);
         if (d.weather && climateWeatherNames[d.weather]) {
           climateCurrentWeather = d.weather;
-          updateClimateWeatherUI();
         }
+        if (d.feelsLike && d.feelsLike.status) {
+          climateFeelsLike = d.feelsLike;
+        }
+        updateClimateWeatherUI();
       }
     } catch(e) {}
     climateCloudSync = 'synced';
@@ -10634,6 +10646,16 @@ function updateClimateWeatherUI() {
     textEl.textContent = climateWeatherNames[displayWeather] + (displayWeather === 'sunny' ? '（最优）' : '');
     textEl.style.color = displayWeather === 'sunny' ? '#FAAD14' : 'var(--text-dim)';
   }
+  // 体感温度：由宇宙恒等系统数据驱动（晴天=舒适状态）
+  try {
+    var feelsLikeEl = document.getElementById('climateFeelsLikeText');
+    if (feelsLikeEl) {
+      var fl = climateFeelsLikeConfig[displayWeather] || climateFeelsLikeConfig.sunny;
+      climateFeelsLike = { status: fl.status, temp: fl.temp, icon: fl.icon };
+      var bestTag = displayWeather === 'sunny' ? ' · 全宇宙最优天气 · 阳光明媚' : '';
+      feelsLikeEl.textContent = fl.icon + ' 体感温度 · ' + fl.status + ' · ' + fl.temp + '°C' + bestTag;
+    }
+  } catch(e) {}
   if (isHoliday) {
     var now = new Date();
     var weekday = ['周日','周一','周二','周三','周四','周五','周六'][now.getDay()];
