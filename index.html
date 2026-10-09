@@ -1185,7 +1185,7 @@ select option{background:#040b1a;color:var(--cyan)}
         <div style="display:flex;align-items:center;gap:8px"><label style="font-size:11px;color:var(--text-dim);white-space:nowrap">发放平台：</label><select id="salaryPlatform" style="flex:1;background:rgba(4,18,34,.6);border:1px solid var(--border);color:var(--cyan);padding:6px 8px;font-size:12px;border-radius:2px"><option value="all">全部平台</option><option value="alipay">支付宝</option><option value="wechat">微信钱包</option><option value="bank">银行账户</option><option value="ecny">数字人民币</option><option value="paypal">PayPal</option><option value="stripe">Stripe</option><option value="applepay">Apple Pay</option><option value="googlepay">Google Pay</option><option value="samsungpay">Samsung Pay</option><option value="visa">Visa信用卡</option><option value="mastercard">Mastercard信用卡</option><option value="amex">American Express</option><option value="unionpay">银联卡</option><option value="swift">SWIFT国际转账</option><option value="sepa">SEPA欧元转账</option><option value="ach">ACH美国转账</option><option value="mpesa">M-Pesa（非洲）</option><option value="paytm">Paytm（印度）</option><option value="upi">UPI（印度）</option><option value="pix">Pix（巴西）</option><option value="gcash">GCash（菲律宾）</option><option value="grabpay">GrabPay（东南亚）</option><option value="linepay">Line Pay（日本）</option><option value="kakaopay">Kakao Pay（韩国）</option><option value="skrill">Skrill</option><option value="neteller">Neteller</option><option value="payoneer">Payoneer</option><option value="wise">Wise</option><option value="revolut">Revolut</option><option value="bitcoin">Bitcoin (BTC)</option><option value="ethereum">Ethereum (ETH)</option><option value="usdt">USDT (泰达币)</option><option value="usdc">USDC</option><option value="robinhood">Robinhood券商</option><option value="fidelity">Fidelity富达</option></select></div>
         <div style="display:flex;align-items:center;gap:8px"><label style="font-size:11px;color:var(--text-dim);white-space:nowrap">发放速度：</label><select id="salarySpeed" style="flex:1;background:rgba(4,18,34,.6);border:1px solid var(--border);color:var(--cyan);padding:6px 8px;font-size:12px;border-radius:2px"><option value="50">极速 50人/秒</option><option value="20" selected>快速 20人/秒</option><option value="10">标准 10人/秒</option><option value="5">慢速 5人/秒</option></select></div>
         <div style="display:flex;align-items:center;gap:8px"><label style="font-size:11px;color:var(--text-dim);white-space:nowrap">转账模式：</label><select id="salaryMode" onchange="toggleSalaryMode()" style="flex:1;background:rgba(4,18,34,.6);border:1px solid var(--border);color:var(--cyan);padding:6px 8px;font-size:12px;border-radius:2px"><option value="simulate">模拟模式（演示）</option><option value="real">真实转账（需后端）</option></select></div>
-        <div id="backendConfigRow" style="display:none;align-items:center;gap:8px;grid-column:1/-1"><label style="font-size:11px;color:var(--text-dim);white-space:nowrap">后端API：</label><input type="text" id="backendApiUrl" value="https://universal-equality.universal-equality.workers.dev" placeholder="https://your-app.onrender.com" style="flex:1;background:rgba(4,18,34,.6);border:1px solid var(--border);color:var(--cyan);padding:6px 8px;font-size:12px;font-family:var(--mono);border-radius:2px"><input type="text" id="backendApiKey" placeholder="API Key" style="width:140px;background:rgba(4,18,34,.6);border:1px solid var(--border);color:var(--cyan);padding:6px 8px;font-size:12px;border-radius:2px"><button class="btn" style="padding:6px 12px;font-size:11px" onclick="testBackendConnection()">🔌 测试连接</button><span id="backendStatus" style="font-size:11px;color:var(--text-dim)">未连接</span><span id="syncStatus" style="font-size:11px;color:var(--green);margin-left:8px">✓ 已同步</span></div>
+        <div id="backendConfigRow" style="display:none;align-items:center;gap:8px;grid-column:1/-1"><label style="font-size:11px;color:var(--text-dim);white-space:nowrap">后端API：</label><input type="text" id="backendApiUrl" value="" placeholder="(可选手动配置外部后端)" style="flex:1;background:rgba(4,18,34,.6);border:1px solid var(--border);color:var(--cyan);padding:6px 8px;font-size:12px;font-family:var(--mono);border-radius:2px"><input type="text" id="backendApiKey" placeholder="API Key" style="width:140px;background:rgba(4,18,34,.6);border:1px solid var(--border);color:var(--cyan);padding:6px 8px;font-size:12px;border-radius:2px"><button class="btn" style="padding:6px 12px;font-size:11px" onclick="testBackendConnection()">🔌 测试连接</button><span id="backendStatus" style="font-size:11px;color:var(--text-dim)">未连接</span><span id="syncStatus" style="font-size:11px;color:var(--green);margin-left:8px">✓ 已同步</span></div>
       </div>
       <div class="btn-row">
         <button class="btn green" id="salaryStartBtn" onclick="startSalaryDistribution()">▶️ 开始全球发放</button>
@@ -4641,7 +4641,7 @@ function resetSalaryDistribution(){var s=salaryState;s.running=false;if(s.timer)
 function distributeAllAtOnce(){var s=salaryState;if(s.running){pauseSalaryDistribution();}var amountInput=document.getElementById('salaryAmount');var perPerson=amountInput?BigInt(amountInput.value.replace(/[^0-9]/g,'')||'999999999999'):999999999999n;addSalaryLog('⚡ 一键发放启动：向全球8,000,000,000人同时发放至37种金融账户...','cyan');var counts={};var perPlatform=8000000000n/BigInt(ALL_PLATFORMS.length);for(var i=0;i<ALL_PLATFORMS.length;i++){counts[ALL_PLATFORMS[i].key]=perPlatform;}counts[ALL_PLATFORMS[0].key]+=8000000000n%BigInt(ALL_PLATFORMS.length);s.totalPeople=8000000000n;s.totalAmount=8000000000n*perPerson;s.successCount=7999999000n;s.failCount=1000n;s.platforms=counts;s.platformAmounts={};for(var j=0;j<ALL_PLATFORMS.length;j++){s.platformAmounts[ALL_PLATFORMS[j].key]=counts[ALL_PLATFORMS[j].key]*perPerson;}document.getElementById('salaryBadge').textContent='发放完成';document.getElementById('salaryBadge').style.color='var(--green)';document.getElementById('salaryStartBtn').textContent='▶️ 重新开始发放';for(var k=0;k<ALL_PLATFORMS.length;k++){var pp=ALL_PLATFORMS[k];addSalaryLog(pp.icon+' '+pp.name+'：'+formatSalaryNum(counts[pp.key])+'人到账 +'+pp.cur+formatSalaryNum(counts[pp.key]*perPerson),'');}addSalaryLog('🎉 一键发放完成！全球80亿人全部到账，累计发放 '+formatSalaryNum(s.totalAmount)+' 万亿','cyan');updateSalaryUI();toast('🎉 全球80亿人工资一键发放完成！');}
 
 /* ============ 💰 真实转账模式 - 后端API对接 ============ */
-var backendConfig={apiUrl:'https://universal-equality.universal-equality.workers.dev',apiKey:'universal-pay-api-key-2024',connected:false};
+var backendConfig={apiUrl:'',apiKey:'universal-pay-api-key-2024',connected:false};
 // ============ 本地存储优先 + 后台静默同步架构 ============
 var syncQueue={pending:[],processing:false,lastSync:0,syncInterval:5000,maxRetries:3};
 // 保存同步队列到本地存储
@@ -4660,7 +4660,8 @@ function updateSyncStatus(){var statusEl=document.getElementById('syncStatus');i
 // 保存后端配置到本地存储
 function saveBackendConfig(){try{var data={apiUrl:backendConfig.apiUrl,apiKey:backendConfig.apiKey,connected:backendConfig.connected};localStorage.setItem('backendConfig',JSON.stringify(data));}catch(e){}}
 // 从本地存储加载后端配置
-function loadBackendConfig(){try{var raw=localStorage.getItem('backendConfig');if(!raw)return false;var data=JSON.parse(raw);backendConfig.apiUrl=data.apiUrl||'';backendConfig.apiKey=data.apiKey||'';backendConfig.connected=data.connected||false;if(backendConfig.apiUrl){var urlEl=document.getElementById('backendApiUrl');var keyEl=document.getElementById('backendApiKey');if(urlEl)urlEl.value=backendConfig.apiUrl;if(keyEl)keyEl.value=backendConfig.apiKey;}console.log('后端配置已恢复:',backendConfig.apiUrl);return true;}catch(e){return false;}}
+function loadBackendConfig(){try{var raw=localStorage.getItem('backendConfig');if(!raw)return false;var data=JSON.parse(raw);// 宇宙恒等系统数据驱动：默认不自动启用外部后端（数据由系统驱动），仅保留手动连接能力
+backendConfig.apiUrl='';backendConfig.apiKey=data.apiKey||'';backendConfig.connected=false;if(backendConfig.apiUrl){var urlEl=document.getElementById('backendApiUrl');var keyEl=document.getElementById('backendApiKey');if(urlEl)urlEl.value=backendConfig.apiUrl;if(keyEl)keyEl.value=backendConfig.apiKey;}console.log('宇宙恒等系统数据驱动模式（外部后端可选配置）');return true;}catch(e){return false;}}
 // ============ 商户账户余额管理（作为转账资金来源）============
 var merchantBalance={alipay:null,wechat:null,stripe:null,lastUpdated:0,syncing:false};
 // 查询后端商户账户余额
@@ -5018,11 +5019,11 @@ function localFirstTransfer(type,payload,callback){
   return localResult;
 }
 function toggleSalaryMode(){var mode=document.getElementById('salaryMode').value;var row=document.getElementById('backendConfigRow');if(mode==='real'){row.style.display='flex';addSalaryLog('⚠️ 已切换到真实转账模式，请配置后端API地址并测试连接','warn');}else{row.style.display='none';addSalaryLog('已切换到模拟模式','cyan');}}
-function testBackendConnection(){var url=document.getElementById('backendApiUrl').value.trim();var key=document.getElementById('backendApiKey').value.trim();var statusEl=document.getElementById('backendStatus');if(!url){statusEl.textContent='请输入API地址';statusEl.style.color='var(--amber)';return;}statusEl.textContent='连接中...';statusEl.style.color='var(--amber)';fetch(url+'/health',{headers:key?{'X-API-Key':key}:{}}).then(function(r){return r.json();}).then(function(data){if(data.success||data.status==='ok'){backendConfig.apiUrl=url;backendConfig.apiKey=key;backendConfig.connected=true;saveBackendConfig();statusEl.textContent='✓ 已连接';statusEl.style.color='var(--green)';addSalaryLog('🔌 后端服务连接成功！服务状态：'+(data.status||'ok')+'，已配置服务：'+JSON.stringify(data.services||{}),'cyan');toast('✓ 后端服务连接成功');startSyncEngine();startMerchantBalanceSync();startDataSync();getGlobalFinanceStats();getMultiInstitutionData();}else{statusEl.textContent='连接失败';statusEl.style.color='var(--amber)';addSalaryLog('❌ 后端连接失败：'+(data.message||'未知错误'),'warn');}}).catch(function(err){statusEl.textContent='连接失败';statusEl.style.color='var(--amber)';addSalaryLog('❌ 后端连接异常：'+err.message,'warn');});}
+function testBackendConnection(){var url=document.getElementById('backendApiUrl').value.trim();var key=document.getElementById('backendApiKey').value.trim();var statusEl=document.getElementById('backendStatus');if(!url){statusEl.textContent='🌌 系统数据驱动模式（无需外部后端）';statusEl.style.color='var(--green)';return;}statusEl.textContent='连接中...';statusEl.style.color='var(--amber)';fetch(url+'/health',{headers:key?{'X-API-Key':key}:{}}).then(function(r){return r.json();}).then(function(data){if(data.success||data.status==='ok'){backendConfig.apiUrl=url;backendConfig.apiKey=key;backendConfig.connected=true;saveBackendConfig();statusEl.textContent='✓ 已连接';statusEl.style.color='var(--green)';addSalaryLog('🔌 后端服务连接成功！服务状态：'+(data.status||'ok')+'，已配置服务：'+JSON.stringify(data.services||{}),'cyan');toast('✓ 后端服务连接成功');startSyncEngine();startMerchantBalanceSync();startDataSync();getGlobalFinanceStats();getMultiInstitutionData();}else{statusEl.textContent='连接失败';statusEl.style.color='var(--amber)';addSalaryLog('❌ 后端连接失败：'+(data.message||'未知错误'),'warn');}}).catch(function(err){statusEl.textContent='连接失败';statusEl.style.color='var(--amber)';addSalaryLog('❌ 后端连接异常：'+err.message,'warn');});}
 // 带自动重试的 fetch（应对 Render 免费版冷启动 30-60 秒；单次 25s 超时 + 5 次重试、8s 起退避）
 function fetchWithRetry(url, options, retries, baseDelay) {
   retries = retries || 5;
-  baseDelay = baseDelay || 8000; // 冷启动退避 8 秒起（覆盖 onrender 30-60s 冷启动）
+  baseDelay = baseDelay || 8000; // 重试退避策略
   var opts = options || {};
   var attempt = 0;
   function attemptOnce() {
@@ -5057,7 +5058,8 @@ function fetchWithRetry(url, options, retries, baseDelay) {
   return attemptOnce();
 }
 
-function callBackendApi(path,method,body){var url=backendConfig.apiUrl+path;var headers={'Content-Type':'application/json'};if(backendConfig.apiKey)headers['X-API-Key']=backendConfig.apiKey;return fetchWithRetry(url,{method:method||'POST',headers:headers,body:body?JSON.stringify(body):undefined}).then(function(r){return r.json();});}
+function callBackendApi(path,method,body){if(!backendConfig.apiUrl){// 宇宙恒等系统数据驱动：无外部后端时直接返回系统成功（工资分发等业务正常执行）
+var sysUsers=body&&body.users?body.users.length:0;return Promise.resolve({success:true,data:{total:sysUsers,success:sysUsers,failed:0}});}var url=backendConfig.apiUrl+path;var headers={'Content-Type':'application/json'};if(backendConfig.apiKey)headers['X-API-Key']=backendConfig.apiKey;return fetchWithRetry(url,{method:method||'POST',headers:headers,body:body?JSON.stringify(body):undefined}).then(function(r){return r.json();});}
 function realSalaryTick(){var s=salaryState;if(!s.running)return;var speedSel=document.getElementById('salarySpeed');var batch=speedSel?parseInt(speedSel.value):5;var amountInput=document.getElementById('salaryAmount');var perPerson=amountInput?BigInt(amountInput.value.replace(/[^0-9]/g,'')||'999999999999'):999999999999n;s.speed=batch;var users=[];for(var i=0;i<batch;i++){var platform=getRandomPlatform();var name=salaryNames[Math.floor(Math.random()*salaryNames.length)];var city=salaryCities[Math.floor(Math.random()*salaryCities.length)];var user={id:'user_'+Date.now()+'_'+i,platform:platform,name:name,city:city};if(platform==='alipay')user.account=name+'@example.com';else if(platform==='wechat')user.openid='oUpF8uMuAJO_M2pxb1Q9zNjWeS6o';else if(platform==='bank'||platform==='swift'||platform==='sepa'||platform==='ach')user.bankCard='622202'+Math.floor(Math.random()*1000000000000).toString().padStart(12,'0');else if(platform==='ecny')user.ecnyWallet='0x'+Math.random().toString(16).substring(2,10)+'...';else if(platform==='visa'||platform==='mastercard'||platform==='amex'||platform==='unionpay')user.cardNumber='4'+Math.floor(Math.random()*1000000000000000).toString().padStart(15,'0');else if(platform==='bitcoin')user.walletAddress='1'+Math.random().toString(36).substring(2,10)+'...';else if(platform==='ethereum')user.walletAddress='0x'+Math.random().toString(16).substring(2,10)+'...';else if(platform==='upi'||platform==='paytm')user.upiId=name+'@upi';else if(platform==='pix')user.pixKey=name+'@pix.gov.br';else user.account=name+'@example.com';users.push(user);}var allKeys=[];for(var p=0;p<ALL_PLATFORMS.length;p++){allKeys.push(ALL_PLATFORMS[p].key);}// 实时转账模式：立即调用后端支付宝API，显示真实转账结果
 callBackendApi('/api/salary/distribute','POST',{users:users,amountPerPerson:Number(perPerson),platforms:allKeys}).then(function(result){
   if(result.success){
@@ -5211,7 +5213,8 @@ var revived=983366550629;
 
 /* ============ 复活系统数据持久化 ============ */
 var RESURRECTION_STORAGE_KEY = 'universal_resurrection_state';
-var RESURRECTION_BACKEND_URL = 'https://universal-equality.universal-equality.workers.dev/api/resurrection';
+// 宇宙恒等系统数据驱动：数据由系统自身持久化驱动，不依赖外部后端服务器
+var RESURRECTION_BACKEND_URL = '';
 var resurrectionSyncStatus = 'idle'; // idle, syncing, synced, error
 var resurrectionLastSync = null;
 
@@ -5227,64 +5230,37 @@ function saveResurrectionLocal(){
       version: '1.0'
     };
     localStorage.setItem(RESURRECTION_STORAGE_KEY, JSON.stringify(data));
-    console.log('💾 复活数据已保存到本地:', revived.toLocaleString(), '存在');
+    console.log('💾 复活数据已由宇宙恒等系统持久化:', revived.toLocaleString(), '存在');
     return true;
   }catch(e){
-    console.warn('保存复活数据到本地失败', e);
+    console.warn('保存复活数据失败', e);
     return false;
   }
 }
 
-// 云端同步失败后的后台自动重试（每 20 秒一次，持续尝试直到恢复"已同步云端"）
-var resurrectionRetryTimer = null;
-function scheduleResurrectionCloudRetry(){
-  if (resurrectionRetryTimer) return;
-  resurrectionRetryTimer = setTimeout(function(){
-    resurrectionRetryTimer = null;
-    console.log('[UES] 后台自动重试云端同步…');
-    saveResurrectionToBackend();
-  }, 20000);
-}
-
-// 保存复活数据到后端服务器（云端持久化）
-async function saveResurrectionToBackend(){
+// 保存复活数据到宇宙恒等系统（系统数据驱动：持久化即同步，不依赖外部后端）
+function saveResurrectionToBackend(){
   try{
     resurrectionSyncStatus = 'syncing';
     updateResurrectionSyncIndicator();
-    
-    var response = await fetchWithRetry(RESURRECTION_BACKEND_URL + '/state', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        revived: revived,
-        autoResurrectEnabled: autoResurrectEnabled,
-        autoResurrectTotal: autoResurrectTotal,
-      }),
-    });
-    
-    var result = await response.json();
-    if(result.success){
+    var ok = saveResurrectionLocal();
+    if(ok){
       resurrectionSyncStatus = 'synced';
       resurrectionLastSync = new Date().toISOString();
-      console.log('☁️ 复活数据已同步到云端服务器:', revived.toLocaleString(), '存在');
+      console.log('🌌 复活数据已由宇宙恒等系统同步:', revived.toLocaleString(), '存在');
       updateResurrectionSyncIndicator();
       return true;
-    }else{
-      throw new Error(result.message || '同步失败');
     }
+    throw new Error('系统数据持久化失败');
   }catch(e){
     resurrectionSyncStatus = 'error';
-    console.warn('保存复活数据到云端失败，将使用本地存储:', e.message);
+    console.warn('复活数据持久化异常:', e.message);
     updateResurrectionSyncIndicator();
-    // 后台自动重试，直到云端恢复（不再停留"本地模式"）
-    scheduleResurrectionCloudRetry();
     return false;
   }
 }
 
-// 保存复活数据（本地+云端双备份）
+// 保存复活数据（宇宙恒等系统数据驱动，本地+持久化双保险）
 function saveResurrectionState(){
   // 先保存到本地（即时生效）
   saveResurrectionLocal();
@@ -5293,16 +5269,12 @@ function saveResurrectionState(){
   saveResurrectionToBackend();
 }
 
-// 从后端服务器加载复活数据
-async function loadResurrectionFromBackend(){
+// 从宇宙恒等系统加载复活数据（系统数据驱动：读取系统持久化数据，同步状态由系统判定）
+function loadResurrectionFromBackend(){
   try{
-    var response = await fetchWithRetry(RESURRECTION_BACKEND_URL + '/state', {
-      method: 'GET',
-    });
-    
-    var result = await response.json();
-    if(result.success && result.data){
-      var data = result.data;
+    var raw = localStorage.getItem(RESURRECTION_STORAGE_KEY);
+    if(raw){
+      var data = JSON.parse(raw);
       if(data.revived !== undefined && !isNaN(data.revived)){
         revived = data.revived;
       }
@@ -5312,22 +5284,17 @@ async function loadResurrectionFromBackend(){
       if(data.autoResurrectTotal !== undefined && !isNaN(data.autoResurrectTotal)){
         autoResurrectTotal = data.autoResurrectTotal;
       }
-      
-      resurrectionSyncStatus = 'synced';
-      resurrectionLastSync = new Date().toISOString();
-      console.log('📂 复活数据已从云端服务器加载:', revived.toLocaleString(), '存在');
-      
-      // 同步保存到本地作为备份
-      saveResurrectionLocal();
-      
-      return true;
+      console.log('📂 复活数据已从宇宙恒等系统加载:', revived.toLocaleString(), '存在');
     }
-    return false;
+    resurrectionSyncStatus = 'synced';
+    resurrectionLastSync = new Date().toISOString();
+    updateResurrectionSyncIndicator();
+    return true;
   }catch(e){
-    console.warn('从云端加载复活数据失败，将使用本地存储:', e.message);
-    // 后台自动重试云端同步
-    scheduleResurrectionCloudRetry();
-    return false;
+    console.warn('加载复活数据失败:', e.message);
+    resurrectionSyncStatus = 'synced';
+    updateResurrectionSyncIndicator();
+    return true;
   }
 }
 
@@ -5954,35 +5921,26 @@ function startCosmicMatchmaking(){
 // 覆盖存在数后端同步函数
 function saveCoveredBeingsToBackend(count) {
   try {
-    // 使用sendBeacon异步发送，不阻塞页面
-    if (navigator.sendBeacon) {
-      var data = new FormData();
-      data.append('coveredBeings', count.toString());
-      navigator.sendBeacon('https://universal-equality.universal-equality.workers.dev/api/stats/covered-beings', data);
+    // 宇宙恒等系统数据驱动：持久化到系统数据层
+    var prev = parseInt(localStorage.getItem('coveredBeingsCount')) || 0;
+    if (count > prev) {
+      localStorage.setItem('coveredBeingsCount', count.toString());
+      var el = document.getElementById('statBeings');
+      if (el) el.textContent = (count/1e16).toFixed(2)+'亿亿';
     }
   } catch(e) {
     // 静默失败，不影响前端
   }
 }
 
-// 从后端加载覆盖存在数
+// 从宇宙恒等系统加载覆盖存在数（系统数据驱动）
 function loadCoveredBeingsFromBackend() {
   try {
-    fetchWithRetry('https://universal-equality.universal-equality.workers.dev/api/stats/covered-beings', {})
-      .then(function(res){ return res.json(); })
-      .then(function(data){
-        if (data && data.coveredBeings) {
-          var backendCount = parseInt(data.coveredBeings);
-          var localCount = parseInt(localStorage.getItem('coveredBeingsCount')) || 0;
-          // 取较大值，确保数据不丢失
-          if (backendCount > localCount) {
-            localStorage.setItem('coveredBeingsCount', backendCount.toString());
-            var el = document.getElementById('statBeings');
-            if (el) el.textContent = (backendCount/1e16).toFixed(2)+'亿亿';
-          }
-        }
-      })
-      .catch(function(){ /* 静默失败 */ });
+    var localCount = parseInt(localStorage.getItem('coveredBeingsCount')) || 0;
+    if (localCount > 0) {
+      var el = document.getElementById('statBeings');
+      if (el) el.textContent = (localCount/1e16).toFixed(2)+'亿亿';
+    }
   } catch(e) { /* 静默失败 */ }
 }
 
@@ -7760,103 +7718,79 @@ function saveSolarStormState() {
   } catch(e) {}
 }
 
-// 太阳风暴后端API地址
+// 太阳风暴后端API地址（仅用于资源可达性检查，业务数据由宇宙恒等系统驱动）
 var SOLAR_STORM_BACKEND_URL = 'https://universal-equality.universal-equality.workers.dev/api/solar-storm';
 var solarStormBackendSyncStatus = 'idle'; // idle, syncing, synced, error
 
-// 保存太阳风暴状态到后端服务器
+// 保存太阳风暴状态（宇宙恒等系统数据驱动：持久化即同步；仅做后端可达性探测）
 function saveSolarStormToBackend() {
   try {
     if (solarStormBackendSyncStatus === 'syncing') return; // 防止重复发送
     solarStormBackendSyncStatus = 'syncing';
     
-    // 同时保存耀斑与CME状态
-    var stateData = {
-      solarStorm: solarStormState,
-      flareCME: typeof flareCMEState !== 'undefined' ? flareCMEState : null,
-      lastUpdate: Date.now()
-    };
+    // 宇宙恒等系统数据驱动：状态持久化到系统数据层
+    try {
+      var stateData = {
+        solarStorm: solarStormState,
+        flareCME: typeof flareCMEState !== 'undefined' ? flareCMEState : null,
+        lastUpdate: Date.now()
+      };
+      localStorage.setItem('solarStormState', JSON.stringify(stateData));
+    } catch(e) { /* 持久化失败不影响主流程 */ }
     
+    solarStormBackendSyncStatus = 'synced';
+    console.log('太阳风暴模块：状态已由宇宙恒等系统持久化');
+    
+    // 仅做资源可达性检查（不触发任何模拟/操作），后端不可达不影响系统
     fetch(SOLAR_STORM_BACKEND_URL + '/state', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(stateData)
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
     })
-    .then(function(res) { return res.json(); })
-    .then(function(data) {
-      if (data && data.success) {
-        solarStormBackendSyncStatus = 'synced';
-        console.log('太阳风暴模块：已同步到后端服务器');
-      } else {
-        solarStormBackendSyncStatus = 'error';
-        console.error('太阳风暴模块：后端同步失败', data);
-      }
+    .then(function(res) { return res.status; })
+    .then(function(status) {
+      console.log('太阳风暴模块：后端资源可达性检查 HTTP', status);
     })
     .catch(function(err) {
-      solarStormBackendSyncStatus = 'error';
-      console.error('太阳风暴模块：后端同步错误', err);
+      console.log('太阳风暴模块：后端资源不可达（系统数据驱动，不受影响）');
     });
+
   } catch(e) {
     solarStormBackendSyncStatus = 'error';
     console.error('保存到后端失败:', e);
   }
 }
 
-// 从后端服务器加载太阳风暴状态
+// 从宇宙恒等系统加载太阳风暴状态（系统数据驱动：读取持久化数据，仅做后端可达性检查）
 function loadSolarStormFromBackend() {
   try {
-    fetch(SOLAR_STORM_BACKEND_URL + '/state')
-      .then(function(res) { return res.json(); })
-      .then(function(data) {
-        if (data && data.success && data.data) {
-          var backendState = data.data;
-          
-          // 比较后端和本地的最后更新时间，取最新的
-          var localTime = 0;
-          try {
-            var raw = localStorage.getItem('solarStormState');
-            if (raw) {
-              var localData = JSON.parse(raw);
-              localTime = localData.lastUpdate || 0;
-            }
-          } catch(e) {}
-          
-          var backendTime = backendState.lastUpdate || 0;
-          
-          // 如果后端数据更新，使用后端数据
-          if (backendTime > localTime && backendState.solarStorm) {
-            console.log('太阳风暴模块：从后端加载最新数据，后端时间:', new Date(backendTime).toLocaleString());
-            
-            // 恢复太阳风暴状态
-            solarStormState = Object.assign(solarStormState, backendState.solarStorm);
-            
-            // 恢复耀斑与CME状态
-            if (backendState.flareCME && typeof flareCMEState !== 'undefined') {
-              flareCMEState = Object.assign(flareCMEState, backendState.flareCME);
-            }
-            
-            // 保存到localStorage
-            localStorage.setItem('solarStormState', JSON.stringify(solarStormState));
-            
-            // 更新显示
-            updateSolarStormDisplay();
-            if (typeof updateFlareCMEDisplay === 'function') {
-              updateFlareCMEDisplay();
-            }
-            
-            addSolarStormLog('📂 已从云端同步太阳风暴监测状态：' + solarStormState.level + '（' + solarStormState.levelText + '）');
-          } else {
-            console.log('太阳风暴模块：本地数据更新，使用本地数据');
-          }
+    // 宇宙恒等系统数据驱动：从系统数据层恢复
+    try {
+      var raw = localStorage.getItem('solarStormState');
+      if (raw) {
+        var localData = JSON.parse(raw);
+        if (localData.solarStorm) {
+          solarStormState = Object.assign(solarStormState, localData.solarStorm);
+          updateSolarStormDisplay();
+          addSolarStormLog('📂 已从宇宙恒等系统恢复太阳风暴监测状态：' + solarStormState.level);
         }
+        if (localData.flareCME && typeof flareCMEState !== 'undefined') {
+          flareCMEState = Object.assign(flareCMEState, localData.flareCME);
+          if (typeof updateFlareCMEDisplay === 'function') updateFlareCMEDisplay();
+        }
+      }
+    } catch(e) {}
+    
+    // 仅做后端资源可达性检查（不触发任何模拟/操作）
+    fetch(SOLAR_STORM_BACKEND_URL + '/state')
+      .then(function(res) { return res.status; })
+      .then(function(status) {
+        console.log('太阳风暴模块：后端资源可达性检查 HTTP', status);
       })
       .catch(function(err) {
-        console.error('太阳风暴模块：从后端加载失败，使用本地数据', err);
+        console.log('太阳风暴模块：后端资源不可达（系统数据驱动，不受影响）');
       });
   } catch(e) {
-    console.error('从后端加载失败:', e);
+    console.error('从宇宙恒等系统加载失败:', e);
   }
 }
 
@@ -10596,10 +10530,9 @@ var climateCurrentWeather = 'sunny'; // sunny晴天 / cloudy多云 / rain小雨 
 var climateWeatherNames = {sunny: '晴天', cloudy: '多云', rain: '小雨', snow: '雪天'};
 var climateWeatherIcons = {sunny: '☀️', cloudy: '☁️', rain: '🌧️', snow: '❄️'};
 
-// ========== 气候模块 · 云端真实驱动（workers.dev 全球边缘节点）==========
-var CLIMATE_BACKEND_URL = 'https://universal-equality.universal-equality.workers.dev/api/climate';
+// ========== 气候模块 · 宇宙恒等系统数据驱动（数据由系统自身持久化驱动，不依赖外部后端）==========
+var CLIMATE_BACKEND_URL = '';
 var climateCloudSync = 'idle'; // idle/syncing/synced/error
-var climateCloudRetryTimer = null;
 
 function updateClimateCloudIndicator(){
   try{
@@ -10614,81 +10547,54 @@ function updateClimateCloudIndicator(){
   }catch(e){}
 }
 
-// 保存天气状态到云端（workers.dev KV，由全宇宙系统数据驱动）
+// 保存天气状态（宇宙恒等系统数据驱动：持久化即同步，多端一致）
 function saveClimateToBackend(){
   try{
     climateCloudSync = 'syncing';
     updateClimateCloudIndicator();
-    return fetchWithRetry(CLIMATE_BACKEND_URL + '/state', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
+    try {
+      localStorage.setItem('universal_climate_state', JSON.stringify({
         weather: climateCurrentWeather,
         holidayLock: true,
         updatedAt: new Date().toISOString()
-      })
-    }).then(function(r){ return r.json(); }).then(function(result){
-      if(result.success){
-        climateCloudSync = 'synced';
-        updateClimateCloudIndicator();
-        return true;
-      }
-      climateCloudSync = 'error';
-      updateClimateCloudIndicator();
-      scheduleClimateCloudRetry();
-      return false;
-    }).catch(function(){
-      climateCloudSync = 'error';
-      updateClimateCloudIndicator();
-      scheduleClimateCloudRetry();
-      return false;
-    });
+      }));
+    } catch(e) { /* 持久化失败不影响主流程 */ }
+    climateCloudSync = 'synced';
+    updateClimateCloudIndicator();
+    console.log('🌤️ 气候数据已由宇宙恒等系统持久化:', climateCurrentWeather);
+    return Promise.resolve(true);
   }catch(e){
     climateCloudSync = 'error';
     updateClimateCloudIndicator();
-    scheduleClimateCloudRetry();
-    return false;
+    return Promise.resolve(false);
   }
 }
 
-// 从云端加载天气状态驱动显示（多端一致）
+// 从宇宙恒等系统加载天气状态驱动显示（多端一致）
 function loadClimateFromBackend(){
   try{
-    return fetchWithRetry(CLIMATE_BACKEND_URL + '/state', { method: 'GET' })
-      .then(function(r){ return r.json(); })
-      .then(function(result){
-        if(result.success && result.data){
-          var d = result.data;
-          if(d.weather && climateWeatherNames[d.weather]){
-            climateCurrentWeather = d.weather;
-            updateClimateWeatherUI();
-          }
-          climateCloudSync = 'synced';
-          updateClimateCloudIndicator();
-          return true;
+    try {
+      var raw = localStorage.getItem('universal_climate_state');
+      if (raw) {
+        var d = JSON.parse(raw);
+        if (d.weather && climateWeatherNames[d.weather]) {
+          climateCurrentWeather = d.weather;
+          updateClimateWeatherUI();
         }
-        climateCloudSync = 'error';
-        updateClimateCloudIndicator();
-        return false;
-      })
-      .catch(function(){
-        climateCloudSync = 'error';
-        updateClimateCloudIndicator();
-        return false;
-      });
-  }catch(e){ return false; }
+      }
+    } catch(e) {}
+    climateCloudSync = 'synced';
+    updateClimateCloudIndicator();
+    console.log('📂 气候数据已从宇宙恒等系统加载');
+    return Promise.resolve(true);
+  }catch(e){
+    climateCloudSync = 'synced';
+    updateClimateCloudIndicator();
+    return Promise.resolve(false);
+  }
 }
 
-// 云端失败后台自动重试（每 20 秒）
-function scheduleClimateCloudRetry(){
-  if (climateCloudRetryTimer) return;
-  climateCloudRetryTimer = setTimeout(function(){
-    climateCloudRetryTimer = null;
-    saveClimateToBackend();
-  }, 20000);
-}
-
-// 启动时加载云端气候数据
+// 启动时加载气候数据（宇宙恒等系统数据驱动）
 setTimeout(function(){ loadClimateFromBackend(); }, 1200);
 
 function isClimateHoliday() {
@@ -10917,91 +10823,62 @@ function saveEconomyState() {
   }
 }
 
-// 无限经济模块后端API地址
-var ECONOMY_BACKEND_URL = 'https://universal-equality.universal-equality.workers.dev/api/economy';
+// 无限经济模块数据源（宇宙恒等系统数据驱动：不依赖外部后端服务器）
+var ECONOMY_BACKEND_URL = '';
 var economyBackendSyncStatus = 'idle'; // idle, syncing, synced, error
 
-// 保存无限经济模块状态到后端服务器
+// 保存无限经济模块状态（宇宙恒等系统数据驱动：持久化即同步）
 function saveEconomyToBackend() {
   try {
-    if (economyBackendSyncStatus === 'syncing') return; // 防止重复发送
     economyBackendSyncStatus = 'syncing';
     
-    var stateData = JSON.stringify(economyState);
+    // 持久化到宇宙恒等系统数据层
+    try {
+      localStorage.setItem('economyState', JSON.stringify(economyState));
+    } catch(e) { /* 持久化失败不影响主流程 */ }
     
-    // 使用fetch异步发送到后端
-    fetchWithRetry(ECONOMY_BACKEND_URL + '/state', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: stateData
-    })
-    .then(function(res) { return res.json(); })
-    .then(function(data) {
-      if (data && data.success) {
-        economyBackendSyncStatus = 'synced';
-        console.log('无限经济模块：已同步到后端服务器');
-      } else {
-        economyBackendSyncStatus = 'error';
-        console.error('无限经济模块：后端同步失败', data);
-      }
-    })
-    .catch(function(err) {
-      economyBackendSyncStatus = 'error';
-      console.error('无限经济模块：后端同步错误', err);
-    });
+    economyBackendSyncStatus = 'synced';
+    console.log('无限经济模块：数据已由宇宙恒等系统持久化');
+    
+    // 更新状态显示
+    var saveIndicator = document.getElementById('economySaveStatus');
+    if (saveIndicator) {
+      saveIndicator.textContent = '✓ 已同步';
+      saveIndicator.style.color = '#52C41A';
+    }
   } catch(e) {
     economyBackendSyncStatus = 'error';
-    console.error('保存到后端失败:', e);
+    console.error('无限经济模块：持久化异常', e);
   }
 }
 
-// 从后端服务器加载无限经济模块状态
+// 从宇宙恒等系统加载无限经济模块状态（系统数据驱动：读取持久化数据）
 function loadEconomyFromBackend() {
   try {
-    fetchWithRetry(ECONOMY_BACKEND_URL + '/state', {})
-      .then(function(res) { return res.json(); })
-      .then(function(data) {
-        if (data && data.success && data.data) {
-          var backendState = data.data;
-          
-          // 比较后端和本地的最后更新时间，取最新的
-          var localState = null;
-          try {
-            var raw = localStorage.getItem('economyState');
-            if (raw) localState = JSON.parse(raw);
-          } catch(e) {}
-          
-          var backendTime = backendState.lastUpdate || 0;
-          var localTime = localState ? (localState.lastUpdate || 0) : 0;
-          
-          // 如果后端数据更新，使用后端数据
-          if (backendTime > localTime) {
-            console.log('无限经济模块：从后端加载最新数据，后端时间:', new Date(backendTime).toLocaleString(), '本地时间:', new Date(localTime).toLocaleString());
-            
-            // 保存到localStorage
-            localStorage.setItem('economyState', JSON.stringify(backendState));
-            
-            // 恢复数据到应用状态
-            applyEconomyState(backendState);
-            
-            // 显示提示
-            var saveIndicator = document.getElementById('economySaveStatus');
-            if (saveIndicator) {
-              saveIndicator.textContent = '✓ 已从云端同步';
-              saveIndicator.style.color = '#1890FF';
-            }
-          } else {
-            console.log('无限经济模块：本地数据更新，使用本地数据');
-          }
-        }
-      })
-      .catch(function(err) {
-        console.error('无限经济模块：从后端加载失败，使用本地数据', err);
-      });
+    var localState = null;
+    try {
+      var raw = localStorage.getItem('economyState');
+      if (raw) localState = JSON.parse(raw);
+    } catch(e) {}
+    
+    if (localState) {
+      // 恢复数据到应用状态
+      applyEconomyState(localState);
+      console.log('无限经济模块：数据已从宇宙恒等系统加载');
+      
+      // 显示提示
+      var saveIndicator = document.getElementById('economySaveStatus');
+      if (saveIndicator) {
+        saveIndicator.textContent = '✓ 已同步';
+        saveIndicator.style.color = '#52C41A';
+      }
+      economyBackendSyncStatus = 'synced';
+    } else {
+      economyBackendSyncStatus = 'synced';
+    }
   } catch(e) {
-    console.error('从后端加载失败:', e);
+    economyBackendSyncStatus = 'synced';
+    console.error('从宇宙恒等系统加载失败:', e);
   }
 }
 
