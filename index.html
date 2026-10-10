@@ -12486,16 +12486,14 @@ setTimeout(function() {
   }
 
   function invPerSecTotal(){
-    return invState.universe.count * invState.universe.perSecond +
-           invState.planet.count * invState.planet.perSecond +
-           invState.country.count * invState.country.perSecond +
-           BigInt(INV_PROJECT_PER_SECOND) * BigInt(invProjects.length);
+    // 每秒收益固定为 ¥9,999,999,999
+    return BigInt('9999999999');
   }
 
   function invRender(){
     var el;
     el = document.getElementById('invTotalInvested'); if(el) el.textContent = invFmt(invState.totalInvested);
-    el = document.getElementById('invPerSecond'); if(el) el.textContent = invFmt(invPerSecTotal());
+    el = document.getElementById('invPerSecond'); if(el) el.textContent = '¥' + invPerSecTotal().toLocaleString('zh-CN');
     el = document.getElementById('invReturns'); if(el) el.textContent = invFmt(invState.totalReturns);
     el = document.getElementById('invUniverseAmount'); if(el) el.textContent = invFmt(invState.universe.invested);
     el = document.getElementById('invPlanetAmount'); if(el) el.textContent = invFmt(invState.planet.invested);
@@ -12530,16 +12528,17 @@ setTimeout(function() {
 
   function invTick(){
     if(!invState.running) return;
-    // 全部宇宙：每秒每宇宙 +¥1,000
-    invState.universe.invested += invState.universe.count * invState.universe.perSecond;
-    // 全部星球：每秒每星球 +¥100
-    invState.planet.invested += invState.planet.count * invState.planet.perSecond;
-    // 全部国家：每秒每国 +¥1,000万
-    invState.country.invested += invState.country.count * invState.country.perSecond;
-    // 重点投资项目：每秒每项目 +¥1,000万
-    var perProject = BigInt(INV_PROJECT_PER_SECOND);
-    invProjects.forEach(function(p){
-      p.invested += perProject;
+    // 每秒收益 ¥9,999,999,999 分摊：宇宙70% + 星球20% + 国家8% + 重点项目2%
+    // 全部宇宙：+¥7,000,000,000
+    invState.universe.invested += BigInt(7000000000);
+    // 全部星球：+¥2,000,000,000
+    invState.planet.invested += BigInt(2000000000);
+    // 全部国家：+¥799,999,999
+    invState.country.invested += BigInt(799999999);
+    // 重点投资项目：+¥200,000,000（6个分摊）
+    var prjAlloc = [BigInt(33333334), BigInt(33333334), BigInt(33333333), BigInt(33333333), BigInt(33333333), BigInt(33333333)];
+    invProjects.forEach(function(p, idx){
+      p.invested += prjAlloc[idx % prjAlloc.length];
       p.rounds++;
       var gain = p.invested * BigInt(Math.round(p.rate * 100)) / BigInt(100) / BigInt(31536000);
       invState.totalReturns += gain;
@@ -12553,7 +12552,7 @@ setTimeout(function() {
     invRender();
     invSave();
     if(invState.rounds % 5 === 0){
-      invLog('第 ' + invState.rounds + ' 轮：全部宇宙(∞)·全部星球(1000亿)·全部国家(195)·重点项目(' + invProjects.length + ') 全部自动投资，每秒 ' + invFmt(invPerSecTotal()), 'ok');
+      invLog('第 ' + invState.rounds + ' 轮：全部宇宙(∞)·全部星球(1000亿)·全部国家(195)·重点项目(' + invProjects.length + ') 全部自动投资，每秒 ¥9,999,999,999', 'ok');
     }
   }
 
