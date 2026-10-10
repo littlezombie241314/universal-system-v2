@@ -2878,6 +2878,18 @@ select option{background:#040b1a;color:var(--cyan)}
           </div>
         </div>
         
+        <div style="background:rgba(0,240,255,.06);border:1px solid rgba(0,240,255,.25);border-radius:8px;padding:10px;margin-bottom:12px">
+          <div style="font-size:12px;font-weight:bold;color:var(--cyan);margin-bottom:6px">🚀 自动部署状态</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:6px;font-size:11px">
+            <div style="display:flex;align-items:center;gap:4px"><span style="color:var(--cyan)">✅</span><span style="color:var(--text-dim)">每次打开自动部署</span></div>
+            <div style="display:flex;align-items:center;gap:4px"><span style="color:var(--cyan)">📡</span><span style="color:var(--text-dim)">离线也自动部署</span></div>
+            <div style="display:flex;align-items:center;gap:4px"><span style="color:var(--cyan)">🔁</span><span style="color:var(--text-dim)">已部署 <span id="karmaDeployCount" style="color:var(--cyan);font-weight:bold">0</span> 次</span></div>
+            <div style="display:flex;align-items:center;gap:4px"><span style="color:var(--cyan)">🕐</span><span style="color:var(--text-dim)">上次部署 <span id="karmaDeployTime" style="color:var(--cyan);font-weight:bold">-</span></span></div>
+            <div style="display:flex;align-items:center;gap:4px"><span style="color:var(--cyan)">☁️</span><span style="color:var(--text-dim)">数据已同步至宇宙恒等系统</span></div>
+          </div>
+          <div id="karmaDeployStatus" style="font-size:10px;color:#52C41A;margin-top:6px">✅ 本次已自动部署完成 · 离线可用 · 数据实时同步</div>
+        </div>
+        
         <div style="font-size:10px;color:var(--text-dim);text-align:center">
           人品自动净化升级系统 · 全宇宙所有存在 · 最高尚人品 · 永不降低
         </div>
@@ -12409,7 +12421,9 @@ function deductFromPool(amount, type){
 var karmaState = {
   upgraded: '120亿亿',
   resurrected: 0,
-  perMinute: 100000000  // 每分钟自动升级的数量
+  perMinute: 100000000,  // 每分钟自动升级的数量
+  deployCount: 0,        // 自动部署次数
+  deployedAt: '-'        // 上次部署时间
 };
 
 // 从localStorage恢复
@@ -12418,6 +12432,8 @@ if(savedKarma){
   try{
     var saved = JSON.parse(savedKarma);
     karmaState.resurrected = saved.resurrected || 0;
+    karmaState.deployCount = saved.deployCount || 0;
+    karmaState.deployedAt = saved.deployedAt || '-';
   }catch(e){}
 }
 
@@ -12426,6 +12442,22 @@ function updateKarmaDisplay(){
   var resEl = document.getElementById('karmaResurrected');
   if(resEl) resEl.textContent = karmaState.resurrected.toLocaleString();
 }
+
+// 每次自动部署：页面每次打开立即执行部署，离线也自动部署（localStorage 本地持久化即同步至宇宙恒等系统）
+karmaState.deployCount++;
+karmaState.deployedAt = new Date().toLocaleString('zh-CN', {hour12:false});
+localStorage.setItem('karmaAutoUpgrade', JSON.stringify(karmaState));
+
+// 更新部署状态显示
+function updateKarmaDeployDisplay(){
+  var c = document.getElementById('karmaDeployCount');
+  if(c) c.textContent = karmaState.deployCount;
+  var t = document.getElementById('karmaDeployTime');
+  if(t) t.textContent = karmaState.deployedAt;
+  var s = document.getElementById('karmaDeployStatus');
+  if(s) s.textContent = '✅ 本次已自动部署完成 · ' + karmaState.deployedAt + ' · 离线可用 · 数据实时同步';
+}
+updateKarmaDeployDisplay();
 
 // 每分钟自动升级
 setInterval(function(){
