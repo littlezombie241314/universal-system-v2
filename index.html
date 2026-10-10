@@ -837,6 +837,36 @@ select option{background:#040b1a;color:var(--cyan)}
       </div>
     </div>
 
+    <!-- 全宇宙投资系统 · 每秒自动投资全部项目 -->
+    <div class="panel wide"><div class="panel-hdr"><div class="panel-title"><span class="ico">📈</span>全宇宙投资系统 · 每秒自动投资全部项目</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">运行中 · 自动投资</div></div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:10px 0">
+        <div style="text-align:center;padding:10px;background:rgba(0,212,255,0.05);border-radius:8px">
+          <div style="font-size:22px;font-weight:bold;color:var(--cyan)" id="invTotalInvested">¥0</div>
+          <div style="font-size:11px;color:var(--text-dim)">累计投资金额</div>
+        </div>
+        <div style="text-align:center;padding:10px;background:rgba(82,196,26,0.05);border-radius:8px">
+          <div style="font-size:22px;font-weight:bold;color:#52C41A" id="invProjects">0</div>
+          <div style="font-size:11px;color:var(--text-dim)">投资项目数</div>
+        </div>
+        <div style="text-align:center;padding:10px;background:rgba(250,173,20,0.05);border-radius:8px">
+          <div style="font-size:22px;font-weight:bold;color:#FAAD14" id="invPerSecond">¥0</div>
+          <div style="font-size:11px;color:var(--text-dim)">每秒投资金额</div>
+        </div>
+        <div style="text-align:center;padding:10px;background:rgba(156,171,234,0.05);border-radius:8px">
+          <div style="font-size:22px;font-weight:bold;color:var(--m-05)" id="invReturns">¥0</div>
+          <div style="font-size:11px;color:var(--text-dim)">累计收益</div>
+        </div>
+      </div>
+      <div style="font-size:11px;color:var(--text-dim);margin-bottom:8px">投资项目列表（每秒自动投资全部项目）：</div>
+      <div id="invProjectList" style="max-height:260px;overflow-y:auto">
+        <!-- 项目卡片由JS动态生成 -->
+      </div>
+      <div style="font-size:11px;color:var(--text-dim);margin-top:10px">投资日志：</div>
+      <div id="invLog" style="max-height:150px;overflow-y:auto;background:rgba(0,0,0,0.3);border-radius:6px;padding:10px;font-size:11px;font-family:monospace;margin-top:5px">
+        <div style="color:var(--text-dim)">[系统] 全宇宙投资系统初始化中...</div>
+      </div>
+    </div>
+
 
       
       <!-- 账户信息界面（登录后显示） -->
@@ -12327,6 +12357,130 @@ setTimeout(function() {
       }
     }, 1000);
   }
+})();
+</script>
+
+<script>
+// ========== 全宇宙投资系统 · 每秒自动投资全部项目 ==========
+(function(){
+  var INV_PER_SECOND = 10000000; // 每秒每个项目投资金额
+  var invProjects = [
+    {name:'恒星能源矩阵', icon:'🌞', rate:12, invested:BigInt(0), rounds:0},
+    {name:'星际殖民工程', icon:'🚀', rate:15, invested:BigInt(0), rounds:0},
+    {name:'全宇宙AI超脑', icon:'🧠', rate:18, invested:BigInt(0), rounds:0},
+    {name:'虫洞基建网络', icon:'🕳️', rate:20, invested:BigInt(0), rounds:0},
+    {name:'永生医学突破', icon:'🧬', rate:16, invested:BigInt(0), rounds:0},
+    {name:'量子通信星座', icon:'🛰️', rate:10, invested:BigInt(0), rounds:0}
+  ];
+  var invState = {
+    running: true,
+    totalInvested: BigInt(0),
+    totalReturns: BigInt(0),
+    rounds: 0
+  };
+  
+  // 从宇宙恒等系统加载投资状态（数据驱动 · 持久化即同步）
+  try {
+    var savedInv = localStorage.getItem('universal_invest_state');
+    if(savedInv){
+      var d = JSON.parse(savedInv);
+      if(d && d.projects){
+        d.projects.forEach(function(p, i){
+          if(invProjects[i]){
+            invProjects[i].invested = BigInt(p.invested || 0);
+            invProjects[i].rounds = p.rounds || 0;
+          }
+        });
+        invState.totalInvested = BigInt(d.totalInvested || 0);
+        invState.totalReturns = BigInt(d.totalReturns || 0);
+        invState.rounds = d.rounds || 0;
+      }
+    }
+  } catch(e){}
+
+  function invFmt(v){
+    try {
+      var s = v.toString();
+      if(s.length > 12) return '¥' + s.slice(0, -12) + '万亿';
+      if(s.length > 8) return '¥' + s.slice(0, -8) + '亿';
+      if(s.length > 4) return '¥' + s.slice(0, -4) + '万';
+      return '¥' + s;
+    } catch(e){ return '¥' + v; }
+  }
+
+  function invSave(){
+    try {
+      localStorage.setItem('universal_invest_state', JSON.stringify({
+        projects: invProjects.map(function(p){ return {name: p.name, invested: p.invested.toString(), rounds: p.rounds}; }),
+        totalInvested: invState.totalInvested.toString(),
+        totalReturns: invState.totalReturns.toString(),
+        rounds: invState.rounds,
+        updatedAt: new Date().toISOString()
+      }));
+    } catch(e){}
+  }
+
+  function invLog(msg, type){
+    var log = document.getElementById('invLog');
+    if(!log) return;
+    var time = new Date().toLocaleTimeString();
+    var color = type === 'ok' ? '#52C41A' : type === 'warn' ? '#FAAD14' : '#00d4ff';
+    var prefix = type === 'ok' ? '✓' : type === 'warn' ? '⚠' : 'ℹ';
+    var line = document.createElement('div');
+    line.style.color = color;
+    line.textContent = '[' + time + '] ' + prefix + ' ' + msg;
+    log.insertBefore(line, log.firstChild);
+    while(log.children.length > 80) log.removeChild(log.lastChild);
+  }
+
+  function invRender(){
+    // 顶部统计
+    var el;
+    el = document.getElementById('invTotalInvested'); if(el) el.textContent = invFmt(invState.totalInvested);
+    el = document.getElementById('invProjects'); if(el) el.textContent = invProjects.length;
+    el = document.getElementById('invPerSecond'); if(el) el.textContent = invFmt(BigInt(INV_PER_SECOND) * BigInt(invProjects.length));
+    el = document.getElementById('invReturns'); if(el) el.textContent = invFmt(invState.totalReturns);
+    
+    // 项目列表
+    var list = document.getElementById('invProjectList');
+    if(list){
+      list.innerHTML = invProjects.map(function(p){
+        var ret = p.invested * BigInt(Math.round(p.rate * 100)) / BigInt(100) / BigInt(31536000);
+        return '<div style="padding:8px;margin-bottom:6px;background:rgba(0,0,0,0.2);border-radius:6px">' +
+          '<div style="display:flex;justify-content:space-between;align-items:center">' +
+          '<div><div style="font-size:12px;font-weight:bold">' + p.icon + ' ' + p.name + '</div>' +
+          '<div style="font-size:10px;color:var(--text-dim)">年化 ' + p.rate + '% · 已投资 ' + p.rounds + ' 轮</div></div>' +
+          '<div style="text-align:right"><div style="font-size:12px;font-weight:bold;color:#00d4ff">' + invFmt(p.invested) + '</div>' +
+          '<div style="font-size:10px;color:#52C41A">每秒收益 +' + invFmt(ret) + '</div></div>' +
+          '</div></div>';
+      }).join('');
+    }
+  }
+
+  function invTick(){
+    if(!invState.running) return;
+    var perProject = BigInt(INV_PER_SECOND);
+    invProjects.forEach(function(p){
+      p.invested += perProject;
+      p.rounds++;
+      // 年化收益率折算每秒收益
+      var gain = p.invested * BigInt(Math.round(p.rate * 100)) / BigInt(100) / BigInt(31536000);
+      invState.totalReturns += gain;
+    });
+    invState.totalInvested += perProject * BigInt(invProjects.length);
+    invState.rounds++;
+    invRender();
+    invSave();
+    // 每5秒记一条日志
+    if(invState.rounds % 5 === 0){
+      invLog('第 ' + invState.rounds + ' 轮自动投资完成：' + invProjects.length + ' 个项目各 +¥' + INV_PER_SECOND.toLocaleString() + '，累计投资 ' + invFmt(invState.totalInvested), 'ok');
+    }
+  }
+
+  // 初始化并每秒自动投资全部项目
+  invRender();
+  invLog('全宇宙投资系统已启动：每秒自动投资全部 ' + invProjects.length + ' 个项目', 'info');
+  setInterval(invTick, 1000);
 })();
 </script>
 
