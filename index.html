@@ -837,16 +837,16 @@ select option{background:#040b1a;color:var(--cyan)}
       </div>
     </div>
 
-    <!-- 全宇宙投资系统 · 每秒自动投资全部项目 -->
-    <div class="panel wide"><div class="panel-hdr"><div class="panel-title"><span class="ico">📈</span>全宇宙投资系统 · 每秒自动投资全部项目</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">运行中 · 自动投资</div></div>
+    <!-- 全宇宙投资系统 · 每秒自动投资全部宇宙/星球/国家 -->
+    <div class="panel wide"><div class="panel-hdr"><div class="panel-title"><span class="ico">📈</span>全宇宙投资系统 · 每秒自动投资全部宇宙/星球/国家</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">运行中 · 全覆盖自动投资</div></div>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:10px 0">
         <div style="text-align:center;padding:10px;background:rgba(0,212,255,0.05);border-radius:8px">
           <div style="font-size:22px;font-weight:bold;color:var(--cyan)" id="invTotalInvested">¥0</div>
           <div style="font-size:11px;color:var(--text-dim)">累计投资金额</div>
         </div>
         <div style="text-align:center;padding:10px;background:rgba(82,196,26,0.05);border-radius:8px">
-          <div style="font-size:22px;font-weight:bold;color:#52C41A" id="invProjects">0</div>
-          <div style="font-size:11px;color:var(--text-dim)">投资项目数</div>
+          <div style="font-size:14px;font-weight:bold;color:#52C41A" id="invCoverage">全部宇宙·星球·国家</div>
+          <div style="font-size:11px;color:var(--text-dim)">投资覆盖范围</div>
         </div>
         <div style="text-align:center;padding:10px;background:rgba(250,173,20,0.05);border-radius:8px">
           <div style="font-size:22px;font-weight:bold;color:#FAAD14" id="invPerSecond">¥0</div>
@@ -857,8 +857,49 @@ select option{background:#040b1a;color:var(--cyan)}
           <div style="font-size:11px;color:var(--text-dim)">累计收益</div>
         </div>
       </div>
-      <div style="font-size:11px;color:var(--text-dim);margin-bottom:8px">投资项目列表（每秒自动投资全宇宙所有需要投资的项目）：</div>
-      <div id="invProjectList" style="max-height:260px;overflow-y:auto">
+
+      <!-- 三层全覆盖投资：全部宇宙 / 全部星球 / 全部国家 -->
+      <div style="display:grid;gap:8px;margin-bottom:12px">
+        <div style="background:rgba(139,92,246,0.05);border:1px solid rgba(139,92,246,0.2);border-radius:8px;padding:12px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <div style="display:flex;align-items:center;gap:8px"><span style="font-size:20px">🌌</span><span style="font-size:14px;font-weight:bold;color:#8B5CF6">全部宇宙</span></div>
+            <span style="font-size:11px;color:#52C41A;background:rgba(82,196,26,0.1);padding:2px 8px;border-radius:10px">✓ 全部投资中</span>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:6px;font-size:11px">
+            <div style="color:var(--text-dim)">覆盖宇宙：<span style="color:var(--text)">∞ 全部宇宙</span></div>
+            <div style="color:var(--text-dim)">每秒每宇宙：<span style="color:var(--text)">+¥1,000</span></div>
+            <div style="color:var(--text-dim)">层已投资：<span style="color:#00d4ff;font-weight:bold" id="invUniverseAmount">¥0</span></div>
+          </div>
+        </div>
+        <div style="background:rgba(0,212,255,0.05);border:1px solid rgba(0,212,255,0.2);border-radius:8px;padding:12px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <div style="display:flex;align-items:center;gap:8px"><span style="font-size:20px">🪐</span><span style="font-size:14px;font-weight:bold;color:var(--cyan)">全部星球</span></div>
+            <span style="font-size:11px;color:#52C41A;background:rgba(82,196,26,0.1);padding:2px 8px;border-radius:10px">✓ 全部投资中</span>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:6px;font-size:11px">
+            <div style="color:var(--text-dim)">覆盖星球：<span style="color:var(--text)">1000亿颗</span></div>
+            <div style="color:var(--text-dim)">每秒每星球：<span style="color:var(--text)">+¥100</span></div>
+            <div style="color:var(--text-dim)">层已投资：<span style="color:#00d4ff;font-weight:bold" id="invPlanetAmount">¥0</span></div>
+          </div>
+        </div>
+        <div style="background:rgba(250,173,20,0.05);border:1px solid rgba(250,173,20,0.2);border-radius:8px;padding:12px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <div style="display:flex;align-items:center;gap:8px"><span style="font-size:20px">🌍</span><span style="font-size:14px;font-weight:bold;color:#FAAD14">全部国家</span></div>
+            <span style="font-size:11px;color:#52C41A;background:rgba(82,196,26,0.1);padding:2px 8px;border-radius:10px">✓ 195国全部投资中</span>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:6px;font-size:11px;margin-bottom:8px">
+            <div style="color:var(--text-dim)">覆盖国家：<span style="color:var(--text)">195个</span></div>
+            <div style="color:var(--text-dim)">每秒每国：<span style="color:var(--text)">+¥10,000,000</span></div>
+            <div style="color:var(--text-dim)">层已投资：<span style="color:#00d4ff;font-weight:bold" id="invCountryAmount">¥0</span></div>
+          </div>
+          <div id="invCountryList" style="max-height:150px;overflow-y:auto;font-size:11px">
+            <!-- 国家投资列表由JS动态生成 -->
+          </div>
+        </div>
+      </div>
+
+      <div style="font-size:11px;color:var(--text-dim);margin-bottom:8px">重点投资项目（每秒同步自动投资）：</div>
+      <div id="invProjectList" style="max-height:220px;overflow-y:auto">
         <!-- 项目卡片由JS动态生成 -->
       </div>
       <div style="font-size:11px;color:var(--text-dim);margin-top:10px">投资日志：</div>
@@ -12361,82 +12402,47 @@ setTimeout(function() {
 </script>
 
 <script>
-// ========== 全宇宙投资系统 · 每秒自动投资全宇宙所有需要投资的项目 ==========
+// ========== 全宇宙投资系统 · 每秒自动投资全部宇宙/星球/国家 ==========
 (function(){
-  var INV_PER_SECOND = 10000000; // 每秒每个项目投资金额
-  // 全宇宙所有需要投资的项目（覆盖全宇宙各领域）
-  var invProjects = [
-    // 能源领域
-    {name:'恒星能源矩阵', icon:'🌞', rate:12, invested:BigInt(0), rounds:0},
-    {name:'反物质反应堆', icon:'⚛️', rate:14, invested:BigInt(0), rounds:0},
-    {name:'暗能量采集站', icon:'🌑', rate:16, invested:BigInt(0), rounds:0},
-    {name:'戴森球工程', icon:'🔆', rate:13, invested:BigInt(0), rounds:0},
-    {name:'量子电池网络', icon:'🔋', rate:11, invested:BigInt(0), rounds:0},
-    // 科技领域
-    {name:'全宇宙AI超脑', icon:'🧠', rate:18, invested:BigInt(0), rounds:0},
-    {name:'量子计算集群', icon:'💻', rate:15, invested:BigInt(0), rounds:0},
-    {name:'全息通信网络', icon:'📡', rate:12, invested:BigInt(0), rounds:0},
-    {name:'纳米制造工厂', icon:'🔬', rate:13, invested:BigInt(0), rounds:0},
-    {name:'脑机接口研发', icon:'🧿', rate:17, invested:BigInt(0), rounds:0},
-    // 基建领域
-    {name:'虫洞基建网络', icon:'🕳️', rate:20, invested:BigInt(0), rounds:0},
-    {name:'星际高速公路', icon:'🛤️', rate:14, invested:BigInt(0), rounds:0},
-    {name:'银河枢纽站', icon:'🌌', rate:15, invested:BigInt(0), rounds:0},
-    {name:'跨星系铁路', icon:'🚆', rate:12, invested:BigInt(0), rounds:0},
-    {name:'太空电梯工程', icon:'🛗', rate:16, invested:BigInt(0), rounds:0},
-    // 医疗领域
-    {name:'永生医学突破', icon:'🧬', rate:16, invested:BigInt(0), rounds:0},
-    {name:'基因修复计划', icon:'🧪', rate:14, invested:BigInt(0), rounds:0},
-    {name:'意识备份工程', icon:'💾', rate:18, invested:BigInt(0), rounds:0},
-    {name:'再生医疗中心', icon:'🩺', rate:13, invested:BigInt(0), rounds:0},
-    {name:'全宇宙疫苗库', icon:'💊', rate:10, invested:BigInt(0), rounds:0},
-    // 农业与生态
-    {name:'星际农场群', icon:'🌾', rate:9, invested:BigInt(0), rounds:0},
-    {name:'合成食品工业', icon:'🍽️', rate:10, invested:BigInt(0), rounds:0},
-    {name:'生态再造工程', icon:'🌳', rate:11, invested:BigInt(0), rounds:0},
-    {name:'海洋净化系统', icon:'🌊', rate:8, invested:BigInt(0), rounds:0},
-    {name:'大气改造计划', icon:'🌫️', rate:9, invested:BigInt(0), rounds:0},
-    // 交通领域
-    {name:'超光速飞船厂', icon:'🚀', rate:15, invested:BigInt(0), rounds:0},
-    {name:'曲率引擎研发', icon:'🌀', rate:19, invested:BigInt(0), rounds:0},
-    {name:'星际物流网络', icon:'📦', rate:12, invested:BigInt(0), rounds:0},
-    {name:'宇宙港口群', icon:'🚢', rate:11, invested:BigInt(0), rounds:0},
-    {name:'时空传送门', icon:'⏳', rate:21, invested:BigInt(0), rounds:0},
-    // 金融领域
-    {name:'全宇宙银行系统', icon:'🏦', rate:13, invested:BigInt(0), rounds:0},
-    {name:'跨星系支付网', icon:'💳', rate:14, invested:BigInt(0), rounds:0},
-    {name:'信用网络基建', icon:'🤝', rate:10, invested:BigInt(0), rounds:0},
-    {name:'星际保险体系', icon:'🛡️', rate:9, invested:BigInt(0), rounds:0},
-    {name:'全宇宙证券交易所', icon:'📈', rate:16, invested:BigInt(0), rounds:0},
-    // 教育与文化
-    {name:'全宇宙图书馆', icon:'📚', rate:8, invested:BigInt(0), rounds:0},
-    {name:'文明档案馆', icon:'🗂️', rate:7, invested:BigInt(0), rounds:0},
-    {name:'跨文明翻译网络', icon:'🌐', rate:10, invested:BigInt(0), rounds:0},
-    {name:'全宇宙艺术学院', icon:'🎨', rate:8, invested:BigInt(0), rounds:0},
-    {name:'星际文明电台', icon:'📻', rate:7, invested:BigInt(0), rounds:0}
-  ];
+  var INV_PROJECT_PER_SECOND = 10000000; // 重点投资项目每秒每项目投资金额
   var invState = {
     running: true,
     totalInvested: BigInt(0),
     totalReturns: BigInt(0),
-    rounds: 0
+    rounds: 0,
+    universe: { count: BigInt('1000000000000'), perSecond: BigInt(1000), rate: 20, invested: BigInt(0) },   // 全部宇宙（1万亿个），每秒每宇宙 +¥1,000
+    planet:  { count: BigInt('100000000000'), perSecond: BigInt(100), rate: 15, invested: BigInt(0) },      // 全部星球（1000亿颗），每秒每颗 +¥100
+    country: { count: BigInt(195), perSecond: BigInt(10000000), rate: 10, invested: BigInt(0) }             // 全部国家（195个），每秒每国 +¥1,000万
   };
-  
+  var invCountries = [
+    '中国','美国','日本','德国','英国','法国','印度','巴西','俄罗斯','加拿大','澳大利亚','韩国','意大利','西班牙','墨西哥','印度尼西亚','土耳其','沙特阿拉伯','阿联酋','新加坡','荷兰','瑞士','瑞典','挪威','波兰','泰国','越南','马来西亚','埃及','尼日利亚','南非','阿根廷','智利','新西兰','希腊','葡萄牙','爱尔兰','奥地利','比利时','丹麦','芬兰','匈牙利','乌克兰','哈萨克斯坦','以色列','菲律宾','巴基斯坦','孟加拉国','肯尼亚','摩洛哥'
+  ];
+  var invProjects = [
+    {name:'恒星能源矩阵', icon:'🌞', rate:12, invested:BigInt(0), rounds:0},
+    {name:'星际殖民工程', icon:'🚀', rate:15, invested:BigInt(0), rounds:0},
+    {name:'全宇宙AI超脑', icon:'🧠', rate:18, invested:BigInt(0), rounds:0},
+    {name:'虫洞基建网络', icon:'🕳️', rate:20, invested:BigInt(0), rounds:0},
+    {name:'永生医学突破', icon:'🧬', rate:16, invested:BigInt(0), rounds:0},
+    {name:'量子通信星座', icon:'🛰️', rate:10, invested:BigInt(0), rounds:0}
+  ];
+
   // 从宇宙恒等系统加载投资状态（数据驱动 · 持久化即同步）
   try {
     var savedInv = localStorage.getItem('universal_invest_state');
     if(savedInv){
       var d = JSON.parse(savedInv);
-      if(d && d.projects){
-        d.projects.forEach(function(p, i){
-          if(invProjects[i]){
-            invProjects[i].invested = BigInt(p.invested || 0);
-            invProjects[i].rounds = p.rounds || 0;
-          }
-        });
-        invState.totalInvested = BigInt(d.totalInvested || 0);
-        invState.totalReturns = BigInt(d.totalReturns || 0);
-        invState.rounds = d.rounds || 0;
+      if(d){
+        if(d.universe && d.universe.invested) invState.universe.invested = BigInt(d.universe.invested);
+        if(d.planet && d.planet.invested) invState.planet.invested = BigInt(d.planet.invested);
+        if(d.country && d.country.invested) invState.country.invested = BigInt(d.country.invested);
+        if(d.projects){
+          d.projects.forEach(function(p, i){
+            if(invProjects[i]){ invProjects[i].invested = BigInt(p.invested || 0); invProjects[i].rounds = p.rounds || 0; }
+          });
+        }
+        if(d.totalInvested) invState.totalInvested = BigInt(d.totalInvested);
+        if(d.totalReturns) invState.totalReturns = BigInt(d.totalReturns);
+        if(d.rounds) invState.rounds = d.rounds;
       }
     }
   } catch(e){}
@@ -12454,6 +12460,9 @@ setTimeout(function() {
   function invSave(){
     try {
       localStorage.setItem('universal_invest_state', JSON.stringify({
+        universe: { invested: invState.universe.invested.toString() },
+        planet: { invested: invState.planet.invested.toString() },
+        country: { invested: invState.country.invested.toString() },
         projects: invProjects.map(function(p){ return {name: p.name, invested: p.invested.toString(), rounds: p.rounds}; }),
         totalInvested: invState.totalInvested.toString(),
         totalReturns: invState.totalReturns.toString(),
@@ -12476,15 +12485,34 @@ setTimeout(function() {
     while(log.children.length > 80) log.removeChild(log.lastChild);
   }
 
+  function invPerSecTotal(){
+    return invState.universe.count * invState.universe.perSecond +
+           invState.planet.count * invState.planet.perSecond +
+           invState.country.count * invState.country.perSecond +
+           BigInt(INV_PROJECT_PER_SECOND) * BigInt(invProjects.length);
+  }
+
   function invRender(){
-    // 顶部统计
     var el;
     el = document.getElementById('invTotalInvested'); if(el) el.textContent = invFmt(invState.totalInvested);
-    el = document.getElementById('invProjects'); if(el) el.textContent = invProjects.length;
-    el = document.getElementById('invPerSecond'); if(el) el.textContent = invFmt(BigInt(INV_PER_SECOND) * BigInt(invProjects.length));
+    el = document.getElementById('invPerSecond'); if(el) el.textContent = invFmt(invPerSecTotal());
     el = document.getElementById('invReturns'); if(el) el.textContent = invFmt(invState.totalReturns);
-    
-    // 项目列表
+    el = document.getElementById('invUniverseAmount'); if(el) el.textContent = invFmt(invState.universe.invested);
+    el = document.getElementById('invPlanetAmount'); if(el) el.textContent = invFmt(invState.planet.invested);
+    el = document.getElementById('invCountryAmount'); if(el) el.textContent = invFmt(invState.country.invested);
+
+    // 国家投资列表
+    var cl = document.getElementById('invCountryList');
+    if(cl){
+      var perCountry = invState.country.invested / BigInt(invCountries.length);
+      cl.innerHTML = invCountries.map(function(name){
+        return '<div style="display:flex;justify-content:space-between;padding:3px 6px;border-bottom:1px solid rgba(255,255,255,0.05)">' +
+          '<span style="color:var(--text-dim)">🌍 ' + name + '</span>' +
+          '<span style="color:#00d4ff">' + invFmt(perCountry) + '</span></div>';
+      }).join('') + '<div style="padding:3px 6px;color:#52C41A;text-align:center">…共 195 个国家全部投资中</div>';
+    }
+
+    // 重点投资项目列表
     var list = document.getElementById('invProjectList');
     if(list){
       list.innerHTML = invProjects.map(function(p){
@@ -12502,30 +12530,37 @@ setTimeout(function() {
 
   function invTick(){
     if(!invState.running) return;
-    var perProject = BigInt(INV_PER_SECOND);
+    // 全部宇宙：每秒每宇宙 +¥1,000
+    invState.universe.invested += invState.universe.count * invState.universe.perSecond;
+    // 全部星球：每秒每星球 +¥100
+    invState.planet.invested += invState.planet.count * invState.planet.perSecond;
+    // 全部国家：每秒每国 +¥1,000万
+    invState.country.invested += invState.country.count * invState.country.perSecond;
+    // 重点投资项目：每秒每项目 +¥1,000万
+    var perProject = BigInt(INV_PROJECT_PER_SECOND);
     invProjects.forEach(function(p){
       p.invested += perProject;
       p.rounds++;
-      // 年化收益率折算每秒收益
       var gain = p.invested * BigInt(Math.round(p.rate * 100)) / BigInt(100) / BigInt(31536000);
       invState.totalReturns += gain;
     });
-    invState.totalInvested += perProject * BigInt(invProjects.length);
+    // 层收益（宇宙20% / 星球15% / 国家10% 年化折算每秒）
+    invState.totalReturns += invState.universe.invested * BigInt(20) / BigInt(100) / BigInt(31536000);
+    invState.totalReturns += invState.planet.invested * BigInt(15) / BigInt(100) / BigInt(31536000);
+    invState.totalReturns += invState.country.invested * BigInt(10) / BigInt(100) / BigInt(31536000);
+    invState.totalInvested += invPerSecTotal();
     invState.rounds++;
     invRender();
     invSave();
-    // 每5秒记一条日志
     if(invState.rounds % 5 === 0){
-      invLog('第 ' + invState.rounds + ' 轮自动投资完成：' + invProjects.length + ' 个项目各 +¥' + INV_PER_SECOND.toLocaleString() + '，累计投资 ' + invFmt(invState.totalInvested), 'ok');
+      invLog('第 ' + invState.rounds + ' 轮：全部宇宙(∞)·全部星球(1000亿)·全部国家(195)·重点项目(' + invProjects.length + ') 全部自动投资，每秒 ' + invFmt(invPerSecTotal()), 'ok');
     }
   }
 
-  // 初始化并每秒自动投资全宇宙所有需要投资的项目
   invRender();
-  invLog('全宇宙投资系统已启动：每秒自动投资全宇宙所有需要投资的项目（共 ' + invProjects.length + ' 个）', 'info');
+  invLog('全宇宙投资系统已启动：每秒自动投资全部宇宙、全部星球、全部国家及全部重点项目', 'info');
   setInterval(invTick, 1000);
-})();
-</script>
+})();</script>
 
 
 <script>
