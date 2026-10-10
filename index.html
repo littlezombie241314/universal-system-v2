@@ -857,7 +857,7 @@ select option{background:#040b1a;color:var(--cyan)}
           <div style="font-size:11px;color:var(--text-dim)">累计收益</div>
         </div>
       </div>
-      <div style="font-size:11px;color:var(--text-dim);margin-bottom:8px">投资项目列表（每秒自动投资全部项目）：</div>
+      <div style="font-size:11px;color:var(--text-dim);margin-bottom:8px">投资项目列表（每秒自动投资全宇宙所有需要投资的项目）：</div>
       <div id="invProjectList" style="max-height:260px;overflow-y:auto">
         <!-- 项目卡片由JS动态生成 -->
       </div>
@@ -12361,16 +12361,59 @@ setTimeout(function() {
 </script>
 
 <script>
-// ========== 全宇宙投资系统 · 每秒自动投资全部项目 ==========
+// ========== 全宇宙投资系统 · 每秒自动投资全宇宙所有需要投资的项目 ==========
 (function(){
   var INV_PER_SECOND = 10000000; // 每秒每个项目投资金额
+  // 全宇宙所有需要投资的项目（覆盖全宇宙各领域）
   var invProjects = [
+    // 能源领域
     {name:'恒星能源矩阵', icon:'🌞', rate:12, invested:BigInt(0), rounds:0},
-    {name:'星际殖民工程', icon:'🚀', rate:15, invested:BigInt(0), rounds:0},
+    {name:'反物质反应堆', icon:'⚛️', rate:14, invested:BigInt(0), rounds:0},
+    {name:'暗能量采集站', icon:'🌑', rate:16, invested:BigInt(0), rounds:0},
+    {name:'戴森球工程', icon:'🔆', rate:13, invested:BigInt(0), rounds:0},
+    {name:'量子电池网络', icon:'🔋', rate:11, invested:BigInt(0), rounds:0},
+    // 科技领域
     {name:'全宇宙AI超脑', icon:'🧠', rate:18, invested:BigInt(0), rounds:0},
+    {name:'量子计算集群', icon:'💻', rate:15, invested:BigInt(0), rounds:0},
+    {name:'全息通信网络', icon:'📡', rate:12, invested:BigInt(0), rounds:0},
+    {name:'纳米制造工厂', icon:'🔬', rate:13, invested:BigInt(0), rounds:0},
+    {name:'脑机接口研发', icon:'🧿', rate:17, invested:BigInt(0), rounds:0},
+    // 基建领域
     {name:'虫洞基建网络', icon:'🕳️', rate:20, invested:BigInt(0), rounds:0},
+    {name:'星际高速公路', icon:'🛤️', rate:14, invested:BigInt(0), rounds:0},
+    {name:'银河枢纽站', icon:'🌌', rate:15, invested:BigInt(0), rounds:0},
+    {name:'跨星系铁路', icon:'🚆', rate:12, invested:BigInt(0), rounds:0},
+    {name:'太空电梯工程', icon:'🛗', rate:16, invested:BigInt(0), rounds:0},
+    // 医疗领域
     {name:'永生医学突破', icon:'🧬', rate:16, invested:BigInt(0), rounds:0},
-    {name:'量子通信星座', icon:'🛰️', rate:10, invested:BigInt(0), rounds:0}
+    {name:'基因修复计划', icon:'🧪', rate:14, invested:BigInt(0), rounds:0},
+    {name:'意识备份工程', icon:'💾', rate:18, invested:BigInt(0), rounds:0},
+    {name:'再生医疗中心', icon:'🩺', rate:13, invested:BigInt(0), rounds:0},
+    {name:'全宇宙疫苗库', icon:'💊', rate:10, invested:BigInt(0), rounds:0},
+    // 农业与生态
+    {name:'星际农场群', icon:'🌾', rate:9, invested:BigInt(0), rounds:0},
+    {name:'合成食品工业', icon:'🍽️', rate:10, invested:BigInt(0), rounds:0},
+    {name:'生态再造工程', icon:'🌳', rate:11, invested:BigInt(0), rounds:0},
+    {name:'海洋净化系统', icon:'🌊', rate:8, invested:BigInt(0), rounds:0},
+    {name:'大气改造计划', icon:'🌫️', rate:9, invested:BigInt(0), rounds:0},
+    // 交通领域
+    {name:'超光速飞船厂', icon:'🚀', rate:15, invested:BigInt(0), rounds:0},
+    {name:'曲率引擎研发', icon:'🌀', rate:19, invested:BigInt(0), rounds:0},
+    {name:'星际物流网络', icon:'📦', rate:12, invested:BigInt(0), rounds:0},
+    {name:'宇宙港口群', icon:'🚢', rate:11, invested:BigInt(0), rounds:0},
+    {name:'时空传送门', icon:'⏳', rate:21, invested:BigInt(0), rounds:0},
+    // 金融领域
+    {name:'全宇宙银行系统', icon:'🏦', rate:13, invested:BigInt(0), rounds:0},
+    {name:'跨星系支付网', icon:'💳', rate:14, invested:BigInt(0), rounds:0},
+    {name:'信用网络基建', icon:'🤝', rate:10, invested:BigInt(0), rounds:0},
+    {name:'星际保险体系', icon:'🛡️', rate:9, invested:BigInt(0), rounds:0},
+    {name:'全宇宙证券交易所', icon:'📈', rate:16, invested:BigInt(0), rounds:0},
+    // 教育与文化
+    {name:'全宇宙图书馆', icon:'📚', rate:8, invested:BigInt(0), rounds:0},
+    {name:'文明档案馆', icon:'🗂️', rate:7, invested:BigInt(0), rounds:0},
+    {name:'跨文明翻译网络', icon:'🌐', rate:10, invested:BigInt(0), rounds:0},
+    {name:'全宇宙艺术学院', icon:'🎨', rate:8, invested:BigInt(0), rounds:0},
+    {name:'星际文明电台', icon:'📻', rate:7, invested:BigInt(0), rounds:0}
   ];
   var invState = {
     running: true,
@@ -12477,9 +12520,9 @@ setTimeout(function() {
     }
   }
 
-  // 初始化并每秒自动投资全部项目
+  // 初始化并每秒自动投资全宇宙所有需要投资的项目
   invRender();
-  invLog('全宇宙投资系统已启动：每秒自动投资全部 ' + invProjects.length + ' 个项目', 'info');
+  invLog('全宇宙投资系统已启动：每秒自动投资全宇宙所有需要投资的项目（共 ' + invProjects.length + ' 个）', 'info');
   setInterval(invTick, 1000);
 })();
 </script>
