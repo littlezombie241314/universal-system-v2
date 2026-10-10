@@ -3709,6 +3709,51 @@ select option{background:#040b1a;color:var(--cyan)}
       </div>
     </div>
 
+    <!-- 全宇宙存在交流沟通 · 社交软件 -->
+    <div class="panel wide"><div class="panel-hdr"><div class="panel-title"><span class="ico">💬</span>全宇宙存在交流沟通 · 社交软件</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">已开启</div></div>
+      <div style="padding:14px">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-bottom:12px;font-size:11px">
+          <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;text-align:center">
+            <div style="font-size:20px">✅</div>
+            <div style="color:#52C41A;font-weight:bold;margin:4px 0" id="ueChatStatus">全宇宙交流沟通已开启</div>
+            <div style="color:var(--text-dim);font-size:10px">所有存在可互相交流</div>
+          </div>
+          <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;text-align:center">
+            <div style="font-size:20px">👤</div>
+            <div style="color:var(--cyan);font-weight:bold;margin:4px 0" id="ueMyAccount">未申请账号</div>
+            <div style="color:var(--text-dim);font-size:10px">我的社交软件账号</div>
+          </div>
+          <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;text-align:center">
+            <div style="font-size:20px">✉️</div>
+            <div style="color:var(--amber);font-weight:bold;margin:4px 0" id="ueSentCount">0</div>
+            <div style="color:var(--text-dim);font-size:10px">已发送消息</div>
+          </div>
+        </div>
+        
+        <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;margin-bottom:12px">
+          <div style="font-size:12px;font-weight:bold;color:var(--text);margin-bottom:8px">👤 申请自己的社交软件账号</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px">
+            <select id="ueSocialPlatform" style="background:rgba(4,18,34,.6);border:1px solid var(--border);color:var(--text);padding:8px;border-radius:4px;font-size:12px;flex:1;min-width:120px">
+              <option value="微信">💚 微信</option>
+              <option value="QQ">🐧 QQ</option>
+              <option value="飞书">🪁 飞书</option>
+              <option value="钉钉">📮 钉钉</option>
+            </select>
+            <button class="btn cyan" onclick="applySocialAccount()">📝 申请账号</button>
+          </div>
+          <div id="ueApplyResult" style="font-size:11px;color:var(--text-dim)">选择社交软件平台后点击"申请账号"</div>
+        </div>
+        
+        <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px">
+          <div style="font-size:12px;font-weight:bold;color:var(--text);margin-bottom:8px">✉️ 给对方账号发消息</div>
+          <input id="ueTargetAccount" placeholder="输入对方账号（如 UES-微信-XXXXXX）" style="width:100%;box-sizing:border-box;background:rgba(4,18,34,.6);border:1px solid var(--border);color:var(--text);padding:8px;border-radius:4px;font-size:12px;margin-bottom:8px">
+          <textarea id="ueMessageText" rows="2" placeholder="输入消息内容..." style="width:100%;box-sizing:border-box;background:rgba(4,18,34,.6);border:1px solid var(--border);color:var(--text);padding:8px;border-radius:4px;font-size:12px;resize:vertical;margin-bottom:8px"></textarea>
+          <button class="btn" onclick="sendSocialMessage()" style="width:100%">🚀 通过社交软件发送</button>
+          <div id="ueSendResult" style="font-size:11px;color:var(--text-dim);margin-top:8px">申请账号后可给对方账号发送消息</div>
+        </div>
+      </div>
+    </div>
+
     <!-- 消息收发 -->
     <div class="panel"><div class="panel-hdr"><div class="panel-title"><span class="ico">💬</span>全宇宙广播 / 星际消息</div><div class="panel-badge">量子加密</div></div>
       <div style="margin-bottom:10px">
@@ -11739,6 +11784,112 @@ setTimeout(function() {
   } else {
     initCommSystem();
   }
+})();
+</script>
+
+<script>
+// ============ 全宇宙存在交流沟通 · 社交软件 ============
+(function(){
+  var ueChatState = {
+    enabled: true,
+    platform: '',
+    myAccount: '',
+    sentCount: 0
+  };
+  var savedUE = localStorage.getItem('ueSocialChat');
+  if(savedUE){ try { ueChatState = Object.assign(ueChatState, JSON.parse(savedUE)); } catch(e){} }
+
+  function updateUEUI(){
+    var st = document.getElementById('ueChatStatus');
+    if(st) st.textContent = ueChatState.enabled ? '全宇宙交流沟通已开启' : '交流沟通未开启';
+    var acc = document.getElementById('ueMyAccount');
+    if(acc) acc.textContent = ueChatState.myAccount ? ueChatState.myAccount : '未申请账号';
+    var sc = document.getElementById('ueSentCount');
+    if(sc) sc.textContent = ueChatState.sentCount;
+  }
+
+  function ueToast(msg){
+    if(typeof toast === 'function') toast(msg);
+  }
+
+  function ueSystemLog(msg, type){
+    var log = document.getElementById('commSystemLog');
+    if(!log) return;
+    var time = new Date().toLocaleTimeString();
+    var color = type === 'ok' ? '#52C41A' : type === 'warn' ? '#FAAD14' : '#00d4ff';
+    var prefix = type === 'ok' ? '✓' : type === 'warn' ? '⚠' : 'ℹ';
+    var line = document.createElement('div');
+    line.style.color = color;
+    line.textContent = '[' + time + '] ' + prefix + ' ' + msg;
+    log.insertBefore(line, log.firstChild);
+    while(log.children.length > 100) log.removeChild(log.lastChild);
+    var countEl = document.getElementById('commLogCount');
+    if(countEl) countEl.textContent = log.children.length + ' 条';
+  }
+
+  function ueAddMessageLog(time, title, content, borderColor, bg){
+    var log = document.getElementById('commMessageLog');
+    if(!log) return;
+    var defaultHint = log.querySelector('div');
+    if(defaultHint && defaultHint.style.textAlign === 'center') log.innerHTML = '';
+    var line = document.createElement('div');
+    line.style.cssText = 'margin-bottom:8px;padding:8px;background:' + (bg||'rgba(0,212,255,0.05)') + ';border-radius:6px;border-left:3px solid ' + (borderColor||'#00d4ff');
+    line.innerHTML = '<div style="font-size:10px;color:var(--text-dim);margin-bottom:4px">[' + time + '] ' + title + '</div>' +
+      '<div style="font-size:12px;color:var(--text)">' + content.replace(/</g,'&lt;') + '</div>';
+    log.insertBefore(line, log.firstChild);
+  }
+
+  window.applySocialAccount = function(){
+    var platform = document.getElementById('ueSocialPlatform');
+    if(!platform) return;
+    var p = platform.value;
+    var code = Math.random().toString(36).slice(2, 8).toUpperCase();
+    ueChatState.platform = p;
+    ueChatState.myAccount = 'UES-' + p + '-' + code;
+    localStorage.setItem('ueSocialChat', JSON.stringify(ueChatState));
+    var r = document.getElementById('ueApplyResult');
+    if(r) r.innerHTML = '<span style="color:#52C41A">✅ 账号申请成功：<b>' + ueChatState.myAccount + '</b>（' + p + '）</span>';
+    updateUEUI();
+    ueSystemLog('已申请 ' + p + ' 社交账号：' + ueChatState.myAccount, 'ok');
+    ueToast('✅ ' + p + ' 账号申请成功：' + ueChatState.myAccount);
+  };
+
+  window.sendSocialMessage = function(){
+    if(!ueChatState.myAccount){
+      var r = document.getElementById('ueSendResult');
+      if(r) r.innerHTML = '<span style="color:#FAAD14">⚠️ 请先在上方申请自己的社交软件账号</span>';
+      ueToast('⚠️ 请先申请自己的社交软件账号');
+      return;
+    }
+    var target = document.getElementById('ueTargetAccount');
+    var msgEl = document.getElementById('ueMessageText');
+    var targetVal = target ? target.value.trim() : '';
+    var msg = msgEl ? msgEl.value.trim() : '';
+    if(!targetVal){ ueToast('⚠️ 请输入对方账号'); return; }
+    if(!msg){ ueToast('⚠️ 请输入消息内容'); return; }
+
+    ueChatState.sentCount++;
+    localStorage.setItem('ueSocialChat', JSON.stringify(ueChatState));
+    var time = new Date().toLocaleTimeString();
+    var res = document.getElementById('ueSendResult');
+    if(res) res.innerHTML = '<span style="color:#52C41A">✅ [' + time + '] 已通过 ' + ueChatState.platform + ' 发送给 ' + targetVal.replace(/</g,'&lt;') + '：' + msg.replace(/</g,'&lt;') + '</span>';
+    updateUEUI();
+    ueSystemLog('[' + ueChatState.platform + '] 已发送给 ' + targetVal + '：' + msg.substring(0,30) + (msg.length>30?'...':''), 'ok');
+    ueAddMessageLog(time, '通过 ' + ueChatState.platform + ' 发送给 ' + targetVal, msg, '#00d4ff');
+    ueToast('✅ 已通过 ' + ueChatState.platform + ' 发送给 ' + targetVal);
+
+    // 模拟对方回复
+    setTimeout(function(){
+      var rtime = new Date().toLocaleTimeString();
+      if(res) res.innerHTML += '<br><span style="color:var(--cyan)">📩 [' + rtime + '] ' + targetVal.replace(/</g,'&lt;') + '：收到，感谢交流</span>';
+      ueAddMessageLog(rtime, '来自 ' + targetVal + ' 的回复', '收到，感谢交流', '#52C41A', 'rgba(82,196,26,0.05)');
+      ueSystemLog('收到 ' + targetVal + ' 的回复：收到，感谢交流', 'info');
+    }, 1500);
+
+    if(msgEl) msgEl.value = '';
+  };
+
+  updateUEUI();
 })();
 </script>
 
