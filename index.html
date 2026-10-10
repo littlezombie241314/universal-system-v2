@@ -1213,10 +1213,10 @@ select option{background:#040b1a;color:var(--cyan)}
           <div style="background:rgba(0,212,255,0.05);border:1px solid rgba(0,212,255,0.2);border-radius:10px;padding:14px;">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
               <span style="font-size:13px;color:var(--text);">全宇宙存在智能终端覆盖</span>
-              <span id="terminalCoverage" style="font-size:13px;color:#52C41A;font-weight:bold;">67.3%</span>
+              <span id="terminalCoverage" style="font-size:13px;color:#52C41A;font-weight:bold;">100%</span>
             </div>
             <div style="background:rgba(0,0,0,0.3);border-radius:6px;height:8px;overflow:hidden;margin-bottom:10px;">
-              <div id="terminalCoverageBar" style="height:100%;width:67.3%;background:linear-gradient(90deg,#00d4ff,#52C41A);border-radius:6px;"></div>
+              <div id="terminalCoverageBar" style="height:100%;width:100%;background:linear-gradient(90deg,#00d4ff,#52C41A);border-radius:6px;"></div>
             </div>
             <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;">
               <div style="text-align:center;">
@@ -10584,13 +10584,19 @@ function updateTerminalSync() {
   try {
     var totalEl = document.getElementById('terminalTotal');
     var onlineEl = document.getElementById('terminalOnline');
+    var coverageEl = document.getElementById('terminalCoverage');
+    var coverageBar = document.getElementById('terminalCoverageBar');
+    
+    // 智能终端余额同步状态：100% 全覆盖
+    if (coverageEl) coverageEl.textContent = '100%';
+    if (coverageBar) coverageBar.style.width = '100%';
     
     if (totalEl && onlineEl) {
-      // 真实数据：全球IoT联网设备约170亿，在线设备约105亿
+      // 余额数据已实时同步到每个存在的智能终端：全部已同步在线
       var baseTotal = 17000000000; // 全球IoT联网设备数（Statista，2024年）
       var variation = Math.floor(Math.random() * 1000000);
       var total = baseTotal + variation;
-      var online = 10500000000 + Math.floor(Math.random() * 100000); // 全宇宙在线设备数
+      var online = total; // 全宇宙智能终端余额同步：100% 全覆盖，全部在线同步
       
       totalEl.textContent = total.toLocaleString();
       onlineEl.textContent = online.toLocaleString();
