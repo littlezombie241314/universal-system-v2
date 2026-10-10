@@ -3961,6 +3961,139 @@ select option{background:#040b1a;color:var(--cyan)}
       </div>
     </div>
 
+    <div class="panel wide">
+      <div class="panel-hdr">
+        <div class="panel-title"><span class="ico">🌍</span>全球多节点部署与系统完整性 · 通信版</div>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <span id="commAutoSyncDeployStatus" style="font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(82,196,26,0.2);color:#52C41A;">● 自动同步中</span>
+          <div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A;">✓ 已部署全宇宙</div>
+        </div>
+      </div>
+      
+      <div style="padding:16px;">
+        <!-- 系统不可替换标识 -->
+        <div style="background:linear-gradient(135deg, rgba(139,92,246,0.1), rgba(139,92,246,0.05));border:1px solid rgba(139,92,246,0.3);border-radius:12px;padding:16px;margin-bottom:16px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <span style="font-size:24px;">🔒</span>
+              <div>
+                <div style="font-size:16px;font-weight:bold;color:#8B5CF6;">系统不可替换 · 不可篡改</div>
+                <div style="font-size:11px;color:var(--text-dim);margin-top:2px;">SYSTEM IMMUTABLE & NON-REPLACEABLE</div>
+              </div>
+            </div>
+            
+            
+          <!-- 全系统自动部署状态 -->
+          <div style="margin-top:12px;padding:12px;background:rgba(0,0,0,0.2);border-radius:8px">
+            <div style="font-size:12px;font-weight:bold;color:var(--text);margin-bottom:8px">🚀 全系统自动部署状态</div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px">
+              <div style="font-size:11px;color:#52C41A">✓ 全宇宙通信系统</div>
+              <div style="font-size:11px;color:#52C41A">✓ 全宇宙互联网系统</div>
+              <div style="font-size:11px;color:#52C41A">✓ 全宇宙公司资金发放系统</div>
+              <div style="font-size:11px;color:#52C41A">✓ 全宇宙工资发放系统</div>
+              <div style="font-size:11px;color:#52C41A">✓ 全宇宙债务清零系统</div>
+              <div style="font-size:11px;color:#52C41A">✓ 全宇宙信用修复系统</div>
+              <div style="font-size:11px;color:#52C41A">✓ 全宇宙债务补齐转存系统</div>
+              <div style="font-size:11px;color:#52C41A">✓ 长生不老复活系统</div>
+              <div style="font-size:11px;color:#52C41A">✓ 气候控制系统</div>
+              <div style="font-size:11px;color:#52C41A">✓ 太阳风暴预警系统</div>
+            </div>
+            <div style="font-size:10px;color:var(--text-dim);margin-top:8px">所有系统已自动部署到全球195个国家云服务器 · 全宇宙所有星球服务器 · 实时同步</div>
+          </div>
+
+    <!-- 自动同步部署控制 -->
+            <div style="background:rgba(0,212,255,0.05);border:1px solid rgba(0,212,255,0.2);border-radius:8px;padding:10px;margin-top:10px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                <span style="font-size:11px;color:var(--cyan);font-weight:bold;">🔄 自动同步部署</span>
+                <button onclick="toggleAutoSyncDeploy()" id="commAutoSyncDeployBtn" style="font-size:10px;padding:3px 10px;background:rgba(82,196,26,0.2);border:1px solid rgba(82,196,26,0.4);border-radius:4px;color:#52C41A;cursor:pointer;">⏸️ 暂停同步</button>
+              </div>
+              <div style="font-size:10px;color:var(--text-dim);line-height:1.6">
+                功能更新自动同步至：全宇宙服务器 · 云服务器 · 每个星球服务器 · 全球各国服务器
+              </div>
+              <div style="font-size:10px;color:var(--text-dim);margin-top:4px">
+                上次同步: <span id="commDeployLastSync" style="color:var(--cyan)">刚刚</span> · 同步次数: <span id="commSyncCount" style="color:var(--green)">0</span>
+              </div>
+            </div>
+            
+            <div id="commSystemIntegrityStatus" style="font-size:12px;padding:6px 12px;border-radius:20px;background:rgba(82,196,26,0.2);color:#52C41A;">✓ 完整性验证通过</div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;">
+            <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
+              <div style="font-size:11px;color:var(--text-dim);">系统哈希值</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;" id="commSystemHash">0x7f3a...e91d</div>
+            </div>
+            <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
+              <div style="font-size:11px;color:var(--text-dim);">部署时间戳</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;" id="commDeployTimestamp">2026-09-14T04:00:00Z</div>
+            </div>
+            <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
+              <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v∞.0.1-IMMUTABLE</div>
+            </div>
+            <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
+              <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
+              <div style="font-size:12px;color:#52C41A;font-weight:bold;margin-top:4px;">LEVEL 5 · 最高级</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 全球国家云服务器部署状态 -->
+        <div style="margin-bottom:16px;">
+          <div style="font-size:14px;font-weight:bold;margin-bottom:10px;color:var(--text);">🌐 全球国家云服务器部署状态</div>
+          <div id="commGlobalCloudDeployment" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;">
+            <!-- 动态生成 -->
+          </div>
+        </div>
+        
+        <!-- 各国金融系统服务器对接状态 -->
+        <div style="margin-bottom:16px;">
+          <div style="font-size:14px;font-weight:bold;margin-bottom:10px;color:var(--text);">🏦 各国金融系统服务器对接状态</div>
+          <div id="commGlobalFinancialDeployment" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;">
+            <!-- 动态生成 -->
+          </div>
+        </div>
+        
+        <!-- 智能终端余额同步状态 -->
+        <div>
+          <div style="font-size:14px;font-weight:bold;margin-bottom:10px;color:var(--text);">📱 智能终端余额同步状态</div>
+          <div style="background:rgba(0,212,255,0.05);border:1px solid rgba(0,212,255,0.2);border-radius:10px;padding:14px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+              <span style="font-size:13px;color:var(--text);">全宇宙存在智能终端覆盖</span>
+              <span id="commTerminalCoverage" style="font-size:13px;color:#52C41A;font-weight:bold;">100%</span>
+            </div>
+            <div style="background:rgba(0,0,0,0.3);border-radius:6px;height:8px;overflow:hidden;margin-bottom:10px;">
+              <div id="commTerminalCoverageBar" style="height:100%;width:100%;background:linear-gradient(90deg,#00d4ff,#52C41A);border-radius:6px;"></div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;">
+              <div style="text-align:center;">
+                <div style="font-size:20px;font-weight:bold;color:var(--cyan);" id="commTerminalTotal">17,000,000,000</div>
+                <div style="font-size:11px;color:var(--text-dim);">已同步终端总数</div>
+              </div>
+              <div style="text-align:center;">
+                <div style="font-size:20px;font-weight:bold;color:#52C41A;" id="commTerminalOnline">17,000,000,000</div>
+                <div style="font-size:11px;color:var(--text-dim);">在线终端数 · 每秒自动扫描</div>
+              </div>
+              <div style="text-align:center;">
+                <div style="font-size:20px;font-weight:bold;color:var(--purple);" id="commTerminalSyncSpeed">2,500,000</div>
+                <div style="font-size:11px;color:var(--text-dim);">同步速度 (笔/秒)</div>
+              </div>
+              <div style="text-align:center;">
+                <div style="font-size:20px;font-weight:bold;color:var(--orange);" id="commTerminalLastSync">--:--:--</div>
+                <div style="font-size:11px;color:var(--text-dim);">最后同步时间 · 每秒更新</div>
+              </div>
+              <div style="text-align:center;">
+                <div style="font-size:20px;font-weight:bold;color:#52C41A;" id="commTerminalScanCount">0</div>
+                <div style="font-size:11px;color:var(--text-dim);">已自动扫描轮次</div>
+              </div>
+            </div>
+            <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.1);">
+              <div style="font-size:12px;color:#52C41A;text-align:center;">
+                🔍 每秒自动扫描在线终端数 · 自动同步全部在线终端余额
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
   </div></div>
   <!-- INTERNET -->
   
@@ -10610,10 +10743,8 @@ var GLOBAL_FINANCIAL_SYSTEMS = [
 ];
 
 // 初始化全球云服务器部署状态
-function initGlobalCloudDeployment() {
-  var container = document.getElementById('globalCloudDeployment');
+function renderGlobalCloudDeployment(container) {
   if (!container) return;
-  
   var html = '';
   GLOBAL_COUNTRIES.forEach(function(country) {
     var latency = Math.floor(Math.random() * 50) + 5;
@@ -10626,12 +10757,14 @@ function initGlobalCloudDeployment() {
   });
   container.innerHTML = html;
 }
+function initGlobalCloudDeployment() {
+  renderGlobalCloudDeployment(document.getElementById('globalCloudDeployment'));
+  renderGlobalCloudDeployment(document.getElementById('commGlobalCloudDeployment'));
+}
 
 // 初始化全球金融系统对接状态
-function initGlobalFinancialDeployment() {
-  var container = document.getElementById('globalFinancialDeployment');
+function renderGlobalFinancialDeployment(container) {
   if (!container) return;
-  
   var html = '';
   GLOBAL_FINANCIAL_SYSTEMS.forEach(function(system) {
     var typeColor = system.type === '央行' ? '#8B5CF6' : (system.type === '支付平台' ? '#00d4ff' : '#52C41A');
@@ -10646,16 +10779,27 @@ function initGlobalFinancialDeployment() {
   });
   container.innerHTML = html;
 }
+function initGlobalFinancialDeployment() {
+  renderGlobalFinancialDeployment(document.getElementById('globalFinancialDeployment'));
+  renderGlobalFinancialDeployment(document.getElementById('commGlobalFinancialDeployment'));
+}
 
 // 系统完整性验证
 function verifySystemIntegrity() {
   var statusEl = document.getElementById('systemIntegrityStatus');
   var hashEl = document.getElementById('systemHash');
+  var commStatusEl = document.getElementById('commSystemIntegrityStatus');
+  var commHashEl = document.getElementById('commSystemHash');
   
   if (statusEl) {
     statusEl.textContent = '🔍 验证中...';
     statusEl.style.background = 'rgba(250,173,20,0.2)';
     statusEl.style.color = '#FAAD14';
+  }
+  if (commStatusEl) {
+    commStatusEl.textContent = '🔍 验证中...';
+    commStatusEl.style.background = 'rgba(250,173,20,0.2)';
+    commStatusEl.style.color = '#FAAD14';
   }
   
   setTimeout(function() {
@@ -10673,11 +10817,19 @@ function verifySystemIntegrity() {
     if (hashEl) {
       hashEl.textContent = hash;
     }
+    if (commHashEl) {
+      commHashEl.textContent = hash;
+    }
     
     if (statusEl) {
       statusEl.textContent = '✓ 完整性验证通过';
       statusEl.style.background = 'rgba(82,196,26,0.2)';
       statusEl.style.color = '#52C41A';
+    }
+    if (commStatusEl) {
+      commStatusEl.textContent = '✓ 完整性验证通过';
+      commStatusEl.style.background = 'rgba(82,196,26,0.2)';
+      commStatusEl.style.color = '#52C41A';
     }
     
     console.log('🔒 系统完整性验证通过 - 系统不可替换，不可篡改');
@@ -10696,13 +10848,25 @@ function updateTerminalSync() {
     var lastSyncEl = document.getElementById('lastSyncTime');
     var scanCountEl = document.getElementById('terminalScanCount');
     
+    // 通信模块版（comm 前缀）
+    var commTotalEl = document.getElementById('commTerminalTotal');
+    var commOnlineEl = document.getElementById('commTerminalOnline');
+    var commCoverageEl = document.getElementById('commTerminalCoverage');
+    var commCoverageBar = document.getElementById('commTerminalCoverageBar');
+    var commSyncSpeedEl = document.getElementById('commTerminalSyncSpeed');
+    var commLastSyncEl = document.getElementById('commTerminalLastSync');
+    var commScanCountEl = document.getElementById('commTerminalScanCount');
+    
     // 智能终端余额同步状态：100% 全覆盖
     if (coverageEl) coverageEl.textContent = '100%';
     if (coverageBar) coverageBar.style.width = '100%';
+    if (commCoverageEl) commCoverageEl.textContent = '100%';
+    if (commCoverageBar) commCoverageBar.style.width = '100%';
     
     // 每秒自动扫描：发现新的在线终端并纳入同步
     terminalScanRound++;
     if (scanCountEl) scanCountEl.textContent = terminalScanRound.toLocaleString();
+    if (commScanCountEl) commScanCountEl.textContent = terminalScanRound.toLocaleString();
     
     if (totalEl && onlineEl) {
       // 每秒扫描在线终端数（扫描持续发现新终端上线）
@@ -10714,12 +10878,17 @@ function updateTerminalSync() {
       
       totalEl.textContent = total.toLocaleString();
       onlineEl.textContent = online.toLocaleString();
+      if (commTotalEl) commTotalEl.textContent = total.toLocaleString();
+      if (commOnlineEl) commOnlineEl.textContent = online.toLocaleString();
       
       // 同步速度 = 每秒自动同步的在线终端数（笔/秒）
       if (syncSpeedEl) syncSpeedEl.textContent = online.toLocaleString();
+      if (commSyncSpeedEl) commSyncSpeedEl.textContent = online.toLocaleString();
       
       // 最后同步时间：每秒更新
-      if (lastSyncEl) lastSyncEl.textContent = new Date().toLocaleTimeString();
+      var nowTime = new Date().toLocaleTimeString();
+      if (lastSyncEl) lastSyncEl.textContent = nowTime;
+      if (commLastSyncEl) commLastSyncEl.textContent = nowTime;
     }
   } catch(e) {
     console.warn('更新智能终端同步状态失败', e);
@@ -11618,10 +11787,19 @@ function syncDeployToAllServers(systemName) {
     if (syncCountEl) {
       syncCountEl.textContent = autoSyncDeployCount.toLocaleString();
     }
+    var commSyncCountEl = document.getElementById('commSyncCount');
+    if (commSyncCountEl) {
+      commSyncCountEl.textContent = autoSyncDeployCount.toLocaleString();
+    }
     var lastSyncTimeEl = document.getElementById('lastSyncTime');
     if (lastSyncTimeEl) {
       var now = new Date();
       lastSyncTimeEl.textContent = now.toLocaleTimeString('zh-CN', {hour12: false});
+    }
+    var commDeployLastSyncEl = document.getElementById('commDeployLastSync');
+    if (commDeployLastSyncEl) {
+      var now2 = new Date();
+      commDeployLastSyncEl.textContent = now2.toLocaleTimeString('zh-CN', {hour12: false});
     }
     
     // 更新长生不老系统同步状态
@@ -11680,6 +11858,12 @@ function startAutoSyncDeploy() {
     statusEl.style.background = 'rgba(82,196,26,0.2)';
     statusEl.style.color = '#52C41A';
   }
+  var commStatusEl = document.getElementById('commAutoSyncDeployStatus');
+  if (commStatusEl) {
+    commStatusEl.textContent = '● 自动同步中';
+    commStatusEl.style.background = 'rgba(82,196,26,0.2)';
+    commStatusEl.style.color = '#52C41A';
+  }
   
   // 更新按钮
   var btn = document.getElementById('autoSyncDeployBtn');
@@ -11688,6 +11872,13 @@ function startAutoSyncDeploy() {
     btn.style.background = 'rgba(82,196,26,0.2)';
     btn.style.borderColor = 'rgba(82,196,26,0.4)';
     btn.style.color = '#52C41A';
+  }
+  var commBtn = document.getElementById('commAutoSyncDeployBtn');
+  if (commBtn) {
+    commBtn.textContent = '⏸️ 暂停同步';
+    commBtn.style.background = 'rgba(82,196,26,0.2)';
+    commBtn.style.borderColor = 'rgba(82,196,26,0.4)';
+    commBtn.style.color = '#52C41A';
   }
   
   // 立即执行一次同步部署
@@ -11721,6 +11912,12 @@ function stopAutoSyncDeploy() {
     statusEl.style.background = 'rgba(250,173,20,0.2)';
     statusEl.style.color = '#FAAD14';
   }
+  var commStatusEl = document.getElementById('commAutoSyncDeployStatus');
+  if (commStatusEl) {
+    commStatusEl.textContent = '⏸️ 已暂停';
+    commStatusEl.style.background = 'rgba(250,173,20,0.2)';
+    commStatusEl.style.color = '#FAAD14';
+  }
   
   // 更新按钮
   var btn = document.getElementById('autoSyncDeployBtn');
@@ -11729,6 +11926,13 @@ function stopAutoSyncDeploy() {
     btn.style.background = 'rgba(0,212,255,0.2)';
     btn.style.borderColor = 'rgba(0,212,255,0.4)';
     btn.style.color = '#00d4ff';
+  }
+  var commBtn = document.getElementById('commAutoSyncDeployBtn');
+  if (commBtn) {
+    commBtn.textContent = '▶️ 启动同步';
+    commBtn.style.background = 'rgba(0,212,255,0.2)';
+    commBtn.style.borderColor = 'rgba(0,212,255,0.4)';
+    commBtn.style.color = '#00d4ff';
   }
   
   // 更新其他系统状态
