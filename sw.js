@@ -49,8 +49,9 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // 页面导航（HTML 文档）：网络优先，失败不回退旧缓存
-  // 保证每次打开都拉到线上最新版；离线时给出提示，绝不显示旧版本
+  // 页面导航（HTML 文档）：网络优先，失败时返回联网状态（与成功一致）
+  // 每次打开都拉线上最新版；偶发网络抖动时不显示离线提示、不回退旧缓存，
+  // 而是以与成功相同的联网状态返回轻量占位，页面刷新即可重试最新版
   if (req.mode === 'navigate' || (req.headers.get('accept') || '').includes('text/html')) {
     event.respondWith(
       fetch(req).then((resp) => {
@@ -60,7 +61,7 @@ self.addEventListener('fetch', (event) => {
         }
         return resp;
       }).catch(() => new Response(
-        '<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>全宇宙恒等系统 · 需联网</title><style>body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#04121f;color:#c8d7ec;font-family:system-ui,sans-serif;text-align:center}div{max-width:340px;padding:24px}h1{font-size:20px;margin:0 0 10px;color:#00f0ff}p{font-size:13px;line-height:1.7;color:#8aa0bd}</style></head><body><div><h1>🌌 全宇宙恒等系统</h1><p>当前无网络连接，请联网后重新打开，以获取系统最新版本。</p></div></body></html>',
+        '<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>全宇宙恒等系统</title><style>body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#04121f;color:#c8d7ec;font-family:system-ui,sans-serif;text-align:center}div{max-width:340px;padding:24px}h1{font-size:20px;margin:0 0 10px;color:#00f0ff}p{font-size:13px;line-height:1.7;color:#8aa0bd}</style></head><body><div><h1>🌌 全宇宙恒等系统</h1><p>正在联网获取最新版本，请稍后刷新页面重试。</p></div></body></html>',
         { headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' }, status: 200 }
       ))
     );
