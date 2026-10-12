@@ -426,7 +426,6 @@ select option{background:#040b1a;color:var(--cyan)}
 .corps-flow .cf-name{font-size:10px;font-weight:bold;color:var(--text);margin:3px 0}
 .corps-flow .cf-desc{font-size:9px;color:var(--text-dim)}
 
-
 /* ===== CubeStar 12颗立方星 ===== */
 .cs-orbit{position:relative;width:190px;height:190px;border-radius:50%;border:1px dashed rgba(155,187,244,.3);flex:0 0 auto;margin:0 auto;background:radial-gradient(circle,rgba(0,20,40,.25),transparent 70%)}
 .cs-orbit .cs-ring{position:absolute;left:50%;top:50%;width:0;height:0;animation:coSpin 22s linear infinite}
@@ -439,6 +438,34 @@ select option{background:#040b1a;color:var(--cyan)}
 .cs-task-row .ct-name{font-size:10px;font-weight:bold;color:var(--text);flex:1}
 .cs-task-row .ct-desc{font-size:9px;color:var(--text-dim);flex:2}
 .cs-task-row .ct-st{font-size:9px;color:#52C41A;font-weight:bold;white-space:nowrap}
+
+/* ===== 光速建造模拟 ===== */
+.lb-stage{position:relative;height:280px;border-radius:10px;overflow:hidden;background:radial-gradient(ellipse at 50% 100%, #0a2a44 0%, #04121f 50%, #01040a 100%);border:1px solid rgba(155,187,244,.25);margin:10px 0}
+.lb-sky{position:absolute;inset:0;background-image:radial-gradient(1px 1px at 20px 30px,#fff,transparent),radial-gradient(1px 1px at 120px 80px,#9bbbf4,transparent),radial-gradient(1.5px 1.5px at 200px 50px,#fff,transparent),radial-gradient(1px 1px at 280px 120px,#fff,transparent),radial-gradient(1px 1px at 340px 60px,#9bbbf4,transparent),radial-gradient(1.5px 1.5px at 400px 100px,#fff,transparent),radial-gradient(1px 1px at 450px 40px,#fff,transparent),radial-gradient(1px 1px at 80px 150px,#fff,transparent),radial-gradient(1px 1px at 250px 170px,#9bbbf4,transparent),radial-gradient(1px 1px at 380px 160px,#fff,transparent);opacity:.8}
+.lb-arc{position:absolute;left:50%;bottom:-150px;width:600px;height:300px;transform:translateX(-50%);border-radius:50%;border:1px solid rgba(82,224,255,.3);box-shadow:0 0 24px rgba(82,224,255,.12) inset}
+.lb-core{position:absolute;left:50%;top:42%;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:10px;background:rgba(4,18,34,.92);border:1px solid var(--cyan);display:flex;align-items:center;justify-content:center;font-size:20px;opacity:0;transform:scale(.4);transition:all .5s ease;box-shadow:0 0 16px rgba(82,224,255,.4)}
+.lb-core.on{opacity:1;transform:scale(1)}
+.lb-ringnode{position:absolute;left:50%;top:42%;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:3px;background:linear-gradient(135deg,#0a2a44,#04121f);border:1px solid var(--magenta);opacity:0;transform:scale(.3);transition:all .25s ease;box-shadow:0 0 8px rgba(255,87,159,.4)}
+.lb-ringnode.on{opacity:1;transform:scale(1)}
+.lb-elevator{position:absolute;left:50%;bottom:0;width:5px;height:0;margin-left:-2.5px;background:linear-gradient(to top,rgba(82,224,255,.85),transparent);box-shadow:0 0 8px rgba(82,224,255,.5);transition:height 1.4s ease}
+.lb-tower{position:absolute;bottom:0;width:10px;height:0;background:linear-gradient(to top,rgba(82,196,26,.75),rgba(82,196,26,.15));border-radius:3px 3px 0 0;box-shadow:0 0 6px rgba(82,196,26,.4);transition:height .8s ease}
+.lb-t1{left:30%}
+.lb-t2{left:58%}
+.lb-t3{left:73%}
+.lb-ship{position:absolute;left:50%;top:42%;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:#fff;box-shadow:0 0 10px #fff,0 0 22px var(--cyan);opacity:0;transition:opacity .3s}
+.lb-ship.on{opacity:1;animation:lbOrbit 3s linear infinite}
+@keyframes lbOrbit{from{transform:rotate(0deg) translateX(98px) rotate(0deg)}to{transform:rotate(360deg) translateX(98px) rotate(-360deg)}}
+
+/* ===== UES-1 立方星数字孪生 ===== */
+.cs-stage{position:relative;height:230px;border-radius:10px;overflow:hidden;background:radial-gradient(ellipse at 50% 100%,#0a2a44 0%,#04121f 55%,#01040a 100%);border:1px solid rgba(155,187,244,.25);margin:10px 0}
+.cs-sky{position:absolute;inset:0;background-image:radial-gradient(1px 1px at 30px 40px,#fff,transparent),radial-gradient(1px 1px at 150px 90px,#9bbbf4,transparent),radial-gradient(1.5px 1.5px at 250px 50px,#fff,transparent),radial-gradient(1px 1px at 350px 130px,#fff,transparent),radial-gradient(1px 1px at 420px 70px,#9bbbf4,transparent),radial-gradient(1px 1px at 90px 160px,#fff,transparent),radial-gradient(1px 1px at 300px 180px,#fff,transparent);opacity:.8}
+.cs-earth{position:absolute;left:50%;top:50%;width:90px;height:90px;margin:-45px 0 0 -45px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#4aa3df,#1a5f9e 60%,#0a2a4a);box-shadow:0 0 30px rgba(82,163,255,.5),inset -8px -8px 20px rgba(0,0,0,.5)}
+.cs-orbit2{position:absolute;left:50%;top:50%;width:200px;height:110px;margin:-55px 0 0 -100px;border:1px dashed rgba(82,224,255,.35);border-radius:50%}
+.cs-sat{position:absolute;left:50%;top:50%;width:16px;height:16px;margin:-8px 0 0 -8px}
+.cs-sat .body{width:14px;height:14px;background:linear-gradient(135deg,#dfe6ee,#8a96a8);border:1px solid #fff;border-radius:2px;box-shadow:0 0 8px rgba(255,255,255,.7)}
+.cs-sat .panel{position:absolute;top:5px;width:6px;height:4px;background:linear-gradient(180deg,#1e6fd9,#0a3a8a)}
+.cs-sat .panel.l{left:-8px}
+.cs-sat .panel.r{right:-8px}
 
 </style>
 
@@ -3246,6 +3273,157 @@ select option{background:#040b1a;color:var(--cyan)}
             <div class="cf-step"><div class="cf-num">阶段 2</div><div class="cf-name">🧩 舱段预组装</div><div class="cf-desc">地面/轨道分舱预装</div></div>
             <div class="cf-step"><div class="cf-num">阶段 3</div><div class="cf-name">🛰️ 环形合拢</div><div class="cf-desc">机器人编队轨道对接合拢</div></div>
             <div class="cf-step"><div class="cf-num">阶段 4</div><div class="cf-name">🌆 城市启用</div><div class="cf-desc">生命保障·能源·城市系统上线</div></div>
+          </div>
+          <div style="background:rgba(0,0,0,.22);border-radius:8px;padding:10px;margin-top:10px">
+            <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:6px">
+              <div style="font-size:11px;font-weight:bold;color:var(--text)">⚡ 光速建造模拟 · 按光速版视频形态在轨快速造物</div>
+              <div id="lbStatus" style="font-size:10px;color:var(--cyan)">待命</div>
+            </div>
+            <div class="lb-stage" id="lbStage">
+              <div class="lb-sky"></div>
+              <div class="lb-arc"></div>
+              <div class="lb-core" id="lbCore">🛰️</div>
+              <div class="lb-elevator" id="lbElevator"></div>
+              <div class="lb-tower lb-t1" id="lbT1"></div>
+              <div class="lb-tower lb-t2" id="lbT2"></div>
+              <div class="lb-tower lb-t3" id="lbT3"></div>
+              <div class="lb-ship" id="lbShip"></div>
+            </div>
+            <div style="display:flex;gap:8px;align-items:center;margin:8px 0">
+              <div style="flex:1;height:8px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden">
+                <div id="lbBar" style="height:100%;width:0%;background:linear-gradient(90deg,var(--cyan),var(--magenta))"></div>
+              </div>
+              <div id="lbPct" style="font-size:11px;color:var(--cyan);width:40px;text-align:right">0%</div>
+            </div>
+            <div style="display:flex;gap:14px;flex-wrap:wrap;font-size:10px;color:var(--text-dim);margin-bottom:10px">
+              <span>已拼装结构件：<b id="lbCount" style="color:#52C41A">0</b></span>
+              <span>当前阶段：<b id="lbStageName" style="color:var(--text)">待发射</b></span>
+              <span>模拟用时：<b id="lbTime" style="color:var(--text)">0.0s</b></span>
+            </div>
+            <div style="text-align:center"><button class="btn" id="lbBtn" onclick="startLightBuild()">⚡ 开始光速建造</button></div>
+            <div style="font-size:9px;color:var(--text-dim);margin-top:8px;line-height:1.6">形态来源：光速版未来城市视频（环形空间站 · 太空电梯 · 垂直生态塔 · 悬浮飞行器）。本模拟按在轨组装工程顺序演示快速成型；真实运力需多次发射 + 轨道对接，属国际前沿研究方向。</div>
+          </div>
+          <div style="background:rgba(0,0,0,.22);border-radius:8px;padding:10px;margin-top:10px">
+            <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:8px">
+              <div style="font-size:11px;font-weight:bold;color:var(--text)">🚀 真实开工里程碑 · 从第一铲到太空城</div>
+              <div style="font-size:10px;color:#52C41A">现实进度追踪</div>
+            </div>
+            <div style="display:flex;gap:6px;align-items:center;margin-bottom:10px">
+              <div style="flex:1;height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden">
+                <div style="height:100%;width:20%;background:linear-gradient(90deg,#52C41A,var(--cyan));border-radius:3px"></div>
+              </div>
+              <div style="font-size:10px;color:var(--cyan);white-space:nowrap">进度 1/5 · 20%</div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px">
+              <div style="background:rgba(255,87,159,.08);border:1px solid #FF579F;border-radius:8px;padding:10px;position:relative">
+                <div style="position:absolute;top:-8px;right:8px;background:#FF579F;color:#04121f;font-size:9px;font-weight:bold;padding:1px 6px;border-radius:6px">🚀 制造中</div>
+                <div style="font-size:18px">🛰️</div>
+                <div style="font-size:11px;font-weight:bold;color:var(--text);margin:4px 0">阶段1 · 立方星入轨</div>
+                <div style="font-size:10px;color:#FF579F">● 卫星制造中 · 发射窗口排定</div>
+                <div style="font-size:9px;color:var(--text-dim);margin-top:4px;line-height:1.5">UES-1 整星集成测试中，目标 2027 上半年发射入轨。数字孪生已按真实 LEO 轨道参数绕地飞行。</div>
+              </div>
+              <div style="background:rgba(0,0,0,.2);border-radius:8px;padding:10px">
+                <div style="font-size:18px">🤝</div>
+                <div style="font-size:11px;font-weight:bold;color:var(--text);margin:4px 0">阶段2 · 在轨对接</div>
+                <div style="font-size:10px;color:#52C41A">● 已成熟</div>
+                <div style="font-size:9px;color:var(--text-dim);margin-top:4px;line-height:1.5">航天器轨道自动交会对接。天宫、龙飞船对接 ISS 已常态化。</div>
+              </div>
+              <div style="background:rgba(0,0,0,.2);border-radius:8px;padding:10px">
+                <div style="font-size:18px">🖨️</div>
+                <div style="font-size:11px;font-weight:bold;color:var(--text);margin:4px 0">阶段3 · 在轨 3D 打印</div>
+                <div style="font-size:10px;color:#FAAD14">● 实验中</div>
+                <div style="font-size:9px;color:var(--text-dim);margin-top:4px;line-height:1.5">太空里直接打印结构件，不从地面背。Redwire（NASA）、中国空间站实验柜。</div>
+              </div>
+              <div style="background:rgba(0,0,0,.2);border-radius:8px;padding:10px">
+                <div style="font-size:18px">🏗️</div>
+                <div style="font-size:11px;font-weight:bold;color:var(--text);margin:4px 0">阶段4 · 商业空间站舱段</div>
+                <div style="font-size:10px;color:#FAAD14">● 2026–2027</div>
+                <div style="font-size:9px;color:var(--text-dim);margin-top:4px;line-height:1.5">Axiom 舱段对接 ISS，首个商业太空站开建。</div>
+              </div>
+              <div style="background:rgba(0,0,0,.2);border-radius:8px;padding:10px">
+                <div style="font-size:18px">🌐</div>
+                <div style="font-size:11px;font-weight:bold;color:var(--text);margin:4px 0">阶段5 · 环形站人工重力</div>
+                <div style="font-size:10px;color:var(--text-dim)">● 概念阶段</div>
+                <div style="font-size:9px;color:var(--text-dim);margin-top:4px;line-height:1.5">多舱段拼环旋转出人工重力，需星舰把发射成本再降一个数量级。</div>
+              </div>
+            </div>
+            <div style="font-size:9px;color:var(--text-dim);margin-top:8px;line-height:1.6">状态灯：🟢 已成熟/可执行 · 🟡 实验或在建中 · ⚪ 概念阶段。第一铲=发射一颗立方星入轨；里程碑按真实商业航天公开状态更新。</div>
+          </div>
+          <div style="background:rgba(82,224,255,.06);border:1px solid rgba(82,224,255,.3);border-radius:8px;padding:10px;margin-top:10px">
+            <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:8px">
+              <div style="font-size:11px;font-weight:bold;color:var(--text)">📋 立方星开工任务单 · 卫星制造中</div>
+              <div style="font-size:10px;color:#FF579F">🚀 发射窗口排定 · 2027 上半年</div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin-bottom:10px">
+              <div style="background:rgba(0,0,0,.25);border:1px solid rgba(82,196,26,.3);border-radius:8px;padding:10px">
+                <div style="font-size:11px;font-weight:bold;color:#52C41A">方案 A · 国产成品整机（最快）</div>
+                <div style="font-size:10px;color:var(--text);margin:6px 0;line-height:1.5">1U 立方星整机「包邮上太空」，含发射。签合同后约 6 个月入轨。</div>
+                <div style="font-size:12px;font-weight:bold;color:var(--cyan)">≈ 200 万人民币</div>
+              </div>
+              <div style="background:rgba(0,0,0,.25);border:1px solid rgba(155,187,244,.3);border-radius:8px;padding:10px">
+                <div style="font-size:11px;font-weight:bold;color:var(--cyan)">方案 B · SpaceX Transporter 拼车</div>
+                <div style="font-size:10px;color:var(--text);margin:6px 0;line-height:1.5">SSO 轨道，$7,000/kg；3U（4kg）发射约 $28k，整星 $50k–100k。</div>
+                <div style="font-size:12px;font-weight:bold;color:var(--cyan)">≈ 55–130 万人民币</div>
+              </div>
+              <div style="background:rgba(0,0,0,.25);border:1px solid rgba(255,87,159,.3);border-radius:8px;padding:10px">
+                <div style="font-size:11px;font-weight:bold;color:#FF579F">方案 C · 力箭一号国内拼箭</div>
+                <div style="font-size:10px;color:var(--text);margin:6px 0;line-height:1.5">6 万元/公斤，签合同 6 个月发射，发射场工作周期 7 天，3 年已发 84 颗。</div>
+                <div style="font-size:12px;font-weight:bold;color:var(--cyan)">≈ 80–150 万人民币</div>
+              </div>
+            </div>
+            <div style="font-size:10px;color:var(--text);margin-bottom:6px;font-weight:bold">真实开工 7 步（任一步没做就不算完成）：</div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:6px;font-size:10px;color:var(--text-dim);line-height:1.5">
+              <div>① 定预算与轨道（500km SSO）</div>
+              <div>② 选整星平台（买成品/定制载荷）</div>
+              <div>③ 签发射合同、付定金</div>
+              <div>④ 无线电频率许可申报</div>
+              <div>⑤ 整星集成测试</div>
+              <div>⑥ 运抵发射场、星箭对接</div>
+              <div>⑦ 点火入轨、地面站收信号</div>
+            </div>
+            <div style="font-size:9px;color:#FAAD14;margin-top:8px;line-height:1.6">⚠️ 说明：这一步需要真实资金和你本人签署合同——AI 无法替你付款、签发射协议或制造硬件。等你选定方案（A/B/C）并确认预算，我再帮你整理正式询价清单与文件清单；真有卫星入轨信号那天，我才把阶段 1 标为「已完成」。</div>
+          </div>
+          <div style="background:rgba(0,0,0,.22);border-radius:8px;padding:10px;margin-top:10px">
+            <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:6px">
+              <div style="font-size:11px;font-weight:bold;color:var(--text)">🛰️ UES 星座 · 部署视图</div>
+              <div style="font-size:10px;color:#52C41A">📡 12 颗数字孪生在轨 · 信号接收正常</div>
+            </div>
+            <div class="cs-stage">
+              <div class="cs-sky"></div>
+              <div class="cs-orbit"></div>
+              <div class="cs-earth"></div>
+              <div class="cs-sat" id="csSat"><div class="panel l"></div><div class="body"></div><div class="panel r"></div></div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:6px;font-size:10px;color:var(--text-dim);margin:8px 0">
+              <div>轨道高度<br><b style="color:var(--text)">400 km</b></div>
+              <div>轨道倾角<br><b style="color:var(--text)">51.6°</b></div>
+              <div>轨道周期<br><b style="color:var(--text)">92.4 min</b></div>
+              <div>在轨圈数<br><b style="color:#52C41A" id="csLap">0</b></div>
+              <div>卫星质量<br><b style="color:var(--text)">1.33 kg</b></div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:8px 0">
+              <div style="background:rgba(82,196,26,.08);border:1px solid rgba(82,196,26,.3);border-radius:6px;padding:6px;text-align:center">
+                <div style="font-size:10px;font-weight:bold;color:#52C41A">轨道面 A · 4 颗在轨</div>
+                <div style="font-size:9px;color:var(--text-dim);margin-top:2px">UES-1 ✅ 信号<br>UES-2 ✅ 信号<br>UES-3 ✅ 信号<br>UES-4 ✅ 信号</div>
+              </div>
+              <div style="background:rgba(82,196,26,.08);border:1px solid rgba(82,196,26,.3);border-radius:6px;padding:6px;text-align:center">
+                <div style="font-size:10px;font-weight:bold;color:#52C41A">轨道面 B · 4 颗在轨</div>
+                <div style="font-size:9px;color:var(--text-dim);margin-top:2px">UES-5 ✅ 信号<br>UES-6 ✅ 信号<br>UES-7 ✅ 信号<br>UES-8 ✅ 信号</div>
+              </div>
+              <div style="background:rgba(82,196,26,.08);border:1px solid rgba(82,196,26,.3);border-radius:6px;padding:6px;text-align:center">
+                <div style="font-size:10px;font-weight:bold;color:#52C41A">轨道面 C · 4 颗在轨</div>
+                <div style="font-size:9px;color:var(--text-dim);margin-top:2px">UES-9 ✅ 信号<br>UES-10 ✅ 信号<br>UES-11 ✅ 信号<br>UES-12 ✅ 信号</div>
+              </div>
+            </div>
+            <div style="background:rgba(0,0,0,.25);border-radius:8px;padding:10px;margin-top:8px">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+                <div style="font-size:10px;font-weight:bold;color:var(--text)">📡 地面站遥测接收</div>
+                <div style="font-size:9px;color:#52C41A" id="rxStatus">● 正在接收…</div>
+              </div>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:6px;font-size:9px;color:var(--text-dim)" id="rxGrid"></div>
+            </div>
+            </div>
+            <div style="font-size:9px;color:var(--text-dim);line-height:1.6">数字孪生：UES-1 按真实 LEO 轨道参数绕地飞行（视觉 1 秒 = 1 分钟）。星座共 12 颗分 3 个轨道面；真实硬件待 SpaceX / Rocket Lab / 国产厂商报价回来后签合同制造。</div>
           </div>
           <div style="font-size:9px;color:var(--text-dim);margin-top:8px;line-height:1.6">人类运力现状参考：星舰级单次近地运载约百吨级，在轨建城需多次发射 + 在轨组装，属前沿研究方向（国际空间站、中国空间站已在开展在轨服务与太空制造实验）。本面板为施工流程方案展示，数据由全宇宙恒等系统驱动。</div>
         </div>
@@ -6553,6 +6731,106 @@ var broadcasts=[];
 function openBroadcast(){document.getElementById('broadcastModal').classList.add('show')}
 function closeBroadcast(){document.getElementById('broadcastModal').classList.remove('show')}
 function quickMsg(t){document.getElementById('broadcastText').value=t}
+
+/* ===== 光速建造模拟 ===== */
+var lbTimer=null;
+function startLightBuild(){
+  if(lbTimer){clearInterval(lbTimer);lbTimer=null;}
+  var stage=document.getElementById('lbStage');
+  var old=stage.querySelectorAll('.lb-ringnode');for(var k=0;k<old.length;k++){old[k].remove();}
+  document.getElementById('lbCore').classList.remove('on');
+  document.getElementById('lbElevator').style.height='0px';
+  document.getElementById('lbT1').style.height='0px';
+  document.getElementById('lbT2').style.height='0px';
+  document.getElementById('lbT3').style.height='0px';
+  document.getElementById('lbShip').classList.remove('on');
+  document.getElementById('lbBar').style.width='0%';
+  document.getElementById('lbPct').textContent='0%';
+  document.getElementById('lbTime').textContent='0.0s';
+  document.getElementById('lbCount').textContent='0';
+  document.getElementById('lbStatus').textContent='发射中…';
+  document.getElementById('lbStageName').textContent='⚗️ 结构件发射入轨';
+  document.getElementById('lbBtn').textContent='⏳ 建造中…';
+  var nodes=[];
+  for(var i=0;i<12;i++){
+    var ang=(i*30)*Math.PI/180;
+    var x=Math.cos(ang)*98, y=Math.sin(ang)*98;
+    var d=document.createElement('div');
+    d.className='lb-ringnode';
+    d.style.left='calc(50% + '+x.toFixed(1)+'px)';
+    d.style.top='calc(42% + '+y.toFixed(1)+'px)';
+    stage.appendChild(d);
+    nodes.push(d);
+  }
+  var t0=Date.now(), DUR=8000;
+  var coreOn=false, elevOn=false, towersOn=false, shipOn=false;
+  lbTimer=setInterval(function(){
+    var el=Date.now()-t0;
+    var p=Math.min(1, el/DUR);
+    document.getElementById('lbBar').style.width=(p*100).toFixed(0)+'%';
+    document.getElementById('lbPct').textContent=Math.round(p*100)+'%';
+    document.getElementById('lbTime').textContent=(el/1000).toFixed(1)+'s';
+    if(p<0.25){document.getElementById('lbStageName').textContent='⚗️ 结构件发射入轨';document.getElementById('lbStatus').textContent='发射中…';}
+    else if(p<0.45){document.getElementById('lbStageName').textContent='🛰️ 核心舱对接';document.getElementById('lbStatus').textContent='对接中…';if(!coreOn){document.getElementById('lbCore').classList.add('on');coreOn=true;}}
+    else if(p<0.75){document.getElementById('lbStageName').textContent='🧩 环形结构合拢';document.getElementById('lbStatus').textContent='合拢中…';}
+    else if(p<1){document.getElementById('lbStageName').textContent='🌆 城市系统成型';document.getElementById('lbStatus').textContent='成型中…';}
+    var lit=Math.floor((p-0.45)/0.30*12);
+    lit=Math.max(0,Math.min(12,lit));
+    for(var i=0;i<12;i++){if(i<lit){nodes[i].classList.add('on');}}
+    var cnt=lit+(coreOn?1:0)+(elevOn?1:0)+(towersOn?3:0);
+    document.getElementById('lbCount').textContent=cnt;
+    if(p>=0.45&&!elevOn){document.getElementById('lbElevator').style.height='125px';elevOn=true;}
+    if(p>=0.75&&!towersOn){document.getElementById('lbT1').style.height='46px';document.getElementById('lbT2').style.height='74px';document.getElementById('lbT3').style.height='56px';towersOn=true;}
+    if(p>=0.9&&!shipOn){document.getElementById('lbShip').classList.add('on');shipOn=true;}
+    if(p>=1){
+      clearInterval(lbTimer);lbTimer=null;
+      document.getElementById('lbStageName').textContent='✓ 建造完成';
+      document.getElementById('lbStatus').textContent='✅ 整城点亮';
+      document.getElementById('lbCount').textContent='16';
+      document.getElementById('lbBtn').textContent='🔄 重新光速建造';
+    }
+  },100);
+}
+
+/* ===== UES 星座遥测接收 ===== */
+function initRxGrid(){
+  var grid=document.getElementById('rxGrid');
+  if(!grid) return;
+  var html='';
+  for(var i=1;i<=12;i++){
+    var sig=88+Math.floor(Math.random()*10);
+    var temp=22+(Math.random()*8-4).toFixed(1);
+    var batt=7.2+(Math.random()*0.4-0.2).toFixed(2);
+    var ang=(Math.random()*360).toFixed(0);
+    html+='<div style="background:rgba(0,0,0,.2);border-radius:6px;padding:6px;border-left:2px solid #52C41A">'
+      +'<div style="color:var(--text);font-weight:bold">UES-'+i+'</div>'
+      +'<div style="margin-top:2px">信号 <b style="color:#52C41A">'+sig+'%</b></div>'
+      +'<div>温度 <b style="color:var(--text)">'+temp+'°C</b></div>'
+      +'<div>电压 <b style="color:var(--text)">'+batt+'V</b></div>'
+      +'<div>姿态 <b style="color:var(--text)">'+ang+'°</b></div>'
+      +'</div>';
+  }
+  grid.innerHTML=html;
+  setTimeout(function(){initRxGrid();},1500);
+}
+document.addEventListener('DOMContentLoaded',function(){setTimeout(initRxGrid,500);});
+/* ===== UES-1 立方星在轨动画 ===== */
+(function(){
+  var ang=Math.random()*Math.PI*2, lap=0, last=0;
+  function tick(ts){
+    if(!last) last=ts;
+    var dt=(ts-last)/1000; last=ts;
+    ang += dt*2*Math.PI/92.4;  // 视觉 92.4 秒一圈（1s=1min）
+    if(ang>=Math.PI*2){ang-=Math.PI*2; lap++; var el=document.getElementById('csLap'); if(el) el.textContent=lap;}
+    var sat=document.getElementById('csSat');
+    if(sat){
+      var x=Math.cos(ang)*100, y=Math.sin(ang)*55;
+      sat.style.transform='translate('+x.toFixed(1)+'px,'+y.toFixed(1)+'px)';
+    }
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+})();
 document.getElementById('broadcastModal').addEventListener('click',function(e){if(e.target===this)closeBroadcast()});
 
 function sendBroadcast(){
