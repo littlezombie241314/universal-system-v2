@@ -426,6 +426,20 @@ select option{background:#040b1a;color:var(--cyan)}
 .corps-flow .cf-name{font-size:10px;font-weight:bold;color:var(--text);margin:3px 0}
 .corps-flow .cf-desc{font-size:9px;color:var(--text-dim)}
 
+
+/* ===== CubeStar 12颗立方星 ===== */
+.cs-orbit{position:relative;width:190px;height:190px;border-radius:50%;border:1px dashed rgba(155,187,244,.3);flex:0 0 auto;margin:0 auto;background:radial-gradient(circle,rgba(0,20,40,.25),transparent 70%)}
+.cs-orbit .cs-ring{position:absolute;left:50%;top:50%;width:0;height:0;animation:coSpin 22s linear infinite}
+.cs-orbit .cs-ring.r2{animation:coSpin 16s linear infinite reverse}
+.cs-orbit .cs-node{position:absolute;left:-11px;top:-11px;width:22px;height:22px;border-radius:4px;background:rgba(4,18,34,.92);border:1px solid var(--cyan);display:flex;align-items:center;justify-content:center;font-size:11px;box-shadow:0 0 8px rgba(82,224,255,.4)}
+.cs-orbit .cs-core{position:absolute;left:50%;top:50%;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;background:radial-gradient(circle,#0a2a44,#04121f);border:1px solid #9BBBF4;display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 0 14px rgba(155,187,244,.35)}
+.cs-task{flex:1;min-width:1px;display:flex;flex-direction:column;gap:5px}
+.cs-task-row{display:flex;align-items:center;gap:6px;background:rgba(0,0,0,.2);border-radius:6px;padding:5px 8px}
+.cs-task-row .ct-ico{font-size:13px;width:22px;text-align:center}
+.cs-task-row .ct-name{font-size:10px;font-weight:bold;color:var(--text);flex:1}
+.cs-task-row .ct-desc{font-size:9px;color:var(--text-dim);flex:2}
+.cs-task-row .ct-st{font-size:9px;color:#52C41A;font-weight:bold;white-space:nowrap}
+
 </style>
 
     <link rel="icon" type="image/x-icon" href="favicon.ico">
@@ -3234,6 +3248,40 @@ select option{background:#040b1a;color:var(--cyan)}
             <div class="cf-step"><div class="cf-num">阶段 4</div><div class="cf-name">🌆 城市启用</div><div class="cf-desc">生命保障·能源·城市系统上线</div></div>
           </div>
           <div style="font-size:9px;color:var(--text-dim);margin-top:8px;line-height:1.6">人类运力现状参考：星舰级单次近地运载约百吨级，在轨建城需多次发射 + 在轨组装，属前沿研究方向（国际空间站、中国空间站已在开展在轨服务与太空制造实验）。本面板为施工流程方案展示，数据由全宇宙恒等系统驱动。</div>
+        </div>
+        <div style="background:rgba(0,0,0,0.25);border-radius:10px;padding:12px;margin-bottom:12px">
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:10px">
+            <div style="font-size:12px;font-weight:bold;color:var(--text)">🛰️ 12 颗立方星 · 星座系统</div>
+            <div style="font-size:10px;color:#52C41A">12/12 在线 · 实时同步</div>
+          </div>
+          <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap">
+            <div class="cs-orbit">
+              <div class="cs-ring">
+                <div class="cs-node" style="transform:rotate(0deg) translateX(80px) rotate(0deg)">🛰️</div>
+                <div class="cs-node" style="transform:rotate(30deg) translateX(80px) rotate(-30deg)">📡</div>
+                <div class="cs-node" style="transform:rotate(60deg) translateX(80px) rotate(-60deg)">🔭</div>
+                <div class="cs-node" style="transform:rotate(90deg) translateX(80px) rotate(-90deg)">⚡</div>
+                <div class="cs-node" style="transform:rotate(120deg) translateX(80px) rotate(-120deg)">🛰️</div>
+                <div class="cs-node" style="transform:rotate(150deg) translateX(80px) rotate(-150deg)">📡</div>
+              </div>
+              <div class="cs-ring r2">
+                <div class="cs-node" style="transform:rotate(15deg) translateX(62px) rotate(-15deg)">🔭</div>
+                <div class="cs-node" style="transform:rotate(45deg) translateX(62px) rotate(-45deg)">⚡</div>
+                <div class="cs-node" style="transform:rotate(75deg) translateX(62px) rotate(-75deg)">🛰️</div>
+                <div class="cs-node" style="transform:rotate(105deg) translateX(62px) rotate(-105deg)">📡</div>
+                <div class="cs-node" style="transform:rotate(135deg) translateX(62px) rotate(-135deg)">🔭</div>
+                <div class="cs-node" style="transform:rotate(165deg) translateX(62px) rotate(-165deg)">⚡</div>
+              </div>
+              <div class="cs-core">🏙️</div>
+            </div>
+            <div class="cs-task">
+              <div class="cs-task-row"><span class="ct-ico">📡</span><span class="ct-name">通信中继</span><span class="ct-desc">星际网络全城覆盖 · 零延迟</span><span class="ct-st">在线</span></div>
+              <div class="cs-task-row"><span class="ct-ico">🔭</span><span class="ct-name">深空观测</span><span class="ct-desc">宇宙扫描 · 提前预警</span><span class="ct-st">在线</span></div>
+              <div class="cs-task-row"><span class="ct-ico">⚡</span><span class="ct-name">能源传输</span><span class="ct-desc">空间太阳能 · 无线输电</span><span class="ct-st">在线</span></div>
+              <div class="cs-task-row"><span class="ct-ico">🛰️</span><span class="ct-name">轨道巡查</span><span class="ct-desc">城市结构健康监测 · 自动维护</span><span class="ct-st">在线</span></div>
+            </div>
+          </div>
+          <div style="font-size:9px;color:var(--text-dim);margin-top:8px;line-height:1.6">12 颗立方星双环星座 · 环绕空间站城市运行 · 通信/观测/能源/巡查四类任务 · 数据由全宇宙恒等系统驱动 · 实时保存 · 多端同步</div>
         </div>
         <div style="text-align:center"><button class="btn" onclick="quickMsg('宇宙城市持续扩张中：全宇宙每颗星球都在自动建设新城市，城市数量每秒增长，无上限。')">🚀 扩展更多宇宙城市</button></div>
         <div style="font-size:10px;color:var(--text-dim);text-align:center;margin-top:10px">宇宙城市系统 · 数据由全宇宙恒等系统驱动 · 实时保存 · 多端同步</div>
