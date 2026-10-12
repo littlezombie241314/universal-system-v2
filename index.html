@@ -406,19 +406,6 @@ select option{background:#040b1a;color:var(--cyan)}
 .lang-tag{padding:4px 10px;border:1px solid rgba(168,85,247,0.25);background:rgba(168,85,247,0.05);font-size:10px;color:var(--purple);letter-spacing:1px;transition:all .2s}
 .lang-tag:hover{border-color:var(--purple);background:rgba(168,85,247,0.12);box-shadow:0 0 8px rgba(168,85,247,.3)}
 
-/* ===== UCity3D ===== */
-#uc3dBox{user-select:none;cursor:grab}
-#uc3dBox:active{cursor:grabbing}
-#uc3dRig .uc-seg{position:absolute;border-radius:2px;transform-style:preserve-3d;box-shadow:0 0 6px rgba(0,0,0,.35)}
-#uc3dRig .s-hub{background:linear-gradient(180deg,var(--uc-a),var(--uc-b));opacity:.95}
-#uc3dRig .s-ring{background:linear-gradient(180deg,var(--uc-b),var(--uc-a));opacity:.85;border:1px solid rgba(255,255,255,.12)}
-#uc3dRig .s-ring2{background:linear-gradient(180deg,var(--uc-a),var(--uc-b));opacity:.7}
-#uc3dRig .s-pillar{background:linear-gradient(180deg,var(--uc-b),var(--uc-a));opacity:.55;border-radius:3px}
-#uc3dRig .uc-glow{position:absolute;width:230px;height:230px;left:-115px;top:-115px;border-radius:50%;background:radial-gradient(circle,var(--uc-a) 0%,rgba(0,0,0,0) 62%);opacity:.22;filter:blur(6px)}
-.uc3d-stars{position:absolute;left:0;top:0;width:100%;height:100%;border-radius:10px;pointer-events:none;background-image:radial-gradient(1px 1px at 22% 18%,#fff,transparent),radial-gradient(1px 1px at 68% 34%,#cfe,transparent),radial-gradient(1.5px 1.5px at 42% 72%,#fff,transparent),radial-gradient(1px 1px at 84% 58%,#bdf,transparent),radial-gradient(1.5px 1.5px at 12% 82%,#fff,transparent),radial-gradient(1px 1px at 55% 12%,#fff,transparent);opacity:.6}
-.uc3d-earth{position:absolute;left:50%;bottom:-34%;width:130%;height:72%;transform:translateX(-50%);border-radius:50% 50% 0 0;background:radial-gradient(ellipse at 38% 22%,#1f6f8f 0%,#0a2a44 58%,#04121f 100%);opacity:.28;filter:blur(2px)}
-#ucityTabs .uctab{padding:4px 10px;font-size:10px;border:1px solid rgba(155,187,244,.4);border-radius:4px;color:var(--text);cursor:pointer;background:rgba(4,18,34,.5)}
-#ucityTabs .uctab.on{background:rgba(155,187,244,.25);color:#fff;border-color:#9BBBF4}
 
 
 /* ===== Corps 施工军团 ===== */
@@ -3153,25 +3140,6 @@ select option{background:#040b1a;color:var(--cyan)}
           <span>在建城市：<b style="color:#52C41A">∞ 无限</b></span>
           <span>覆盖星球：<b style="color:#52C41A">全宇宙</b></span>
           <span>城市人口：<b style="color:#52C41A">全宇宙所有存在</b></span>
-        </div>
-        <div style="background:rgba(0,0,0,0.25);border-radius:10px;padding:12px;margin-bottom:12px">
-          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:8px">
-            <div style="font-size:12px;font-weight:bold;color:var(--text)">🧊 3D 实物还原 · 数字孪生</div>
-            <div style="display:flex;gap:6px;flex-wrap:wrap" id="ucityTabs"></div>
-          </div>
-          <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap">
-            <div id="uc3dBox" style="flex:0 0 auto;position:relative;width:340px;height:340px;perspective:900px;margin:0 auto;border-radius:10px;background:rgba(0,0,0,.35);overflow:hidden">
-              <div class="uc3d-stars"></div>
-              <div class="uc3d-earth"></div>
-              <div id="uc3dRig" style="position:absolute;left:50%;top:50%;width:0;height:0;transform-style:preserve-3d;--uc-a:#52E0FF;--uc-b:#2E6BFF"></div>
-            </div>
-            <div style="flex:1;min-width:200px">
-              <div id="ucityName" style="font-size:16px;font-weight:bold;color:var(--cyan)">🛰️ 九霄空间站</div>
-              <div id="ucityDesc" style="font-size:11px;color:#52C41A;margin:6px 0">地球轨道 · 环形都市 · 博鳌空天基地</div>
-              <div id="ucityTech" style="font-size:10px;color:var(--text-dim)">核心技术：可控核聚变微型反应堆 · 纳米复合纤维结构</div>
-              <div id="ucityStat" style="font-size:10px;color:var(--text-dim);margin-top:8px">🖱️ 拖拽旋转 360° 查看 · 自动巡航中</div>
-            </div>
-          </div>
         </div>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-bottom:12px">
           <div style="background:rgba(0,0,0,0.2);border-radius:8px;overflow:hidden">
@@ -13821,82 +13789,7 @@ if ('serviceWorker' in navigator) {
 })();
 </script>
 </div>
-<script>
-/* ===== UCity3D JS ===== */
-(function(){
-  if (!document.getElementById('uc3dRig')) return;
-  var RIG = document.getElementById('uc3dRig');
-  var BOX = document.getElementById('uc3dBox');
-  var CITIES = {
-    jiuxiao: {short:'九霄空间站', name:'🛰️ 九霄空间站', desc:'地球轨道 · 环形都市 · 博鳌空天基地', tech:'可控核聚变微型反应堆 · 纳米复合纤维结构', a:'#52E0FF', b:'#2E6BFF'},
-    asia1:   {short:'亚洲一号', name:'🌌 亚洲一号 · ASIA-1', desc:'深空空间站 · 大型深空都市', tech:'长寿命聚变堆 · 闭环全物质再生生命保障 · 抗宇宙辐射涂层', a:'#FFD76E', b:'#C9842B'},
-    kunpeng: {short:'鲲鹏号', name:'🚀 鲲鹏号 · KUNPENG', desc:'星际战舰 · 空天母城', tech:'星际外交出访载体 · 星际空域国土安全防御核心', a:'#FF7B72', b:'#3AA8FF'},
-    xiamen:  {short:'厦门2100', name:'🌆 厦门 2100 · XIAMEN', desc:'龙海 CBD · 全息海滨都市', tech:'生物朋克 · 数字全息都市 · 悬浮建筑群落', a:'#B48CFF', b:'#52E0FF'}
-  };
-  var rotY = -30, rotX = 16, auto = true, dragging = false, lx = 0, ly = 0, raf = null;
-  function buildSeg(cls, w, h, left, top, rz, tz){
-    var d = document.createElement('div');
-    d.className = 'uc-seg ' + cls;
-    d.style.width = w + 'px'; d.style.height = h + 'px';
-    d.style.left = left + 'px'; d.style.top = top + 'px';
-    d.style.transform = 'rotateZ(' + rz + 'deg) translateZ(' + tz + 'px)';
-    return d;
-  }
-  function build(){
-    RIG.innerHTML = '';
-    var g = document.createElement('div'); g.className = 'uc-glow'; RIG.appendChild(g);
-    for (var i = 0; i < 16; i++) RIG.appendChild(buildSeg('s-ring', 20, 96, -10, -48, i * 22.5, 118));
-    for (var j = 0; j < 12; j++) RIG.appendChild(buildSeg('s-ring2', 12, 22, -6, -160, j * 30, 118));
-    for (var k = 0; k < 8; k++) RIG.appendChild(buildSeg('s-hub', 26, 168, -13, -84, k * 45, 15));
-    RIG.appendChild(buildSeg('s-hub', 34, 18, -17, -176, 0, 0));
-    for (var m = 0; m < 8; m++) RIG.appendChild(buildSeg('s-pillar', 5, 116, -2.5, -58, m * 45, 118));
-  }
-  function render(){ RIG.style.transform = 'rotateX(' + rotX + 'deg) rotateY(' + rotY + 'deg)'; }
-  function setCity(key){
-    var ct = CITIES[key] || CITIES.jiuxiao;
-    RIG.style.setProperty('--uc-a', ct.a);
-    RIG.style.setProperty('--uc-b', ct.b);
-    document.getElementById('ucityName').textContent = ct.name;
-    document.getElementById('ucityDesc').textContent = ct.desc;
-    document.getElementById('ucityTech').textContent = '核心技术：' + ct.tech;
-    var tabs = document.querySelectorAll('#ucityTabs .uctab');
-    for (var i = 0; i < tabs.length; i++) tabs[i].classList.toggle('on', tabs[i].getAttribute('data-k') === key);
-  }
-  function tick(t){ if (auto && !dragging) rotY += 0.18; render(); raf = requestAnimationFrame(tick); }
-  var tb = document.getElementById('ucityTabs');
-  var keys = Object.keys(CITIES);
-  for (var n = 0; n < keys.length; n++){
-    (function(k){
-      var b = document.createElement('div');
-      b.className = 'uctab' + (k === 'jiuxiao' ? ' on' : '');
-      b.setAttribute('data-k', k);
-      b.textContent = CITIES[k].short;
-      b.onclick = function(){ setCity(k); };
-      tb.appendChild(b);
-    })(keys[n]);
-  }
-  function down(e){ dragging = true; auto = false; lx = e.clientX || (e.touches && e.touches[0].clientX); ly = e.clientY || (e.touches && e.touches[0].clientY); BOX.style.cursor = 'grabbing'; document.getElementById('ucityStat').textContent = '🖱️ 手动查看中 · 松手恢复自动巡航'; }
-  function move(e){
-    if (!dragging) return;
-    var x = e.clientX || (e.touches && e.touches[0].clientX);
-    var y = e.clientY || (e.touches && e.touches[0].clientY);
-    if (x === undefined || y === undefined) return;
-    rotY += (x - lx) * 0.5; rotX += (y - ly) * 0.3;
-    if (rotX > 60) rotX = 60; if (rotX < -30) rotX = -30;
-    lx = x; ly = y;
-  }
-  function up(){ if (dragging){ dragging = false; setTimeout(function(){ auto = true; document.getElementById('ucityStat').textContent = '🖱️ 拖拽旋转 360° 查看 · 自动巡航中'; }, 2500); } }
-  BOX.addEventListener('mousedown', down);
-  window.addEventListener('mousemove', move);
-  window.addEventListener('mouseup', up);
-  BOX.addEventListener('touchstart', down, {passive:true});
-  window.addEventListener('touchmove', move, {passive:true});
-  window.addEventListener('touchend', up, {passive:true});
-  build();
-  setCity('jiuxiao');
-  raf = requestAnimationFrame(tick);
-})();
-</script>
+
 </body>
 </html>
     
