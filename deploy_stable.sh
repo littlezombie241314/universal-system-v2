@@ -197,7 +197,10 @@ except: print('')
 # ---------- 步骤 4: Cloudflare ----------
 deploy_cloudflare() {
   Y "更新 Cloudflare Workers..."
-  cp "$PUBLISH_DIR/index.html" "$APP_DIR/../worker/public/index.html" || return 1
+  # 同步全部文件（index.html + sw.js + manifest + icons + assets），避免部分文件旧版导致内容不完整
+  rsync -a --delete --exclude '.git' --exclude '.gitignore' --exclude '.github' --exclude 'index_backup_wormhole.html' \
+    "$PUBLISH_DIR/" "$APP_DIR/../worker/public/" || return 1
+  md5sum "$APP_DIR/../worker/public/index.html" | awk '{print "worker/public/index.html md5:", $1}'
   cd "$APP_DIR/../worker" || return 1
   export CLOUDFLARE_API_TOKEN="$CF_TOKEN"
   if ! retry_cmd 3 8 wrangler deploy >/dev/null 2>&1; then
