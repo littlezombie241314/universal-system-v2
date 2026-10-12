@@ -3247,7 +3247,7 @@ select option{background:#040b1a;color:var(--cyan)}
           <div style="font-size:11px;color:var(--text-dim);margin-bottom:4px">🌡️ 全屋平均温度</div>
           <div id="indoorAvgTemp" style="font-size:22px;font-weight:bold;color:#52C41A">26.0°C</div>
           <div style="font-size:10px;color:var(--text-dim);margin-top:2px">室外 30°C · 室内恒温舒适</div>
-          <button onclick="setAllIndoorTarget(26)" style="margin-top:8px;padding:6px 16px;background:rgba(82,196,26,0.2);border:1px solid rgba(82,196,26,0.4);color:#52C41A;border-radius:6px;font-size:11px;cursor:pointer">🎯 全屋舒适 26°C</button>
+          <button onclick="setAllIndoorTarget(30)" style="margin-top:8px;padding:6px 16px;background:rgba(82,196,26,0.2);border:1px solid rgba(82,196,26,0.4);color:#52C41A;border-radius:6px;font-size:11px;cursor:pointer">🎯 全屋舒适 30°C</button>
         </div>
       </div>
 
@@ -11182,7 +11182,7 @@ var indoorTickStarted = false;
 
 function initIndoorClimate(){
   INDOOR_SPACES.forEach(function(s){
-    indoorSpaces[s.id] = {current: 30, target: 26};
+    indoorSpaces[s.id] = {current: 30, target: 30};
   });
   loadIndoorFromBackend();
   renderIndoorClimate();
@@ -11288,7 +11288,12 @@ function loadIndoorFromBackend(){
       if(d.spaces){
         INDOOR_SPACES.forEach(function(s){
           if(d.spaces[s.id]) indoorSpaces[s.id] = d.spaces[s.id];
+          indoorSpaces[s.id].target = 30; // 全屋舒适统一 30°C（旧设定自动迁移）
         });
+        try {
+          d.spaces = indoorSpaces;
+          localStorage.setItem('universal_indoor_climate_state', JSON.stringify(d));
+        } catch(e) {}
       }
     }
   }catch(e){}
