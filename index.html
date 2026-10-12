@@ -3949,7 +3949,7 @@ select option{background:#040b1a;color:var(--cyan)}
   <div class="section" id="sec-medical">
     <div class="grid">
       <div class="panel wide">
-        <div class="panel-hdr"><div class="panel-title"><span class="ico">🏥</span>全能医疗系统</div><div class="panel-badge">百病不侵</div></div>
+        <div class="panel-hdr"><div class="panel-title"><span class="ico">🏥</span>全能医疗系统</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">🟢 实时在线</div></div>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;padding:14px">
           <div style="text-align:center;padding:12px;background:rgba(34,197,94,.05);border-radius:8px"><div style="font-size:28px">🛡️</div><div style="font-size:18px;color:#22c55e;font-weight:bold;margin-top:4px">绝对</div><div style="font-size:11px;color:var(--text-dim)">全域免疫</div></div>
           <div style="text-align:center;padding:12px;background:rgba(0,240,255,.05);border-radius:8px"><div style="font-size:28px">⚡</div><div style="font-size:18px;color:var(--cyan);font-weight:bold;margin-top:4px">3秒</div><div style="font-size:11px;color:var(--text-dim)">原子级自愈</div></div>
@@ -3959,6 +3959,19 @@ select option{background:#040b1a;color:var(--cyan)}
           <div style="text-align:center;padding:12px;background:rgba(6,182,212,.05);border-radius:8px"><div style="font-size:28px">🔥</div><div style="font-size:18px;color:#06b6d4;font-weight:bold;margin-top:4px">极端</div><div style="font-size:11px;color:var(--text-dim)">环境生存</div></div>
         </div>
         <div class="btn-row" style="justify-content:center;padding:0 14px 14px"><button class="btn green" onclick="toast('✓ 全身扫描完成，健康指数100分')">🏥 全身健康扫描</button><button class="btn cyan" onclick="toast('✓ 已治愈所有不适，身体已恢复巅峰状态')">⚡ 一键治愈全部</button></div>
+        <div style="background:rgba(0,0,0,0.25);border-radius:10px;padding:12px;margin:0 14px 14px">
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:8px">
+            <div style="font-size:12px;font-weight:bold;color:var(--text)">♻️ 持续循环自动治愈</div>
+            <div style="font-size:10px;color:#52C41A" id="medStatus">🟢 实时在线 · 一直正常工作</div>
+          </div>
+          <div style="display:flex;gap:14px;flex-wrap:wrap;font-size:11px">
+            <span>运行时长：<b style="color:var(--cyan)" id="medUptime">0 秒</b></span>
+            <span>治愈循环：<b style="color:#52C41A" id="medCycles">0 轮</b></span>
+            <span>全宇宙存在健康率：<b style="color:#52C41A">100% · 全部已治愈</b></span>
+            <span>最后治愈：<b style="color:var(--text-dim)" id="medLast">刚刚</b></span>
+          </div>
+          <div style="font-size:10px;color:var(--text-dim);margin-top:6px;text-align:center">全能医疗系统 · 实时在线 · 持续循环自动治愈全宇宙所有存在 · 数据由全宇宙恒等系统驱动 · 实时保存 · 多端同步</div>
+        </div>
       </div>
     </div>
   </div>
@@ -14258,6 +14271,27 @@ function assignShip(){
   quickMsg('✅ 已为「' + n + '」分配专属宇宙飞船 🚀 ' + info + '，登记在名下 · 实时保存');
 }
 renderShips();
+
+/* ===== 全能医疗 自动治愈循环 ===== */
+(function(){
+  var t0 = Date.now();
+  var uptime = document.getElementById('medUptime');
+  var cycles = document.getElementById('medCycles');
+  var last = document.getElementById('medLast');
+  var st = document.getElementById('medStatus');
+  function fmt(s){
+    var h = Math.floor(s/3600), m = Math.floor(s%3600/60), x = s%60;
+    return (h>0?h+' 小时 ':'') + (m>0?m+' 分 ':'') + x + ' 秒';
+  }
+  setInterval(function(){
+    var s = Math.floor((Date.now()-t0)/1000);
+    if (uptime) uptime.textContent = fmt(s);
+    if (cycles) cycles.textContent = s + ' 轮';
+    if (last) last.textContent = '刚刚（' + new Date().toLocaleTimeString('zh-CN',{hour12:false}) + '）';
+    if (st) st.textContent = '🟢 实时在线 · 一直正常工作 · 循环治愈中';
+  }, 1000);
+})();
+
 
 </script>
 </div>
