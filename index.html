@@ -2511,34 +2511,6 @@ select option{background:#040b1a;color:var(--cyan)}
         </div>
       </div>
     </div>
-  <!-- 室内温度调节系统 -->
-  <div class="panel wide"><div class="panel-hdr"><div class="panel-title"><span class="ico">🏠</span>室内温度调节系统</div><div class="panel-badge" style="background:rgba(0,212,255,0.2);color:#00d4ff">恒温舒适 · 全屋智控</div></div>
-    <div style="padding:16px">
-      <div style="font-size:13px;color:var(--text-dim);margin-bottom:12px">全宇宙室内空间温度智能调节 · 每间独立控温 · 实时恒温到设定温度</div>
-
-      <!-- 全屋控制 -->
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
-        <div style="background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.3);border-radius:8px;padding:12px;text-align:center">
-          <div style="font-size:11px;color:var(--text-dim);margin-bottom:4px">⚡ 全屋恒温智控</div>
-          <div id="indoorMasterStatus" style="font-size:16px;font-weight:bold;color:#00d4ff">● 已开启</div>
-          <button onclick="toggleIndoorMaster()" id="indoorMasterBtn" style="margin-top:8px;padding:6px 16px;background:rgba(0,212,255,0.2);border:1px solid rgba(0,212,255,0.4);color:#00d4ff;border-radius:6px;font-size:11px;cursor:pointer">⏸️ 关闭全屋调节</button>
-        </div>
-        <div style="background:rgba(82,196,26,0.08);border:1px solid rgba(82,196,26,0.3);border-radius:8px;padding:12px;text-align:center">
-          <div style="font-size:11px;color:var(--text-dim);margin-bottom:4px">🌡️ 全屋平均温度</div>
-          <div id="indoorAvgTemp" style="font-size:22px;font-weight:bold;color:#52C41A">26.0°C</div>
-          <div style="font-size:10px;color:var(--text-dim);margin-top:2px">室外 30°C · 室内恒温舒适</div>
-          <button onclick="setAllIndoorTarget(26)" style="margin-top:8px;padding:6px 16px;background:rgba(82,196,26,0.2);border:1px solid rgba(82,196,26,0.4);color:#52C41A;border-radius:6px;font-size:11px;cursor:pointer">🎯 全屋舒适 26°C</button>
-        </div>
-      </div>
-
-      <!-- 空间列表 -->
-      <div id="indoorSpaceGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px"></div>
-
-      <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.1);">
-        <div style="font-size:12px;color:#52C41A;text-align:center;">✅ 恒温自动调节中 · 每间空间实时收敛到设定温度</div>
-        <div style="font-size:9px;color:var(--text-dim);text-align:center;margin-top:2px">数据由全宇宙恒等系统驱动 · 实时保存 · 多端同步</div>
-      </div>
-    </div>
   </div>
 
   </div>
@@ -3257,6 +3229,34 @@ select option{background:#040b1a;color:var(--cyan)}
         <div style="text-align:center;margin-bottom:10px"><button class="btn" onclick="wormholeJump()">🌀 启动虫洞跃迁</button></div>
         <div class="warp-progress"><div class="bar"><div class="bar-fill" id="wormholeBar" style="width:0%"></div></div></div>
         <div class="console" id="wormholeLog"><div class="log-line dim">虫洞跃迁记录将显示在这里...</div></div>
+      </div>
+    </div>
+  <!-- 室内温度调节系统 -->
+  <div class="panel wide"><div class="panel-hdr"><div class="panel-title"><span class="ico">🏠</span>室内温度调节系统</div><div class="panel-badge" style="background:rgba(0,212,255,0.2);color:#00d4ff">恒温舒适 · 全屋智控</div></div>
+    <div style="padding:16px">
+      <div style="font-size:13px;color:var(--text-dim);margin-bottom:12px">全宇宙室内空间温度智能调节 · 每间独立控温 · 实时恒温到设定温度</div>
+
+      <!-- 全屋控制 -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+        <div style="background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.3);border-radius:8px;padding:12px;text-align:center">
+          <div style="font-size:11px;color:var(--text-dim);margin-bottom:4px">⚡ 全屋恒温智控</div>
+          <div id="indoorMasterStatus" style="font-size:16px;font-weight:bold;color:#00d4ff">● 已开启</div>
+          <button onclick="toggleIndoorMaster()" id="indoorMasterBtn" style="margin-top:8px;padding:6px 16px;background:rgba(0,212,255,0.2);border:1px solid rgba(0,212,255,0.4);color:#00d4ff;border-radius:6px;font-size:11px;cursor:pointer">⏸️ 关闭全屋调节</button>
+        </div>
+        <div style="background:rgba(82,196,26,0.08);border:1px solid rgba(82,196,26,0.3);border-radius:8px;padding:12px;text-align:center">
+          <div style="font-size:11px;color:var(--text-dim);margin-bottom:4px">🌡️ 全屋平均温度</div>
+          <div id="indoorAvgTemp" style="font-size:22px;font-weight:bold;color:#52C41A">26.0°C</div>
+          <div style="font-size:10px;color:var(--text-dim);margin-top:2px">室外 30°C · 室内恒温舒适</div>
+          <button onclick="setAllIndoorTarget(26)" style="margin-top:8px;padding:6px 16px;background:rgba(82,196,26,0.2);border:1px solid rgba(82,196,26,0.4);color:#52C41A;border-radius:6px;font-size:11px;cursor:pointer">🎯 全屋舒适 26°C</button>
+        </div>
+      </div>
+
+      <!-- 空间列表 -->
+      <div id="indoorSpaceGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px"></div>
+
+      <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.1);">
+        <div style="font-size:12px;color:#52C41A;text-align:center;">✅ 恒温自动调节中 · 每间空间实时收敛到设定温度</div>
+        <div style="font-size:9px;color:var(--text-dim);text-align:center;margin-top:2px">数据由全宇宙恒等系统驱动 · 实时保存 · 多端同步</div>
       </div>
     </div>
   </div></div>
