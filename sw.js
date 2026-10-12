@@ -1,8 +1,8 @@
 /* 全宇宙恒等系统 · Service Worker
- * 版本: v1.4.16
+ * 版本: v1.4.17
  * 作用: 让系统在云 / ARM 工控板 / Android / iOS / 鸿蒙 上离线可启动、可安装、可运行
  */
-const VERSION = 'ues-v1.4.16';
+const VERSION = 'ues-v1.4.17';
 const CORE_CACHE = `${VERSION}-core`;
 
 const CORE_ASSETS = [
@@ -49,7 +49,22 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // 同源静态资源：缓存优先
+  // 页面导航（HTML 文档）：网络优先，失败回退缓存
+  // 保证每次打开都拉到线上最新版，离线时才用缓存
+  if (req.mode === 'navigate' || (req.headers.get('accept') || '').includes('text/html')) {
+    event.respondWith(
+      fetch(req).then((resp) => {
+        if (resp && resp.status === 200 && resp.type === 'basic') {
+          const copy = resp.clone();
+          caches.open(CORE_CACHE).then((c) => c.put(req, copy));
+        }
+        return resp;
+      }).catch(() => caches.match(req))
+    );
+    return;
+  }
+
+  // 同源静态资源（js/css/图标等）：缓存优先，离线可用
   event.respondWith(
     caches.match(req).then((cached) => {
       if (cached) return cached;
