@@ -1247,7 +1247,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.31 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.32 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -4530,7 +4530,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.31 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.32 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -5329,6 +5329,28 @@ function switchMainTab(secId){
 
 
 // 简单的标签页切换函数
+
+/* ===== 全宇宙恒等系统 全局在线/离线 ===== */
+(function(){
+  var bar = document.createElement('div');
+  bar.id = 'uesOfflineBar';
+  bar.style.cssText = 'position:fixed;bottom:0;left:0;right:0;z-index:99999;background:#1a1a2e;color:#FFD24A;font-size:11px;padding:6px 10px;text-align:center;display:none;border-top:1px solid rgba(255,210,74,0.3);font-family:monospace';
+  document.body.appendChild(bar);
+  function showOffline(){
+    bar.textContent = '🔵 离线模式 · 全宇宙恒等系统本地运行中 · 自动治愈 / 复活扫描 / 自动防护 / 体感温度 持续工作 · 联网后自动恢复在线';
+    bar.style.display = 'block';
+  }
+  function hideOffline(){
+    bar.style.display = 'none';
+  }
+  if (!navigator.onLine) showOffline();
+  window.addEventListener('offline', showOffline);
+  window.addEventListener('online', function(){
+    hideOffline();
+    try { toast('✅ 已恢复在线 · 全宇宙恒等系统在线同步中'); log('网络已恢复 · 全宇宙恒等系统恢复在线模式','ok'); } catch(e){}
+  });
+})();
+
 function switchTab(secId){
   try{
     console.log('switchTab called:', secId);
@@ -12610,7 +12632,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.4.31';
+var systemVersion = 'v1.4.32';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
