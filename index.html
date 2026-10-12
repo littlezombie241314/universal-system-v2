@@ -1246,7 +1246,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.28 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.29 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -3939,7 +3939,8 @@ select option{background:#040b1a;color:var(--cyan)}
           <div style="text-align:center;padding:12px;background:rgba(236,72,153,.05);border-radius:8px"><div style="font-size:28px">🐱</div><div style="font-size:18px;color:#ec4899;font-weight:bold;margin-top:4px">永生</div><div style="font-size:11px;color:var(--text-dim)">宠物陪伴</div></div>
           <div style="text-align:center;padding:12px;background:rgba(34,197,94,.05);border-radius:8px"><div style="font-size:28px">🌳</div><div style="font-size:18px;color:#22c55e;font-weight:bold;margin-top:4px">意识</div><div style="font-size:11px;color:var(--text-dim)">植物唤醒</div></div>
         </div>
-        <div class="btn-row" style="justify-content:center;padding:0 14px 14px"><button class="btn green" onclick="toast('✓ 已与周围生物建立沟通连接')">🗣️ 开启万物对话</button><button class="btn cyan" onclick="toast('✓ 已复活指定灭绝物种，种群永续繁衍')">🦕 复活灭绝物种</button></div>
+        <div class="btn-row" style="justify-content:center;padding:0 14px 8px"><button class="btn green" onclick="toast('✓ 已与周围生物建立沟通连接')">🗣️ 开启万物对话</button><button class="btn green" id="extinctAutoBtn" onclick="toggleExtinctAuto()" style="background:rgba(82,196,26,0.3);border-color:#52C41A">🦕 自动复活灭绝物种 ✓ 已开启</button></div>
+        <div style="font-size:10px;color:#52C41A;padding:0 14px 10px;text-align:center">🦕 自动复活灭绝物种 · <span id="extinctAutoStatus">已自动开启 · 每秒自动复活</span> · 已自动复活 <b id="extinctRevivedCount">0</b> 个灭绝物种 · 种群永续繁衍</div>
       </div>
     </div>
   </div>
@@ -4482,7 +4483,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.28 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.29 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -6264,6 +6265,30 @@ setInterval(function(){
   if (st) st.textContent = (!navigator.onLine ? '🔵 离线模式 · 复活扫描持续运行' : '🟢 每飞秒自动扫描中');
   try { saveResurrectionState(); } catch(e){}
 }, 1);
+
+/* ===== 生态多样性守护 · 自动复活灭绝物种 ===== */
+var extinctAutoEnabled = true;
+var extinctRevivedTotal = 0;
+function toggleExtinctAuto(){
+  var btn = document.getElementById('extinctAutoBtn');
+  var st = document.getElementById('extinctAutoStatus');
+  extinctAutoEnabled = !extinctAutoEnabled;
+  if (extinctAutoEnabled){
+    if (btn){ btn.textContent = '🦕 自动复活灭绝物种 ✓ 已开启'; btn.style.background = 'rgba(82,196,26,0.3)'; btn.style.borderColor = '#52C41A'; }
+    if (st) st.textContent = '已自动开启 · 每秒自动复活';
+    toast('✓ 自动复活灭绝物种已开启：全宇宙灭绝物种持续复活中');
+  } else {
+    if (btn){ btn.textContent = '🦕 自动复活灭绝物种'; btn.style.background = ''; btn.style.borderColor = ''; }
+    if (st) st.textContent = '已暂停';
+    toast('自动复活灭绝物种已暂停');
+  }
+}
+setInterval(function(){
+  if (!extinctAutoEnabled) return;
+  extinctRevivedTotal += Math.floor(Math.random() * 50 + 5);
+  var el = document.getElementById('extinctRevivedCount');
+  if (el) el.textContent = extinctRevivedTotal.toLocaleString();
+}, 1000);
 // 一键复活全部功能
 function resurrectAll(){
   toast('⚡ 一键复活全部启动...');
@@ -12504,7 +12529,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.4.28';
+var systemVersion = 'v1.4.29';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
