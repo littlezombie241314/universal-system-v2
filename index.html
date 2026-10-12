@@ -420,6 +420,25 @@ select option{background:#040b1a;color:var(--cyan)}
 #ucityTabs .uctab{padding:4px 10px;font-size:10px;border:1px solid rgba(155,187,244,.4);border-radius:4px;color:var(--text);cursor:pointer;background:rgba(4,18,34,.5)}
 #ucityTabs .uctab.on{background:rgba(155,187,244,.25);color:#fff;border-color:#9BBBF4}
 
+
+/* ===== Corps 施工军团 ===== */
+.corps-orbit{position:relative;width:190px;height:190px;border-radius:50%;border:1px dashed rgba(155,187,244,.35);flex:0 0 auto;margin:0 auto}
+.corps-orbit .co-ring{position:absolute;left:50%;top:50%;width:0;height:0;animation:coSpin 14s linear infinite}
+.corps-orbit .co-node{position:absolute;left:-13px;top:-13px;width:26px;height:26px;border-radius:50%;background:rgba(4,18,34,.9);border:1px solid var(--cyan);display:flex;align-items:center;justify-content:center;font-size:13px;box-shadow:0 0 8px rgba(82,224,255,.35)}
+.corps-orbit .co-core{position:absolute;left:50%;top:50%;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;background:radial-gradient(circle,#0a2a44,#04121f);border:1px solid var(--magenta);display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 0 14px rgba(255,87,159,.3)}
+@keyframes coSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.corps-stage{flex:1;min-width:1px;display:flex;flex-direction:column;gap:6px}
+.corps-row{display:flex;align-items:center;gap:6px;background:rgba(0,0,0,.2);border-radius:6px;padding:6px 8px}
+.corps-row .cr-ico{font-size:16px;width:24px;text-align:center}
+.corps-row .cr-name{font-size:11px;font-weight:bold;color:var(--text);flex:1}
+.corps-row .cr-task{font-size:10px;color:var(--text-dim);flex:2}
+.corps-row .cr-num{font-size:10px;color:#52C41A;font-weight:bold;white-space:nowrap}
+.corps-flow{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:10px}
+.corps-flow .cf-step{background:rgba(0,0,0,.22);border-radius:6px;padding:8px 6px;text-align:center;border-top:2px solid var(--cyan)}
+.corps-flow .cf-num{font-size:9px;color:var(--text-dim)}
+.corps-flow .cf-name{font-size:10px;font-weight:bold;color:var(--text);margin:3px 0}
+.corps-flow .cf-desc{font-size:9px;color:var(--text-dim)}
+
 </style>
 
     <link rel="icon" type="image/x-icon" href="favicon.ico">
@@ -3187,6 +3206,38 @@ select option{background:#040b1a;color:var(--cyan)}
               <div style="font-size:10px;color:var(--text-dim)">生物朋克 · 数字全息都市 · 悬浮建筑群落</div>
             </div>
           </div>
+        </div>
+        <div style="background:rgba(0,0,0,0.25);border-radius:10px;padding:12px;margin-bottom:12px">
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:10px">
+            <div style="font-size:12px;font-weight:bold;color:var(--text)">🛠️ 智能太空施工军团 · 在轨建城方案</div>
+            <div style="font-size:10px;color:#52C41A">编队待命 · 方案就绪</div>
+          </div>
+          <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap">
+            <div class="corps-orbit">
+              <div class="co-ring">
+                <div class="co-node" style="transform:rotate(0deg) translateX(82px) rotate(0deg)">🤖</div>
+                <div class="co-node" style="transform:rotate(60deg) translateX(82px) rotate(-60deg)">🔧</div>
+                <div class="co-node" style="transform:rotate(120deg) translateX(82px) rotate(-120deg)">⚗️</div>
+                <div class="co-node" style="transform:rotate(180deg) translateX(82px) rotate(-180deg)">🚀</div>
+                <div class="co-node" style="transform:rotate(240deg) translateX(82px) rotate(-240deg)">🧩</div>
+                <div class="co-node" style="transform:rotate(300deg) translateX(82px) rotate(-300deg)">🔌</div>
+              </div>
+              <div class="co-core">🛰️</div>
+            </div>
+            <div class="corps-stage">
+              <div class="corps-row"><span class="cr-ico">🤖</span><span class="cr-name">建造机器人</span><span class="cr-task">环形结构搭建 · 舱段铺设</span><span class="cr-num">∞ 编队</span></div>
+              <div class="corps-row"><span class="cr-ico">🔧</span><span class="cr-name">组装机器人</span><span class="cr-task">舱段对接 · 辐条合拢</span><span class="cr-num">∞ 编队</span></div>
+              <div class="corps-row"><span class="cr-ico">⚗️</span><span class="cr-name">材料合成机器人</span><span class="cr-task">月壤/小行星原位制材 · 3D打印结构件</span><span class="cr-num">∞ 编队</span></div>
+              <div class="corps-row"><span class="cr-ico">🚀</span><span class="cr-name">物资穿梭机</span><span class="cr-task">轨道运输 · 能源补给 · 人员轮换</span><span class="cr-num">∞ 编队</span></div>
+            </div>
+          </div>
+          <div class="corps-flow">
+            <div class="cf-step"><div class="cf-num">阶段 1</div><div class="cf-name">⚗️ 原位制材</div><div class="cf-desc">月壤/小行星材料就地合成</div></div>
+            <div class="cf-step"><div class="cf-num">阶段 2</div><div class="cf-name">🧩 舱段预组装</div><div class="cf-desc">地面/轨道分舱预装</div></div>
+            <div class="cf-step"><div class="cf-num">阶段 3</div><div class="cf-name">🛰️ 环形合拢</div><div class="cf-desc">机器人编队轨道对接合拢</div></div>
+            <div class="cf-step"><div class="cf-num">阶段 4</div><div class="cf-name">🌆 城市启用</div><div class="cf-desc">生命保障·能源·城市系统上线</div></div>
+          </div>
+          <div style="font-size:9px;color:var(--text-dim);margin-top:8px;line-height:1.6">人类运力现状参考：星舰级单次近地运载约百吨级，在轨建城需多次发射 + 在轨组装，属前沿研究方向（国际空间站、中国空间站已在开展在轨服务与太空制造实验）。本面板为施工流程方案展示，数据由全宇宙恒等系统驱动。</div>
         </div>
         <div style="text-align:center"><button class="btn" onclick="quickMsg('宇宙城市持续扩张中：全宇宙每颗星球都在自动建设新城市，城市数量每秒增长，无上限。')">🚀 扩展更多宇宙城市</button></div>
         <div style="font-size:10px;color:var(--text-dim);text-align:center;margin-top:10px">宇宙城市系统 · 数据由全宇宙恒等系统驱动 · 实时保存 · 多端同步</div>
