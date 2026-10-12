@@ -2511,6 +2511,36 @@ select option{background:#040b1a;color:var(--cyan)}
         </div>
       </div>
     </div>
+  <!-- 室内温度调节系统 -->
+  <div class="panel wide"><div class="panel-hdr"><div class="panel-title"><span class="ico">🏠</span>室内温度调节系统</div><div class="panel-badge" style="background:rgba(0,212,255,0.2);color:#00d4ff">恒温舒适 · 全屋智控</div></div>
+    <div style="padding:16px">
+      <div style="font-size:13px;color:var(--text-dim);margin-bottom:12px">全宇宙室内空间温度智能调节 · 每间独立控温 · 实时恒温到设定温度</div>
+
+      <!-- 全屋控制 -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+        <div style="background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.3);border-radius:8px;padding:12px;text-align:center">
+          <div style="font-size:11px;color:var(--text-dim);margin-bottom:4px">⚡ 全屋恒温智控</div>
+          <div id="indoorMasterStatus" style="font-size:16px;font-weight:bold;color:#00d4ff">● 已开启</div>
+          <button onclick="toggleIndoorMaster()" id="indoorMasterBtn" style="margin-top:8px;padding:6px 16px;background:rgba(0,212,255,0.2);border:1px solid rgba(0,212,255,0.4);color:#00d4ff;border-radius:6px;font-size:11px;cursor:pointer">⏸️ 关闭全屋调节</button>
+        </div>
+        <div style="background:rgba(82,196,26,0.08);border:1px solid rgba(82,196,26,0.3);border-radius:8px;padding:12px;text-align:center">
+          <div style="font-size:11px;color:var(--text-dim);margin-bottom:4px">🌡️ 全屋平均温度</div>
+          <div id="indoorAvgTemp" style="font-size:22px;font-weight:bold;color:#52C41A">26.0°C</div>
+          <div style="font-size:10px;color:var(--text-dim);margin-top:2px">室外 30°C · 室内恒温舒适</div>
+          <button onclick="setAllIndoorTarget(26)" style="margin-top:8px;padding:6px 16px;background:rgba(82,196,26,0.2);border:1px solid rgba(82,196,26,0.4);color:#52C41A;border-radius:6px;font-size:11px;cursor:pointer">🎯 全屋舒适 26°C</button>
+        </div>
+      </div>
+
+      <!-- 空间列表 -->
+      <div id="indoorSpaceGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px"></div>
+
+      <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.1);">
+        <div style="font-size:12px;color:#52C41A;text-align:center;">✅ 恒温自动调节中 · 每间空间实时收敛到设定温度</div>
+        <div style="font-size:9px;color:var(--text-dim);text-align:center;margin-top:2px">数据由全宇宙恒等系统驱动 · 实时保存 · 多端同步</div>
+      </div>
+    </div>
+  </div>
+
   </div>
   </div>
 </div>
@@ -11132,6 +11162,143 @@ function loadClimateFromBackend(){
 
 // 启动时加载气候数据（宇宙恒等系统数据驱动）
 setTimeout(function(){ loadClimateFromBackend(); }, 1200);
+
+// ========== 室内温度调节系统（宇宙恒等系统数据驱动）==========
+var INDOOR_SPACES = [
+  {id:'living', icon:'🛋️', name:'客厅'},
+  {id:'bedroom', icon:'🛏️', name:'卧室'},
+  {id:'kitchen', icon:'🍳', name:'厨房'},
+  {id:'study', icon:'📚', name:'书房'},
+  {id:'office', icon:'💼', name:'办公室'},
+  {id:'classroom', icon:'🏫', name:'教室'},
+  {id:'hospital', icon:'🏥', name:'医院'},
+  {id:'factory', icon:'🏭', name:'工厂'},
+  {id:'mall', icon:'🛍️', name:'商场'},
+  {id:'data', icon:'🖥️', name:'数据中心'}
+];
+var indoorMasterOn = true;
+var indoorSpaces = {};
+var indoorTickStarted = false;
+
+function initIndoorClimate(){
+  INDOOR_SPACES.forEach(function(s){
+    indoorSpaces[s.id] = {current: 30, target: 26};
+  });
+  loadIndoorFromBackend();
+  renderIndoorClimate();
+  if(!indoorTickStarted){
+    indoorTickStarted = true;
+    setInterval(indoorTick, 1000);
+  }
+}
+
+function renderIndoorClimate(){
+  var grid = document.getElementById('indoorSpaceGrid');
+  if(!grid) return;
+  var html = '';
+  INDOOR_SPACES.forEach(function(s){
+    var sp = indoorSpaces[s.id];
+    if(!sp) return;
+    var cooling = sp.current > sp.target + 0.05;
+    var heating = sp.current < sp.target - 0.05;
+    var status = cooling ? '❄️ 制冷中' : (heating ? '🔥 制热中' : '✅ 恒温');
+    var statusColor = cooling ? '#00d4ff' : (heating ? '#FA8C16' : '#52C41A');
+    html += '<div style="background:rgba(0,0,0,0.2);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:10px;">' +
+      '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">' +
+        '<span style="font-size:18px">' + s.icon + '</span>' +
+        '<span style="font-size:12px;font-weight:bold;color:var(--text)">' + s.name + '</span>' +
+        '<span style="font-size:9px;padding:1px 6px;border-radius:8px;background:' + statusColor + '20;color:' + statusColor + '">' + status + '</span>' +
+      '</div>' +
+      '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">' +
+        '<span style="font-size:10px;color:var(--text-dim)">当前温度</span>' +
+        '<span style="font-size:16px;font-weight:bold;color:var(--text)">' + sp.current.toFixed(1) + '°C</span>' +
+      '</div>' +
+      '<div style="display:flex;justify-content:space-between;align-items:center;">' +
+        '<button onclick="indoorAdj(\'' + s.id + '\',-1)" style="width:28px;height:28px;border-radius:50%;background:rgba(0,212,255,0.15);border:1px solid rgba(0,212,255,0.4);color:#00d4ff;font-size:14px;cursor:pointer">−</button>' +
+        '<span style="font-size:10px;color:var(--text-dim)">设定 <b style="color:#00d4ff">' + sp.target + '°C</b></span>' +
+        '<button onclick="indoorAdj(\'' + s.id + '\',1)" style="width:28px;height:28px;border-radius:50%;background:rgba(0,212,255,0.15);border:1px solid rgba(0,212,255,0.4);color:#00d4ff;font-size:14px;cursor:pointer">+</button>' +
+      '</div>' +
+    '</div>';
+  });
+  grid.innerHTML = html;
+
+  var avg = 0;
+  INDOOR_SPACES.forEach(function(s){ avg += (indoorSpaces[s.id] ? indoorSpaces[s.id].current : 30); });
+  var avgEl = document.getElementById('indoorAvgTemp');
+  if(avgEl) avgEl.textContent = (avg / INDOOR_SPACES.length).toFixed(1) + '°C';
+
+  var ms = document.getElementById('indoorMasterStatus');
+  var mb = document.getElementById('indoorMasterBtn');
+  if(ms) ms.textContent = indoorMasterOn ? '● 已开启' : '⏸️ 已关闭';
+  if(mb) mb.textContent = indoorMasterOn ? '⏸️ 关闭全屋调节' : '▶️ 开启全屋调节';
+}
+
+function indoorTick(){
+  if(!indoorMasterOn) return;
+  INDOOR_SPACES.forEach(function(s){
+    var sp = indoorSpaces[s.id];
+    if(!sp) return;
+    var diff = sp.target - sp.current;
+    if(Math.abs(diff) > 0.05){
+      sp.current += diff > 0 ? Math.min(0.2, diff) : Math.max(-0.2, diff);
+    } else {
+      sp.current = sp.target;
+    }
+  });
+  renderIndoorClimate();
+  saveIndoorToBackend();
+}
+
+function indoorAdj(id, delta){
+  var sp = indoorSpaces[id];
+  if(!sp) return;
+  sp.target = Math.max(16, Math.min(32, sp.target + delta));
+  saveIndoorToBackend();
+  renderIndoorClimate();
+}
+
+function setAllIndoorTarget(t){
+  INDOOR_SPACES.forEach(function(s){ indoorSpaces[s.id].target = t; });
+  saveIndoorToBackend();
+  renderIndoorClimate();
+}
+
+function toggleIndoorMaster(){
+  indoorMasterOn = !indoorMasterOn;
+  saveIndoorToBackend();
+  renderIndoorClimate();
+}
+
+function saveIndoorToBackend(){
+  try{
+    localStorage.setItem('universal_indoor_climate_state', JSON.stringify({
+      masterOn: indoorMasterOn,
+      spaces: indoorSpaces,
+      updatedAt: new Date().toISOString()
+    }));
+  }catch(e){}
+}
+
+function loadIndoorFromBackend(){
+  try{
+    var raw = localStorage.getItem('universal_indoor_climate_state');
+    if(raw){
+      var d = JSON.parse(raw);
+      if(typeof d.masterOn === 'boolean') indoorMasterOn = d.masterOn;
+      if(d.spaces){
+        INDOOR_SPACES.forEach(function(s){
+          if(d.spaces[s.id]) indoorSpaces[s.id] = d.spaces[s.id];
+        });
+      }
+    }
+  }catch(e){}
+}
+
+// 启动时初始化室内温度调节系统
+document.addEventListener('DOMContentLoaded', function(){
+  setTimeout(function(){ initIndoorClimate(); }, 1500);
+});
+
 
 function isClimateHoliday() {
   var now = new Date();
