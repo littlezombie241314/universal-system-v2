@@ -1246,7 +1246,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.25 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.26 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -2169,6 +2169,19 @@ select option{background:#040b1a;color:var(--cyan)}
         </div>
       </div>
       
+      <div style="background:rgba(0,0,0,0.25);border:1px solid rgba(0,212,255,0.25);border-radius:10px;padding:12px;margin:0 14px 14px">
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:8px">
+          <div style="font-size:12px;font-weight:bold;color:var(--text)">🔍 全宇宙复活扫描</div>
+          <div style="font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(82,196,26,0.2);color:#52C41A" id="reviveScanStatus">🟢 每秒自动扫描中</div>
+        </div>
+        <div style="display:flex;gap:14px;flex-wrap:wrap;font-size:11px">
+          <span>扫描轮次：<b style="color:var(--cyan)" id="reviveScanCycles">0 轮</b></span>
+          <span>运行时长：<b style="color:#52C41A" id="reviveScanUptime">0 秒</b></span>
+          <span>最后扫描：<b style="color:var(--text-dim)" id="reviveScanLast">--</b></span>
+          <span>扫描范围：<b style="color:#a855f7">全宇宙 · 所有时空线</b></span>
+        </div>
+        <div style="font-size:10px;color:var(--text-dim);margin-top:6px;text-align:center">每秒自动执行全宇宙复活扫描 · 扫描即复活 · 实时保存 · 数据由全宇宙恒等系统驱动 · 多端同步</div>
+      </div>
       <div class="btn-row">
         <button class="btn" onclick="resurrect()">🔄 执行全宇宙复活扫描</button>
         <button class="btn cyan" onclick="resurrectAll()">⚡ 一键复活全部</button>
@@ -4465,7 +4478,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.25 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.26 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -6218,6 +6231,27 @@ function resurrect(){toast('🕊️ 复活扫描中...');log('启动全宇宙复
     saveResurrectionState(); // 实时保存复活数据
     log('复活扫描完成 · 新增复活 '+add.toLocaleString()+' 个存在','ok');toast('✓ 复活扫描完成，新增 '+add.toLocaleString()+' 个存在')},2000)}
 
+
+/* ===== 每秒自动执行全宇宙复活扫描 ===== */
+var reviveScanT0 = Date.now();
+var reviveScanCycles = 0;
+setInterval(function(){
+  reviveScanCycles++;
+  var add = Math.floor(Math.random() * 500 + 100);
+  revived += add;
+  var el = document.getElementById('revivedCount');
+  if (el) el.textContent = revived.toLocaleString();
+  if (typeof updateStatRevived === 'function') updateStatRevived();
+  var cs = document.getElementById('reviveScanCycles');
+  if (cs) cs.textContent = reviveScanCycles + ' 轮';
+  var up = document.getElementById('reviveScanUptime');
+  if (up) up.textContent = Math.floor((Date.now() - reviveScanT0) / 1000) + ' 秒';
+  var ls = document.getElementById('reviveScanLast');
+  if (ls) ls.textContent = new Date().toLocaleTimeString('zh-CN',{hour12:false}) + ' · 新增 ' + add.toLocaleString() + ' 个存在';
+  var st = document.getElementById('reviveScanStatus');
+  if (st) st.textContent = '🟢 每秒自动扫描中';
+  try { saveResurrectionState(); } catch(e){}
+}, 1000);
 // 一键复活全部功能
 function resurrectAll(){
   toast('⚡ 一键复活全部启动...');
@@ -12458,7 +12492,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.4.25';
+var systemVersion = 'v1.4.26';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
