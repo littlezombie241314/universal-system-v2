@@ -1246,7 +1246,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.29 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.30 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -2220,6 +2220,11 @@ select option{background:#040b1a;color:var(--cyan)}
             <div style="font-size:11px;color:var(--text-dim);margin-bottom:4px">🔒 天气锁定</div>
             <div id="holidayLockStatus" style="font-size:16px;font-weight:bold;color:#FAAD14">🔒 已锁定晴天无云</div>
             <div id="holidayLockDetail" style="font-size:10px;color:var(--text-dim);margin-top:4px">天气暂时锁定为晴天无云 · 不可修改</div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+              <span style="font-size:11px;color:var(--text-dim)">🌡️ 体感温度自动保持</span>
+              <span id="feelsLikeAutoStatus" style="font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(82,196,26,0.2);color:#52C41A">🟢 保持 30°C</span>
+            </div>
+            <div id="feelsLikeAutoDetail" style="font-size:9px;color:var(--text-dim);margin-top:3px">自动保持 30°C · 舒适体感 · 离线也自动保持 · 不可修改</div>
           </div>
         </div>
         <div style="background:rgba(250,173,20,0.08);border:1px solid rgba(250,173,20,0.35);border-radius:8px;padding:10px;margin-bottom:12px;text-align:center">
@@ -4483,7 +4488,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.29 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.30 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -6288,6 +6293,17 @@ setInterval(function(){
   extinctRevivedTotal += Math.floor(Math.random() * 50 + 5);
   var el = document.getElementById('extinctRevivedCount');
   if (el) el.textContent = extinctRevivedTotal.toLocaleString();
+}, 1000);
+
+/* ===== 气候控制 · 体感温度自动保持 30°C（离线也自动保持） ===== */
+setInterval(function(){
+  var offline = !navigator.onLine;
+  var st = document.getElementById('feelsLikeAutoStatus');
+  var dt = document.getElementById('feelsLikeAutoDetail');
+  var fl = document.getElementById('climateFeelsLikeText');
+  if (st) st.textContent = (offline ? '🔵 离线保持 30°C' : '🟢 保持 30°C');
+  if (dt) dt.textContent = (offline ? '离线模式 · 体感温度仍自动保持 30°C · 本地运行不受断网影响' : '自动保持 30°C · 舒适体感 · 离线也自动保持 · 不可修改');
+  if (fl) fl.textContent = (offline ? '🌡️ 体感温度 · 舒适 · 30°C · 离线保持中' : '🌡️ 体感温度 · 舒适 · 30°C · 自动保持中 · 阳光明媚');
 }, 1000);
 // 一键复活全部功能
 function resurrectAll(){
@@ -12529,7 +12545,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.4.29';
+var systemVersion = 'v1.4.30';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
