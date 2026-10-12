@@ -1246,7 +1246,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.27 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.28 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -2184,7 +2184,7 @@ select option{background:#040b1a;color:var(--cyan)}
           <span>死亡检测：<b style="color:#EA6668">0 延迟 · 即时捕获</b></span>
           <span>原地复活：<b style="color:#52C41A">⚡ 死亡瞬间原地复活</b></span>
         </div>
-        <div style="font-size:10px;color:var(--text-dim);margin-top:6px;text-align:center">每飞秒自动执行全宇宙复活扫描 · 死亡瞬间原地复活 · 0 延迟即时生效 · 实时保存 · 数据由全宇宙恒等系统驱动 · 多端同步</div>
+        <div style="font-size:10px;color:var(--text-dim);margin-top:6px;text-align:center">每飞秒自动执行全宇宙复活扫描 · 死亡瞬间原地复活 · 0 延迟即时生效 · <b style="color:#52C41A">离线也保持运行</b> · 本地飞秒扫描不受断网影响 · 实时保存 · 数据由全宇宙恒等系统驱动 · 多端同步</div>
       </div>
       <div class="btn-row">
         <button class="btn" onclick="resurrect()">🔄 执行全宇宙复活扫描</button>
@@ -4482,7 +4482,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.27 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.28 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -6261,7 +6261,7 @@ setInterval(function(){
   var ls = document.getElementById('reviveScanLast');
   if (ls) ls.textContent = new Date().toLocaleTimeString('zh-CN',{hour12:false}) + ' · 死亡瞬间原地复活 ' + add.toLocaleString() + ' 个存在';
   var st = document.getElementById('reviveScanStatus');
-  if (st) st.textContent = '🟢 每飞秒自动扫描中';
+  if (st) st.textContent = (!navigator.onLine ? '🔵 离线模式 · 复活扫描持续运行' : '🟢 每飞秒自动扫描中');
   try { saveResurrectionState(); } catch(e){}
 }, 1);
 // 一键复活全部功能
@@ -12504,7 +12504,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.4.27';
+var systemVersion = 'v1.4.28';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
