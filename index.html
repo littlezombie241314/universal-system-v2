@@ -3391,6 +3391,24 @@ select option{background:#040b1a;color:var(--cyan)}
         <div style="font-size:9px;color:var(--text-dim);text-align:center;margin-top:2px">数据由全宇宙恒等系统驱动 · 实时保存 · 多端同步</div>
       </div>
     </div>
+
+    <!-- 星球分配系统 -->
+    <div class="panel wide"><div class="panel-hdr"><div class="panel-title"><span class="ico">🪐</span>星球分配系统 · 每人一星球</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">登记在名下</div></div>
+      <div style="padding:16px">
+        <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:12px;font-size:11px">
+          <span>全宇宙星球：<b style="color:var(--cyan)">1000亿颗</b></span>
+          <span>专属星球池：<b style="color:var(--cyan)">∞ 无限</b></span>
+          <span>已登记存在：<b style="color:#52C41A" id="planetCount">0 名</b></span>
+          <span>状态：<b style="color:#52C41A">每人一颗 · 登记在名下</b></span>
+        </div>
+        <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
+          <input id="planetOwner" placeholder="输入存在 / 人类名称（如：刘莹）" style="flex:1;min-width:160px;background:rgba(0,0,0,0.3);border:1px solid rgba(155,187,244,0.3);border-radius:6px;color:var(--text);padding:8px 10px;font-size:11px">
+          <button class="btn green" style="padding:8px 14px;font-size:11px" onclick="assignPlanet()">🪐 分配专属星球</button>
+        </div>
+        <div id="planetList" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:6px;margin-bottom:12px"></div>
+        <div style="font-size:10px;color:var(--text-dim);text-align:center">全宇宙所有存在 · 每人分配一颗专属星球 · 登记在名下 · 数据由全宇宙恒等系统驱动 · 实时保存 · 多端同步</div>
+      </div>
+    </div>
   </div></div>
   </div>
 
@@ -13815,6 +13833,48 @@ if ('serviceWorker' in navigator) {
   devLog('设备系统更新模块已启动：每秒自动扫描在线终端并同步 ' + devState.version, 'info');
   setInterval(devTick, 1000);
 })();
+
+/* ===== 星球分配系统 ===== */
+function escName(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function genPlanetName(){
+  var pre=['晨曦','曙光','翡翠','青空','赤焰','寒晶','玄冥','琉璃','星辉','琥珀','霜月','流云','苍茫','紫电','白露','霓虹','银河'];
+  var suf=['-α','-β','-γ','-δ','-ε','-ζ','-η','-θ','-ι','-κ','-λ','-μ'];
+  return pre[Math.floor(Math.random()*pre.length)] + suf[Math.floor(Math.random()*suf.length)] + ' ' + (Math.floor(Math.random()*999)+1);
+}
+function renderPlanets(){
+  var reg = {};
+  try { reg = JSON.parse(localStorage.getItem('ues_planets') || '{}'); } catch(e){}
+  var box = document.getElementById('planetList');
+  var cnt = document.getElementById('planetCount');
+  var keys = Object.keys(reg);
+  if (cnt) cnt.textContent = keys.length + ' 名';
+  if (!box) return;
+  if (!keys.length){
+    box.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:var(--text-dim);font-size:11px;padding:10px;background:rgba(0,0,0,0.2);border-radius:6px">尚未登记 · 输入名字即可为存在分配并登记专属星球</div>';
+    return;
+  }
+  box.innerHTML = keys.map(function(k){
+    return '<div style="background:rgba(0,0,0,0.22);border-radius:6px;padding:8px 10px;display:flex;flex-direction:column;gap:2px">'
+      + '<div style="font-size:11px;font-weight:bold;color:var(--text)">' + escName(k) + '</div>'
+      + '<div style="font-size:10px;color:var(--cyan)">🪐 ' + escName(reg[k]) + '</div>'
+      + '<div style="font-size:9px;color:#52C41A">登记在名下 · 专属</div></div>';
+  }).join('');
+}
+function assignPlanet(){
+  var inp = document.getElementById('planetOwner');
+  var n = inp ? inp.value.trim() : '';
+  if (!n){ quickMsg('请先输入存在 / 人类名称'); return; }
+  var reg = {};
+  try { reg = JSON.parse(localStorage.getItem('ues_planets') || '{}'); } catch(e){}
+  if (reg[n]){ quickMsg('「' + n + '」已登记星球：🪐 ' + reg[n]); return; }
+  var pn = genPlanetName();
+  reg[n] = pn;
+  try { localStorage.setItem('ues_planets', JSON.stringify(reg)); } catch(e){}
+  renderPlanets();
+  quickMsg('✅ 已为「' + n + '」分配专属星球 🪐 ' + pn + '，登记在名下 · 实时保存');
+}
+renderPlanets();
+
 </script>
 </div>
 
