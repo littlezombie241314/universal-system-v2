@@ -1246,7 +1246,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.23 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.24 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -3970,7 +3970,7 @@ select option{background:#040b1a;color:var(--cyan)}
             <span>全宇宙存在健康率：<b style="color:#52C41A">100% · 全部已治愈</b></span>
             <span>最后治愈：<b style="color:var(--text-dim)" id="medLast">刚刚</b></span>
           </div>
-          <div style="font-size:10px;color:var(--text-dim);margin-top:6px;text-align:center">全能医疗系统 · 实时在线 · 持续循环自动治愈全宇宙所有存在 · 数据由全宇宙恒等系统驱动 · 实时保存 · 多端同步</div>
+          <div style="font-size:10px;color:var(--text-dim);margin-top:6px;text-align:center">全能医疗系统 · 实时在线 · 持续循环自动治愈全宇宙所有存在 · 自动治愈本地运行 · <b style="color:#52C41A">离线也保持开启</b> · 数据由全宇宙恒等系统驱动 · 实时保存 · 多端同步</div>
         </div>
       </div>
     </div>
@@ -4465,7 +4465,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.23 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.24 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -12458,7 +12458,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.4.23';
+var systemVersion = 'v1.4.24';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
@@ -14286,7 +14286,12 @@ function autoCureAll(){
     btn.textContent = '🔄 自动一键治愈';
     btn.style.background = '';
     btn.style.borderColor = '';
-    if (st) st.textContent = (window.medAuto ? '🟢 实时在线 · 自动一键治愈已开启 · 持续循环治愈中' : '🟢 实时在线 · 一直正常工作 · 循环治愈中');
+    if (st){
+      var offline = !navigator.onLine;
+      st.textContent = (offline ? '🔵 离线模式 · ' : '🟢 实时在线 · ')
+        + (window.medAuto ? '自动一键治愈已开启 · ' : '一直正常工作 · ')
+        + (offline ? '离线持续治愈中（本地运行不受影响）' : '持续循环治愈中');
+    }
     toast('自动一键治愈已暂停');
   }
 }
@@ -14318,7 +14323,12 @@ function fmt(s){
     if (uptime) uptime.textContent = fmt(s);
     if (cycles) cycles.textContent = s + ' 轮';
     if (last) last.textContent = '刚刚（' + new Date().toLocaleTimeString('zh-CN',{hour12:false}) + '）';
-    if (st) st.textContent = (window.medAuto ? '🟢 实时在线 · 自动一键治愈已开启 · 持续循环治愈中' : '🟢 实时在线 · 一直正常工作 · 循环治愈中');
+    if (st){
+      var offline = !navigator.onLine;
+      st.textContent = (offline ? '🔵 离线模式 · ' : '🟢 实时在线 · ')
+        + (window.medAuto ? '自动一键治愈已开启 · ' : '一直正常工作 · ')
+        + (offline ? '离线持续治愈中（本地运行不受影响）' : '持续循环治愈中');
+    }
   }, 1000);
 })();
 
