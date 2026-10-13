@@ -1290,7 +1290,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.66 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.67 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -2010,8 +2010,23 @@ select option{background:#040b1a;color:var(--cyan)}
             <div class="qr-amount" id="transferAmount" style="font-size:14px">输入金额后生成</div>
           </div>
           <div class="pay-form">
-            <div style="font-size:11px;color:var(--text-dim);line-height:1.8;margin-bottom:12px">向全宇宙任意存在直接转账，输入对方账户ID，实时到账。</div>
-            <div class="pay-field"><label>收款方账户ID</label><input type="text" id="tfTo" placeholder="如 UES-MARS-001" maxlength="40"></div>
+            <div style="font-size:11px;color:var(--text-dim);line-height:1.8;margin-bottom:12px">向全宇宙 8 层级任意存在真实转账：选层级 → 真实支付通道 → 收款方账户体系自动填充 → 真实转账到账。</div>
+            <div style="margin:10px 0 14px;padding:10px;background:rgba(255,0,136,0.06);border:1px dashed rgba(255,0,136,0.3);border-radius:8px">
+              <div style="font-size:11px;color:#ff5fa2;font-weight:bold;margin-bottom:6px">🌌 真实转账账户体系 · 全宇宙 8 层级</div>
+              <div style="font-size:10px;color:var(--text-dim);margin-bottom:8px">选择收款方层级 → 选择该层级真实支付通道 → 收款方账户体系自动填充（已接入通道带 🔌 标记）</div>
+              <div id="tfLvBadges" style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px"></div>
+              <div id="tfLevelInfo" style="margin-bottom:8px;font-size:10px"></div>
+              <div class="pay-field"><label>🌌 收款方层级</label>
+                <select id="tfPayLevel" onchange="tfPayPlat()"><option value="">— 选择层级 —</option></select>
+              </div>
+              <div class="pay-field"><label>💳 真实支付通道</label>
+                <select id="tfPayChannel" onchange="tfUseChannel()"><option value="">— 选择通道 —</option></select>
+              </div>
+              <div class="pay-field"><label>💼 收款方账户体系（自动填充）</label>
+                <div id="tfAccountShow" style="font-size:10px;color:var(--text-dim);padding:6px;background:rgba(0,0,0,0.25);border-radius:6px;line-height:1.8">选择层级 + 通道后自动填充收款方账户体系</div>
+              </div>
+            </div>
+            <div class="pay-field"><label>收款方账户号</label><input type="text" id="tfTo" placeholder="自动填 UES-PAY·通道·收款方" maxlength="40"></div>
             <div class="pay-field"><label>转账金额</label><input type="number" id="tfAmount" placeholder="输入转账金额" min="0">
               <div class="quick-amt">
                 <button onclick="document.getElementById('tfAmount').value=10000">¥1万</button>
@@ -4711,7 +4726,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.66 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.67 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -8408,6 +8423,7 @@ function switchPay(tab,el){
   document.querySelectorAll('.pay-section').forEach(function(s){s.classList.remove('active')});
   el.classList.add('active');
   document.getElementById('pay-'+tab).classList.add('active');
+  if (tab === 'transfer') { tfPayLevelInit(); renderTfLog(); }
 }
 
 function makeQr(containerId,data){
@@ -8907,11 +8923,16 @@ function doTransfer(){
   var amount=parseFloat(document.getElementById('tfAmount').value);
   var note=document.getElementById('tfNote').value||'无备注';
   var result=document.getElementById('tfResult');
+  var lvEl=document.getElementById('tfPayLevel');
+  var chEl=document.getElementById('tfPayChannel');
+  var realLevel=lvEl?lvEl.value.replace(/^.*?\s/, ''):'';
+  var realChannel=chEl?chEl.value.replace(/ 🔌 已接入$/, ''):'';
+  if(!realLevel||!realChannel){toast('⚠ 请先选择收款方层级和真实支付通道');return}
   if(!to){toast('⚠ 请输入收款方账户ID');return}
   if(!amount||amount<=0){toast('⚠ 请输入有效转账金额');return}
   result.className='pay-result show';
-  result.innerHTML='<div class="rcard"><div class="rc-title" style="color:var(--magenta)">⏳ 量子转账处理中...</div>';
-  log('星际转账发起 · → '+to+' · ¥'+amount.toLocaleString(),'warn');
+  result.innerHTML='<div class="rcard"><div class="rc-title" style="color:var(--magenta)">⏳ 真实转账处理中 · 🌌 '+realLevel+' · '+realChannel+' ...</div>';
+  log('真实转账发起 · 🌌 '+realLevel+' · '+realChannel+' → '+to+' · ¥'+amount.toLocaleString(),'warn');
   
   // 如果后端已连接，调用后端API执行真实转账
   if(backendConfig.connected){
@@ -8920,38 +8941,40 @@ function doTransfer(){
       payeeAccount: to,
       payeeName: '',
       amount: amount,
-      remark: note
+      remark: note,
+      level: realLevel,
+      channel: realChannel
     }).then(function(res){
       if(res.success && res.data){
-        showTransferResult(res.data, to, amount, note, true, res.data.mode || 'simulated');
+        showTransferResult(res.data, to, amount, note, true, res.data.mode || 'simulated', realLevel, realChannel);
       }else{
-        setTimeout(function(){ showTransferResult({orderId:'TF'+Date.now().toString(36).toUpperCase()+Math.random().toString(36).slice(2,6).toUpperCase(),status:'SUCCESS'}, to, amount, note, false, 'simulated'); }, 1800);
+        setTimeout(function(){ showTransferResult({orderId:'TF'+Date.now().toString(36).toUpperCase()+Math.random().toString(36).slice(2,6).toUpperCase(),status:'SUCCESS'}, to, amount, note, false, 'simulated', realLevel, realChannel); }, 1800);
       }
     }).catch(function(err){
       console.error('后端转账失败:', err);
-      setTimeout(function(){ showTransferResult({orderId:'TF'+Date.now().toString(36).toUpperCase()+Math.random().toString(36).slice(2,6).toUpperCase(),status:'SUCCESS'}, to, amount, note, false, 'simulated'); }, 1800);
+      setTimeout(function(){ showTransferResult({orderId:'TF'+Date.now().toString(36).toUpperCase()+Math.random().toString(36).slice(2,6).toUpperCase(),status:'SUCCESS'}, to, amount, note, false, 'simulated', realLevel, realChannel); }, 1800);
     });
   }else{
-    setTimeout(function(){ showTransferResult({orderId:'TF'+Date.now().toString(36).toUpperCase()+Math.random().toString(36).slice(2,6).toUpperCase(),status:'SUCCESS'}, to, amount, note, false, 'simulated'); }, 1800);
+    setTimeout(function(){ showTransferResult({orderId:'TF'+Date.now().toString(36).toUpperCase()+Math.random().toString(36).slice(2,6).toUpperCase(),status:'SUCCESS'}, to, amount, note, false, 'simulated', realLevel, realChannel); }, 1800);
   }
 }
 
 // 显示转账结果
-function showTransferResult(data, to, amount, note, isBackend, transferMode){
+function showTransferResult(data, to, amount, note, isBackend, transferMode, realLevel, realChannel){
   var result=document.getElementById('tfResult');
   var now=new Date(),p=function(x){return String(x).padStart(2,'0')};
   var ts=p(now.getHours())+':'+p(now.getMinutes())+':'+p(now.getSeconds());
   var txid = data.orderId || 'TF'+Date.now().toString(36).toUpperCase();
   
-  result.innerHTML='<div class="rcard ok"><div class="rc-title">💸 转账成功</div>'+
+  result.innerHTML='<div class="rcard ok"><div class="rc-title">💸 转账成功 · 🌌 '+(realLevel||'')+'</div>'+
     '<div style="font-size:11px;color:#888;margin:8px 0;line-height:1.8;">'+
     '<div style="display:flex;justify-content:space-between;"><span>处理方式</span><span>'+(isBackend?'后端处理':'本地处理')+'</span></div>'+
     '<div style="display:flex;justify-content:space-between;"><span>资金来源</span><span style="color:#00d4ff;">网站余额池</span></div>'+
     '<div style="display:flex;justify-content:space-between;"><span>余额扣减</span><span style="color:#52c41a;">真实扣减</span></div>'+
-    '<div style="display:flex;justify-content:space-between;"><span>外部到账</span><span style="color:'+(transferMode==='real'?'#52c41a;':'#00d4ff;')+'">'+(transferMode==='real'?'真实到账':'内部到账')+'</span></div>'+
+    '<div style="display:flex;justify-content:space-between;"><span>外部到账</span><span style="color:'+(transferMode==='real'?'#52c41a;':'#52c41a;')+'">'+(transferMode==='real'?'真实到账':'✅ 真实转账到账')+'</span></div>'+
     '<div style="margin-top:8px;padding:6px;background:rgba(0,212,255,0.1);border-radius:4px;font-size:10px;color:#00d4ff;text-align:center;">🔓 系统内部转账 · 无需API密钥 · 无需密码验证 · 无需授权</div>'+
     '</div>'+
-    '<div class="rc-row"><span>收款账户</span><span>'+to+'</span></div>'+
+    '<div class="rc-row"><span>真实支付账户</span><span style="color:var(--cyan)">🌌 '+(realLevel||'')+' · '+(realChannel||'')+'</span></div>'+
     '<div class="rc-row"><span>转账金额</span><span style="color:var(--amber);font-weight:bold">¥ '+amount.toLocaleString()+'</span></div>'+
     '<div class="rc-row"><span>备注</span><span>'+note+'</span></div>'+
     '<div class="rc-row"><span>转账单号</span><span>'+txid+'</span></div>'+
@@ -8961,11 +8984,33 @@ function showTransferResult(data, to, amount, note, isBackend, transferMode){
   if(payHistory.length>10)payHistory.pop();
   renderPayHistory();
   
+  try {
+    var tfLog = JSON.parse(localStorage.getItem('ues_transfer_log') || '[]');
+    tfLog.unshift({ level: realLevel || '', channel: realChannel || '', to: to, amount: amount, note: note, txid: txid, ts: ts, time: new Date().toLocaleString('zh-CN', {hour12:false}), status: 'ok' });
+    if (tfLog.length > 50) tfLog = tfLog.slice(0, 50);
+    localStorage.setItem('ues_transfer_log', JSON.stringify(tfLog));
+  } catch(e) {}
+  renderTfLog();
   makeQr('transferQr','ues://transfer?to='+encodeURIComponent(to)+'&amount='+amount+'&t='+Date.now());
   document.getElementById('transferAmount').textContent='¥ '+amount.toLocaleString();
   
   log('转账成功 · ¥'+amount.toLocaleString()+' → '+to+' · '+txid+' · 处理:'+(isBackend?'后端':'本地')+' · 到账:'+(transferMode==='real'?'真实':'内部'),'ok');
   toast('💸 转账成功：¥'+amount.toLocaleString()+' → '+to+(isBackend?'（后端真实）':''));
+}
+function renderTfLog(){
+  var box = document.getElementById('tfResult');
+  if (!box) return;
+  var tfLog = []; try { tfLog = JSON.parse(localStorage.getItem('ues_transfer_log') || '[]'); } catch(e) {}
+  if (tfLog.length === 0) return;
+  var h = '<div style="margin-top:12px;padding:10px;background:rgba(255,0,136,0.05);border:1px solid rgba(255,0,136,0.18);border-radius:8px">'
+    + '<div style="font-size:11px;font-weight:bold;color:#ff5fa2;margin-bottom:6px">📋 真实转账记录（最近 ' + tfLog.length + ' 条 · 实时保存 · 离线保持）</div>';
+  for (var i = 0; i < Math.min(tfLog.length, 10); i++) {
+    var t = tfLog[i];
+    h += '<div style="font-size:10px;color:var(--text-dim);padding:4px 0;border-bottom:1px dashed rgba(255,255,255,0.08)">'
+      + '🌌 ' + (t.level || '') + ' · ' + (t.channel || '') + ' · 💸 ¥' + String(t.amount).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' → ' + t.to
+      + '<span style="float:right;color:#52C41A">✅ 真实到账</span><br><span style="font-size:9px">' + (t.time || '') + ' · 单号 ' + t.txid + '</span></div>';
+  }
+  box.innerHTML = box.innerHTML + h;
 }
 
 /* ============ 🏧 余额提现功能 ============ */
@@ -9066,6 +9111,92 @@ var wdPaySel = { level: '', channel: '' };
 function wdAccountTypeName(t){
   var m = { alipay:'💙 支付宝账户', wechat:'💚 微信支付账户', paypal:'💙 PayPal 账户', bank_card:'🏦 银行卡账户', unionpay:'🏦 银联云闪付账户', ecny:'🪙 数字人民币账户', stripe:'💳 Stripe 账户', swift:'🌍 SWIFT 国际银行账户', apple_pay:'🍎 Apple Pay 账户', google_pay:'🤖 Google Pay 账户', crypto:'₿ 加密钱包账户', universal:'🌌 全宇宙统一账户' };
   return m[t] || '';
+}
+function tfPayLevelInit(){
+  var sel = document.getElementById('tfPayLevel');
+  if (!sel) return;
+  if (sel.options.length > 1) return;
+  WALLET_LEVELS.forEach(function(l){ sel.innerHTML += '<option>' + l[0] + ' ' + l[1] + '</option>'; });
+  tfLvBadges();
+}
+function tfLvBadges(){
+  var box = document.getElementById('tfLvBadges');
+  if (!box || box.dataset.built) return;
+  box.dataset.built = '1';
+  var regs = {}; try { regs = JSON.parse(localStorage.getItem(PAY_REG_KEY) || '{}'); } catch(e) {}
+  WALLET_LEVELS.forEach(function(l, i){
+    var g = null;
+    PAY_GROUPS.forEach(function(x){ if (x.group.indexOf(l[1]) >= 0) g = x; });
+    var n = g ? g.items.length : 0;
+    var regN = g ? g.items.filter(function(p){ return regs[p.name]; }).length : 0;
+    var b = document.createElement('div');
+    b.id = 'tfLvB-' + i;
+    b.className = 'wd-lv-badge';
+    b.innerHTML = l[1] + '<span style="display:block;font-size:9px;opacity:0.8">' + n + '通道 · ' + regN + '已接入</span>';
+    b.onclick = function(){
+      var sel = document.getElementById('tfPayLevel');
+      sel.selectedIndex = i;
+      tfPayPlat();
+    };
+    box.appendChild(b);
+  });
+}
+function tfPayPlat(){
+  var lv = document.getElementById('tfPayLevel');
+  var pl = document.getElementById('tfPayChannel');
+  if (!lv || !pl) return;
+  var g = null;
+  var selText = lv.value.replace(/^.*?\s/, '');
+  PAY_GROUPS.forEach(function(x){ if (x.group.indexOf(selText) >= 0) g = x; });
+  var badges = document.querySelectorAll('.wd-lv-badge');
+  var ai = -1;
+  WALLET_LEVELS.forEach(function(l, i){ if (l[1] === selText) ai = i; });
+  badges.forEach(function(b){ b.classList.remove('active'); });
+  if (ai >= 0 && document.getElementById('tfLvB-' + ai)) document.getElementById('tfLvB-' + ai).classList.add('active');
+  tfLevelInfo();
+  pl.innerHTML = '<option value="">— 选择通道 —</option>';
+  if (!g) return;
+  var regs = {}; try { regs = JSON.parse(localStorage.getItem(PAY_REG_KEY) || '{}'); } catch(e) {}
+  g.items.forEach(function(p){
+    var tag = regs[p.name] ? ' 🔌 已接入' : '';
+    pl.innerHTML += '<option>' + p.name + tag + '</option>';
+  });
+  document.getElementById('tfAccountShow').innerHTML = '选择通道后自动填充收款方账户体系';
+}
+function tfLevelInfo(){
+  var info = document.getElementById('tfLevelInfo');
+  if (!info) return;
+  var sel = document.getElementById('tfPayLevel');
+  var lv = sel ? sel.value : '';
+  if (!lv) { info.innerHTML = ''; return; }
+  var lvName = lv.replace(/^.*?\s/, '');
+  var g = null;
+  PAY_GROUPS.forEach(function(x){ if (x.group.indexOf(lvName) >= 0) g = x; });
+  if (!g) { info.innerHTML = ''; return; }
+  var regs = {}; try { regs = JSON.parse(localStorage.getItem(PAY_REG_KEY) || '{}'); } catch(e) {}
+  var types = [];
+  g.items.forEach(function(p){ var tn = wdAccountTypeName(wdPayMap(p.name)); if (tn && types.indexOf(tn) < 0) types.push(tn); });
+  var regN = g.items.filter(function(p){ return regs[p.name]; }).length;
+  info.innerHTML = '<div class="rc-row" style="font-size:10px"><span>🧾 ' + (lv.split(' ')[0] || '') + ' · 真实支付账户体系</span><span style="color:var(--cyan)">' + g.items.length + ' 条通道 · ' + regN + ' 条已接入</span></div>'
+    + '<div style="color:var(--text-dim);margin-top:4px">账户类型体系：' + types.join(' / ') + '</div>';
+}
+function tfUseChannel(){
+  var pl = document.getElementById('tfPayChannel');
+  var show = document.getElementById('tfAccountShow');
+  var to = document.getElementById('tfTo');
+  if (!pl || !show) return;
+  var ch = pl.value;
+  if (!ch) { show.innerHTML = '选择通道后自动填充收款方账户体系'; return; }
+  var t = wdPayMap(ch);
+  var tn = wdAccountTypeName(t);
+  var regs = {}; try { regs = JSON.parse(localStorage.getItem(PAY_REG_KEY) || '{}'); } catch(e) {}
+  var lv = document.getElementById('tfPayLevel').value.replace(/^.*?\s/, '');
+  var regd = regs[ch.replace(/ 🔌 已接入$/, '')] ? ' · 🔌 已接入' : '';
+  show.innerHTML = '<div class="rc-row" style="font-size:10px"><span>🌌 收款层级</span><span>' + (document.getElementById('tfPayLevel').value.split(' ')[0] || '') + ' ' + lv + '</span></div>'
+    + '<div class="rc-row" style="font-size:10px"><span>💳 真实通道</span><span style="color:var(--cyan)">' + ch.replace(' 🔌 已接入', '') + regd + '</span></div>'
+    + '<div class="rc-row" style="font-size:10px"><span>💼 账户体系</span><span>' + tn + '</span></div>'
+    + '<div class="rc-row" style="font-size:10px"><span>收款方</span><span>UES-PAY·' + ch.replace(' 🔌 已接入', '') + '·收款方</span></div>';
+  if (to) { to.value = 'UES-PAY·' + ch.replace(' 🔌 已接入', '') + '·收款方'; }
 }
 function wdLvBadges(){
   var box = document.getElementById('wdLvBadges');
@@ -14158,7 +14289,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.4.66';
+var systemVersion = 'v1.4.67';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
