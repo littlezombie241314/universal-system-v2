@@ -1256,7 +1256,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.51 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.52 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -4633,7 +4633,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.51 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.52 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -5318,6 +5318,7 @@ select option{background:#040b1a;color:var(--cyan)}
     <div class="panel wide"><div class="panel-hdr"><div class="panel-title"><span class="ico">📱</span>全宇宙社交平台 · 注册入口</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">点击 logo 前往注册</div></div>
       <div style="padding:14px">
         <div style="font-size:11px;color:var(--text-dim);margin-bottom:10px">全宇宙<b style="color:#52C41A">8 个层级</b>的社交平台与社交软件 · 点击 logo/按钮即<b style="color:var(--cyan)">跳转到该平台自己的官网或注册页</b>注册 · 国家层级为真实平台官网 · 其他层级为该平台<b style="color:var(--cyan)">独立官方注册页</b>（每个平台独立入口页面，填写账号即可注册，账号与全宇宙恒等系统同步）· 附各平台注册方法</div>
+        <div class="btn-row" style="justify-content:center;margin-bottom:10px"><button class="btn cyan" onclick="internetVpn()">🔐 VPN 连接 · 全宇宙加密隧道</button></div>
         <div id="socialLevelNav" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px"></div>
         <div id="socialList" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px"></div>
       </div>
@@ -13333,7 +13334,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.4.51';
+var systemVersion = 'v1.4.52';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
