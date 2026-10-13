@@ -1255,7 +1255,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.43 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.44 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -4603,7 +4603,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.43 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.44 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -5218,6 +5218,70 @@ select option{background:#040b1a;color:var(--cyan)}
       <div style="padding:0 14px 6px;font-size:12px;color:var(--text-dim)">全宇宙互联网为<b style="color:#52C41A">全宇宙级别</b> · 在<b style="color:#52C41A">所有层级</b>都起作用 · 每层级互联网接入 · 无限带宽 · 零延迟 · <b style="color:#52C41A">离线也保持</b></div>
       <div id="inetLevels" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;padding:10px 14px 6px"></div>
       <div style="font-size:10px;color:#52C41A;text-align:center;padding:0 14px 12px">✅ 对<b style="color:#52C41A">所有存在</b>都生效 · 含未明确归属层级的存在（星际流浪者 / 初生AI / 动植物 / 微观存在 / 随机新生成存在等）· 一律互联网接入 · 无限带宽</div>
+    </div>
+
+    <!-- 全宇宙层级留言板 · 语言互译 -->
+    <div class="panel wide"><div class="panel-hdr"><div class="panel-title"><span class="ico">📮</span>全宇宙层级留言板 · 语言互译</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">各层级可留言</div></div>
+      <div style="padding:14px">
+        <div style="font-size:11px;color:var(--text-dim);margin-bottom:10px">所有层级的存在都可以在这里留言 · 留言可互译为各宇宙语言 · 离线也保存</div>
+        <div style="display:grid;grid-template-columns:180px 1fr;gap:8px;margin-bottom:8px">
+          <div>
+            <div style="font-size:10px;color:var(--text-dim);margin-bottom:4px">所属层级</div>
+            <select id="gbLevel" style="width:100%;background:rgba(4,18,34,.6);border:1px solid var(--border);color:var(--text);padding:7px 8px;font-size:12px;border-radius:4px">
+              <option value="🌌 宇宙层级">🌌 宇宙层级</option>
+              <option value="🌠 星系层级">🌠 星系层级</option>
+              <option value="🪐 星球层级">🪐 星球层级</option>
+              <option value="🌍 文明层级">🌍 文明层级</option>
+              <option value="🏛️ 国家层级">🏛️ 国家层级</option>
+              <option value="🏙️ 地区层级">🏙️ 地区层级</option>
+              <option value="👤 个人层级">👤 个人层级</option>
+              <option value="✨ 未分层级存在">✨ 未分层级存在</option>
+            </select>
+          </div>
+          <div>
+            <div style="font-size:10px;color:var(--text-dim);margin-bottom:4px">留言者名称</div>
+            <input type="text" id="gbName" placeholder="匿名存在" value="匿名存在" style="width:100%;box-sizing:border-box;background:rgba(4,18,34,.6);border:1px solid var(--border);color:var(--text);padding:7px 8px;font-size:12px;border-radius:4px">
+          </div>
+        </div>
+        <div style="font-size:10px;color:var(--text-dim);margin-bottom:4px">留言内容</div>
+        <textarea id="gbText" rows="2" placeholder="向全宇宙所有层级的存在留言…" style="width:100%;box-sizing:border-box;background:rgba(4,18,34,.6);border:1px solid var(--border);color:var(--text);padding:8px;font-size:12px;border-radius:4px;resize:vertical"></textarea>
+        <div style="display:flex;align-items:center;gap:10px;margin-top:8px">
+          <button class="btn green" onclick="gbPost()">📮 发布留言</button>
+          <div style="font-size:11px;color:var(--text-dim)">共 <b id="gbCount" style="color:var(--cyan)">0</b> 条留言</div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:180px 1fr;gap:8px;margin-top:12px;padding:10px;background:rgba(0,212,255,0.05);border:1px solid rgba(0,212,255,0.2);border-radius:8px">
+          <div>
+            <div style="font-size:10px;color:var(--text-dim);margin-bottom:4px">🌐 语言互译面板 · 目标语言</div>
+            <select id="gbLang" style="width:100%;background:rgba(4,18,34,.6);border:1px solid var(--border);color:var(--text);padding:7px 8px;font-size:12px;border-radius:4px">
+              <option value="en">英语</option>
+              <option value="ja">日语</option>
+              <option value="ko">韩语</option>
+              <option value="fr">法语</option>
+              <option value="de">德语</option>
+              <option value="ru">俄语</option>
+              <option value="es">西班牙语</option>
+              <option value="ar">阿拉伯语</option>
+              <option value="pt">葡萄牙语</option>
+              <option value="zh-CN">中文</option>
+            </select>
+          </div>
+          <div style="font-size:11px;color:var(--text-dim);align-self:center">点击每条留言的「🌐 翻译」按钮 · 即可将该留言互译为所选语言 · 各层级留言互通</div>
+        </div>
+
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin:10px 0">
+          <button class="btn" style="padding:4px 10px;font-size:11px" onclick="gbFilter('')">全部</button>
+          <button class="btn" style="padding:4px 10px;font-size:11px" onclick="gbFilter('🌌 宇宙层级')">🌌 宇宙</button>
+          <button class="btn" style="padding:4px 10px;font-size:11px" onclick="gbFilter('🌠 星系层级')">🌠 星系</button>
+          <button class="btn" style="padding:4px 10px;font-size:11px" onclick="gbFilter('🪐 星球层级')">🪐 星球</button>
+          <button class="btn" style="padding:4px 10px;font-size:11px" onclick="gbFilter('🌍 文明层级')">🌍 文明</button>
+          <button class="btn" style="padding:4px 10px;font-size:11px" onclick="gbFilter('🏛️ 国家层级')">🏛️ 国家</button>
+          <button class="btn" style="padding:4px 10px;font-size:11px" onclick="gbFilter('🏙️ 地区层级')">🏙️ 地区</button>
+          <button class="btn" style="padding:4px 10px;font-size:11px" onclick="gbFilter('👤 个人层级')">👤 个人</button>
+          <button class="btn" style="padding:4px 10px;font-size:11px" onclick="gbFilter('✨ 未分层级存在')">✨ 未分层级</button>
+        </div>
+        <div id="gbList" style="display:grid;gap:8px;max-height:420px;overflow:auto"></div>
+      </div>
     </div>
 
 
@@ -6445,6 +6509,73 @@ setInterval(function(){
 
 
 
+
+
+/* ===== 全宇宙层级留言板 · 语言互译 ===== */
+var GB_KEY = 'ues_guestbook';
+var GB_FILTER = '';
+function gbLoad(){ try { return JSON.parse(localStorage.getItem(GB_KEY) || '[]'); } catch(e){ return []; } }
+function gbSave(list){ localStorage.setItem(GB_KEY, JSON.stringify(list)); }
+function gbPost(){
+  var lv = document.getElementById('gbLevel').value;
+  var name = (document.getElementById('gbName').value || '匿名存在').trim() || '匿名存在';
+  var text = document.getElementById('gbText').value.trim();
+  if (!text) { toast('⚠️ 请输入留言内容'); return; }
+  var list = gbLoad();
+  list.unshift({ id: Date.now() + '' + Math.floor(Math.random()*1000), level: lv, name: name, text: text, time: new Date().toLocaleString('zh-CN', {hour12:false}), trans: null });
+  gbSave(list);
+  document.getElementById('gbText').value = '';
+  gbRender();
+  toast('✓ 留言已发布到' + lv + ' · 全宇宙实时同步');
+}
+function gbFilter(lv){ GB_FILTER = lv; gbRender(); }
+function gbRender(){
+  var list = gbLoad();
+  if (GB_FILTER) list = list.filter(function(m){ return m.level === GB_FILTER; });
+  var el = document.getElementById('gbList');
+  var cnt = document.getElementById('gbCount');
+  if (cnt) cnt.textContent = list.length;
+  if (!list.length) { el.innerHTML = '<div style="font-size:11px;color:var(--text-dim);text-align:center;padding:16px">📭 暂无留言 · 全宇宙各层级存在可在此留言</div>'; return; }
+  el.innerHTML = list.map(function(m){
+    return '<div style="background:rgba(0,0,0,0.25);border:1px solid rgba(0,212,255,0.2);border-radius:8px;padding:10px">'
+      + '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">'
+      + '<div><span style="font-size:10px;padding:1px 8px;border-radius:8px;background:rgba(0,212,255,0.15);color:#00d4ff">' + m.level + '</span>'
+      + ' <b style="font-size:12px;color:var(--text)">' + m.name + '</b></div>'
+      + '<span style="font-size:10px;color:var(--text-dim)">' + m.time + '</span></div>'
+      + '<div style="font-size:12px;color:var(--text);margin:4px 0">' + m.text + '</div>'
+      + (m.trans ? '<div style="font-size:11px;color:#52C41A;margin:2px 0">🌐 译文（' + m.transLang + '）：' + m.trans + '</div>' : '')
+      + '<button class="btn" style="padding:3px 10px;font-size:10px" onclick="gbTranslate(' + m.id + ')">🌐 翻译为' + gbLangName() + '</button></div>';
+  }).join('');
+}
+function gbLangName(){
+  var sel = document.getElementById('gbLang');
+  return sel ? sel.options[sel.selectedIndex].text : '英语';
+}
+function gbTranslate(id){
+  var list = gbLoad();
+  var m = list.find(function(x){ return x.id === id; });
+  if (!m) return;
+  var lang = document.getElementById('gbLang').value;
+  var name = gbLangName();
+  var pair = 'zh|' + (lang === 'zh-CN' ? 'zh-CN' : lang);
+  var btn = document.querySelector('[onclick="gbTranslate(\'' + id + '\')"]');
+  if (btn) btn.textContent = '⏳ 翻译中…';
+  fetch('https://api.mymemory.translated.net/get?q=' + encodeURIComponent(m.text) + '&langpair=' + pair)
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      var tr = (d.responseData && d.responseData.translatedText) || '';
+      if (tr && d.responseStatus === 200) {
+        m.trans = tr; m.transLang = name;
+        gbSave(list); gbRender();
+        toast('✓ 已翻译为' + name);
+      } else {
+        toast('⚠️ 翻译服务暂不可用 · 已保持原文');
+        gbRender();
+      }
+    })
+    .catch(function(){ toast('⚠️ 翻译服务暂不可用（离线）· 已保持原文'); gbRender(); });
+}
+setInterval(function(){ var el = document.getElementById('gbList'); if (el && !el.getAttribute('data-inited')) { el.setAttribute('data-inited','1'); gbRender(); } }, 800);
 
 /* ===== 全宇宙互联网 · 全宇宙层级 · 所有层级生效 ===== */
 var INET_LEVELS = [
@@ -12892,7 +13023,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.4.43';
+var systemVersion = 'v1.4.44';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
