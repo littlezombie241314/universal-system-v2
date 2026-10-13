@@ -755,6 +755,21 @@ select option{background:#040b1a;color:var(--cyan)}
   <!-- ECONOMY -->
   <div class="section" id="sec-economy"><div class="grid">
 
+    <!-- 📒 我的钱包 -->
+    <div class="panel wide">
+      <div class="panel-hdr"><div class="panel-title"><span class="ico">📒</span>我的钱包</div><div style="display:flex;gap:6px;align-items:center"><div class="panel-badge" style="background:rgba(0,212,255,0.15);color:#00d4ff">🌌 全宇宙级别</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A" id="walletCount">0 个钱包</div></div></div>
+      <div style="padding:16px">
+        <div style="font-size:12px;color:var(--text-dim);margin-bottom:10px">🌌 全宇宙 8 层级用户均可注册钱包账户 · 注册后钱包余额每秒自动增加 <b style="color:#07c160">99,999,999,999,999,999,999</b> · 实时保存 · 离线保持</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+          <div><label style="font-size:11px;color:var(--text-dim);display:block;margin-bottom:4px">🌌 选择层级</label>
+            <select id="walletLevel" style="width:100%;background:rgba(4,18,34,.6);border:1px solid var(--border);color:var(--text);padding:8px;border-radius:6px;font-size:12px"></select></div>
+          <div><label style="font-size:11px;color:var(--text-dim);display:block;margin-bottom:4px">👤 昵称 / 账户名</label>
+            <input id="walletName" value="刘莹" style="width:100%;box-sizing:border-box;background:rgba(4,18,34,.6);border:1px solid var(--border);color:var(--text);padding:8px;border-radius:6px;font-size:13px"></div>
+        </div>
+        <div class="btn-row" style="justify-content:center"><button class="btn green" onclick="walletReg()">📝 注册我的钱包账户</button><button class="btn cyan" onclick="walletReset()">🔄 重置钱包</button></div>
+        <div id="walletList" style="margin-top:12px"></div>
+      </div>
+    </div>
     <!-- 💚 支付宝余额自动增加系统 -->
     <div class="panel wide">
       <div class="panel-hdr"><div class="panel-title"><span class="ico">💚</span>支付宝余额自动增加系统</div><div style="display:flex;gap:6px;align-items:center"><div class="panel-badge" style="background:rgba(0,212,255,0.15);color:#00d4ff">🌌 全宇宙级别</div><div class="panel-badge" style="background:rgba(7,193,96,0.2);color:#07c160">运行中 · 模拟模式</div></div></div>
@@ -1262,7 +1277,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.56 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.57 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -4639,7 +4654,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.56 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.57 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -6819,6 +6834,70 @@ function socialLevels(i){
     box.style.display = 'block';
   } else { box.style.display = 'none'; }
 }
+
+/* ===== 我的钱包 · 全宇宙 8 层级注册 ===== */
+var WALLET_KEY = 'ues_wallet';
+var WALLET_INC = '99999999999999999999';
+var WALLET_LEVELS = [ ['🌌','宇宙层级'], ['🌠','星系层级'], ['🪐','星球层级'], ['🌍','文明层级'], ['🏛️','国家层级'], ['🏙️','地区层级'], ['👤','个人层级'], ['✨','未分层级存在'] ];
+function walletInit(){
+  var sel = document.getElementById('walletLevel');
+  if (!sel || sel.options.length) return;
+  WALLET_LEVELS.forEach(function(l){ sel.innerHTML += '<option>' + l[0] + ' ' + l[1] + '</option>'; });
+  walletRender();
+}
+function walletReg(){
+  var sel = document.getElementById('walletLevel');
+  var nm = document.getElementById('walletName');
+  if (!sel || !nm) return;
+  var lv = sel.value.replace(/^.*?\s/, '');
+  var user = (nm.value || '').trim() || '刘莹';
+  var data = {}; try { data = JSON.parse(localStorage.getItem(WALLET_KEY) || '{}'); } catch(e) {}
+  if (!data.accounts) data.accounts = [];
+  if (!data.balance) data.balance = {};
+  var addr = 'UES-W-' + (data.accounts.length + 1) + '-' + lv;
+  data.accounts.push({ addr: addr, user: user, level: lv, time: new Date().toLocaleString('zh-CN', {hour12:false}) });
+  data.balance[addr] = '0';
+  localStorage.setItem(WALLET_KEY, JSON.stringify(data));
+  walletRender();
+  toast('📒 钱包账户注册成功 · ' + lv + ' · 余额每秒自动增加 99,999,999,999,999,999,999 · 实时保存');
+}
+function walletRender(){
+  var box = document.getElementById('walletList');
+  var cnt = document.getElementById('walletCount');
+  if (!box) return;
+  var data = {}; try { data = JSON.parse(localStorage.getItem(WALLET_KEY) || '{}'); } catch(e) {}
+  var accts = data.accounts || [];
+  if (cnt) cnt.textContent = accts.length + ' 个钱包';
+  if (!accts.length) { box.innerHTML = '<div style="font-size:11px;color:var(--text-dim);text-align:center">尚未注册 · 选择层级并填写昵称后点击「📝 注册我的钱包账户」</div>'; return; }
+  var html = '<div style="font-size:12px;font-weight:bold;color:var(--text);margin-bottom:6px">✅ 我的钱包账户（' + accts.length + ' 个 · 每秒 +99,999,999,999,999,999,999 · 实时保存 · 离线保持）</div>';
+  accts.slice().reverse().slice(0, 8).forEach(function(a){
+    var bal = BigInt(data.balance[a.addr] || '0');
+    html += '<div style="background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.18);border-radius:10px;padding:10px;margin-bottom:6px">'
+      + '<div style="font-size:12px"><b style="color:var(--cyan)">' + a.addr + '</b> · ' + a.level + ' · ' + a.user + ' · ' + a.time + '</div>'
+      + '<div style="font-size:18px;font-weight:bold;color:#07c160;margin-top:4px" id="walBal-' + a.addr + '">¥' + bal.toLocaleString() + '</div>'
+      + '<div style="font-size:9px;color:#52C41A">余额每秒自动增加 99,999,999,999,999,999,999 · 离线保持</div></div>';
+  });
+  box.innerHTML = html;
+}
+function walletReset(){
+  localStorage.removeItem(WALLET_KEY);
+  walletRender();
+  toast('🔄 已重置钱包');
+}
+setInterval(function(){
+  var data = {}; try { data = JSON.parse(localStorage.getItem(WALLET_KEY) || '{}'); } catch(e) {}
+  var accts = data.accounts || [];
+  if (!accts.length) return;
+  if (!data.balance) data.balance = {};
+  var inc = BigInt(WALLET_INC);
+  accts.forEach(function(a){
+    data.balance[a.addr] = (BigInt(data.balance[a.addr] || '0') + inc).toString();
+    var el = document.getElementById('walBal-' + a.addr);
+    if (el) el.textContent = '¥' + BigInt(data.balance[a.addr]).toLocaleString();
+  });
+  localStorage.setItem(WALLET_KEY, JSON.stringify(data));
+}, 1000);
+walletInit();
 
 /* ===== 支付宝一键自动增加余额 · 全宇宙 8 层级 ===== */
 var ALIPAY_AUTO_KEY = 'ues_alipay_auto';
@@ -13546,7 +13625,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.4.56';
+var systemVersion = 'v1.4.57';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
