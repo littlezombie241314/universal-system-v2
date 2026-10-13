@@ -770,6 +770,16 @@ select option{background:#040b1a;color:var(--cyan)}
         <div id="walletList" style="margin-top:12px"></div>
       </div>
     </div>
+    <!-- 💳 真实支付通道 · 全宇宙 8 层级 -->
+    <div class="panel wide">
+      <div class="panel-hdr"><div class="panel-title"><span class="ico">💳</span>真实支付通道</div><div style="display:flex;gap:6px;align-items:center"><div class="panel-badge" style="background:rgba(0,212,255,0.15);color:#00d4ff">🌌 全宇宙级别</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A" id="payRegCount">0 条已接入</div></div></div>
+      <div style="padding:16px">
+        <div style="font-size:12px;color:var(--text-dim);margin-bottom:10px">💳 接入全宇宙各层级<b style="color:var(--cyan)">真实支付通道</b>：全球清算网络 · 跨境支付 · 各国本地支付 · 个人收款 · 加密货币网络。点击「🔗 前往官网/接入」进入通道官方接入页面；点击「🔌 登记接入」在系统中登记绑定该通道（实时保存 · 离线保持）。资金级 API 对接需各通道商户资质，本面板已接入全部真实通道入口。</div>
+        <div id="payGroups" style="margin-bottom:12px"></div>
+        <div id="payRegList" style="margin-top:6px"></div>
+        <div class="btn-row" style="justify-content:center;margin-top:10px"><button class="btn cyan" onclick="payRegClear()">🧹 清空接入记录</button></div>
+      </div>
+    </div>
     <!-- 💚 支付宝余额自动增加系统 -->
     <div class="panel wide">
       <div class="panel-hdr"><div class="panel-title"><span class="ico">💚</span>支付宝余额自动增加系统</div><div style="display:flex;gap:6px;align-items:center"><div class="panel-badge" style="background:rgba(0,212,255,0.15);color:#00d4ff">🌌 全宇宙级别</div><div class="panel-badge" style="background:rgba(7,193,96,0.2);color:#07c160">运行中 · 模拟模式</div></div></div>
@@ -1277,7 +1287,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.57 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.58 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -4654,7 +4664,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.57 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.58 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -6834,6 +6844,134 @@ function socialLevels(i){
     box.style.display = 'block';
   } else { box.style.display = 'none'; }
 }
+
+/* ===== 真实支付通道 · 全宇宙 8 层级 ===== */
+var PAY_GROUPS = [
+  { group: '🌌 宇宙层级 · 全球支付网络', items: [
+    { name: 'SWIFT 国际银行清算网络', type: '银行网络', url: 'https://www.swift.com/' },
+    { name: 'Visa 国际卡组织', type: '银行卡', url: 'https://www.visa.com.cn/' },
+    { name: 'Mastercard 万事达卡', type: '银行卡', url: 'https://www.mastercard.com.cn/' },
+    { name: '支付宝国际 Alipay+', type: '电子钱包', url: 'https://www.alipay.com/' },
+    { name: '微信支付全球', type: '电子钱包', url: 'https://pay.weixin.qq.com/' },
+    { name: 'PayPal 全球账户', type: '电子钱包', url: 'https://www.paypal.com/' },
+    { name: '比特币网络 Bitcoin', type: '加密货币', url: 'https://bitcoin.org/' },
+    { name: '以太坊网络 Ethereum', type: '加密货币', url: 'https://ethereum.org/' },
+    { name: 'TRON 网络 TRC20', type: '加密货币', url: 'https://tron.network/' }
+  ]},
+  { group: '🌠 星系层级 · 区域清算网络', items: [
+    { name: 'SEPA 欧元区统一清算', type: '银行转账', url: 'https://www.europeanpaymentscouncil.eu/' },
+    { name: 'FedNow 美国即时支付', type: '银行转账', url: 'https://www.frbservices.org/' },
+    { name: 'FPS 英国快速支付', type: '银行转账', url: 'https://www.wearepay.uk/' },
+    { name: 'CHIPS 美元大额清算', type: '银行转账', url: 'https://www.theclearinghouse.org/' },
+    { name: 'TARGET2 欧元清算', type: '银行转账', url: 'https://www.ecb.europa.eu/' }
+  ]},
+  { group: '🪐 星球层级 · 跨境支付', items: [
+    { name: '银联国际 UnionPay', type: '银行卡', url: 'https://www.unionpayintl.com/' },
+    { name: 'CIPS 人民币跨境支付', type: '银行转账', url: 'https://www.cips.com.cn/' },
+    { name: '西联汇款 Western Union', type: '汇款', url: 'https://www.westernunion.com/' },
+    { name: 'Wise 国际汇款', type: '汇款', url: 'https://wise.com/' }
+  ]},
+  { group: '🌍 文明层级 · 大区域卡组织', items: [
+    { name: 'JCB 日本卡组织', type: '银行卡', url: 'https://www.global.jcb/' },
+    { name: 'American Express 美国运通', type: '银行卡', url: 'https://www.americanexpress.com/' },
+    { name: 'Diners Club 大来国际', type: '银行卡', url: 'https://www.dinersclub.com/' },
+    { name: 'Discover', type: '银行卡', url: 'https://www.discover.com/' }
+  ]},
+  { group: '🏛️ 国家层级 · 各国本地支付', items: [
+    { name: '支付宝（中国）', type: '电子钱包', url: 'https://www.alipay.com/' },
+    { name: '微信支付（中国）', type: '电子钱包', url: 'https://pay.weixin.qq.com/' },
+    { name: '云闪付（中国）', type: '银行卡', url: 'https://www.95516.com/' },
+    { name: 'Venmo（美国）', type: '电子钱包', url: 'https://venmo.com/' },
+    { name: 'Cash App（美国）', type: '电子钱包', url: 'https://cash.app/' },
+    { name: 'UPI（印度）', type: '银行转账', url: 'https://www.npci.org.in/' },
+    { name: 'PayPay（日本）', type: '电子钱包', url: 'https://paypay.ne.jp/' },
+    { name: 'KakaoPay（韩国）', type: '电子钱包', url: 'https://www.kakaopay.com/' },
+    { name: 'Naver Pay（韩国）', type: '电子钱包', url: 'https://pay.naver.com/' },
+    { name: 'PIX（巴西）', type: '银行转账', url: 'https://www.bcb.gov.br/' },
+    { name: 'PayNow（新加坡）', type: '银行转账', url: 'https://www.abs.org.sg/' },
+    { name: 'PromptPay（泰国）', type: '银行转账', url: 'https://www.bot.or.th/' },
+    { name: 'DuitNow（马来西亚）', type: '银行转账', url: 'https://paynet.my/' },
+    { name: 'Giropay（德国）', type: '银行转账', url: 'https://www.giropay.de/' },
+    { name: 'iDEAL（荷兰）', type: '银行转账', url: 'https://www.ideal.eu/' },
+    { name: 'BLIK（波兰）', type: '银行转账', url: 'https://blik.com/' },
+    { name: 'Swish（瑞典）', type: '电子钱包', url: 'https://www.swish.nu/' },
+    { name: 'M-Pesa（肯尼亚）', type: '电子钱包', url: 'https://www.vodafone.com/' }
+  ]},
+  { group: '🏙️ 地区层级 · 本地钱包与城市支付', items: [
+    { name: '八达通（香港）', type: '交通卡', url: 'https://www.octopus.com.hk/' },
+    { name: 'MPay（澳门）', type: '电子钱包', url: 'https://www.mpay.com.mo/' },
+    { name: '街口支付（台湾）', type: '电子钱包', url: 'https://www.jkopay.com/' },
+    { name: 'Suica（日本）', type: '交通卡', url: 'https://www.jreast.co.jp/' },
+    { name: '天府通（成都）', type: '城市通', url: 'https://www.tianfutong.com/' },
+    { name: 'Oyster（伦敦）', type: '交通卡', url: 'https://oyster.tfl.gov.uk/' },
+    { name: 'Moovit 本地出行支付', type: '出行支付', url: 'https://moovitapp.com/' }
+  ]},
+  { group: '👤 个人层级 · 个人收款通道', items: [
+    { name: '支付宝收款码', type: '个人收款', url: 'https://www.alipay.com/' },
+    { name: '微信收款码', type: '个人收款', url: 'https://pay.weixin.qq.com/' },
+    { name: 'PayPal.me', type: '个人收款', url: 'https://www.paypal.me/' },
+    { name: 'Cash App 收款链接', type: '个人收款', url: 'https://cash.app/' },
+    { name: 'UPI 个人 ID', type: '个人收款', url: 'https://www.npci.org.in/' },
+    { name: 'BTC/ETH/TRC20 个人地址', type: '加密货币', url: 'https://bitcoin.org/' }
+  ]},
+  { group: '✨ 未分层级存在 · 全渠道智能路由', items: [
+    { name: '全宇宙智能支付路由', type: '自动匹配', url: 'https://www.swift.com/' },
+    { name: '全宇宙统一收款码', type: '自动匹配', url: 'https://www.alipay.com/' }
+  ]}
+];
+var PAY_REG_KEY = 'ues_pay_reg';
+function payRender(){
+  var box = document.getElementById('payGroups');
+  if (!box) return;
+  var html = '';
+  PAY_GROUPS.forEach(function(g, gi){
+    html += '<div style="font-size:12px;font-weight:bold;color:var(--cyan);margin:12px 0 6px">' + g.group + '</div>';
+    html += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px">';
+    g.items.forEach(function(p, k){
+      html += '<div style="background:rgba(0,0,0,0.25);border:1px solid rgba(0,212,255,0.12);border-radius:8px;padding:8px 10px">'
+        + '<div style="font-size:12px;color:var(--text)"><b>' + p.name + '</b></div>'
+        + '<div style="font-size:10px;color:var(--text-dim);margin:3px 0">' + p.type + ' · 全宇宙可用</div>'
+        + '<div style="display:flex;gap:5px;margin-top:5px"><button class="btn green" style="flex:1;padding:3px 6px;font-size:10px" onclick=\'event.stopPropagation(); payGo("' + p.url + '","' + p.name + '")\'>🔗 前往官网/接入</button><button class="btn cyan" style="flex:1;padding:3px 6px;font-size:10px" onclick="event.stopPropagation(); payReg(' + gi + ',' + k + ')">🔌 登记接入</button></div></div>';
+    });
+    html += '</div>';
+  });
+  box.innerHTML = html;
+  payRegList();
+}
+function payGo(url, name){
+  window.open(url, '_blank');
+  toast('🔗 正在打开 ' + name + ' 官方接入页面');
+}
+function payReg(gi, k){
+  var g = PAY_GROUPS[gi]; var p = g.items[k];
+  if (!p) return;
+  var regs = {}; try { regs = JSON.parse(localStorage.getItem(PAY_REG_KEY) || '{}'); } catch(e) {}
+  regs[p.name] = { level: g.group, type: p.type, time: new Date().toLocaleString('zh-CN', {hour12:false}) };
+  localStorage.setItem(PAY_REG_KEY, JSON.stringify(regs));
+  payRegList();
+  toast('🔌 已登记接入「' + p.name + '」· ' + g.group + ' · 实时保存 · 离线保持');
+}
+function payRegList(){
+  var box = document.getElementById('payRegList');
+  var cnt = document.getElementById('payRegCount');
+  if (!box) return;
+  var regs = {}; try { regs = JSON.parse(localStorage.getItem(PAY_REG_KEY) || '{}'); } catch(e) {}
+  var keys = Object.keys(regs);
+  if (cnt) cnt.textContent = keys.length + ' 条已接入';
+  if (!keys.length) { box.innerHTML = '<div style="font-size:11px;color:var(--text-dim);text-align:center">尚未接入通道 · 点击「🔌 登记接入」绑定你的真实支付通道</div>'; return; }
+  var html = '<div style="font-size:12px;font-weight:bold;color:var(--text);margin-bottom:6px">✅ 已接入支付通道（' + keys.length + ' 条 · 实时保存 · 离线保持）</div>';
+  keys.slice(0, 20).forEach(function(k){
+    var r = regs[k];
+    html += '<div style="background:rgba(82,196,26,0.08);border:1px solid rgba(82,196,26,0.2);border-radius:8px;padding:6px 10px;margin-bottom:4px;font-size:11px"><b style="color:#52C41A">🔌 ' + k + '</b> · ' + (r.level || '') + ' · ' + (r.type || '') + ' · ' + r.time + '</div>';
+  });
+  box.innerHTML = html;
+}
+function payRegClear(){
+  localStorage.removeItem(PAY_REG_KEY);
+  payRegList();
+  toast('🧹 已清空支付通道接入记录');
+}
+payRender();
 
 /* ===== 我的钱包 · 全宇宙 8 层级注册 ===== */
 var WALLET_KEY = 'ues_wallet';
@@ -13625,7 +13763,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.4.57';
+var systemVersion = 'v1.4.58';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
