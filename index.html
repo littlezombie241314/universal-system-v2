@@ -775,16 +775,6 @@ select option{background:#040b1a;color:var(--cyan)}
       <div class="panel-hdr"><div class="panel-title"><span class="ico">💳</span>真实支付通道</div><div style="display:flex;gap:6px;align-items:center"><div class="panel-badge" style="background:rgba(0,212,255,0.15);color:#00d4ff">🌌 全宇宙级别</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A" id="payRegCount">0 条已接入</div></div></div>
       <div style="padding:16px">
         <div style="font-size:12px;color:var(--text-dim);margin-bottom:10px">💳 接入全宇宙各层级<b style="color:var(--cyan)">真实支付通道</b>：全球清算网络 · 跨境支付 · 各国本地支付 · 个人收款 · 加密货币网络。点击「🔗 前往官网/接入」进入通道官方接入页面；点击「🔌 登记接入」在系统中登记绑定该通道（实时保存 · 离线保持）。资金级 API 对接需各通道商户资质，本面板已接入全部真实通道入口。</div>
-        <div id="payQrUploadBox" style="display:none;margin-bottom:12px;padding:12px;background:rgba(255,170,0,0.06);border:1px dashed rgba(255,170,0,0.35);border-radius:8px">
-          <div style="font-size:12px;color:var(--amber);font-weight:bold;margin-bottom:6px">📤 上传微信收款二维码</div>
-          <div style="font-size:10px;color:var(--text-dim);margin-bottom:8px">上传你的真实微信收款码图片（个人收款通道 · 实时保存 · 提现时扫码付款成功）</div>
-          <input type="file" id="payQrFile" accept="image/*" onchange="payQrFileChange(this)" style="font-size:10px;color:var(--text);width:100%"/>
-          <div id="payQrPreview" style="text-align:center;margin:8px 0;display:none"><img id="payQrImg" style="width:140px;height:140px;object-fit:contain;background:#fff;border-radius:8px;padding:6px"/></div>
-          <div style="display:flex;gap:6px;justify-content:center;margin-top:8px">
-            <button class="btn green" onclick="payQrConfirm()">✅ 确认保存并登记接入</button>
-            <button class="btn" onclick="payQrCancel()">取消</button>
-          </div>
-        </div>
         <div id="payGroups" style="margin-bottom:12px"></div>
         <div id="payRegList" style="margin-top:6px"></div>
         <div class="btn-row" style="justify-content:center;margin-top:10px"><button class="btn cyan" onclick="payRegClear()">🧹 清空接入记录</button></div>
@@ -6984,7 +6974,7 @@ function payRender(){
         + '<div style="font-size:12px;color:var(--text)"><b>' + p.name + '</b></div>'
         + '<div style="font-size:10px;color:var(--text-dim);margin:3px 0">' + p.type + ' · 全宇宙可用</div>'
         + (g.group.indexOf('个人层级') >= 0 ? '<select id="payVer-' + gi + '-' + k + '" style="width:100%;margin-top:4px;background:rgba(4,18,34,.6);border:1px solid var(--border);color:var(--text);padding:3px;border-radius:4px;font-size:10px"><option>未核验</option><option>个人实名核验</option><option>企业核验</option></select>' : '')
-        + '<div style="display:flex;gap:5px;margin-top:5px"><button class="btn green" style="flex:1;padding:3px 6px;font-size:10px" onclick=\'event.stopPropagation(); payGo("' + p.url + '","' + p.name + '")\'>🔗 前往官网/接入</button><button class="btn cyan" style="flex:1;padding:3px 6px;font-size:10px" onclick="event.stopPropagation(); payReg(' + gi + ',' + k + ')">🔌 登记接入</button>' + (p.name === '微信收款码' ? '<button class="btn amber" style="flex:1;padding:3px 6px;font-size:10px" onclick="event.stopPropagation(); payQrUpload(' + gi + ',' + k + ')">📤 上传收款码</button>' : '') + '</div></div>';
+        + '<div style="display:flex;gap:5px;margin-top:5px"><button class="btn green" style="flex:1;padding:3px 6px;font-size:10px" onclick=\'event.stopPropagation(); payGo("' + p.url + '","' + p.name + '")\'>🔗 前往官网/接入</button><button class="btn cyan" style="flex:1;padding:3px 6px;font-size:10px" onclick="event.stopPropagation(); payReg(' + gi + ',' + k + ')">🔌 登记接入</button></div></div>';
     });
     html += '</div>';
   });
@@ -6994,60 +6984,6 @@ function payRender(){
 function payGo(url, name){
   window.open(url, '_blank');
   toast('🔗 正在打开 ' + name + ' 官方接入页面');
-}
-/* ===== 微信收款码 · 上传收款二维码（实时保存 · 提现扫码付款）===== */
-var payQrPending = null;
-function payQrUpload(gi, k){
-  payQrPending = { gi: gi, k: k };
-  var box = document.getElementById('payQrUploadBox');
-  if (!box) return;
-  var g = PAY_GROUPS[gi]; var p = g.items[k];
-  box.style.display = 'block';
-  var qr = {}; try { qr = JSON.parse(localStorage.getItem('ues_pay_qr') || '{}'); } catch(e) {}
-  if (qr[p.name] && qr[p.name].img) {
-    document.getElementById('payQrImg').src = qr[p.name].img;
-    document.getElementById('payQrPreview').style.display = 'block';
-  }
-  box.scrollIntoView({behavior:'smooth', block:'center'});
-  toast('📤 请选择你的微信收款二维码图片上传');
-}
-function payQrFileChange(input){
-  if (!input.files || !input.files[0]) return;
-  var f = input.files[0];
-  if (f.size > 3*1024*1024) { toast('⚠ 图片过大，请选择 3MB 以内'); input.value=''; return; }
-  var reader = new FileReader();
-  reader.onload = function(e){
-    document.getElementById('payQrImg').src = e.target.result;
-    document.getElementById('payQrPreview').style.display = 'block';
-    toast('✅ 已读取收款二维码图片，点击「确认保存并登记接入」');
-  };
-  reader.readAsDataURL(f);
-}
-function payQrConfirm(){
-  var gi = -1, k = -1;
-  if (payQrPending) { gi = payQrPending.gi; k = payQrPending.k; }
-  else {
-    for (var i = 0; i < PAY_GROUPS.length; i++) {
-      var j = PAY_GROUPS[i].items.findIndex(function(x){ return x.name === '微信收款码'; });
-      if (j >= 0) { gi = i; k = j; break; }
-    }
-  }
-  if (gi < 0 || k < 0) return;
-  var g = PAY_GROUPS[gi]; var p = g.items[k];
-  var img = document.getElementById('payQrImg').src;
-  if (!img || img.indexOf('data:image') < 0) { toast('⚠ 请先选择收款二维码图片'); return; }
-  var qr = {}; try { qr = JSON.parse(localStorage.getItem('ues_pay_qr') || '{}'); } catch(e) {}
-  qr[p.name] = { img: img, time: new Date().toLocaleString('zh-CN', {hour12:false}) };
-  localStorage.setItem('ues_pay_qr', JSON.stringify(qr));
-  payQrCancel();
-  payReg(gi, k);
-  toast('📤 微信收款二维码已保存并登记接入 · 提现时扫码付款成功');
-}
-function payQrCancel(){
-  var box = document.getElementById('payQrUploadBox');
-  if (box) box.style.display = 'none';
-  payQrPending = null;
-  var inp = document.getElementById('payQrFile'); if (inp) inp.value = '';
 }
 /* ===== 收款二维码上传页（微信收款码登记接入跳转）===== */
 var qrPending = null; var qrUploadTarget = null;
