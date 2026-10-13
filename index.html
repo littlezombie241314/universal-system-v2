@@ -1255,7 +1255,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.47 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.48 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -4603,7 +4603,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.47 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.48 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -5287,7 +5287,7 @@ select option{background:#040b1a;color:var(--cyan)}
     <!-- 全宇宙社交平台 · 注册入口 -->
     <div class="panel wide"><div class="panel-hdr"><div class="panel-title"><span class="ico">📱</span>全宇宙社交平台 · 注册入口</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">点击 logo 前往注册</div></div>
       <div style="padding:14px">
-        <div style="font-size:11px;color:var(--text-dim);margin-bottom:10px">全宇宙<b style="color:#52C41A">8 个层级</b>的社交平台与社交软件 · 点击任意平台的 logo/按钮即<b style="color:var(--cyan)">跳转到该平台的官网或注册页</b> · 国家层级为真实官网（新窗口打开）· 其他层级为全宇宙系统内官网/注册页（填写账号即可注册，账号与全宇宙恒等系统同步）· 附各平台注册方法</div>
+        <div style="font-size:11px;color:var(--text-dim);margin-bottom:10px">全宇宙<b style="color:#52C41A">8 个层级</b>的社交平台与社交软件 · 点击 logo/按钮即<b style="color:var(--cyan)">跳转到该平台自己的官网或注册页</b>注册 · 国家层级为真实平台官网 · 其他层级为该平台<b style="color:var(--cyan)">独立官方注册页</b>（每个平台独立入口页面，填写账号即可注册，账号与全宇宙恒等系统同步）· 附各平台注册方法</div>
         <div id="socialLevelNav" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px"></div>
         <div id="socialList" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px"></div>
       </div>
@@ -6614,7 +6614,7 @@ function socialGroupIdx(gi){
       + '<div style="font-size:10px;color:var(--text-dim);min-height:26px">' + p.desc + '</div>'
       + '<div style="font-size:9px;color:var(--text-dim);text-align:left;margin:6px 0;padding:6px;background:rgba(0,0,0,0.25);border-radius:6px">📝 注册方法：' + p.method + '</div>'
       + (p.virtual
-          ? '<button class="btn green" style="width:100%;padding:5px 8px;font-size:11px" onclick="event.stopPropagation(); socialGoIdx(' + i + ')">✨ 系统内注册</button>'
+          ? '<button class="btn green" style="width:100%;padding:5px 8px;font-size:11px" onclick="event.stopPropagation(); socialGoIdx(' + i + ')">🌐 前往该平台注册页</button>'
           : '<button class="btn green" style="width:100%;padding:5px 8px;font-size:11px" onclick="event.stopPropagation(); socialGoIdx(' + i + ')">🌐 前往官网/注册</button>') + '</div>';
   });
   list.innerHTML = html;
@@ -6623,7 +6623,8 @@ function socialGoIdx(i){
   var p = SOCIAL_FLAT[i];
   if (!p) return;
   if (p.virtual) {
-    socialOpenSite(i);
+    window.open('social-register.html?platform=' + encodeURIComponent(p.name), '_blank');
+    toast('✓ 正在打开 ' + p.name + ' 官方注册页');
   } else {
     window.open(p.url, '_blank');
     toast('✓ 正在打开 ' + p.name + ' 官网/注册页：' + p.url);
@@ -13197,7 +13198,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.4.47';
+var systemVersion = 'v1.4.48';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {

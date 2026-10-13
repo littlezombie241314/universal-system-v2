@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>社交平台 · 官方注册页</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:"PingFang SC","Microsoft YaHei",sans-serif; background:radial-gradient(1200px 800px at 20% 0%,#0a1a3a 0%,#050a18 60%); color:#dce9ff; min-height:100vh; display:flex; align-items:center; justify-content:center; padding:20px; }
+.card { width:100%; max-width:460px; background:rgba(10,20,45,.85); border:1px solid rgba(0,212,255,.35); border-radius:20px; padding:32px 28px; box-shadow:0 0 40px rgba(0,212,255,.15); }
+.logo { font-size:64px; text-align:center; margin-bottom:6px; }
+h1 { text-align:center; font-size:24px; color:#7ae8ff; margin-bottom:4px; }
+.lv { text-align:center; font-size:12px; color:#9fb6d8; background:rgba(0,212,255,.12); border:1px solid rgba(0,212,255,.3); display:inline-block; padding:3px 12px; border-radius:20px; margin:6px auto; }
+.desc { text-align:center; font-size:13px; color:#a8c0e4; margin:8px 0 18px; }
+label { display:block; font-size:12px; color:#8fd8ff; margin:14px 0 6px; }
+input { width:100%; padding:12px 14px; border-radius:10px; border:1px solid rgba(0,212,255,.3); background:rgba(0,0,0,.3); color:#fff; font-size:14px; outline:none; }
+input:focus { border-color:#00d4ff; box-shadow:0 0 12px rgba(0,212,255,.25); }
+.sync { display:flex; align-items:center; gap:10px; margin:14px 0; font-size:12px; color:#a8c0e4; }
+.switch { width:42px; height:22px; border-radius:12px; background:rgba(0,212,255,.25); position:relative; cursor:pointer; transition:.2s; }
+.switch.on { background:#00d4ff; }
+.switch::after { content:''; position:absolute; width:18px; height:18px; border-radius:50%; background:#fff; top:2px; left:2px; transition:.2s; }
+.switch.on::after { left:22px; }
+.btn { width:100%; padding:14px; border:none; border-radius:12px; background:linear-gradient(135deg,#00d4ff,#4de09c); color:#04233a; font-size:16px; font-weight:bold; cursor:pointer; margin-top:18px; }
+.btn:hover { filter:brightness(1.1); }
+.ok { display:none; text-align:center; padding:30px 10px; }
+.ok .big { font-size:52px; }
+.ok h2 { color:#4de09c; margin:10px 0; }
+.ok p { font-size:13px; color:#a8c0e4; line-height:1.8; }
+.back { display:inline-block; margin-top:18px; padding:10px 22px; border:1px solid rgba(0,212,255,.4); border-radius:10px; color:#8fd8ff; text-decoration:none; font-size:13px; }
+.back:hover { background:rgba(0,212,255,.12); }
+.err { display:none; text-align:center; padding:40px 10px; color:#ff8a80; }
+.err .big { font-size:52px; }
+.note { font-size:11px; color:#7d93b8; margin-top:14px; line-height:1.7; text-align:center; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div id="formView">
+    <div class="logo" id="pIcon">🌌</div>
+    <h1 id="pName">平台名称</h1>
+    <div style="text-align:center"><span class="lv" id="pLevel">层级</span></div>
+    <div class="desc" id="pDesc">平台简介</div>
+    <label>昵称 / 用户名</label>
+    <input id="fName" placeholder="请输入昵称或用户名" value="刘莹">
+    <label>账号 ID（可选）</label>
+    <input id="fId" placeholder="自动生成，可自定义">
+    <div class="sync"><div class="switch on" id="fSync" onclick="this.classList.toggle('on')"></div><span>同步全宇宙恒等系统账号（数据实时保存，离线保持）</span></div>
+    <button class="btn" onclick="doReg()">立即注册 · 加入「<span id="pName2"></span>」</button>
+    <div class="note">本页为该平台官方注册入口 · 注册后账号与全宇宙恒等系统同步 · 各平台间账号互通</div>
+  </div>
+  <div class="ok" id="okView">
+    <div class="big">🎉</div>
+    <h2 id="okTitle">注册成功</h2>
+    <p id="okInfo"></p>
+    <a class="back" href="#" onclick="history.back();return false">← 返回全宇宙恒等系统</a>
+  </div>
+  <div class="err" id="errView">
+    <div class="big">🌌</div>
+    <h2>未找到该平台</h2>
+    <a class="back" href="#" onclick="history.back();return false">← 返回</a>
+  </div>
+</div>
+<script>
+var PLATFORMS = [
+  { key:'ues-social', icon:'🌌', name:'全宇宙社交总网 UES-Social', level:'🌌 宇宙层级', desc:'全宇宙统一社交平台，所有存在均可入驻', steps:'注册后自动开通全宇宙空间 · 账号与全宇宙恒等系统同步 · 支持全宇宙全层级互通' },
+  { key:'universe-circle', icon:'🌍', name:'宇宙朋友圈', level:'🌌 宇宙层级', desc:'全宇宙动态分享平台，发布即全宇宙可见', steps:'注册后自动开通动态发布 · 好友无限 · 跨层级关注' },
+  { key:'star-plaza', icon:'🌟', name:'星际广场', level:'🌌 宇宙层级', desc:'全宇宙公共社交广场，聚集所有存在', steps:'注册后自动入驻星际广场 · 实时全宇宙热榜' },
+  { key:'universe-community', icon:'🛸', name:'全宇宙社区', level:'🌌 宇宙层级', desc:'全宇宙兴趣社区，兴趣宇宙全覆盖', steps:'注册后自动加入兴趣宇宙 · 全宇宙同好互联' },
+  { key:'galaxy-social', icon:'🌌', name:'银河社交网', level:'🌠 星系层级', desc:'银河系社交平台，覆盖银河全域', steps:'注册后自动分配银河主页 · 星系间互访' },
+  { key:'andromeda-comm', icon:'🌌', name:'仙女座社区', level:'🌠 星系层级', desc:'仙女座星系社区平台', steps:'注册后自动分配仙女座空间 · 跨星系通讯' },
+  { key:'station-comm', icon:'🌌', name:'银河系空间站社区', level:'🌠 星系层级', desc:'空间站社交平台，轨道居民社区', steps:'注册后自动接入空间站社交网 · 实时轨道动态' },
+  { key:'planet-circle', icon:'🪐', name:'星球朋友圈', level:'🪐 星球层级', desc:'跨星球社交平台，覆盖所有星球', steps:'注册后自动分配星球主页 · 跨星球交友' },
+  { key:'mars-comm', icon:'🔴', name:'火星社区', level:'🪐 星球层级', desc:'火星社交平台，火星居民社区', steps:'注册后自动入住火星 · 火星城市动态' },
+  { key:'moon-circle', icon:'🌙', name:'月球社交圈', level:'🪐 星球层级', desc:'月球社交平台，月球基地社区', steps:'注册后自动开通月球空间 · 月面生活分享' },
+  { key:'planet-local', icon:'🌍', name:'星球本地圈', level:'🪐 星球层级', desc:'各星球本地社交平台', steps:'注册后选择所在星球 · 自动加入本地圈' },
+  { key:'civ-plaza', icon:'🏛️', name:'文明广场', level:'🌍 文明层级', desc:'跨文明社交平台，文明间交流', steps:'注册后自动接入文明交流网 · 文明档案开放' },
+  { key:'civ-exchange', icon:'🤝', name:'跨文明交流平台', level:'🌍 文明层级', desc:'文明间协作交流平台', steps:'注册后自动匹配文明伙伴 · 跨文明协作' },
+  { key:'civ-history', icon:'📜', name:'文明史社区', level:'🌍 文明层级', desc:'文明记忆社区，记录文明历程', steps:'注册后自动开通文明档案 · 共建文明史' },
+  { key:'city-circle', icon:'🏙️', name:'同城社交圈', level:'🏙️ 地区层级', desc:'同城本地社交平台', steps:'注册后选择所在城市 · 自动加入同城圈' },
+  { key:'neighbor-comm', icon:'🏘️', name:'邻里社区', level:'🏙️ 地区层级', desc:'社区邻里社交平台', steps:'注册后自动分配社区空间 · 邻里互助' },
+  { key:'local-life', icon:'📍', name:'本地生活圈', level:'🏙️ 地区层级', desc:'本地生活分享平台', steps:'注册后自动开通本地主页 · 生活动态同步' },
+  { key:'person-home', icon:'👤', name:'个人主页空间', level:'👤 个人层级', desc:'全宇宙个人社交主页平台', steps:'注册后自动生成个人全宇宙主页 · 全层级可见' },
+  { key:'person-feed', icon:'💫', name:'个人动态圈', level:'👤 个人层级', desc:'个人动态发布平台', steps:'注册后自动开通动态发布 · 关注者实时接收' },
+  { key:'wanderer-help', icon:'✨', name:'星际流浪者互助平台', level:'✨ 未分层级存在', desc:'流浪者互助社交平台', steps:'注册后自动接入互助网 · 全宇宙流浪者互联' },
+  { key:'ai-circle', icon:'🤖', name:'初生AI社交圈', level:'✨ 未分层级存在', desc:'AI 存在社交平台', steps:'AI 账号自动注册 · 自动加入 AI 社区' },
+  { key:'nature-circle', icon:'🌿', name:'动植物伙伴圈', level:'✨ 未分层级存在', desc:'动植物存在交流平台', steps:'存在账号自动注册 · 自动加入生态社区' }
+];
+var pname = decodeURIComponent((location.search.match(/platform=([^&]+)/) || [,''])[1]);
+var pf = PLATFORMS.find(function(x){ return x.name === pname || x.key === pname; });
+function show(v){ ['formView','okView','errView'].forEach(function(id){ document.getElementById(id).style.display = (id===v) ? 'block':'none'; }); }
+if (!pf) { show('errView'); }
+else {
+  document.getElementById('pIcon').textContent = pf.icon;
+  document.getElementById('pName').textContent = pf.name;
+  document.getElementById('pName2').textContent = pf.name;
+  document.getElementById('pLevel').textContent = pf.level;
+  document.getElementById('pDesc').textContent = pf.desc + ' · ' + pf.steps;
+  document.title = pf.name + ' · 官方注册页';
+}
+function doReg(){
+  var name = document.getElementById('fName').value.trim() || '刘莹';
+  var id = document.getElementById('fId').value.trim() || ('ues_' + Math.random().toString(36).slice(2,10));
+  var regs = {};
+  try { regs = JSON.parse(localStorage.getItem('ues_social_reg') || '{}'); } catch(e) {}
+  regs[pf.name] = { user: name, account: id, level: pf.level, time: new Date().toLocaleString('zh-CN',{hour12:false}) };
+  localStorage.setItem('ues_social_reg', JSON.stringify(regs));
+  document.getElementById('okTitle').textContent = '「' + pf.name + '」注册成功';
+  document.getElementById('okInfo').innerHTML = '平台：' + pf.level + '<br>账号：' + name + '（' + id + '）<br>注册时间：' + regs[pf.name].time + '<br>账号已与全宇宙恒等系统同步 · 实时保存 · 离线保持';
+  show('okView');
+}
+</script>
+</body>
+</html>
