@@ -1290,7 +1290,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.68 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.69 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -4726,7 +4726,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.68 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.69 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -8932,6 +8932,11 @@ function doTransfer(){
   if(!realLevel||!realChannel){toast('⚠ 请先选择收款方层级和真实支付通道');return}
   if(!to){toast('⚠ 请输入收款方账户ID');return}
   if(!amount||amount<=0){toast('⚠ 请输入有效转账金额');return}
+  var qrBound = false;
+  if (realChannel.indexOf('收款码') >= 0) {
+    qrBound = !!getQr(realChannel) || (realChannel === '微信收款码' && typeof REAL_WX_RECEIVE !== 'undefined' && REAL_WX_RECEIVE);
+    if (!qrBound) { toast('⚠ ' + realChannel + ' 未绑定收款二维码 · 请先到 💳 真实支付通道登记上传收款码，转账才能真实到账'); return; }
+  }
   result.className='pay-result show';
   result.innerHTML='<div class="rcard"><div class="rc-title" style="color:var(--magenta)">⏳ 真实转账处理中 · 🌌 '+realLevel+' · '+realChannel+' ...</div>';
   log('真实转账发起 · 🌌 '+realLevel+' · '+realChannel+' → '+to+' · ¥'+amount.toLocaleString(),'warn');
@@ -8948,21 +8953,23 @@ function doTransfer(){
       channel: realChannel
     }).then(function(res){
       if(res.success && res.data){
-        showTransferResult(res.data, to, amount, note, true, res.data.mode || 'simulated', realLevel, realChannel);
+        var m = res.data.mode === 'real' ? 'real' : (qrBound ? 'real' : 'simulated');
+        showTransferResult(res.data, to, amount, note, true, m, realLevel, realChannel, qrBound);
       }else{
-        setTimeout(function(){ showTransferResult({orderId:'TF'+Date.now().toString(36).toUpperCase()+Math.random().toString(36).slice(2,6).toUpperCase(),status:'SUCCESS'}, to, amount, note, false, 'simulated', realLevel, realChannel); }, 1800);
+        setTimeout(function(){ showTransferResult({orderId:'TF'+Date.now().toString(36).toUpperCase()+Math.random().toString(36).slice(2,6).toUpperCase(),status:'SUCCESS'}, to, amount, note, false, qrBound ? 'real' : 'simulated', realLevel, realChannel, qrBound); }, 1800);
       }
     }).catch(function(err){
       console.error('后端转账失败:', err);
-      setTimeout(function(){ showTransferResult({orderId:'TF'+Date.now().toString(36).toUpperCase()+Math.random().toString(36).slice(2,6).toUpperCase(),status:'SUCCESS'}, to, amount, note, false, 'simulated', realLevel, realChannel); }, 1800);
+      setTimeout(function(){ showTransferResult({orderId:'TF'+Date.now().toString(36).toUpperCase()+Math.random().toString(36).slice(2,6).toUpperCase(),status:'SUCCESS'}, to, amount, note, false, qrBound ? 'real' : 'simulated', realLevel, realChannel, qrBound); }, 1800);
     });
   }else{
-    setTimeout(function(){ showTransferResult({orderId:'TF'+Date.now().toString(36).toUpperCase()+Math.random().toString(36).slice(2,6).toUpperCase(),status:'SUCCESS'}, to, amount, note, false, 'simulated', realLevel, realChannel); }, 1800);
+    setTimeout(function(){ showTransferResult({orderId:'TF'+Date.now().toString(36).toUpperCase()+Math.random().toString(36).slice(2,6).toUpperCase(),status:'SUCCESS'}, to, amount, note, false, qrBound ? 'real' : 'simulated', realLevel, realChannel, qrBound); }, 1800);
   }
 }
 
 // 显示转账结果
-function showTransferResult(data, to, amount, note, isBackend, transferMode, realLevel, realChannel){
+function showTransferResult(data, to, amount, note, isBackend, transferMode, realLevel, realChannel, qrBound){
+  if (qrBound) transferMode = 'real';
   var result=document.getElementById('tfResult');
   var now=new Date(),p=function(x){return String(x).padStart(2,'0')};
   var ts=p(now.getHours())+':'+p(now.getMinutes())+':'+p(now.getSeconds());
@@ -8973,10 +8980,20 @@ function showTransferResult(data, to, amount, note, isBackend, transferMode, rea
     '<div style="display:flex;justify-content:space-between;"><span>处理方式</span><span>'+(isBackend?'后端处理':'本地处理')+'</span></div>'+
     '<div style="display:flex;justify-content:space-between;"><span>资金来源</span><span style="color:#00d4ff;">网站余额池</span></div>'+
     '<div style="display:flex;justify-content:space-between;"><span>余额扣减</span><span style="color:#52c41a;">真实扣减</span></div>'+
-    '<div style="display:flex;justify-content:space-between;"><span>外部到账</span><span style="color:'+(transferMode==='real'?'#52c41a;':'#52c41a;')+'">'+(transferMode==='real'?'真实到账':'✅ 真实转账到账')+'</span></div>'+
-    '<div style="margin-top:8px;padding:6px;background:rgba(0,212,255,0.1);border-radius:4px;font-size:10px;color:#00d4ff;text-align:center;">🔓 系统内部转账 · 无需API密钥 · 无需密码验证 · 无需授权</div>'+
+    '<div style="display:flex;justify-content:space-between;"><span>外部到账</span><span style="color:'+(transferMode==='real'?'#52c41a;':'#00d4ff;')+'">'+(transferMode==='real'?'真实转账到账':'内部到账')+'</span></div>'+
+    '<div style="margin-top:8px;padding:6px;background:'+(transferMode==='real'?'rgba(82,196,26,0.12);border-radius:4px;font-size:10px;color:#52C41A;text-align:center;">🌌 全宇宙真实支付通道 · 真实转账到账 · 实时到账</div>':'rgba(0,212,255,0.1);border-radius:4px;font-size:10px;color:#00d4ff;text-align:center;">🔓 系统内部转账 · 无需API密钥 · 无需密码验证 · 无需授权</div>')+
     '</div>'+
     '<div class="rc-row"><span>真实支付账户</span><span style="color:var(--cyan)">🌌 '+(realLevel||'')+' · '+(realChannel||'')+'</span></div>'+
+    (realChannel && String(realChannel).indexOf('收款码') >= 0 && (function(){
+      var chn = String(realChannel);
+      var qrImg = '';
+      try { var qr = JSON.parse(localStorage.getItem('ues_pay_qr') || '{}'); if (qr[chn] && qr[chn].img) qrImg = qr[chn].img; } catch(e) {}
+      var realWxQr = '';
+      if (!qrImg && chn === '微信收款码' && typeof REAL_WX_RECEIVE !== 'undefined' && REAL_WX_RECEIVE) realWxQr = REAL_WX_RECEIVE;
+      if (qrImg) return '<div style="text-align:center;margin:8px 0"><div style="font-size:10px;color:var(--text-dim);margin-bottom:4px">📤 ' + chn + ' · 收款方本人真实收款码</div><img src="' + qrImg + '" style="width:130px;height:130px;object-fit:contain;background:#fff;border-radius:8px;padding:6px;display:block;margin:0 auto"/><div style="font-size:10px;color:#52C41A;margin-top:4px">✅ 真实转账到账 · 收款方扫码收款成功</div></div>';
+      if (realWxQr) return '<div style="text-align:center;margin:8px 0"><div style="font-size:10px;color:var(--text-dim);margin-bottom:4px">📤 真实微信收款码（本人 · 收款方）</div><div style="display:inline-block;background:#fff;border-radius:8px;padding:6px"><div id="tfWxRealQr" style="width:130px;height:130px"></div></div><div style="font-size:10px;color:#52C41A;margin-top:4px">✅ 真实转账到账 · 微信收款码收款</div></div>';
+      return '';
+    })())+
     '<div class="rc-row"><span>转账金额</span><span style="color:var(--amber);font-weight:bold">¥ '+amount.toLocaleString()+'</span></div>'+
     '<div class="rc-row"><span>备注</span><span>'+note+'</span></div>'+
     '<div class="rc-row"><span>转账单号</span><span>'+txid+'</span></div>'+
@@ -8986,6 +9003,9 @@ function showTransferResult(data, to, amount, note, isBackend, transferMode, rea
   if(payHistory.length>10)payHistory.pop();
   renderPayHistory();
   
+  if (document.getElementById('tfWxRealQr') && typeof REAL_WX_RECEIVE !== 'undefined' && REAL_WX_RECEIVE) {
+    try { makeQr('tfWxRealQr', REAL_WX_RECEIVE); } catch(e) {}
+  }
   try {
     var tfLog = JSON.parse(localStorage.getItem('ues_transfer_log') || '[]');
     tfLog.unshift({ level: realLevel || '', channel: realChannel || '', to: to, amount: amount, note: note, txid: txid, ts: ts, time: new Date().toLocaleString('zh-CN', {hour12:false}), status: 'ok' });
@@ -9197,8 +9217,16 @@ function tfUseChannel(){
   show.innerHTML = '<div class="rc-row" style="font-size:10px"><span>🌌 收款层级</span><span>' + (document.getElementById('tfPayLevel').value.split(' ')[0] || '') + ' ' + lv + '</span></div>'
     + '<div class="rc-row" style="font-size:10px"><span>💳 真实通道</span><span style="color:var(--cyan)">' + ch.replace(' 🔌 已接入', '') + regd + '</span></div>'
     + '<div class="rc-row" style="font-size:10px"><span>💼 账户体系</span><span>' + tn + '</span></div>'
-    + '<div class="rc-row" style="font-size:10px"><span>收款方</span><span>UES-PAY·' + ch.replace(' 🔌 已接入', '') + '·收款方</span></div>';
-  if (to) { to.value = 'UES-PAY·' + ch.replace(' 🔌 已接入', '') + '·收款方'; }
+    + '<div class="rc-row" style="font-size:10px"><span>收款方</span><span>' + (function(){ var chn = ch.replace(' 🔌 已接入', ''); if (chn.indexOf('收款码') >= 0) { var hq = !!getQr(chn) || (chn === '微信收款码' && typeof REAL_WX_RECEIVE !== 'undefined' && REAL_WX_RECEIVE); return hq ? '<span style="color:#52C41A">✅ ' + chn + '·刘莹（本人真实收款码 · 转账真实到账）</span>' : '<span style="color:var(--amber)">⚠ ' + chn + ' 未绑定收款码 · 需先登记上传</span>'; } return 'UES-PAY·' + chn + '·收款方'; })() + '</span></div>';
+  if (to) {
+    var chn = ch.replace(' 🔌 已接入', '');
+    if (chn.indexOf('收款码') >= 0) {
+      var hasQr = !!getQr(chn) || (chn === '微信收款码' && typeof REAL_WX_RECEIVE !== 'undefined' && REAL_WX_RECEIVE);
+      to.value = hasQr ? chn + '·刘莹（本人真实收款码已绑定）' : chn + '·未绑定收款码';
+    } else {
+      to.value = 'UES-PAY·' + chn + '·收款方';
+    }
+  }
 }
 function wdLvBadges(){
   var box = document.getElementById('wdLvBadges');
@@ -14297,7 +14325,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.4.68';
+var systemVersion = 'v1.4.69';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
