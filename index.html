@@ -746,6 +746,7 @@ select option{background:#040b1a;color:var(--cyan)}
     <div class="tab" data-sec="education" onclick="switchTab('education')">📚 全知教育</div>
     <div class="tab" data-sec="medical" onclick="switchTab('medical')">🏥 全能医疗</div>
     <div class="tab" data-sec="entertainment" onclick="switchTab('entertainment')">🎭 娱乐体验</div>
+    <div class="tab" data-sec="outdoor" onclick="switchTab('outdoor')">🎢 星际户外娱乐</div>
     <div class="tab" data-sec="ai" onclick="switchTab('ai')">🤖 AI共生</div>
     <div class="tab" data-sec="spirit" onclick="switchTab('spirit')">🌱 精神哲学</div>
     <div class="tab" data-sec="devices" onclick="switchTab('devices')">📲 设备系统更新</div>
@@ -4132,6 +4133,35 @@ select option{background:#040b1a;color:var(--cyan)}
     </div>
   </div>
 
+
+  <!-- OUTDOOR ENTERTAINMENT -->
+  <div class="section" id="sec-outdoor">
+    <div class="grid">
+      <div class="panel wide">
+        <div class="panel-hdr"><div class="panel-title"><span class="ico">🎢</span>星际户外娱乐中心</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">全宇宙开放 · 离线保持</div></div>
+        <div style="padding:16px">
+          <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:12px;font-size:11px">
+            <span>开放项目：<b style="color:var(--cyan)">12 项</b></span>
+            <span>在线娱乐设施：<b style="color:#52C41A" id="outdoorFac">100%</b></span>
+            <span>每秒预约：<b style="color:var(--cyan)" id="outdoorCnt">9,999,999,999</b></span>
+            <span>覆盖层级：<b style="color:#52C41A">8 / 8</b></span>
+            <span>离线保持：<b style="color:#52C41A">✅ 持续开放</b></span>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-bottom:12px" id="outdoorList"></div>
+          <div class="btn-row" style="justify-content:center"><button class="btn green" onclick="outdoorScan()">🔍 全宇宙户外娱乐巡检</button><button class="btn cyan" onclick="outdoorOpenAll()">🚀 一键开启全宇宙娱乐</button></div>
+        </div>
+      </div>
+      <div class="panel wide">
+        <div class="panel-hdr"><div class="panel-title"><span class="ico">🌌</span>全宇宙层级 · 户外娱乐全覆盖</div><div class="panel-badge">8 层级</div></div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;padding:14px" id="outdoorLevels"></div>
+      </div>
+      <div class="panel wide">
+        <div class="panel-hdr"><div class="panel-title"><span class="ico">🎫</span>我的星际娱乐预约</div><div class="panel-badge">实时保存</div></div>
+        <div style="padding:14px" id="outdoorRegs"></div>
+      </div>
+    </div>
+  </div>
+
   <!-- AI SYMBIOSIS -->
   <div class="section" id="sec-ai">
     <div class="grid">
@@ -6520,6 +6550,101 @@ setInterval(function(){
 
 
 
+
+/* ===== 星际户外娱乐 ===== */
+var OUTDOOR_KEY = 'ues_outdoor';
+var outdoorCnt = 9999999999;
+var OUTDOOR_ITEMS = [
+  { icon:'🚀', name:'星舰远航', desc:'跨星系远航观光', status:'🌠 全线开放' },
+  { icon:'🪐', name:'星球探险', desc:'星球地表探险体验', status:'🌍 全星球开放' },
+  { icon:'🥾', name:'宇宙徒步', desc:'太空走廊徒步漫游', status:'🛤️ 无限里程' },
+  { icon:'🛸', name:'零重力体验舱', desc:'太空零重力漂浮', status:'🪐 恒温恒压' },
+  { icon:'🎠', name:'星际游乐场', desc:'太空过山车·旋转木马', status:'🎡 全速运行' },
+  { icon:'🏎️', name:'行星环赛道', desc:'行星环高速竞速', status:'🏁 无限圈速' },
+  { icon:'🔭', name:'太空观景台', desc:'全宇宙奇观观景台', status:'🌌 全天开放' },
+  { icon:'🏕️', name:'深空露营', desc:'深空星空营地', status:'✨ 极光营位无限' },
+  { icon:'🪂', name:'小行星蹦极', desc:'小行星边缘无重力蹦极', status:'⚡ 随时起跳' },
+  { icon:'🛹', name:'星际滑翔', desc:'大气层边缘滑翔', status:'🌬️ 无风阻' },
+  { icon:'🏜️', name:'月球越野', desc:'月球环形山越野', status:'🌙 全月面赛道' },
+  { icon:'🚜', name:'火星沙丘车', desc:'火星沙丘穿越', status:'🔴 全火星开放' }
+];
+var OUTDOOR_LEVELS = [
+  { icon:'🌌', name:'宇宙层级', state:'全量娱乐设施开放' },
+  { icon:'🌠', name:'星系层级', state:'星系娱乐网络接入' },
+  { icon:'🪐', name:'星球层级', state:'全星球娱乐场开放' },
+  { icon:'🌍', name:'文明层级', state:'文明娱乐互通' },
+  { icon:'🏛️', name:'国家层级', state:'国家级星际乐园开放' },
+  { icon:'🏙️', name:'地区层级', state:'地区户外基地开放' },
+  { icon:'👤', name:'个人层级', state:'个人专属娱乐空间' },
+  { icon:'✨', name:'未分层级存在', state:'所有存在均可体验' }
+];
+function outdoorRender(){
+  var box = document.getElementById('outdoorList');
+  if (!box) return;
+  var html = '';
+  OUTDOOR_ITEMS.forEach(function(it, i){
+    html += '<div style="background:rgba(0,0,0,0.25);border:1px solid rgba(0,212,255,0.18);border-radius:10px;padding:10px;text-align:center">'
+      + '<div style="font-size:28px">' + it.icon + '</div>'
+      + '<div style="font-size:12px;font-weight:bold;color:var(--text);margin:4px 0 2px">' + it.name + '</div>'
+      + '<div style="font-size:10px;color:var(--text-dim);min-height:26px">' + it.desc + '</div>'
+      + '<div style="font-size:10px;color:#52C41A;margin-bottom:6px">' + it.status + '</div>'
+      + '<button class="btn green" style="width:100%;padding:4px 8px;font-size:10px" onclick="outdoorBook(' + i + ')">🎟️ 前往预约</button></div>';
+  });
+  box.innerHTML = html;
+}
+function outdoorLevelsRender(){
+  var box = document.getElementById('outdoorLevels');
+  if (!box) return;
+  var html = '';
+  OUTDOOR_LEVELS.forEach(function(lv){
+    html += '<div style="background:rgba(0,0,0,0.2);border-radius:10px;padding:10px;text-align:center">'
+      + '<div style="font-size:24px">' + lv.icon + '</div>'
+      + '<div style="font-size:12px;font-weight:bold;color:var(--text);margin:4px 0">' + lv.name + '</div>'
+      + '<div style="font-size:10px;color:#52C41A">✅ ' + lv.state + '</div>'
+      + '<div style="font-size:9px;color:var(--text-dim);margin-top:2px">离线保持 · 持续开放</div></div>';
+  });
+  box.innerHTML = html;
+}
+function outdoorRegsRender(){
+  var box = document.getElementById('outdoorRegs');
+  if (!box) return;
+  var regs = {}; try { regs = JSON.parse(localStorage.getItem(OUTDOOR_KEY) || '{}'); } catch(e) {}
+  var keys = Object.keys(regs);
+  if (!keys.length) { box.innerHTML = '<div style="font-size:11px;color:var(--text-dim)">暂无预约 · 点击上方项目「🎟️ 前往预约」即可登记</div>'; return; }
+  var html = '<div style="font-size:12px;font-weight:bold;color:var(--text);margin-bottom:8px">🎫 已预约项目（实时保存 · 离线保持）</div>';
+  keys.forEach(function(k){
+    var r = regs[k];
+    html += '<div style="background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.18);border-radius:8px;padding:8px 12px;margin-bottom:6px;font-size:11px;display:flex;justify-content:space-between;align-items:center">'
+      + '<span><b style="color:var(--cyan)">' + k + '</b> · 预约时间 ' + r.time + '</span>'
+      + '<span style="color:#52C41A">✅ 已确认</span></div>';
+  });
+  box.innerHTML = html;
+}
+function outdoorBook(i){
+  var it = OUTDOOR_ITEMS[i];
+  if (!it) return;
+  var regs = {}; try { regs = JSON.parse(localStorage.getItem(OUTDOOR_KEY) || '{}'); } catch(e) {}
+  regs[it.name] = { time: new Date().toLocaleString('zh-CN', {hour12:false}) };
+  localStorage.setItem(OUTDOOR_KEY, JSON.stringify(regs));
+  outdoorRegsRender();
+  toast('🎟️ 已预约「' + it.name + '」· 全宇宙户外娱乐系统即时安排 · 实时保存');
+}
+function outdoorScan(){
+  var el = document.getElementById('outdoorFac'); if (el) el.textContent = '100%';
+  var cnt = document.getElementById('outdoorCnt'); if (cnt) cnt.textContent = (outdoorCnt + Math.floor(Math.random()*1000)).toLocaleString();
+  toast('🔍 巡检完成：全宇宙 8 层级户外娱乐设施 100% 开放 · 离线保持');
+}
+function outdoorOpenAll(){
+  OUTDOOR_ITEMS.forEach(function(it){
+    var regs = {}; try { regs = JSON.parse(localStorage.getItem(OUTDOOR_KEY) || '{}'); } catch(e) {}
+    regs[it.name] = { time: new Date().toLocaleString('zh-CN', {hour12:false}) };
+    localStorage.setItem(OUTDOOR_KEY, JSON.stringify(regs));
+  });
+  outdoorRegsRender();
+  toast('🚀 已开启全宇宙 12 项星际户外娱乐 · 所有存在均已预约 · 实时保存');
+}
+outdoorRender(); outdoorLevelsRender(); outdoorRegsRender();
+setInterval(function(){ outdoorCnt += Math.floor(Math.random()*1000); var el = document.getElementById('outdoorCnt'); if (el) el.textContent = outdoorCnt.toLocaleString(); }, 1000);
 
 /* ===== 全宇宙社交平台 · 注册入口 ===== */
 var SOCIAL_GROUPS = [
