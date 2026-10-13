@@ -245,7 +245,10 @@ select option{background:#040b1a;color:var(--cyan)}
 .qr-amount{font-size:20px;color:var(--amber);font-weight:bold;text-shadow:0 0 10px var(--amber);margin-top:4px}
 .pay-form{flex:1;min-width:240px}
 .pay-field{margin-bottom:12px}
-.pay-field label{display:block;font-size:10px;color:var(--text-dim);letter-spacing:1px;margin-bottom:4px}
+.wd-lv-badge{display:inline-block;padding:3px 8px;border-radius:6px;font-size:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:var(--text-dim);cursor:pointer;text-align:center;line-height:1.5}
+  .wd-lv-badge:hover{border-color:var(--cyan)}
+  .wd-lv-badge.active{background:rgba(0,212,255,0.16);border-color:var(--cyan);color:#fff}
+  .pay-field label{display:block;font-size:10px;color:var(--text-dim);letter-spacing:1px;margin-bottom:4px}
 .pay-field input,.pay-field select{width:100%;background:rgba(0,0,0,0.5);border:1px solid rgba(0,240,255,0.3);color:var(--cyan);padding:8px 10px;font-family:var(--mono);font-size:13px;outline:none;transition:border-color .2s;border-radius:2px}
 .pay-field input:focus,.pay-field select:focus{border-color:var(--cyan);box-shadow:0 0 8px rgba(0,240,255,.2)}
 .pay-field input::placeholder{color:var(--text-dim)}
@@ -1287,7 +1290,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.64 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.65 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -2035,7 +2038,9 @@ select option{background:#040b1a;color:var(--cyan)}
             <div style="font-size:11px;color:var(--text-dim);line-height:1.8;margin-bottom:12px">从全宇宙统一余额提现到全球任意金融账户，无限额，实时到账。</div>
             <div style="margin:10px 0 14px;padding:10px;background:rgba(0,212,255,0.06);border:1px dashed rgba(0,212,255,0.3);border-radius:8px">
               <div style="font-size:11px;color:var(--cyan);font-weight:bold;margin-bottom:6px">🌌 真实支付账户体系 · 全宇宙 8 层级</div>
-              <div style="font-size:10px;color:var(--text-dim);margin-bottom:8px">选择层级 → 选择该层级真实支付通道，自动填入提现收款账户（已接入通道带 🔌 标记）</div>
+'              <div style="font-size:10px;color:var(--text-dim);margin-bottom:8px">选择层级 → 选择该层级真实支付通道，自动填入提现收款账户（已接入通道带 🔌 标记）</div>
+              <div id="wdLvBadges" style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px"></div>
+              <div id="wdLevelInfo" style="margin-bottom:8px;font-size:10px"></div>
               <div class="pay-field"><label>🌌 收款层级</label>
                 <select id="wdPayLevel" onchange="wdPayPlat()"><option value="">— 选择层级 —</option></select>
               </div>
@@ -4706,7 +4711,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.64 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.65 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -9025,11 +9030,55 @@ var withdrawAccountConfigs = {
 // 根据账户类型动态生成表单字段
 /* ===== 提现 · 真实支付账户体系（全宇宙 8 层级）===== */
 var wdPaySel = { level: '', channel: '' };
+function wdAccountTypeName(t){
+  var m = { alipay:'💙 支付宝账户', wechat:'💚 微信支付账户', paypal:'💙 PayPal 账户', bank_card:'🏦 银行卡账户', unionpay:'🏦 银联云闪付账户', ecny:'🪙 数字人民币账户', stripe:'💳 Stripe 账户', swift:'🌍 SWIFT 国际银行账户', apple_pay:'🍎 Apple Pay 账户', google_pay:'🤖 Google Pay 账户', crypto:'₿ 加密钱包账户', universal:'🌌 全宇宙统一账户' };
+  return m[t] || '';
+}
+function wdLvBadges(){
+  var box = document.getElementById('wdLvBadges');
+  if (!box || box.dataset.built) return;
+  box.dataset.built = '1';
+  var regs = {}; try { regs = JSON.parse(localStorage.getItem('ues_pay_reg') || '{}'); } catch(e) {}
+  WALLET_LEVELS.forEach(function(l, i){
+    var g = null;
+    PAY_GROUPS.forEach(function(x){ if (x.group.indexOf(l[1]) >= 0) g = x; });
+    var n = g ? g.items.length : 0;
+    var regN = g ? g.items.filter(function(p){ return regs[p.name]; }).length : 0;
+    var b = document.createElement('div');
+    b.id = 'wdLvB-' + i;
+    b.className = 'wd-lv-badge';
+    b.innerHTML = l[1] + '<span style="display:block;font-size:9px;opacity:0.8">' + n + '通道 · ' + regN + '已接入</span>';
+    b.onclick = function(){
+      var sel = document.getElementById('wdPayLevel');
+      sel.selectedIndex = i;
+      wdPayPlat();
+    };
+    box.appendChild(b);
+  });
+}
+function updateWdLevelInfo(){
+  var info = document.getElementById('wdLevelInfo');
+  if (!info) return;
+  var sel = document.getElementById('wdPayLevel');
+  var lv = sel ? sel.value : '';
+  if (!lv) { info.innerHTML = ''; return; }
+  var lvName = lv.replace(/^.*?\s/, '');
+  var g = null;
+  PAY_GROUPS.forEach(function(x){ if (x.group.indexOf(lvName) >= 0) g = x; });
+  if (!g) { info.innerHTML = ''; return; }
+  var regs = {}; try { regs = JSON.parse(localStorage.getItem('ues_pay_reg') || '{}'); } catch(e) {}
+  var types = [];
+  g.items.forEach(function(p){ var tn = wdAccountTypeName(wdPayMap(p.name)); if (tn && types.indexOf(tn) < 0) types.push(tn); });
+  var regN = g.items.filter(function(p){ return regs[p.name]; }).length;
+  info.innerHTML = '<div class="rc-row" style="font-size:10px"><span>🧾 ' + (lv.split(' ')[0] || '') + ' · 真实支付账户体系</span><span style="color:var(--cyan)">' + g.items.length + ' 条通道 · ' + regN + ' 条已接入</span></div>'
+    + '<div style="color:var(--text-dim);margin-top:4px">账户类型体系：' + types.join(' / ') + '</div>';
+}
 function wdPayLevelInit(){
   var sel = document.getElementById('wdPayLevel');
   if (!sel) return;
   if (sel.options.length > 1) return;
   WALLET_LEVELS.forEach(function(l){ sel.innerHTML += '<option>' + l[0] + ' ' + l[1] + '</option>'; });
+  wdLvBadges();
 }
 function wdPayPlat(){
   var lv = document.getElementById('wdPayLevel');
@@ -9038,6 +9087,12 @@ function wdPayPlat(){
   var g = null;
   var selText = lv.value.replace(/^.*?\s/, '');
   PAY_GROUPS.forEach(function(x){ if (x.group.indexOf(selText) >= 0) g = x; });
+  var badges = document.querySelectorAll('.wd-lv-badge');
+  var ai = -1;
+  WALLET_LEVELS.forEach(function(l, i){ if (l[1] === selText) ai = i; });
+  badges.forEach(function(b){ b.classList.remove('active'); });
+  if (ai >= 0 && document.getElementById('wdLvB-' + ai)) document.getElementById('wdLvB-' + ai).classList.add('active');
+  updateWdLevelInfo();
   pl.innerHTML = '<option value="">— 选择通道 —</option>';
   if (!g) return;
   var regs = {}; try { regs = JSON.parse(localStorage.getItem('ues_pay_reg') || '{}'); } catch(e) {}
@@ -14070,7 +14125,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.4.64';
+var systemVersion = 'v1.4.65';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
