@@ -1255,7 +1255,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.44 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.45 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -4603,7 +4603,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.44 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.45 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -5281,6 +5281,15 @@ select option{background:#040b1a;color:var(--cyan)}
           <button class="btn" style="padding:4px 10px;font-size:11px" onclick="gbFilter('✨ 未分层级存在')">✨ 未分层级</button>
         </div>
         <div id="gbList" style="display:grid;gap:8px;max-height:420px;overflow:auto"></div>
+      </div>
+    </div>
+
+    <!-- 全宇宙社交平台 · 注册入口 -->
+    <div class="panel wide"><div class="panel-hdr"><div class="panel-title"><span class="ico">📱</span>全宇宙社交平台 · 注册入口</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">点击 logo 前往注册</div></div>
+      <div style="padding:14px">
+        <div style="font-size:11px;color:var(--text-dim);margin-bottom:10px">全宇宙各层级的社交平台与社交软件 · 点击下方 logo 或「前往官网/注册」即可跳转到对应平台的官网或注册页面 · 附各平台注册方法</div>
+        <div id="socialLevelNav" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px"></div>
+        <div id="socialList" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px"></div>
       </div>
     </div>
 
@@ -6511,6 +6520,70 @@ setInterval(function(){
 
 
 
+
+/* ===== 全宇宙社交平台 · 注册入口 ===== */
+var SOCIAL_GROUPS = [
+  { group: '🌍 地球社交平台', items: [
+    { icon: '💬', name: '微信', desc: '即时通讯 · 全宇宙最大社交软件', url: 'https://weixin.qq.com', method: '手机下载微信App → 打开 → 注册新账号 → 手机号验证' },
+    { icon: '🐧', name: 'QQ', desc: '即时通讯 · 社交社区', url: 'https://zc.qq.com', method: '电脑/手机 → 申请QQ号 → 填写资料 → 手机号或邮箱验证' },
+    { icon: '🟠', name: '微博', desc: '社交平台 · 公开信息流', url: 'https://weibo.com/signup/signup.php', method: '打开微博注册页 → 手机号注册 → 验证码验证 → 设置昵称' },
+    { icon: '📕', name: '小红书', desc: '生活方式分享平台', url: 'https://www.xiaohongshu.com/register', method: '官网或App → 手机号/微信注册 → 验证 → 设置头像昵称' },
+    { icon: '🎵', name: '抖音', desc: '短视频社交平台', url: 'https://www.douyin.com', method: 'App → 手机号注册 → 验证码 → 设置账号' },
+    { icon: '⏩', name: '快手', desc: '短视频直播平台', url: 'https://www.kuaishou.com', method: 'App → 手机号注册 → 验证码 → 完善资料' },
+    { icon: '📺', name: '哔哩哔哩', desc: '视频弹幕社区', url: 'https://www.bilibili.com', method: '官网右上角注册 → 手机号/邮箱 → 验证 → 设置昵称' },
+    { icon: '❓', name: '知乎', desc: '知识问答社区', url: 'https://www.zhihu.com/signup', method: '官网 → 手机号注册 → 验证码 → 设置资料' },
+    { icon: '📚', name: '豆瓣', desc: '兴趣社区', url: 'https://www.douban.com/accounts/register', method: '官网 → 邮箱/手机注册 → 激活 → 完成注册' },
+    { icon: '🔷', name: '钉钉', desc: '企业协作软件', url: 'https://www.dingtalk.com', method: 'App → 手机号注册 → 实名验证 → 加入/创建组织' },
+    { icon: '📄', name: '飞书', desc: '企业协作软件', url: 'https://www.feishu.cn/register', method: '官网 → 手机号注册 → 验证码 → 创建团队' },
+    { icon: '🏢', name: '企业微信', desc: '企业通讯软件', url: 'https://work.weixin.qq.com', method: '官网 → 注册企业 → 手机号验证 → 开通' }
+  ]},
+  { group: '🌌 全球社交平台', items: [
+    { icon: '📘', name: 'Facebook', desc: '全球社交平台', url: 'https://www.facebook.com/r.php', method: '官网 → 填写姓名/手机/邮箱 → 密码 → 创建账户' },
+    { icon: '📸', name: 'Instagram', desc: '图片视频社交平台', url: 'https://www.instagram.com/accounts/emailsignup/', method: 'App/官网 → 手机或邮箱 → 验证码 → 设置用户名密码' },
+    { icon: '🐦', name: 'X (Twitter)', desc: '全球公开信息平台', url: 'https://x.com/signup', method: '官网 → 姓名 → 手机/邮箱验证 → 设置密码' },
+    { icon: '▶️', name: 'YouTube', desc: '全球视频平台', url: 'https://www.youtube.com/signup', method: '官网 → 创建账号 → 手机验证 → 完成' },
+    { icon: '🎬', name: 'TikTok', desc: '全球短视频平台', url: 'https://www.tiktok.com/signup', method: 'App/官网 → 手机/邮箱注册 → 验证 → 设置账号' },
+    { icon: '🟢', name: 'WhatsApp', desc: '全球即时通讯', url: 'https://www.whatsapp.com', method: 'App → 输入手机号 → 短信验证 → 设置昵称' },
+    { icon: '✈️', name: 'Telegram', desc: '全球加密通讯', url: 'https://telegram.org', method: 'App → 手机号 → 短信/App验证码 → 设置昵称' },
+    { icon: '🎮', name: 'Discord', desc: '游戏/社区通讯', url: 'https://discord.com/register', method: '官网 → 邮箱 → 用户名密码 → 验证邮箱 → 完成' },
+    { icon: '🔺', name: 'Reddit', desc: '全球社区论坛', url: 'https://www.reddit.com/register/', method: '官网 → 邮箱 → 用户名密码 → 验证 → 完成' },
+    { icon: '💼', name: 'LinkedIn', desc: '全球职场社交', url: 'https://www.linkedin.com/signup', method: '官网 → 手机或邮箱 → 密码 → 完善职业信息' },
+    { icon: '🟩', name: 'Line', desc: '亚洲即时通讯', url: 'https://line.me/zh-hans/', method: 'App → 手机号/邮箱注册 → 验证 → 设置昵称' },
+    { icon: '💛', name: 'KakaoTalk', desc: '韩国即时通讯', url: 'https://accounts.kakao.com', method: 'App/官网 → 邮箱注册 → 验证 → 设置昵称' },
+    { icon: '👻', name: 'Snapchat', desc: '全球图片社交', url: 'https://www.snapchat.com', method: 'App → 姓名 → 生日 → 邮箱/手机 → 验证' },
+    { icon: '📌', name: 'Pinterest', desc: '全球灵感社区', url: 'https://www.pinterest.com', method: '官网 → 邮箱/Google → 密码 → 选择兴趣 → 完成' }
+  ]}
+];
+var SOCIAL_FLAT = [];
+SOCIAL_GROUPS.forEach(function(g){ g.items.forEach(function(p){ p.groupName = g.group; SOCIAL_FLAT.push(p); }); });
+(function(){
+  var nav = document.getElementById('socialLevelNav');
+  if (!nav) return;
+  var html = '<button class="btn" style="padding:4px 10px;font-size:11px" onclick="socialGroupIdx(-1)">🌐 全部平台</button>';
+  SOCIAL_GROUPS.forEach(function(g, gi){ html += '<button class="btn" style="padding:4px 10px;font-size:11px" onclick="socialGroupIdx(' + gi + ')">' + g.group + '</button>'; });
+  nav.innerHTML = html;
+  socialGroupIdx(-1);
+})();
+function socialGroupIdx(gi){
+  var list = document.getElementById('socialList');
+  if (!list) return;
+  var items = gi < 0 ? SOCIAL_FLAT : SOCIAL_FLAT.filter(function(p){ return p.groupName === SOCIAL_GROUPS[gi].group; });
+  var curGroup = '';
+  var html = '';
+  items.forEach(function(p, k){
+    var gname = p.groupName;
+    if (gname !== curGroup) { curGroup = gname; html += '<div style="grid-column:1/-1;font-size:12px;font-weight:bold;color:var(--cyan);margin:6px 0 0">' + gname + ' · ' + items.filter(function(x){ return x.groupName === gname; }).length + ' 个平台</div>'; }
+    var i = SOCIAL_FLAT.indexOf(p);
+    html += '<div style="background:rgba(0,0,0,0.25);border:1px solid rgba(0,212,255,0.18);border-radius:10px;padding:12px;text-align:center;cursor:pointer" onclick="socialGoIdx(' + i + ')">'
+      + '<div style="font-size:34px">' + p.icon + '</div>'
+      + '<div style="font-size:13px;font-weight:bold;color:var(--text);margin:6px 0 2px">' + p.name + '</div>'
+      + '<div style="font-size:10px;color:var(--text-dim);min-height:26px">' + p.desc + '</div>'
+      + '<div style="font-size:9px;color:var(--text-dim);text-align:left;margin:6px 0;padding:6px;background:rgba(0,0,0,0.25);border-radius:6px">📝 注册方法：' + p.method + '</div>'
+      + '<button class="btn green" style="width:100%;padding:5px 8px;font-size:11px" onclick="event.stopPropagation(); socialGoIdx(' + i + ')">🌐 前往官网/注册</button></div>';
+  });
+  list.innerHTML = html;
+}
+function socialGoIdx(i){ var p = SOCIAL_FLAT[i]; if (p) { window.open(p.url, '_blank'); toast('✓ 正在打开 ' + p.name + ' 官网/注册页：' + p.url); } }
 /* ===== 全宇宙层级留言板 · 语言互译 ===== */
 var GB_KEY = 'ues_guestbook';
 var GB_FILTER = '';
@@ -13023,7 +13096,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.4.44';
+var systemVersion = 'v1.4.45';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
