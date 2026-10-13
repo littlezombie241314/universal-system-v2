@@ -1247,7 +1247,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.35 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.36 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -2316,8 +2316,9 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:6px;font-size:11px">
               <div style="color:var(--text-dim)">国家数量：<span style="color:var(--text)">195</span></div>
-              <div style="color:var(--text-dim)">平均温度：<span style="color:var(--text)">30°C</span></div>
+              <div style="color:var(--text-dim)">平均温度：<span style="color:var(--text)">25°C ~ 30°C（锁定）</span></div>
               <div style="color:var(--text-dim)">气候适宜：<span style="color:#52C41A">100%</span></div>
+              <div style="color:var(--text-dim)">室外气温：<span id="countryTempText" style="color:#52C41A;font-weight:bold">锁定 25°C ~ 30°C</span></div>
             </div>
           </div>
           
@@ -4575,7 +4576,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.35 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.36 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -6404,6 +6405,15 @@ setInterval(function(){
   if (el) el.textContent = extinctRevivedTotal.toLocaleString();
 }, 1000);
 
+
+
+/* ===== 气候控制 · 国家层级（地球）室外气温锁定 25°C~30°C ===== */
+setInterval(function(){
+  var cur = 25 + (Math.sin(Date.now() / 30000 + 1) * 2.5 + 2.5); // 25.0 ~ 30.0
+  var el = document.getElementById('countryTempText');
+  var offline = !navigator.onLine;
+  if (el) el.textContent = (offline ? '🔵 离线保持 ' : '锁定 ') + cur.toFixed(1) + '°C · 25°C~30°C';
+}, 1000);
 
 /* ===== 气候控制 · 气温锁定 25°C~30°C ===== */
 setInterval(function(){
@@ -12688,7 +12698,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.4.35';
+var systemVersion = 'v1.4.36';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
