@@ -1256,7 +1256,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.49 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.50 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -4141,7 +4141,7 @@ select option{background:#040b1a;color:var(--cyan)}
         <div class="panel-hdr"><div class="panel-title"><span class="ico">🎢</span>星际户外娱乐中心</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">全宇宙开放 · 离线保持</div></div>
         <div style="padding:16px">
           <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:12px;font-size:11px">
-            <span>开放项目：<b style="color:var(--cyan)">12 项</b></span>
+            <span>开放项目：<b style="color:var(--cyan)">14 项</b></span>
             <span>在线娱乐设施：<b style="color:#52C41A" id="outdoorFac">100%</b></span>
             <span>每秒预约：<b style="color:var(--cyan)" id="outdoorCnt">9,999,999,999</b></span>
             <span>覆盖层级：<b style="color:#52C41A">8 / 8</b></span>
@@ -4633,7 +4633,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.49 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.50 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -6566,7 +6566,9 @@ var OUTDOOR_ITEMS = [
   { icon:'🪂', name:'小行星蹦极', desc:'小行星边缘无重力蹦极', status:'⚡ 随时起跳' },
   { icon:'🛹', name:'星际滑翔', desc:'大气层边缘滑翔', status:'🌬️ 无风阻' },
   { icon:'🏜️', name:'月球越野', desc:'月球环形山越野', status:'🌙 全月面赛道' },
-  { icon:'🚜', name:'火星沙丘车', desc:'火星沙丘穿越', status:'🔴 全火星开放' }
+  { icon:'🚜', name:'火星沙丘车', desc:'火星沙丘穿越', status:'🔴 全火星开放' },
+  { icon:'🎣', name:'星际钓鱼', desc:'星海垂钓体验', status:'🐟 全水系开放', url:'https://wildlife.ca.gov/' },
+  { icon:'🏹', name:'星际狩猎', desc:'星际猎场狩猎', status:'🦌 全星域开放', url:'https://wildlife.ca.gov/' }
 ];
 var OUTDOOR_LEVELS = [
   { icon:'🌌', name:'宇宙层级', state:'全量娱乐设施开放' },
@@ -6623,6 +6625,7 @@ function outdoorRegsRender(){
 function outdoorBook(i){
   var it = OUTDOOR_ITEMS[i];
   if (!it) return;
+  if (it.url) { window.open(it.url, '_blank'); toast('✓ 正在打开 ' + it.name + ' 官方预约网站：' + it.url); return; }
   var regs = {}; try { regs = JSON.parse(localStorage.getItem(OUTDOOR_KEY) || '{}'); } catch(e) {}
   regs[it.name] = { time: new Date().toLocaleString('zh-CN', {hour12:false}) };
   localStorage.setItem(OUTDOOR_KEY, JSON.stringify(regs));
@@ -6641,7 +6644,7 @@ function outdoorOpenAll(){
     localStorage.setItem(OUTDOOR_KEY, JSON.stringify(regs));
   });
   outdoorRegsRender();
-  toast('🚀 已开启全宇宙 12 项星际户外娱乐 · 所有存在均已预约 · 实时保存');
+  toast('🚀 已开启全宇宙 14 项星际户外娱乐 · 所有存在均已预约 · 实时保存');
 }
 outdoorRender(); outdoorLevelsRender(); outdoorRegsRender();
 setInterval(function(){ outdoorCnt += Math.floor(Math.random()*1000); var el = document.getElementById('outdoorCnt'); if (el) el.textContent = outdoorCnt.toLocaleString(); }, 1000);
@@ -13323,7 +13326,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.4.49';
+var systemVersion = 'v1.4.50';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
