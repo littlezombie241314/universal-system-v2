@@ -1290,7 +1290,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.67 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.68 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -4726,7 +4726,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.67 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.68 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -7114,8 +7114,9 @@ function savePayReg(gi, k, skipUI){
 function payReg(gi, k){
   var g = PAY_GROUPS[gi]; var p = g.items[k];
   if (!p) return;
-  if (p.name === '微信收款码') {
-    if (!getQr(p.name) && !(typeof REAL_WX_RECEIVE !== 'undefined' && REAL_WX_RECEIVE)) { openQrUpload(gi, k); toast('📤 微信收款码登记接入：请先上传收款二维码'); return; }
+  if (p.name.indexOf('收款码') >= 0) {
+    var hasRealWx = (p.name === '微信收款码' && typeof REAL_WX_RECEIVE !== 'undefined' && REAL_WX_RECEIVE);
+    if (!getQr(p.name) && !hasRealWx) { openQrUpload(gi, k); toast('📤 ' + p.name + ' 登记接入：请先上传收款二维码（上传后可扫码真实到账）'); return; }
   }
   savePayReg(gi, k);
 }
@@ -7123,7 +7124,8 @@ function payRegAll(gi){
   var g = PAY_GROUPS[gi];
   var done = 0, skipped = 0;
   g.items.forEach(function(p, k){
-    if (p.name === '微信收款码' && !getQr(p.name) && !(typeof REAL_WX_RECEIVE !== 'undefined' && REAL_WX_RECEIVE)) { skipped++; return; }
+    var hasRealWx = (p.name === '微信收款码' && typeof REAL_WX_RECEIVE !== 'undefined' && REAL_WX_RECEIVE);
+    if (p.name.indexOf('收款码') >= 0 && !getQr(p.name) && !hasRealWx) { skipped++; return; }
     savePayReg(gi, k, true);
     done++;
   });
@@ -9314,7 +9316,12 @@ function wdUsePayChannel(){
       ? '<div style="margin-top:8px;padding:8px;background:rgba(82,196,26,0.08);border:1px solid rgba(82,196,26,0.25);border-radius:8px;text-align:center"><div style="font-size:11px;color:#52C41A;margin-bottom:6px">📷 收款二维码已绑定 · 可扫码收款</div><div style="display:inline-block;background:#fff;padding:6px;border-radius:6px"><img src="' + qr + '" style="width:130px;height:130px;display:block"></div></div>'
       : (realWx
         ? '<div style="margin-top:8px;padding:8px;background:rgba(82,196,26,0.08);border:1px solid rgba(82,196,26,0.25);border-radius:8px;text-align:center"><div style="font-size:11px;color:#52C41A;margin-bottom:6px">📷 真实微信收款码（本人已配置 · 扫码真实到账）</div><div style="display:inline-block;background:#fff;padding:6px;border-radius:6px"><div id="wdWxRealQr" style="width:130px;height:130px"></div></div><div style="font-size:10px;color:var(--text-dim);margin-top:4px">微信扫一扫 → 输入金额 → 真实到账</div></div>'
-        : (ch.indexOf('收款码') >= 0 ? '<div style="margin-top:8px;font-size:10px;color:var(--text-dim);text-align:center">⚠ 该通道尚未配置收款二维码（前往 💳 真实支付通道 → 微信收款码 → 🔌 登记接入）</div>' : ''));
+        : (ch.indexOf('收款码') >= 0 ? (function(){
+          var loc = { gi: -1, k: -1 };
+          PAY_GROUPS.forEach(function(gg, gi){ gg.items.forEach(function(pp, k){ if (pp.name === ch) { loc.gi = gi; loc.k = k; } }); });
+          var btn = loc.gi >= 0 ? '<button class="btn" style="padding:4px 10px;font-size:10px;margin-top:6px" onclick="openQrUpload(' + loc.gi + ',' + loc.k + ')">✒ 现在上传收款码</button>' : '';
+          return '<div style="margin-top:8px;font-size:10px;color:var(--text-dim);text-align:center">⚠ ' + ch + ' 尚未配置收款二维码 · 上传后可扫码真实到账' + btn + '</div>';
+        })() : ''));
     if (realWx && !qr) { try { makeQr('wdWxRealQr', realWx); } catch(e) {} }
   }
   toast('🌌 已选择真实支付账户：' + wdPaySel.level + ' · ' + ch + ' · 已自动填入提现账户');
@@ -9430,12 +9437,13 @@ function showWithdrawResult(res, config, accountInfo, amount, source, remark){
     '<div style="display:flex;justify-content:space-between;"><span>外部到账</span><span style="color:' + (transferMode === 'real' ? '#52c41a;' : '#00d4ff;') + '">' + (transferMode === 'real' ? '真实到账' : '内部到账') + '</span></div>' +
     '<div style="margin-top:8px;padding:6px;background:rgba(0,212,255,0.1);border-radius:4px;font-size:10px;color:#00d4ff;text-align:center;">🔓 系统内部转账 · 无需API密钥 · 无需密码验证 · 无需授权</div>' +
     '</div>'+
-    (accountInfo.realChannel && String(accountInfo.realChannel).indexOf('微信收款码') >= 0 ? (function(){
+    (accountInfo.realChannel && String(accountInfo.realChannel).indexOf('收款码') >= 0 ? (function(){
+      var ch = String(accountInfo.realChannel);
       var qrImg = '';
-      try { var qr = JSON.parse(localStorage.getItem('ues_pay_qr') || '{}'); if (qr['微信收款码'] && qr['微信收款码'].img) qrImg = qr['微信收款码'].img; } catch(e) {}
-      return qrImg
-        ? '<div style="text-align:center;margin:8px 0"><div style="font-size:10px;color:var(--text-dim);margin-bottom:4px">📤 微信收款二维码 · 扫码付款成功</div><img src="' + qrImg + '" style="width:130px;height:130px;object-fit:contain;background:#fff;border-radius:8px;padding:6px;display:block;margin:0 auto"/><div style="font-size:10px;color:#52C41A;margin-top:4px">✅ 已找到收款二维码 · 扫码付款成功</div></div>'
-        : (typeof REAL_WX_RECEIVE !== 'undefined' && REAL_WX_RECEIVE ? '<div style="text-align:center;margin:8px 0"><div style="font-size:10px;color:var(--text-dim);margin-bottom:4px">📤 真实微信收款码（本人 · 扫码付款）</div><div style="display:inline-block;background:#fff;border-radius:8px;padding:6px"><div id="wxRealQrResult" style="width:130px;height:130px"></div></div><div style="font-size:10px;color:#52C41A;margin-top:4px">✅ 真实微信到账 · 扫码付款成功</div></div>' : '<div class="rc-row"><span>收款二维码</span><span style="color:var(--amber)">⚠ 未配置收款二维码（到真实支付通道配置微信收款码）</span></div>');
+      try { var qr = JSON.parse(localStorage.getItem('ues_pay_qr') || '{}'); if (qr[ch] && qr[ch].img) qrImg = qr[ch].img; } catch(e) {}
+      if (qrImg) return '<div style="text-align:center;margin:8px 0"><div style="font-size:10px;color:var(--text-dim);margin-bottom:4px">📤 ' + ch + ' · 扫码付款</div><img src="' + qrImg + '" style="width:130px;height:130px;object-fit:contain;background:#fff;border-radius:8px;padding:6px;display:block;margin:0 auto"/><div style="font-size:10px;color:#52C41A;margin-top:4px">✅ 真实到账 · 扫码付款成功</div></div>';
+      if (ch.indexOf('微信收款码') >= 0 && typeof REAL_WX_RECEIVE !== 'undefined' && REAL_WX_RECEIVE) return '<div style="text-align:center;margin:8px 0"><div style="font-size:10px;color:var(--text-dim);margin-bottom:4px">📤 真实微信收款码（本人 · 扫码付款）</div><div style="display:inline-block;background:#fff;border-radius:8px;padding:6px"><div id="wxRealQrResult" style="width:130px;height:130px"></div></div><div style="font-size:10px;color:#52C41A;margin-top:4px">✅ 真实微信到账 · 扫码付款成功</div></div>';
+      return '<div class="rc-row"><span>收款二维码</span><span style="color:var(--amber)">⚠ ' + ch + ' 未配置收款二维码 · 到真实支付通道登记接入上传后可扫码到账</span></div>';
     })() : '')+
     (accountInfo.realChannel ? '<div class="rc-row"><span>真实支付账户</span><span style="color:var(--cyan)">🌌 '+(accountInfo.realLevel||'')+' · '+(accountInfo.realChannel||'')+'</span></div>' : '')+
     (accountInfo.qr ? '<div style="margin-top:10px;text-align:center;background:#fff;border-radius:8px;padding:8px"><img src="'+accountInfo.qr+'" style="width:160px;height:160px;display:block;margin:0 auto"><div style="color:#52C41A;font-size:11px;margin-top:6px">📷 扫码收款成功 · 付款已完成 · 全宇宙实时到账</div></div>' : '')+
@@ -14289,7 +14297,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.4.67';
+var systemVersion = 'v1.4.68';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
