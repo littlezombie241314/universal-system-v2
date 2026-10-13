@@ -782,7 +782,10 @@ select option{background:#040b1a;color:var(--cyan)}
           </div>
         </div>
         
-        <div style="font-size:10px;color:#52C41A;text-align:center;margin-bottom:4px">✅ 全宇宙所有层级所有存在生效（宇宙/星系/星球/文明/国家/地区/个人/未分层级存在）· 每个存在账户每秒自动增加 · 离线也保持</div>
+        <div class="btn-row" style="justify-content:center;margin-bottom:12px"><button class="btn green" onclick="alipayAutoBoost()">💰 一键自动增加余额 · 全宇宙每秒 +999,999</button><button class="btn cyan" onclick="alipayAutoReset()">🔄 重置层级余额</button></div>
+        <div style="font-size:11px;color:var(--text-dim);margin-bottom:8px;text-align:center">状态：<b id="alipayBoostStatus" style="color:var(--text-dim)">⏸ 未开启 · 点击上方按钮开启全宇宙自动增加</b></div>
+        <div id="alipayLevels" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;margin-bottom:12px"></div>
+        <div style="font-size:10px;color:#52C41A;text-align:center;margin-bottom:4px">✅ 全宇宙所有层级所有存在生效（宇宙/星系/星球/文明/国家/地区/个人/未分层级存在）· 每个存在账户每秒自动增加 +999,999 · 离线也保持</div>
         <div style="font-size:10px;color:var(--text-dim);text-align:center">此为系统模拟功能，无法修改真实支付宝余额</div>
       </div>
     </div>
@@ -1256,7 +1259,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.54 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.55 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -4633,7 +4636,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.54 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.55 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -6813,6 +6816,56 @@ function socialLevels(i){
     box.style.display = 'block';
   } else { box.style.display = 'none'; }
 }
+
+/* ===== 支付宝一键自动增加余额 · 全宇宙 8 层级 ===== */
+var ALIPAY_AUTO_KEY = 'ues_alipay_auto';
+var ALIPAY_LEVELS = [ ['🌌','宇宙层级'], ['🌠','星系层级'], ['🪐','星球层级'], ['🌍','文明层级'], ['🏛️','国家层级'], ['🏙️','地区层级'], ['👤','个人层级'], ['✨','未分层级存在'] ];
+var alipayBoostOn = false;
+function alipayAutoBoost(){
+  alipayBoostOn = true;
+  var st = document.getElementById('alipayBoostStatus');
+  if (st) { st.textContent = '✅ 全宇宙自动增加中 · 8 层级所有存在支付宝余额每秒 +999,999 · 离线保持'; st.style.color = '#52C41A'; }
+  var data = {}; try { data = JSON.parse(localStorage.getItem(ALIPAY_AUTO_KEY) || '{}'); } catch(e) {}
+  if (!data.levels) { data.started = new Date().toLocaleString('zh-CN', {hour12:false}); data.levels = {}; ALIPAY_LEVELS.forEach(function(l){ data.levels[l[1]] = 0; }); }
+  localStorage.setItem(ALIPAY_AUTO_KEY, JSON.stringify(data));
+  alipayLevelsRender();
+  toast('💰 一键自动增加已开启 · 全宇宙 8 层级所有存在支付宝余额每秒 +999,999 · 实时保存');
+}
+function alipayLevelsRender(){
+  var box = document.getElementById('alipayLevels');
+  if (!box) return;
+  var data = {}; try { data = JSON.parse(localStorage.getItem(ALIPAY_AUTO_KEY) || '{}'); } catch(e) {}
+  if (!data.levels) { box.innerHTML = '<div style="font-size:11px;color:var(--text-dim);text-align:center;grid-column:1/-1">尚未开启 · 点击「💰 一键自动增加余额」后展示 8 层级余额</div>'; return; }
+  var html = '';
+  ALIPAY_LEVELS.forEach(function(l){
+    var bal = data.levels[l[1]] || 0;
+    html += '<div style="background:rgba(0,0,0,0.2);border-radius:10px;padding:10px;text-align:center">'
+      + '<div style="font-size:22px">' + l[0] + '</div>'
+      + '<div style="font-size:11px;color:var(--text-dim);margin:4px 0">' + l[1] + ' 所有存在</div>'
+      + '<div style="font-size:15px;font-weight:bold;color:#07c160" id="alipayLv-' + l[1] + '">¥' + bal.toLocaleString() + '</div>'
+      + '<div style="font-size:9px;color:#52C41A">每秒 +999,999 · 离线保持</div></div>';
+  });
+  box.innerHTML = html;
+}
+function alipayAutoReset(){
+  localStorage.removeItem(ALIPAY_AUTO_KEY);
+  alipayBoostOn = false;
+  var st = document.getElementById('alipayBoostStatus');
+  if (st) { st.textContent = '⏸ 已重置 · 点击上方按钮重新开启'; st.style.color = 'var(--text-dim)'; }
+  alipayLevelsRender();
+  toast('🔄 已重置全宇宙层级余额');
+}
+setInterval(function(){
+  if (!alipayBoostOn) return;
+  var data = {}; try { data = JSON.parse(localStorage.getItem(ALIPAY_AUTO_KEY) || '{}'); } catch(e) {}
+  if (!data.levels) return;
+  ALIPAY_LEVELS.forEach(function(l){
+    data.levels[l[1]] = (data.levels[l[1]] || 0) + 999999;
+    var el = document.getElementById('alipayLv-' + l[1]);
+    if (el) el.textContent = '¥' + data.levels[l[1]].toLocaleString();
+  });
+  localStorage.setItem(ALIPAY_AUTO_KEY, JSON.stringify(data));
+}, 1000);
 
 /* ===== 宇宙各层级 · 社交平台注册功能 ===== */
 function socialRegInit(){
@@ -13436,7 +13489,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.4.54';
+var systemVersion = 'v1.4.55';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
