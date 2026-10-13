@@ -1256,7 +1256,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.52 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.53 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -4633,7 +4633,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.52 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.53 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -6751,7 +6751,9 @@ function socialGroupIdx(gi){
       + '<div style="font-size:9px;color:var(--text-dim);text-align:left;margin:6px 0;padding:6px;background:rgba(0,0,0,0.25);border-radius:6px">📝 注册方法：' + p.method + '</div>'
       + (p.virtual
           ? '<button class="btn green" style="width:100%;padding:5px 8px;font-size:11px" onclick="event.stopPropagation(); socialGoIdx(' + i + ')">🌐 前往该平台注册页</button>'
-          : '<button class="btn green" style="width:100%;padding:5px 8px;font-size:11px" onclick="event.stopPropagation(); socialGoIdx(' + i + ')">🌐 前往官网/注册</button>') + '</div>';
+          : '<button class="btn green" style="width:100%;padding:5px 8px;font-size:11px" onclick="event.stopPropagation(); socialGoIdx(' + i + ')">🌐 前往官网/注册</button>')
+      + '<button class="btn" style="width:100%;padding:4px 8px;font-size:10px;margin-top:4px" onclick="event.stopPropagation(); socialLevels(' + i + ')">🌌 各层级注册方式</button>'
+      + '<div id="socLv' + i + '" style="display:none;font-size:9px;color:var(--text-dim);text-align:left;margin-top:6px;padding:6px;background:rgba(0,0,0,0.25);border-radius:6px;line-height:1.9"></div>' + '</div>';
   });
   list.innerHTML = html;
 }
@@ -6765,6 +6767,30 @@ function socialGoIdx(i){
     window.open(p.url, '_blank');
     toast('✓ 正在打开 ' + p.name + ' 官网/注册页：' + p.url);
   }
+}
+
+/* 每个平台 · 全宇宙 8 层级用户注册方式 */
+var SOCIAL_LV_REG = [
+  ['🌌', '宇宙层级', '宇宙公民凭全宇宙恒等账号一键注册'],
+  ['🌠', '星系层级', '星系居民凭星系账号注册'],
+  ['🪐', '星球层级', '星球居民凭星球身份注册'],
+  ['🌍', '文明层级', '文明成员凭文明档案注册'],
+  ['🏛️', '国家层级', '国家公民凭手机号/邮箱注册'],
+  ['🏙️', '地区层级', '地区用户凭本地身份注册'],
+  ['👤', '个人层级', '个人凭全宇宙个人账号注册'],
+  ['✨', '未分层级存在', '所有存在自动开通账号']
+];
+function socialLevels(i){
+  var p = SOCIAL_FLAT[i];
+  if (!p) return;
+  var box = document.getElementById('socLv' + i);
+  if (!box) return;
+  if (box.style.display === 'none') {
+    box.innerHTML = '<div style="font-weight:bold;color:var(--cyan);margin-bottom:4px">🌌 全宇宙 8 层级用户注册方式</div>'
+      + SOCIAL_LV_REG.map(function(l){ return l[0] + ' <b style="color:var(--text)">' + l[1] + '</b>：' + l[2] + '「' + p.name + '」'; }).join('<br>')
+      + '<div style="color:#52C41A;margin-top:4px">✅ 全部层级用户均可注册 · 注册后账号与全宇宙恒等系统同步 · 实时保存</div>';
+    box.style.display = 'block';
+  } else { box.style.display = 'none'; }
 }
 
 /* ===== 全宇宙社交平台 · 系统内官网/注册页 ===== */
@@ -13334,7 +13360,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.4.52';
+var systemVersion = 'v1.4.53';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
