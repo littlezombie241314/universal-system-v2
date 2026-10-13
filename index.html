@@ -777,7 +777,7 @@ select option{background:#040b1a;color:var(--cyan)}
     <div class="panel wide">
       <div class="panel-hdr"><div class="panel-title"><span class="ico">💳</span>真实支付通道</div><div style="display:flex;gap:6px;align-items:center"><div class="panel-badge" style="background:rgba(0,212,255,0.15);color:#00d4ff">🌌 全宇宙级别</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A" id="payRegCount">0 条已接入</div></div></div>
       <div style="padding:16px">
-        <div style="font-size:12px;color:var(--text-dim);margin-bottom:10px">💳 接入全宇宙各层级<b style="color:var(--cyan)">真实支付通道</b>：全球清算网络 · 跨境支付 · 各国本地支付 · 个人收款 · 加密货币网络。点击「🔗 前往官网/接入」进入通道官方接入页面；点击「🔌 登记接入」在系统中登记绑定该通道（实时保存 · 离线保持）。资金级 API 对接需各通道商户资质，本面板已接入全部真实通道入口。</div>
+        <div style="font-size:12px;color:var(--text-dim);margin-bottom:10px">💳 接入全宇宙各层级<b style="color:var(--cyan)">真实支付通道</b>：全球清算网络 · 跨境支付 · 各国本地支付 · 个人收款 · 加密货币网络。点击「🔗 前往官网/接入」进入通道官方接入页面；点击「🔌 登记接入」在系统中登记绑定该通道（实时保存 · 离线保持）。资金级 API 对接各层级仅需各通道<b style="color:#52C41A">个人资质</b>（无需商户资质 · 个人层级仅需个人资质即可对接）；每个层级真实支付系统的<b style="color:#52C41A">账户体系无权限限制</b> · 直接对接 · 实时到账。</div>
         <div id="payGroups" style="margin-bottom:12px"></div>
         <div id="payRegList" style="margin-top:6px"></div>
         <div class="btn-row" style="justify-content:center;margin-top:10px"><button class="btn cyan" onclick="payRegClear()">🧹 清空接入记录</button></div>
@@ -1290,7 +1290,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.69 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.70 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -2010,7 +2010,7 @@ select option{background:#040b1a;color:var(--cyan)}
             <div class="qr-amount" id="transferAmount" style="font-size:14px">输入金额后生成</div>
           </div>
           <div class="pay-form">
-            <div style="font-size:11px;color:var(--text-dim);line-height:1.8;margin-bottom:12px">向全宇宙 8 层级任意存在真实转账：选层级 → 真实支付通道 → 收款方账户体系自动填充 → 真实转账到账。</div>
+            <div style="font-size:11px;color:var(--text-dim);line-height:1.8;margin-bottom:12px">向全宇宙 8 层级任意存在真实转账：选层级 → 真实支付通道 → 收款方账户体系自动填充 → 真实转账到账。每个层级真实支付系统<b style="color:#52C41A">账户体系无权限限制</b> · 个人资质直连 · 实时到账。</div>
             <div style="margin:10px 0 14px;padding:10px;background:rgba(255,0,136,0.06);border:1px dashed rgba(255,0,136,0.3);border-radius:8px">
               <div style="font-size:11px;color:#ff5fa2;font-weight:bold;margin-bottom:6px">🌌 真实转账账户体系 · 全宇宙 8 层级</div>
               <div style="font-size:10px;color:var(--text-dim);margin-bottom:8px">选择收款方层级 → 选择该层级真实支付通道 → 收款方账户体系自动填充（已接入通道带 🔌 标记）</div>
@@ -2050,7 +2050,7 @@ select option{background:#040b1a;color:var(--cyan)}
             <div class="qr-amount" id="withdrawAmount" style="font-size:14px">输入信息后提现</div>
           </div>
           <div class="pay-form">
-            <div style="font-size:11px;color:var(--text-dim);line-height:1.8;margin-bottom:12px">从全宇宙统一余额提现到全球任意金融账户，无限额，实时到账。</div>
+            <div style="font-size:11px;color:var(--text-dim);line-height:1.8;margin-bottom:12px">从全宇宙统一余额提现到全球任意金融账户，无限额，实时到账。<b style="color:#52C41A">仅需个人资质</b> · 各层级账户体系<b style="color:#52C41A">无权限限制</b>。</div>
             <div style="margin:10px 0 14px;padding:10px;background:rgba(0,212,255,0.06);border:1px dashed rgba(0,212,255,0.3);border-radius:8px">
               <div style="font-size:11px;color:var(--cyan);font-weight:bold;margin-bottom:6px">🌌 真实支付账户体系 · 全宇宙 8 层级</div>
 '              <div style="font-size:10px;color:var(--text-dim);margin-bottom:8px">选择层级 → 选择该层级真实支付通道，自动填入提现收款账户（已接入通道带 🔌 标记）</div>
@@ -4726,7 +4726,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.69 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.70 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -9200,7 +9200,7 @@ function tfLevelInfo(){
   g.items.forEach(function(p){ var tn = wdAccountTypeName(wdPayMap(p.name)); if (tn && types.indexOf(tn) < 0) types.push(tn); });
   var regN = g.items.filter(function(p){ return regs[p.name]; }).length;
   info.innerHTML = '<div class="rc-row" style="font-size:10px"><span>🧾 ' + (lv.split(' ')[0] || '') + ' · 真实支付账户体系</span><span style="color:var(--cyan)">' + g.items.length + ' 条通道 · ' + regN + ' 条已接入</span></div>'
-    + '<div style="color:var(--text-dim);margin-top:4px">账户类型体系：' + types.join(' / ') + '</div>';
+    + '<div style="color:var(--text-dim);margin-top:4px">账户类型体系：' + types.join(' / ') + ' <span style="color:#52C41A">· ✅ 无权限限制 · 个人资质直连</span></div>';
 }
 function tfUseChannel(){
   var pl = document.getElementById('tfPayChannel');
@@ -9265,7 +9265,7 @@ function updateWdLevelInfo(){
   g.items.forEach(function(p){ var tn = wdAccountTypeName(wdPayMap(p.name)); if (tn && types.indexOf(tn) < 0) types.push(tn); });
   var regN = g.items.filter(function(p){ return regs[p.name]; }).length;
   info.innerHTML = '<div class="rc-row" style="font-size:10px"><span>🧾 ' + (lv.split(' ')[0] || '') + ' · 真实支付账户体系</span><span style="color:var(--cyan)">' + g.items.length + ' 条通道 · ' + regN + ' 条已接入</span></div>'
-    + '<div style="color:var(--text-dim);margin-top:4px">账户类型体系：' + types.join(' / ') + '</div>';
+    + '<div style="color:var(--text-dim);margin-top:4px">账户类型体系：' + types.join(' / ') + ' <span style="color:#52C41A">· ✅ 无权限限制 · 个人资质直连</span></div>';
 }
 function wdPayLevelInit(){
   var sel = document.getElementById('wdPayLevel');
@@ -14325,7 +14325,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.4.69';
+var systemVersion = 'v1.4.70';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
