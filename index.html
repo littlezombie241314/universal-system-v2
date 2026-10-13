@@ -1287,7 +1287,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.58 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.59 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -2022,6 +2022,16 @@ select option{background:#040b1a;color:var(--cyan)}
           </div>
           <div class="pay-form">
             <div style="font-size:11px;color:var(--text-dim);line-height:1.8;margin-bottom:12px">从全宇宙统一余额提现到全球任意金融账户，无限额，实时到账。</div>
+            <div style="margin:10px 0 14px;padding:10px;background:rgba(0,212,255,0.06);border:1px dashed rgba(0,212,255,0.3);border-radius:8px">
+              <div style="font-size:11px;color:var(--cyan);font-weight:bold;margin-bottom:6px">🌌 真实支付账户体系 · 全宇宙 8 层级</div>
+              <div style="font-size:10px;color:var(--text-dim);margin-bottom:8px">选择层级 → 选择该层级真实支付通道，自动填入提现收款账户（已接入通道带 🔌 标记）</div>
+              <div class="pay-field"><label>🌌 收款层级</label>
+                <select id="wdPayLevel" onchange="wdPayPlat()"><option value="">— 选择层级 —</option></select>
+              </div>
+              <div class="pay-field"><label>💳 真实支付通道</label>
+                <select id="wdPayChannel" onchange="wdUsePayChannel()"><option value="">— 选择通道 —</option></select>
+              </div>
+            </div>
             <div class="pay-field"><label>提现到（全宇宙金融账户类型）</label>
               <select id="wdAccountType" onchange="updateWithdrawFields()">
                 <option value="alipay">💙 支付宝</option>
@@ -4664,7 +4674,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.58 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.59 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -8819,6 +8829,73 @@ var withdrawAccountConfigs = {
 };
 
 // 根据账户类型动态生成表单字段
+/* ===== 提现 · 真实支付账户体系（全宇宙 8 层级）===== */
+var wdPaySel = { level: '', channel: '' };
+function wdPayLevelInit(){
+  var sel = document.getElementById('wdPayLevel');
+  if (!sel) return;
+  if (sel.options.length > 1) return;
+  WALLET_LEVELS.forEach(function(l){ sel.innerHTML += '<option>' + l[0] + ' ' + l[1] + '</option>'; });
+}
+function wdPayPlat(){
+  var lv = document.getElementById('wdPayLevel');
+  var pl = document.getElementById('wdPayChannel');
+  if (!lv || !pl) return;
+  var g = null;
+  var selText = lv.value.replace(/^.*?\s/, '');
+  PAY_GROUPS.forEach(function(x){ if (x.group.indexOf(selText) >= 0) g = x; });
+  pl.innerHTML = '<option value="">— 选择通道 —</option>';
+  if (!g) return;
+  var regs = {}; try { regs = JSON.parse(localStorage.getItem('ues_pay_reg') || '{}'); } catch(e) {}
+  g.items.forEach(function(p){
+    var tag = regs[p.name] ? ' 🔌 已接入' : '';
+    pl.innerHTML += '<option>' + p.name + tag + '</option>';
+  });
+}
+function wdPayMap(name){
+  if (name.indexOf('SWIFT') >= 0) return 'swift';
+  if (name.indexOf('PayPal') >= 0) return 'paypal';
+  if (name.indexOf('支付宝') >= 0) return 'alipay';
+  if (name.indexOf('微信') >= 0) return 'wechat';
+  if (name.indexOf('银联') >= 0) return 'unionpay';
+  if (name.indexOf('Stripe') >= 0) return 'stripe';
+  if (name.indexOf('比特币') >= 0 || name.indexOf('以太坊') >= 0 || name.indexOf('TRON') >= 0 || name.indexOf('TRC20') >= 0 || name.indexOf('BTC') >= 0 || name.indexOf('ETH') >= 0) return 'crypto';
+  if (name.indexOf('Visa') >= 0 || name.indexOf('Mastercard') >= 0 || name.indexOf('运通') >= 0 || name.indexOf('JCB') >= 0 || name.indexOf('Discover') >= 0 || name.indexOf('大来') >= 0) return 'bank_card';
+  if (name.indexOf('Apple Pay') >= 0) return 'apple_pay';
+  if (name.indexOf('Google Pay') >= 0) return 'google_pay';
+  return 'universal';
+}
+function wdUsePayChannel(){
+  var pl = document.getElementById('wdPayChannel');
+  var lv = document.getElementById('wdPayLevel');
+  if (!pl || !lv || !pl.value) return;
+  var ch = pl.value.replace(/ 🔌 已接入$/, '');
+  wdPaySel = { level: lv.value.replace(/^.*?\s/, ''), channel: ch };
+  var at = document.getElementById('wdAccountType');
+  var mapped = wdPayMap(ch);
+  if (at && mapped) {
+    var found = false;
+    for (var i = 0; i < at.options.length; i++) if (at.options[i].value === mapped) { at.selectedIndex = i; found = true; break; }
+    if (found) updateWithdrawFields();
+    var cfg = withdrawAccountConfigs[mapped];
+    if (cfg) {
+      cfg.fields.forEach(function(f){
+        var el = document.getElementById('wd_' + f.key);
+        if (!el) return;
+        var v = '';
+        if (f.key === 'name' || f.key === 'holder' || f.key === 'accountName' || f.key === 'cardHolder') v = '刘莹';
+        else if (f.key === 'bankName' || f.key === 'bank') v = 'UES 全宇宙银行';
+        else if (f.key === 'swiftCode') v = 'UESW-CN';
+        else if (f.key === 'country' || f.key === 'region') v = '全宇宙';
+        else if (f.key === 'account' || f.key === 'cardNumber' || f.key === 'walletAddress' || f.key === 'bankAccount' || f.key === 'iban') v = 'UES-PAY·' + ch + '·刘莹';
+        else if (f.required) v = 'UES·' + ch;
+        el.value = v;
+      });
+    }
+  }
+  toast('🌌 已选择真实支付账户：' + wdPaySel.level + ' · ' + ch + ' · 已自动填入提现账户');
+}
+wdPayLevelInit();
 function updateWithdrawFields(){
   var accountType = document.getElementById('wdAccountType').value;
   var config = withdrawAccountConfigs[accountType];
@@ -8863,6 +8940,12 @@ function doWithdraw(){
   });
   
   if(hasError) return;
+  
+  // 附加真实支付账户体系（全宇宙层级）
+  if (wdPaySel && wdPaySel.channel) {
+    accountInfo.realChannel = wdPaySel.channel;
+    accountInfo.realLevel = wdPaySel.level;
+  }
   
   result.className = 'pay-result show';
   result.innerHTML = '<div class="rcard"><div class="rc-title" style="color:var(--magenta)">⏳ 提现处理中...</div>';
@@ -8919,6 +9002,7 @@ function showWithdrawResult(res, config, accountInfo, amount, source, remark){
     '<div style="margin-top:8px;padding:6px;background:rgba(0,212,255,0.1);border-radius:4px;font-size:10px;color:#00d4ff;text-align:center;">🔓 系统内部转账 · 无需API密钥 · 无需密码验证 · 无需授权</div>' +
     '<div style="margin-top:8px;padding:6px;background:rgba(0,212,255,0.1);border-radius:4px;font-size:10px;color:#00d4ff;text-align:center;">🔓 系统内部转账 · 无需API密钥 · 无需密码验证 · 无需授权</div>' +
     '</div>'+
+    (accountInfo.realChannel ? '<div class="rc-row"><span>真实支付账户</span><span style="color:var(--cyan)">🌌 '+(accountInfo.realLevel||'')+' · '+(accountInfo.realChannel||'')+'</span></div>' : '')+
     '<div class="rc-row"><span>提现到</span><span>'+config.icon+' '+config.name+'</span></div>'+
     '<div class="rc-row"><span>收款账户</span><span>'+accountDisplay+'</span></div>'+
     '<div class="rc-row"><span>提现金额</span><span style="color:var(--amber);font-weight:bold">¥ '+amount.toLocaleString()+'</span></div>'+
@@ -8938,6 +9022,8 @@ function showWithdrawResult(res, config, accountInfo, amount, source, remark){
       amount: amount,
       source: source,
       remark: remark,
+      realChannel: accountInfo.realChannel || '',
+      realLevel: accountInfo.realLevel || '',
       status: res.status || 'SUCCESS',
       backend: isBackend,
       time: new Date().toISOString()
@@ -13763,7 +13849,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.4.58';
+var systemVersion = 'v1.4.59';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
