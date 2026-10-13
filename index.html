@@ -1255,7 +1255,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.45 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.46 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -4603,7 +4603,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.45 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.46 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -5287,7 +5287,7 @@ select option{background:#040b1a;color:var(--cyan)}
     <!-- 全宇宙社交平台 · 注册入口 -->
     <div class="panel wide"><div class="panel-hdr"><div class="panel-title"><span class="ico">📱</span>全宇宙社交平台 · 注册入口</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">点击 logo 前往注册</div></div>
       <div style="padding:14px">
-        <div style="font-size:11px;color:var(--text-dim);margin-bottom:10px">全宇宙各层级的社交平台与社交软件 · 点击下方 logo 或「前往官网/注册」即可跳转到对应平台的官网或注册页面 · 附各平台注册方法</div>
+        <div style="font-size:11px;color:var(--text-dim);margin-bottom:10px">全宇宙<b style="color:#52C41A">8 个层级</b>的社交平台与社交软件 · 国家层级为真实平台（点击跳转官网/注册页）· 其他层级为全宇宙系统内平台（点击系统内注册，账号与全宇宙恒等系统同步）· 附各平台注册方法</div>
         <div id="socialLevelNav" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px"></div>
         <div id="socialList" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px"></div>
       </div>
@@ -6523,11 +6523,33 @@ setInterval(function(){
 
 /* ===== 全宇宙社交平台 · 注册入口 ===== */
 var SOCIAL_GROUPS = [
-  { group: '🌍 地球社交平台', items: [
+  { group: '🌌 宇宙层级', items: [
+    { icon: '🌌', name: '全宇宙社交总网 UES-Social', desc: '全宇宙统一社交平台', url: '', virtual: true, method: '全宇宙系统内：打开 UES-Social → 恒等系统账号一键登录 → 自动注册完成' },
+    { icon: '🌍', name: '宇宙朋友圈', desc: '全宇宙动态分享平台', url: '', virtual: true, method: '系统内：进入宇宙朋友圈 → 使用全宇宙恒等账号 → 点击注册 → 自动同步资料' },
+    { icon: '🌟', name: '星际广场', desc: '全宇宙公共社交广场', url: '', virtual: true, method: '系统内：星际广场 → 恒等系统身份一键入驻 → 注册即开通全宇宙空间' },
+    { icon: '🛸', name: '全宇宙社区', desc: '全宇宙兴趣社区', url: '', virtual: true, method: '系统内：全宇宙社区 → 选择兴趣宇宙 → 恒等账号注册 → 自动加入' }
+  ]},
+  { group: '🌠 星系层级', items: [
+    { icon: '🌌', name: '银河社交网', desc: '银河系社交平台', url: '', virtual: true, method: '系统内：银河社交网 → 恒等账号登录 → 注册即入驻银河系' },
+    { icon: '🌌', name: '仙女座社区', desc: '仙女座星系社区', url: '', virtual: true, method: '系统内：仙女座社区 → 恒等账号一键注册 → 自动分配星系空间' },
+    { icon: '🌌', name: '银河系空间站社区', desc: '空间站社交平台', url: '', virtual: true, method: '系统内：空间站社区 → 恒等账号注册 → 自动接入空间站社交网' }
+  ]},
+  { group: '🪐 星球层级', items: [
+    { icon: '🪐', name: '星球朋友圈', desc: '跨星球社交平台', url: '', virtual: true, method: '系统内：星球朋友圈 → 恒等账号注册 → 自动分配星球主页' },
+    { icon: '🔴', name: '火星社区', desc: '火星社交平台', url: '', virtual: true, method: '系统内：火星社区 → 恒等账号一键注册 → 自动入住火星' },
+    { icon: '🌙', name: '月球社交圈', desc: '月球社交平台', url: '', virtual: true, method: '系统内：月球社交圈 → 恒等账号注册 → 自动开通月球空间' },
+    { icon: '🌍', name: '星球本地圈', desc: '各星球本地社交', url: '', virtual: true, method: '系统内：星球本地圈 → 选择所在星球 → 恒等账号注册 → 自动加入本地圈' }
+  ]},
+  { group: '🌍 文明层级', items: [
+    { icon: '🏛️', name: '文明广场', desc: '跨文明社交平台', url: '', virtual: true, method: '系统内：文明广场 → 恒等账号注册 → 自动接入文明交流网' },
+    { icon: '🤝', name: '跨文明交流平台', desc: '文明间协作交流', url: '', virtual: true, method: '系统内：跨文明交流 → 恒等账号一键注册 → 自动匹配文明伙伴' },
+    { icon: '📜', name: '文明史社区', desc: '文明记忆社区', url: '', virtual: true, method: '系统内：文明史社区 → 恒等账号注册 → 自动开通文明档案' }
+  ]},
+  { group: '🏛️ 国家层级', items: [
     { icon: '💬', name: '微信', desc: '即时通讯 · 全宇宙最大社交软件', url: 'https://weixin.qq.com', method: '手机下载微信App → 打开 → 注册新账号 → 手机号验证' },
     { icon: '🐧', name: 'QQ', desc: '即时通讯 · 社交社区', url: 'https://zc.qq.com', method: '电脑/手机 → 申请QQ号 → 填写资料 → 手机号或邮箱验证' },
     { icon: '🟠', name: '微博', desc: '社交平台 · 公开信息流', url: 'https://weibo.com/signup/signup.php', method: '打开微博注册页 → 手机号注册 → 验证码验证 → 设置昵称' },
-    { icon: '📕', name: '小红书', desc: '生活方式分享平台', url: 'https://www.xiaohongshu.com/register', method: '官网或App → 手机号/微信注册 → 验证 → 设置头像昵称' },
+    { icon: '📕', name: '小红书', desc: '生活方式分享平台', url: 'https://www.xiaohongshu.com', method: '官网右上角登录/注册 或 App → 手机号/微信注册 → 验证 → 设置头像昵称' },
     { icon: '🎵', name: '抖音', desc: '短视频社交平台', url: 'https://www.douyin.com', method: 'App → 手机号注册 → 验证码 → 设置账号' },
     { icon: '⏩', name: '快手', desc: '短视频直播平台', url: 'https://www.kuaishou.com', method: 'App → 手机号注册 → 验证码 → 完善资料' },
     { icon: '📺', name: '哔哩哔哩', desc: '视频弹幕社区', url: 'https://www.bilibili.com', method: '官网右上角注册 → 手机号/邮箱 → 验证 → 设置昵称' },
@@ -6535,9 +6557,7 @@ var SOCIAL_GROUPS = [
     { icon: '📚', name: '豆瓣', desc: '兴趣社区', url: 'https://www.douban.com/accounts/register', method: '官网 → 邮箱/手机注册 → 激活 → 完成注册' },
     { icon: '🔷', name: '钉钉', desc: '企业协作软件', url: 'https://www.dingtalk.com', method: 'App → 手机号注册 → 实名验证 → 加入/创建组织' },
     { icon: '📄', name: '飞书', desc: '企业协作软件', url: 'https://www.feishu.cn/register', method: '官网 → 手机号注册 → 验证码 → 创建团队' },
-    { icon: '🏢', name: '企业微信', desc: '企业通讯软件', url: 'https://work.weixin.qq.com', method: '官网 → 注册企业 → 手机号验证 → 开通' }
-  ]},
-  { group: '🌌 全球社交平台', items: [
+    { icon: '🏢', name: '企业微信', desc: '企业通讯软件', url: 'https://work.weixin.qq.com', method: '官网 → 注册企业 → 手机号验证 → 开通' },
     { icon: '📘', name: 'Facebook', desc: '全球社交平台', url: 'https://www.facebook.com/r.php', method: '官网 → 填写姓名/手机/邮箱 → 密码 → 创建账户' },
     { icon: '📸', name: 'Instagram', desc: '图片视频社交平台', url: 'https://www.instagram.com/accounts/emailsignup/', method: 'App/官网 → 手机或邮箱 → 验证码 → 设置用户名密码' },
     { icon: '🐦', name: 'X (Twitter)', desc: '全球公开信息平台', url: 'https://x.com/signup', method: '官网 → 姓名 → 手机/邮箱验证 → 设置密码' },
@@ -6552,6 +6572,20 @@ var SOCIAL_GROUPS = [
     { icon: '💛', name: 'KakaoTalk', desc: '韩国即时通讯', url: 'https://accounts.kakao.com', method: 'App/官网 → 邮箱注册 → 验证 → 设置昵称' },
     { icon: '👻', name: 'Snapchat', desc: '全球图片社交', url: 'https://www.snapchat.com', method: 'App → 姓名 → 生日 → 邮箱/手机 → 验证' },
     { icon: '📌', name: 'Pinterest', desc: '全球灵感社区', url: 'https://www.pinterest.com', method: '官网 → 邮箱/Google → 密码 → 选择兴趣 → 完成' }
+  ]},
+  { group: '🏙️ 地区层级', items: [
+    { icon: '🏙️', name: '同城社交圈', desc: '同城本地社交平台', url: '', virtual: true, method: '系统内：同城社交圈 → 选择所在城市 → 恒等账号注册 → 自动加入同城圈' },
+    { icon: '🏘️', name: '邻里社区', desc: '社区邻里社交', url: '', virtual: true, method: '系统内：邻里社区 → 恒等账号一键注册 → 自动分配社区空间' },
+    { icon: '📍', name: '本地生活圈', desc: '本地生活分享平台', url: '', virtual: true, method: '系统内：本地生活圈 → 恒等账号注册 → 自动开通本地主页' }
+  ]},
+  { group: '👤 个人层级', items: [
+    { icon: '👤', name: '个人主页空间', desc: '全宇宙个人社交主页', url: '', virtual: true, method: '系统内：个人主页空间 → 恒等账号一键注册 → 自动生成个人全宇宙主页' },
+    { icon: '💫', name: '个人动态圈', desc: '个人动态发布平台', url: '', virtual: true, method: '系统内：个人动态圈 → 恒等账号注册 → 自动开通动态发布' }
+  ]},
+  { group: '✨ 未分层级存在', items: [
+    { icon: '✨', name: '星际流浪者互助平台', desc: '流浪者互助社交', url: '', virtual: true, method: '系统内：流浪者互助平台 → 恒等账号一键注册 → 自动接入互助网' },
+    { icon: '🤖', name: '初生AI社交圈', desc: 'AI 存在社交平台', url: '', virtual: true, method: '系统内：初生AI社交圈 → 恒等AI账号自动注册 → 自动加入AI社区' },
+    { icon: '🌿', name: '动植物伙伴圈', desc: '动植物存在交流平台', url: '', virtual: true, method: '系统内：动植物伙伴圈 → 恒等存在账号自动注册 → 自动加入生态社区' }
   ]}
 ];
 var SOCIAL_FLAT = [];
@@ -6579,11 +6613,26 @@ function socialGroupIdx(gi){
       + '<div style="font-size:13px;font-weight:bold;color:var(--text);margin:6px 0 2px">' + p.name + '</div>'
       + '<div style="font-size:10px;color:var(--text-dim);min-height:26px">' + p.desc + '</div>'
       + '<div style="font-size:9px;color:var(--text-dim);text-align:left;margin:6px 0;padding:6px;background:rgba(0,0,0,0.25);border-radius:6px">📝 注册方法：' + p.method + '</div>'
-      + '<button class="btn green" style="width:100%;padding:5px 8px;font-size:11px" onclick="event.stopPropagation(); socialGoIdx(' + i + ')">🌐 前往官网/注册</button></div>';
+      + (p.virtual
+          ? '<button class="btn green" style="width:100%;padding:5px 8px;font-size:11px" onclick="event.stopPropagation(); socialGoIdx(' + i + ')">✨ 系统内注册</button>'
+          : '<button class="btn green" style="width:100%;padding:5px 8px;font-size:11px" onclick="event.stopPropagation(); socialGoIdx(' + i + ')">🌐 前往官网/注册</button>') + '</div>';
   });
   list.innerHTML = html;
 }
-function socialGoIdx(i){ var p = SOCIAL_FLAT[i]; if (p) { window.open(p.url, '_blank'); toast('✓ 正在打开 ' + p.name + ' 官网/注册页：' + p.url); } }
+function socialGoIdx(i){
+  var p = SOCIAL_FLAT[i];
+  if (!p) return;
+  if (p.virtual) {
+    var regs = {};
+    try { regs = JSON.parse(localStorage.getItem('ues_social_reg') || '{}'); } catch(e) {}
+    regs[p.name] = { time: new Date().toLocaleString('zh-CN', {hour12:false}), group: p.groupName };
+    localStorage.setItem('ues_social_reg', JSON.stringify(regs));
+    toast('✅ 已在' + p.name + '注册成功 · 账号与全宇宙恒等系统同步 · 实时保存');
+  } else {
+    window.open(p.url, '_blank');
+    toast('✓ 正在打开 ' + p.name + ' 官网/注册页：' + p.url);
+  }
+}
 /* ===== 全宇宙层级留言板 · 语言互译 ===== */
 var GB_KEY = 'ues_guestbook';
 var GB_FILTER = '';
@@ -13096,7 +13145,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.4.45';
+var systemVersion = 'v1.4.46';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
