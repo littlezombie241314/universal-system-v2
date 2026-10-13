@@ -1290,7 +1290,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.65 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.66 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -4711,7 +4711,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.65 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.66 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -6991,9 +6991,16 @@ function ensureWechatQr(){
 function payRender(){
   var box = document.getElementById('payGroups');
   if (!box) return;
-  var html = '';
+  var regs = {}; try { regs = JSON.parse(localStorage.getItem(PAY_REG_KEY) || '{}'); } catch(e) {}
+  var total = 0; PAY_GROUPS.forEach(function(g){ total += g.items.length; });
+  var regTotal = 0; PAY_GROUPS.forEach(function(g){ regTotal += g.items.filter(function(p){ return regs[p.name]; }).length; });
+  var html = '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;padding:8px;background:rgba(0,212,255,0.05);border:1px dashed rgba(0,212,255,0.3);border-radius:8px">'
+    + '<div style="font-size:11px;color:var(--text-dim)">🌌 全宇宙 8 层级 · <span style="color:var(--cyan);font-weight:bold">' + total + '</span> 条真实支付通道 · 已接入 <span style="color:' + (regTotal === total ? '#52C41A' : 'var(--cyan)') + ';font-weight:bold">' + regTotal + '</span>/' + total + '</div>'
+    + '<button class="btn amber" style="padding:3px 10px;font-size:10px;margin-left:auto" onclick="payRegAllCosmos()">⚡ 一键接入全宇宙全部通道</button></div>';
   PAY_GROUPS.forEach(function(g, gi){
-    html += '<div style="font-size:12px;font-weight:bold;color:var(--cyan);margin:12px 0 6px">' + g.group + '</div>';
+    var n = g.items.length;
+    var rn = g.items.filter(function(p){ return regs[p.name]; }).length;
+    html += '<div style="display:flex;align-items:center;gap:8px;margin:12px 0 6px"><div style="font-size:12px;font-weight:bold;color:var(--cyan)">' + g.group + '</div><span style="font-size:10px;color:var(--text-dim)">已接入 <b style="color:' + (rn === n ? '#52C41A' : 'var(--text)') + '">' + rn + '</b>/' + n + '</span><button class="btn cyan" style="padding:2px 8px;font-size:10px;margin-left:auto" onclick="payRegAll(' + gi + ')">⚡ 一键接入</button></div>';
     html += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px">';
     g.items.forEach(function(p, k){
       html += '<div style="background:rgba(0,0,0,0.25);border:1px solid rgba(0,212,255,0.12);border-radius:8px;padding:8px 10px">'
@@ -7072,12 +7079,9 @@ function qrClose(){
   if (page) page.style.display = 'none';
   qrPending = null; qrUploadTarget = null;
 }
-function payReg(gi, k){
+function savePayReg(gi, k, skipUI){
   var g = PAY_GROUPS[gi]; var p = g.items[k];
   if (!p) return;
-  if (p.name === '微信收款码') {
-    if (!getQr(p.name)) { openQrUpload(gi, k); toast('📤 微信收款码登记接入：请先上传收款二维码'); return; }
-  }
   var verify = '未核验';
   if (g.group.indexOf('个人层级') >= 0) {
     var sel = document.getElementById('payVer-' + gi + '-' + k);
@@ -7086,8 +7090,37 @@ function payReg(gi, k){
   var regs = {}; try { regs = JSON.parse(localStorage.getItem(PAY_REG_KEY) || '{}'); } catch(e) {}
   regs[p.name] = { level: g.group, type: p.type, verify: verify, time: new Date().toLocaleString('zh-CN', {hour12:false}) };
   localStorage.setItem(PAY_REG_KEY, JSON.stringify(regs));
+  if (!skipUI) {
+    payRegList();
+    payRender();
+    toast('🔌 已登记接入「' + p.name + '」· ' + g.group + ' · 📋 核验：' + verify + ' · 实时保存 · 离线保持');
+  }
+}
+function payReg(gi, k){
+  var g = PAY_GROUPS[gi]; var p = g.items[k];
+  if (!p) return;
+  if (p.name === '微信收款码') {
+    if (!getQr(p.name) && !(typeof REAL_WX_RECEIVE !== 'undefined' && REAL_WX_RECEIVE)) { openQrUpload(gi, k); toast('📤 微信收款码登记接入：请先上传收款二维码'); return; }
+  }
+  savePayReg(gi, k);
+}
+function payRegAll(gi){
+  var g = PAY_GROUPS[gi];
+  var done = 0, skipped = 0;
+  g.items.forEach(function(p, k){
+    if (p.name === '微信收款码' && !getQr(p.name) && !(typeof REAL_WX_RECEIVE !== 'undefined' && REAL_WX_RECEIVE)) { skipped++; return; }
+    savePayReg(gi, k, true);
+    done++;
+  });
   payRegList();
-  toast('🔌 已登记接入「' + p.name + '」· ' + g.group + ' · 📋 核验：' + verify + ' · 实时保存 · 离线保持');
+  payRender();
+  toast('⚡ 已一键接入 ' + g.group + '：' + done + '/' + g.items.length + ' 条真实支付通道 · 实时保存 · 离线保持' + (skipped ? '（跳过 ' + skipped + ' 条需上传收款码）' : ''));
+}
+function payRegAllCosmos(){
+  PAY_GROUPS.forEach(function(g, gi){ payRegAll(gi); });
+  var regs = {}; try { regs = JSON.parse(localStorage.getItem(PAY_REG_KEY) || '{}'); } catch(e) {}
+  var n = Object.keys(regs).length;
+  toast('🌌 已一键接入全宇宙 ' + n + ' 条真实支付通道 · 覆盖全部 8 层级 · 实时保存 · 离线保持');
 }
 function payRegList(){
   var box = document.getElementById('payRegList');
@@ -14125,7 +14158,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.4.65';
+var systemVersion = 'v1.4.66';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
