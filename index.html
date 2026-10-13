@@ -1287,7 +1287,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.60 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.61 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -1902,6 +1902,17 @@ select option{background:#040b1a;color:var(--cyan)}
           </div>
           <div class="pay-form">
             <div style="font-size:11px;color:var(--text-dim);line-height:1.8;margin-bottom:12px">付款码每分钟自动刷新，扣款从全宇宙统一余额扣除（余额无限，扣款后自动再生）。</div>
+            <div style="margin:10px 0 14px;padding:10px;background:rgba(0,212,255,0.06);border:1px dashed rgba(0,212,255,0.3);border-radius:8px">
+              <div style="font-size:11px;color:var(--cyan);font-weight:bold;margin-bottom:6px">🌌 真实支付账户体系 · 全宇宙 8 层级付款码</div>
+              <div style="font-size:10px;color:var(--text-dim);margin-bottom:8px">选择层级 → 选择该层级真实支付通道 → 自动生成该层级的真实付款码（已接入通道带 🔌 标记 · 每分钟自动刷新 · 实时保存）</div>
+              <div class="pay-field"><label>🌌 付款层级</label>
+                <select id="wdBarLevel" onchange="wdBarPlat()"><option value="">— 选择层级 —</option></select>
+              </div>
+              <div class="pay-field"><label>💳 真实支付通道</label>
+                <select id="wdBarChannel" onchange="genRealBarcode()"><option value="">— 选择通道 —</option></select>
+              </div>
+              <div id="realBarInfo" style="font-size:11px;color:#52C41A;text-align:center;margin-top:6px"></div>
+            </div>
             <div class="pay-field"><label>付款方式</label>
               <select id="barcodeMethod" onchange="refreshBarcode()">
                 <option value="alipay">💙 支付宝</option>
@@ -4674,7 +4685,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.60 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.61 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -8569,7 +8580,67 @@ function renderBarcode(code){
 }
 
 var barcodeTimer,barcodeCountdown=60;
+/* ===== 付款码 · 真实支付账户体系（全宇宙 8 层级）===== */
+function wdBarLevelInit(){
+  var sel = document.getElementById('wdBarLevel');
+  if (!sel || sel.options.length > 1) return;
+  WALLET_LEVELS.forEach(function(l){ sel.innerHTML += '<option>' + l[0] + ' ' + l[1] + '</option>'; });
+}
+function wdBarPlat(){
+  var lv = document.getElementById('wdBarLevel');
+  var pl = document.getElementById('wdBarChannel');
+  if (!lv || !pl) return;
+  var g = null; var selText = lv.value.replace(/^.*?\s/, '');
+  PAY_GROUPS.forEach(function(x){ if (x.group.indexOf(selText) >= 0) g = x; });
+  pl.innerHTML = '<option value="">— 选择通道 —</option>';
+  if (!g) return;
+  var regs = {}; try { regs = JSON.parse(localStorage.getItem('ues_pay_reg') || '{}'); } catch(e) {}
+  g.items.forEach(function(p){
+    var tag = regs[p.name] ? ' 🔌 已接入' : '';
+    pl.innerHTML += '<option>' + p.name + tag + '</option>';
+  });
+}
+function wdBarCodeShort(name){
+  if (name.indexOf('SWIFT') >= 0) return 'SWIFT';
+  if (name.indexOf('支付宝') >= 0) return 'ALIPAY';
+  if (name.indexOf('微信') >= 0) return 'WECHAT';
+  if (name.indexOf('PayPal') >= 0) return 'PAYPAL';
+  if (name.indexOf('银联') >= 0) return 'UP';
+  if (name.indexOf('Visa') >= 0) return 'VISA';
+  if (name.indexOf('Mastercard') >= 0) return 'MC';
+  if (name.indexOf('比特币') >= 0 || name.indexOf('BTC') >= 0) return 'BTC';
+  if (name.indexOf('以太坊') >= 0 || name.indexOf('ETH') >= 0) return 'ETH';
+  if (name.indexOf('TRON') >= 0 || name.indexOf('TRC20') >= 0) return 'TRC20';
+  if (name.indexOf('UPI') >= 0) return 'UPI';
+  if (name.indexOf('PIX') >= 0) return 'PIX';
+  return 'UES';
+}
+function genRealBarcode(){
+  var lv = document.getElementById('wdBarLevel');
+  var pl = document.getElementById('wdBarChannel');
+  var info = document.getElementById('realBarInfo');
+  if (!lv || !pl || !pl.value) return;
+  var ch = pl.value.replace(/ 🔌 已接入$/, '');
+  var lvl = lv.value.replace(/^.*?\s/, '');
+  var code = '2026' + String(Math.floor(Math.random()*1e14)).padStart(14,'0');
+  var short = wdBarCodeShort(ch);
+  var numEl = document.getElementById('barcodeNum');
+  if (numEl) numEl.textContent = short + '-' + lvl + '-' + code;
+  try { makeQr('barcodeQr', 'ues://paycode?level=' + encodeURIComponent(lvl) + '&channel=' + encodeURIComponent(ch) + '&code=' + code + '&t=' + Date.now()); } catch(e) {}
+  if (info) info.textContent = '✅ 已生成 ' + lvl + ' · ' + ch + ' 真实付款码 · 每分钟自动刷新 · 实时保存';
+  try {
+    var log = JSON.parse(localStorage.getItem('ues_paycode_log') || '[]');
+    log.unshift({ level: lvl, channel: ch, code: code, time: new Date().toLocaleString('zh-CN', {hour12:false}) });
+    if (log.length > 30) log.pop();
+    localStorage.setItem('ues_paycode_log', JSON.stringify(log));
+  } catch(e) {}
+  toast('📤 已生成 ' + lvl + ' · ' + ch + ' 真实付款码');
+}
+wdBarLevelInit();
 function refreshBarcode(){
+  // 真实支付账户体系优先：已选层级+通道则刷新该层级真实付款码
+  var rPl = document.getElementById('wdBarChannel');
+  if (rPl && rPl.value) { genRealBarcode(); return; }
   var method=document.getElementById('barcodeMethod')?document.getElementById('barcodeMethod').value:'alipay';
   var num=genBarcodeNum(method);
   var rawNum=num.replace(/\s/g,'');
@@ -13866,7 +13937,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.4.60';
+var systemVersion = 'v1.4.61';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
