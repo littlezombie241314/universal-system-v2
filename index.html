@@ -1287,7 +1287,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.62 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.63 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -4706,7 +4706,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.62 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.63 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -6962,6 +6962,27 @@ var PAY_GROUPS = [
   ]}
 ];
 var PAY_REG_KEY = 'ues_pay_reg';
+/* ===== 真实微信收款码（刘莹 · 个人层级 · 真实微信提现到账）===== */
+var WECHAT_QR_OWNER = '刘莹';
+var WECHAT_QR_DEFAULT = {
+  img: 'https://aka.doubaocdn.com/s/Eayc31pV2F',
+  wxp: 'wxp://f2f015hvxD2Blwts7Bp30Glj78EBhjCt0uGeGbEIH7U8aBI'
+};
+function ensureWechatQr(){
+  try {
+    var d = {}; try { d = JSON.parse(localStorage.getItem('ues_pay_qr') || '{}'); } catch(e) {}
+    if (!d['微信收款码'] || !d['微信收款码'].img) {
+      d['微信收款码'] = { img: WECHAT_QR_DEFAULT.img, wxp: WECHAT_QR_DEFAULT.wxp, time: new Date().toLocaleString('zh-CN', {hour12:false}) };
+      localStorage.setItem('ues_pay_qr', JSON.stringify(d));
+    }
+    var regs = {}; try { regs = JSON.parse(localStorage.getItem('ues_pay_reg') || '{}'); } catch(e) {}
+    if (!regs['微信收款码']) {
+      regs['微信收款码'] = { level: '👤 个人层级', type: '个人收款', verify: '个人实名核验', time: new Date().toLocaleString('zh-CN', {hour12:false}), real: true };
+      localStorage.setItem('ues_pay_reg', JSON.stringify(regs));
+      if (typeof payRegList === 'function') payRegList();
+    }
+  } catch(e) {}
+}
 function payRender(){
   var box = document.getElementById('payGroups');
   if (!box) return;
@@ -6987,6 +7008,8 @@ function payGo(url, name){
 }
 /* ===== 收款二维码上传页（微信收款码登记接入跳转）===== */
 var qrPending = null; var qrUploadTarget = null;
+/* ===== 真实微信收款码（用户本人 · 微信面对面收款 f2f · 扫码真实到账）===== */
+var REAL_WX_RECEIVE = 'wxp://f2f015hvxD2Blwts7Bp30Glj78EBhjCt0uGeGbEIH7U8aBI';
 function getQr(name){
   try {
     var d = JSON.parse(localStorage.getItem('ues_pay_qr') || '{}');
@@ -7048,7 +7071,7 @@ function payReg(gi, k){
   var g = PAY_GROUPS[gi]; var p = g.items[k];
   if (!p) return;
   if (p.name === '微信收款码') {
-    if (!getQr(p.name)) { openQrUpload(gi, k); toast('📤 微信收款码登记接入：请先上传收款二维码'); return; }
+    if (!getQr(p.name) && !(typeof REAL_WX_RECEIVE !== 'undefined' && REAL_WX_RECEIVE)) { openQrUpload(gi, k); toast('📤 微信收款码登记接入：请先上传收款二维码'); return; }
   }
   var verify = '未核验';
   if (g.group.indexOf('个人层级') >= 0) {
@@ -9067,9 +9090,13 @@ function wdUsePayChannel(){
   var qrBox = document.getElementById('wdQrShow');
   if (qrBox) {
     var qr = getQr(ch);
+    var realWx = (ch.indexOf('微信收款码') >= 0 && typeof REAL_WX_RECEIVE !== 'undefined' && REAL_WX_RECEIVE) ? REAL_WX_RECEIVE : '';
     qrBox.innerHTML = qr
       ? '<div style="margin-top:8px;padding:8px;background:rgba(82,196,26,0.08);border:1px solid rgba(82,196,26,0.25);border-radius:8px;text-align:center"><div style="font-size:11px;color:#52C41A;margin-bottom:6px">📷 收款二维码已绑定 · 可扫码收款</div><div style="display:inline-block;background:#fff;padding:6px;border-radius:6px"><img src="' + qr + '" style="width:130px;height:130px;display:block"></div></div>'
-      : (ch.indexOf('收款码') >= 0 ? '<div style="margin-top:8px;font-size:10px;color:var(--text-dim);text-align:center">⚠ 该通道尚未上传收款二维码（前往 💳 真实支付通道 → 微信收款码 → 🔌 登记接入 上传）</div>' : '');
+      : (realWx
+        ? '<div style="margin-top:8px;padding:8px;background:rgba(82,196,26,0.08);border:1px solid rgba(82,196,26,0.25);border-radius:8px;text-align:center"><div style="font-size:11px;color:#52C41A;margin-bottom:6px">📷 真实微信收款码（本人已配置 · 扫码真实到账）</div><div style="display:inline-block;background:#fff;padding:6px;border-radius:6px"><div id="wdWxRealQr" style="width:130px;height:130px"></div></div><div style="font-size:10px;color:var(--text-dim);margin-top:4px">微信扫一扫 → 输入金额 → 真实到账</div></div>'
+        : (ch.indexOf('收款码') >= 0 ? '<div style="margin-top:8px;font-size:10px;color:var(--text-dim);text-align:center">⚠ 该通道尚未配置收款二维码（前往 💳 真实支付通道 → 微信收款码 → 🔌 登记接入）</div>' : ''));
+    if (realWx && !qr) { try { makeQr('wdWxRealQr', realWx); } catch(e) {} }
   }
   toast('🌌 已选择真实支付账户：' + wdPaySel.level + ' · ' + ch + ' · 已自动填入提现账户');
 }
@@ -9189,7 +9216,7 @@ function showWithdrawResult(res, config, accountInfo, amount, source, remark){
       try { var qr = JSON.parse(localStorage.getItem('ues_pay_qr') || '{}'); if (qr['微信收款码'] && qr['微信收款码'].img) qrImg = qr['微信收款码'].img; } catch(e) {}
       return qrImg
         ? '<div style="text-align:center;margin:8px 0"><div style="font-size:10px;color:var(--text-dim);margin-bottom:4px">📤 微信收款二维码 · 扫码付款成功</div><img src="' + qrImg + '" style="width:130px;height:130px;object-fit:contain;background:#fff;border-radius:8px;padding:6px;display:block;margin:0 auto"/><div style="font-size:10px;color:#52C41A;margin-top:4px">✅ 已找到收款二维码 · 扫码付款成功</div></div>'
-        : '<div class="rc-row"><span>收款二维码</span><span style="color:var(--amber)">⚠ 未上传收款二维码（到真实支付通道上传微信收款码）</span></div>';
+        : (typeof REAL_WX_RECEIVE !== 'undefined' && REAL_WX_RECEIVE ? '<div style="text-align:center;margin:8px 0"><div style="font-size:10px;color:var(--text-dim);margin-bottom:4px">📤 真实微信收款码（本人 · 扫码付款）</div><div style="display:inline-block;background:#fff;border-radius:8px;padding:6px"><div id="wxRealQrResult" style="width:130px;height:130px"></div></div><div style="font-size:10px;color:#52C41A;margin-top:4px">✅ 真实微信到账 · 扫码付款成功</div></div>' : '<div class="rc-row"><span>收款二维码</span><span style="color:var(--amber)">⚠ 未配置收款二维码（到真实支付通道配置微信收款码）</span></div>');
     })() : '')+
     (accountInfo.realChannel ? '<div class="rc-row"><span>真实支付账户</span><span style="color:var(--cyan)">🌌 '+(accountInfo.realLevel||'')+' · '+(accountInfo.realChannel||'')+'</span></div>' : '')+
     (accountInfo.qr ? '<div style="margin-top:10px;text-align:center;background:#fff;border-radius:8px;padding:8px"><img src="'+accountInfo.qr+'" style="width:160px;height:160px;display:block;margin:0 auto"><div style="color:#52C41A;font-size:11px;margin-top:6px">📷 扫码收款成功 · 付款已完成 · 全宇宙实时到账</div></div>' : '')+
@@ -9202,6 +9229,10 @@ function showWithdrawResult(res, config, accountInfo, amount, source, remark){
     '<div class="rc-row"><span>提现单号</span><span>'+(res.withdrawId||'N/A')+'</span></div>'+
     '<div class="rc-row"><span>备注</span><span>'+(remark||'无')+'</span></div></div>';
   
+  // 渲染真实微信收款码二维码（本人 · 扫码真实到账）
+  if (document.getElementById('wxRealQrResult') && typeof REAL_WX_RECEIVE !== 'undefined' && REAL_WX_RECEIVE) {
+    try { makeQr('wxRealQrResult', REAL_WX_RECEIVE); } catch(e) {}
+  }
   // 保存提现记录
   try{
     var withdrawHistory = JSON.parse(localStorage.getItem('withdrawHistory')||'[]');
@@ -14039,7 +14070,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.4.62';
+var systemVersion = 'v1.4.63';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
