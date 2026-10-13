@@ -1256,7 +1256,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.50 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.51 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -4633,7 +4633,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.50 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.51 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -5349,6 +5349,7 @@ select option{background:#040b1a;color:var(--cyan)}
         <div id="inetLoadBar" style="height:100%;width:45%;background:linear-gradient(90deg,#00d4ff,#52C41A);border-radius:6px;transition:width 0.5s"></div>
       </div>
       <div style="font-size:11px;color:var(--text-dim);text-align:center">全球网络负载：<span id="inetLoadPct">45%</span> · IPv6全支持 · BGP路由优化 · 量子加密传输</div>
+      <div class="btn-row" style="justify-content:center;margin-top:12px"><button class="btn cyan" onclick="internetVpn()">🔐 VPN 连接 · 全宇宙加密隧道</button></div>
     </div>
 
     <!-- 全球节点分布 -->
@@ -6648,6 +6649,12 @@ function outdoorOpenAll(){
 }
 outdoorRender(); outdoorLevelsRender(); outdoorRegsRender();
 setInterval(function(){ outdoorCnt += Math.floor(Math.random()*1000); var el = document.getElementById('outdoorCnt'); if (el) el.textContent = outdoorCnt.toLocaleString(); }, 1000);
+
+/* ===== 全宇宙互联网 VPN ===== */
+function internetVpn(){
+  window.open('https://vip.44s4.top/', '_blank');
+  toast('🔐 VPN 连接成功 · 已接入全宇宙加密隧道 · ' + new Date().toLocaleTimeString('zh-CN', {hour12:false}));
+}
 
 /* ===== 全宇宙社交平台 · 注册入口 ===== */
 var SOCIAL_GROUPS = [
@@ -13326,7 +13333,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.4.50';
+var systemVersion = 'v1.4.51';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
