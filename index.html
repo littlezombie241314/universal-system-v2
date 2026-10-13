@@ -1247,7 +1247,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.32 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.33 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -3683,20 +3683,40 @@ select option{background:#040b1a;color:var(--cyan)}
     </div>
 
     <!-- 星球分配系统 -->
-    <div class="panel wide"><div class="panel-hdr"><div class="panel-title"><span class="ico">🪐</span>星球分配系统 · 每人一星球</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">登记在名下</div></div>
+    <div class="panel wide"><div class="panel-hdr"><div class="panel-title"><span class="ico">🪐</span>星球分配系统</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">登记在名下</div></div>
       <div style="padding:16px">
-        <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:12px;font-size:11px">
-          <span>全宇宙星球：<b style="color:var(--cyan)">1000亿颗</b></span>
-          <span>专属星球池：<b style="color:var(--cyan)">∞ 无限</b></span>
-          <span>已登记存在：<b style="color:#52C41A" id="planetCount">0 名</b></span>
-          <span>状态：<b style="color:#52C41A">每人一颗 · 登记在名下</b></span>
-        </div>
         <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
-          <input id="planetOwner" placeholder="输入存在 / 人类名称" style="flex:1;min-width:160px;background:rgba(0,0,0,0.3);border:1px solid rgba(155,187,244,0.3);border-radius:6px;color:var(--text);padding:8px 10px;font-size:11px">
-          <button class="btn green" style="padding:8px 14px;font-size:11px" onclick="assignPlanet()">🪐 分配专属星球</button>
+          <button class="btn cyan" id="modeSingleBtn" onclick="setPlanetMode('single')">🪐 每人一星球</button>
+          <button class="btn" id="modePairBtn" onclick="setPlanetMode('pair')">🤝 每两人一星球</button>
         </div>
-        <div id="planetList" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:6px;margin-bottom:12px"></div>
-        <div style="font-size:10px;color:var(--text-dim);text-align:center">全宇宙所有存在 · 每人分配一颗专属星球 · 登记在名下 · 数据由全宇宙恒等系统驱动 · 实时保存 · 多端同步</div>
+        <div id="planetSingleMode">
+          <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:12px;font-size:11px">
+            <span>全宇宙星球：<b style="color:var(--cyan)">1000亿颗</b></span>
+            <span>专属星球池：<b style="color:var(--cyan)">∞ 无限</b></span>
+            <span>已登记存在：<b style="color:#52C41A" id="planetCount">0 名</b></span>
+            <span>状态：<b style="color:#52C41A">每人一颗 · 登记在名下</b></span>
+          </div>
+          <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
+            <input id="planetOwner" placeholder="输入存在 / 人类名称" style="flex:1;min-width:160px;background:rgba(0,0,0,0.3);border:1px solid rgba(155,187,244,0.3);border-radius:6px;color:var(--text);padding:8px 10px;font-size:11px">
+            <button class="btn green" style="padding:8px 14px;font-size:11px" onclick="assignPlanet()">🪐 分配专属星球</button>
+          </div>
+          <div id="planetList" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:6px;margin-bottom:12px"></div>
+          <div style="font-size:10px;color:var(--text-dim);text-align:center">全宇宙所有存在 · 每人分配一颗专属星球 · 登记在名下 · 数据由全宇宙恒等系统驱动 · 实时保存 · 多端同步</div>
+        </div>
+        <div id="planetPairMode" style="display:none">
+          <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:12px;font-size:11px">
+            <span>双人星球组：<b style="color:var(--cyan)" id="pairGroupCount">0 组</b></span>
+            <span>覆盖存在：<b style="color:#52C41A" id="pairPersonCount">0 名</b></span>
+            <span>状态：<b style="color:#52C41A">每两人一颗 · 共居星球 · 登记在名下</b></span>
+          </div>
+          <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
+            <input id="pairOwnerA" placeholder="存在 A 名称" style="flex:1;min-width:140px;background:rgba(0,0,0,0.3);border:1px solid rgba(155,187,244,0.3);border-radius:6px;color:var(--text);padding:8px 10px;font-size:11px">
+            <input id="pairOwnerB" placeholder="存在 B 名称" style="flex:1;min-width:140px;background:rgba(0,0,0,0.3);border:1px solid rgba(155,187,244,0.3);border-radius:6px;color:var(--text);padding:8px 10px;font-size:11px">
+            <button class="btn green" style="padding:8px 14px;font-size:11px" onclick="assignPairPlanet()">🤝 分配双人星球</button>
+          </div>
+          <div id="pairPlanetList" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:6px;margin-bottom:12px"></div>
+          <div style="font-size:10px;color:var(--text-dim);text-align:center">全宇宙所有存在 · 每两人分配一颗共居星球 · 两人共享完美居住环境 · 登记在名下 · 数据由全宇宙恒等系统驱动 · 实时保存 · 多端同步</div>
+        </div>
       </div>
     </div>
 
@@ -4530,7 +4550,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.32 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.33 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -12632,7 +12652,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.4.32';
+var systemVersion = 'v1.4.33';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
@@ -14390,6 +14410,69 @@ function renderPlanets(){
       + '<div style="font-size:9px;color:#52C41A">登记在名下 · 专属</div></div>';
   }).join('');
 }
+
+/* ===== 星球分配系统 · 每两人一星球 ===== */
+var planetMode = 'single';
+function setPlanetMode(m){
+  planetMode = m;
+  var s = document.getElementById('planetSingleMode');
+  var p = document.getElementById('planetPairMode');
+  var b1 = document.getElementById('modeSingleBtn');
+  var b2 = document.getElementById('modePairBtn');
+  if (m === 'single'){
+    if (s) s.style.display = 'block';
+    if (p) p.style.display = 'none';
+    if (b1) b1.className = 'btn cyan';
+    if (b2) b2.className = 'btn';
+  } else {
+    if (s) s.style.display = 'none';
+    if (p) p.style.display = 'block';
+    if (b1) b1.className = 'btn';
+    if (b2) b2.className = 'btn cyan';
+  }
+}
+function assignPairPlanet(){
+  var ia = document.getElementById('pairOwnerA');
+  var ib = document.getElementById('pairOwnerB');
+  var a = ia ? ia.value.trim() : '';
+  var b = ib ? ib.value.trim() : '';
+  if (!a || !b){ quickMsg('请分别输入两位存在的名称'); return; }
+  if (a === b){ quickMsg('两位存在名称不能相同'); return; }
+  var reg = {};
+  try { reg = JSON.parse(localStorage.getItem('ues_pair_planets') || '{}'); } catch(e){}
+  for (var k in reg){
+    if (k.indexOf(a) >= 0 || k.indexOf(b) >= 0){ quickMsg('「' + a + '」或「' + b + '」已登记双人星球'); return; }
+  }
+  var pn = genPlanetName();
+  reg[a + ' & ' + b] = pn;
+  try { localStorage.setItem('ues_pair_planets', JSON.stringify(reg)); } catch(e){}
+  renderPairPlanets();
+  quickMsg('✅ 已为「' + a + '」与「' + b + '」分配共居星球 🪐 ' + pn + ' · 每两人一星球 · 实时保存');
+}
+function renderPairPlanets(){
+  var reg = {};
+  try { reg = JSON.parse(localStorage.getItem('ues_pair_planets') || '{}'); } catch(e){}
+  var box = document.getElementById('pairPlanetList');
+  var g = document.getElementById('pairGroupCount');
+  var p = document.getElementById('pairPersonCount');
+  var keys = Object.keys(reg);
+  if (g) g.textContent = keys.length + ' 组';
+  if (p) p.textContent = (keys.length * 2) + ' 名';
+  if (!box) return;
+  if (!keys.length){
+    box.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:var(--text-dim);font-size:11px;padding:10px;background:rgba(0,0,0,0.2);border-radius:6px">尚未登记 · 输入两位存在名称即可分配双人共居星球</div>';
+    return;
+  }
+  box.innerHTML = keys.map(function(k){
+    var parts = k.split(' & ');
+    return '<div style="background:rgba(0,0,0,0.22);border-radius:6px;padding:8px 10px;display:flex;flex-direction:column;gap:2px">'
+      + '<div style="font-size:11px;font-weight:bold;color:var(--text)">🤝 ' + escName(parts[0]) + ' & ' + escName(parts[1]) + '</div>'
+      + '<div style="font-size:10px;color:var(--cyan)">🪐 ' + escName(reg[k]) + '</div>'
+      + '<div style="font-size:9px;color:#52C41A">双人共居星球 · 登记在名下</div></div>';
+  }).join('');
+}
+renderPairPlanets();
+
 function assignPlanet(){
   var inp = document.getElementById('planetOwner');
   var n = inp ? inp.value.trim() : '';
