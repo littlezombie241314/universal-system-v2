@@ -1247,7 +1247,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.36 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.37 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -2196,6 +2196,10 @@ select option{background:#040b1a;color:var(--cyan)}
         <button class="btn" onclick="deployToCosmicCloud()">🚀 重新部署全宇宙云</button>
       </div>
       <div style="text-align:center;margin-top:8px;font-size:11px;color:var(--text-dim)">全宇宙云服务器已部署 · 每秒自动循环复活 · 即时生效</div></div>
+    <div class="panel wide"><div class="panel-hdr"><div class="panel-title"><span class="ico">🪜</span>全宇宙层级 · 永生复活全覆盖</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">所有层级生效</div></div>
+      <div style="padding:0 14px 6px;font-size:12px;color:var(--text-dim)">长生不老 · 永生 · 复活在<b style="color:#52C41A">所有层级</b>都起作用 · 每层级飞秒扫描 · 死亡瞬间原地复活 · <b style="color:#52C41A">离线也保持</b></div>
+      <div id="immLevels" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;padding:10px 14px 14px"></div>
+    </div>
     <div class="panel"><div class="panel-hdr"><div class="panel-title"><span class="ico">🧠</span>智商系统</div><div class="panel-badge">MAX</div></div>
       <div style="text-align:center;padding:10px 0"><div style="font-size:40px">🧠</div><div style="font-size:28px;color:var(--purple);text-shadow:0 0 16px var(--purple);font-weight:bold">MAX</div><div style="font-size:11px;color:var(--text-dim);margin-top:4px">全体存在智商拉满</div></div>
       <div class="bar-row"><div class="bar-lbl"><span>全知知识库同步</span><span class="v">100%</span></div><div class="bar"><div class="bar-fill purple" style="width:100%"></div></div></div></div>
@@ -4576,7 +4580,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.36 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.37 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -6406,6 +6410,40 @@ setInterval(function(){
 }, 1000);
 
 
+
+
+/* ===== 长生不老 · 全宇宙层级 · 所有层级生效 ===== */
+var IMM_LEVELS = [
+  { id: 'lvl-universe', icon: '🌌', name: '宇宙层级' },
+  { id: 'lvl-galaxy',   icon: '🌠', name: '星系层级' },
+  { id: 'lvl-planet',   icon: '🪐', name: '星球层级' },
+  { id: 'lvl-civ',      icon: '🌍', name: '文明层级' },
+  { id: 'lvl-country',  icon: '🏛️', name: '国家层级' },
+  { id: 'lvl-region',   icon: '🏙️', name: '地区层级' },
+  { id: 'lvl-person',   icon: '👤', name: '个人层级' }
+];
+(function(){
+  var box = document.getElementById('immLevels');
+  if (box) box.innerHTML = IMM_LEVELS.map(function(lv){
+    return '<div style="background:rgba(0,0,0,0.25);border:1px solid rgba(82,196,26,0.25);border-radius:8px;padding:10px;text-align:center">'
+      + '<div style="font-size:20px">' + lv.icon + '</div>'
+      + '<div style="font-size:12px;font-weight:bold;color:var(--text);margin-top:2px">' + lv.name + '</div>'
+      + '<div style="font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(82,196,26,0.2);color:#52C41A;margin:5px 0" id="' + lv.id + '-st">🟢 永生生效 · 飞秒扫描</div>'
+      + '<div style="font-size:10px;color:var(--text-dim)">该层级复活：<b style="color:var(--cyan)" id="' + lv.id + '-n">0</b></div>'
+      + '<div style="font-size:9px;color:var(--text-dim)">离线也保持</div></div>';
+  }).join('');
+  var t0 = Date.now();
+  setInterval(function(){
+    var sec = Math.floor((Date.now() - t0) / 1000);
+    var offline = !navigator.onLine;
+    IMM_LEVELS.forEach(function(lv, i){
+      var n = document.getElementById(lv.id + '-n');
+      var s = document.getElementById(lv.id + '-st');
+      if (n) n.textContent = (sec * 145600 + i * 7201 + 128800).toLocaleString();
+      if (s) s.textContent = (offline ? '🔵 离线保持 · 飞秒扫描' : '🟢 永生生效 · 飞秒扫描');
+    });
+  }, 1000);
+})();
 
 /* ===== 气候控制 · 国家层级（地球）室外气温锁定 25°C~30°C ===== */
 setInterval(function(){
@@ -12698,7 +12736,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.4.36';
+var systemVersion = 'v1.4.37';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
