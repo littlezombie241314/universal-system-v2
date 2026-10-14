@@ -1833,6 +1833,7 @@ select option{background:#040b1a;color:var(--cyan)}
         <div class="pay-tab" onclick="switchPay('scan',this)">📷 扫码支付</div>
         <div class="pay-tab" onclick="switchPay('transfer',this)">💸 星际转账</div>
         <div class="pay-tab" onclick="switchPay('alipay',this)">🏦 真实支付宝</div>
+        <div class="pay-tab" onclick="switchPay('crypto',this)">🪙 真实加密货币</div>
         <div class="pay-tab" onclick="switchPay('withdraw',this)">🏧 余额提现</div>
       </div>
       <!-- 收款码 -->
@@ -2066,6 +2067,43 @@ select option{background:#040b1a;color:var(--cyan)}
           <div class="pay-field"><label>转账备注</label><input type="text" id="apNote" placeholder="备注（可选）" maxlength="30"></div>
           <button class="btn magenta" onclick="doAlipayTransfer()">🏦 真实转账（真实资金）</button>
           <div class="pay-result" id="apResult"></div>
+        </div>
+      </div>
+      <!-- 真实加密货币（TRON TRC20 + Ethereum ERC20） -->
+      <div class="pay-section" id="pay-crypto">
+        <div class="pay-body">
+          <div style="font-size:11px;color:var(--text-dim);line-height:1.8;margin-bottom:12px">🪙 <b style="color:#52C41A">真实加密货币转账</b>：基于系统真实钱包（TRON + Ethereum）的<b style="color:var(--cyan)">链上真实资产</b>发起链上转账，签名广播上链，返回真实交易哈希（txHash）。资金来源<b style="color:#52C41A">以链上真实余额为准</b>（网站余额为系统内记账，不参与链上转账）；余额不足如实提示，绝不伪装到账。转账<b style="color:#ff4d4f">不可逆</b>，请核对地址与金额。</div>
+          <div style="margin:10px 0 14px;padding:10px;background:rgba(82,196,26,0.06);border:1px dashed rgba(82,196,26,0.3);border-radius:8px">
+            <div style="font-size:11px;color:#52C41A;font-weight:bold;margin-bottom:6px">🌐 加密后端</div>
+            <div class="pay-field"><label>后端地址</label>
+              <div style="display:flex;gap:6px"><input type="text" id="crBackend" style="flex:1" value="https://universal-pay-alipay.onrender.com" placeholder="https://<你的后端>.onrender.com"><button class="btn cyan" onclick="checkCryptoBackend()" style="padding:6px 14px;font-size:11px">🔍 检查状态</button></div>
+              <div style="font-size:10px;color:var(--text-dim);margin-top:4px">与真实支付宝共用同一后端；地址保存在本机，可修改</div>
+            </div>
+            <div id="crStatus" style="margin-top:8px;font-size:11px"></div>
+          </div>
+          <div id="crWallet" style="margin:10px 0 14px;padding:10px;background:rgba(0,212,255,0.05);border:1px dashed rgba(0,212,255,0.25);border-radius:8px;font-size:10px;color:var(--text-dim);line-height:1.9"></div>
+          <div class="pay-field"><label>选择链</label>
+            <select id="crChain" onchange="crChainChange()">
+              <option value="tron">🟠 TRON · USDT(TRC20)</option>
+              <option value="eth">💠 Ethereum · USDT(ERC20)</option>
+            </select>
+          </div>
+          <div class="pay-field"><label>转账资产</label>
+            <select id="crToken">
+              <option value="usdt">₮ USDT</option>
+              <option value="native">原生币（TRX / ETH）</option>
+            </select>
+          </div>
+          <div class="pay-field"><label>收款地址</label><input type="text" id="crTo" placeholder="TRON: T...（33位） / ETH: 0x...（42位）" maxlength="70"></div>
+          <div class="pay-field"><label>转账数量</label><input type="number" id="crAmount" placeholder="先小额测试，如 1" min="0" step="0.000001">
+            <div class="quick-amt">
+              <button onclick="document.getElementById('crAmount').value=1">1 测试</button>
+              <button onclick="document.getElementById('crAmount').value=10">10</button>
+              <button onclick="document.getElementById('crAmount').value=100">100</button>
+            </div>
+          </div>
+          <button class="btn magenta" onclick="doCryptoTransfer()">🪙 真实转账（链上资产 · 不可逆）</button>
+          <div class="pay-result" id="crResult"></div>
         </div>
       </div>
       <!-- 余额提现 -->
@@ -8530,8 +8568,105 @@ function renderAlipayLog(){
   }
   box.innerHTML = box.innerHTML + h;
 }
-function switchPay(tab,el){
-  document.querySelectorAll('.pay-tab').forEach(function(t){t.classList.remove('active')});
+var CR_BACKEND_KEY = 'ues_cr_backend';
+function crBackendUrl(){
+  try { return (localStorage.getItem(CR_BACKEND_KEY) || document.getElementById('crBackend').value || '').replace(/\/+$/,''); }
+  catch(e){ return (document.getElementById('crBackend').value || '').replace(/\/+$/,''); }
+}
+function crChainChange(){
+  var t = document.getElementById('crToken');
+  var ch = document.getElementById('crChain').value;
+  t.innerHTML = ch === 'tron'
+    ? '<option value="usdt">₮ USDT (TRC20)</option><option value="native">TRX（原生）</option>'
+    : '<option value="usdt">₮ USDT (ERC20)</option><option value="native">ETH（原生）</option>';
+}
+function checkCryptoBackend(){
+  var url = crBackendUrl();
+  var res = document.getElementById('crStatus');
+  if (!url) { res.innerHTML = '<div style="color:#ff4d4f">⚠ 请先填写后端地址</div>'; return; }
+  try { localStorage.setItem(CR_BACKEND_KEY, url); } catch(e) {}
+  res.innerHTML = '<div style="color:var(--text-dim)">⏳ 正在检查加密后端...</div>';
+  fetch(url + '/api/crypto/status').then(function(r){ return r.json(); }).then(function(d){
+    if (d.success && d.configured) {
+      var w = document.getElementById('crWallet');
+      w.innerHTML = '<div style="color:var(--cyan);font-weight:bold;margin-bottom:6px">🔐 系统真实钱包（链上资产为准）</div>'
+        + '<div>🟠 TRON 地址：<b style="color:#fff">' + d.tronAddress + '</b></div>'
+        + '<div>💠 ETH 地址：<b style="color:#fff">' + d.evmAddress + '</b></div>'
+        + '<div style="margin-top:6px">TRX：<b>' + (d.trx==null?'查询失败':(Number(d.trx).toFixed(2)+' TRX')) + '</b> · USDT-TRC20：<b>' + (d.usdtTrc20==null?'查询失败':(Number(d.usdtTrc20).toFixed(6)+' ₮')) + '</b></div>'
+        + '<div>ETH：<b>' + (d.eth==null?'查询失败':(Number(d.eth).toFixed(4)+' ETH')) + '</b> · USDT-ERC20：<b>' + (d.usdtErc20==null?'查询失败':(Number(d.usdtErc20).toFixed(6)+' ₮')) + '</b></div>'
+        + '<div style="margin-top:6px;color:#52C41A">✅ 加密后端已就绪 · 转账将以链上真实余额为准</div>';
+      res.innerHTML = '<div style="color:#52C41A">✅ 加密后端连接正常（钱包已配置）</div>';
+    } else {
+      res.innerHTML = '<div style="color:#ff4d4f">⚠ 加密后端未配置钱包（' + (d.message || 'CRYPTO_MNEMONIC 未设置') + '）</div>';
+    }
+  }).catch(function(e){
+    res.innerHTML = '<div style="color:#ff4d4f">❌ 后端连接失败：' + (e.message || e) + '</div>';
+  });
+}
+function doCryptoTransfer(){
+  var url = crBackendUrl();
+  var chain = document.getElementById('crChain').value;
+  var token = document.getElementById('crToken').value;
+  var to = document.getElementById('crTo').value.trim();
+  var amount = parseFloat(document.getElementById('crAmount').value);
+  var res = document.getElementById('crResult');
+  if (!url) { toast('⚠ 请先填写后端地址'); return; }
+  if (!to) { toast('⚠ 请输入收款地址'); return; }
+  if (!amount || amount <= 0) { toast('⚠ 请输入有效数量'); return; }
+  res.className = 'pay-result show';
+  res.innerHTML = '<div class="rcard"><div class="rc-title" style="color:var(--magenta)">⏳ 链上转账广播中 ...</div><div style="font-size:10px;color:var(--text-dim);margin-top:4px">真实链上交易 · 不可逆 · 以系统钱包链上真实余额支付</div></div>';
+  fetch(url + '/api/crypto/transfer', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ chain: chain, to: to, amount: amount, token: token })
+  }).then(function(r){ return r.json(); }).then(function(d){
+    if (d.success) {
+      res.innerHTML = '<div class="rcard ok"><div class="rc-title">🪙 真实链上转账成功</div>' +
+        '<div style="font-size:11px;color:#888;margin:8px 0;line-height:1.8;">' +
+        '<div style="display:flex;justify-content:space-between;"><span>处理方式</span><span style="color:#52C41A">链上真实广播</span></div>' +
+        '<div style="display:flex;justify-content:space-between;"><span>资金来源</span><span>系统钱包链上真实余额</span></div></div>' +
+        '<div class="rc-row"><span>链</span><span>' + (chain === 'tron' ? 'TRON' : 'Ethereum') + ' · ' + (token === 'usdt' ? 'USDT' : (chain === 'tron' ? 'TRX' : 'ETH')) + '</span></div>' +
+        '<div class="rc-row"><span>收款地址</span><span style="color:var(--cyan)">' + to + '</span></div>' +
+        '<div class="rc-row"><span>数量</span><span style="color:var(--amber);font-weight:bold">' + amount + '</span></div>' +
+        '<div class="rc-row"><span>交易哈希</span><span style="color:var(--cyan)">' + (d.txid || '') + '</span></div>' +
+        '<div class="rc-row"><span>说明</span><span>' + (d.message || '') + '</span></div></div>';
+      saveCryptoLog({ chain: chain, token: token, to: to, amount: amount, txid: d.txid || '', status: 'ok', time: new Date().toLocaleString('zh-CN', {hour12:false}) });
+      renderCryptoLog();
+      toast('🪙 真实链上转账成功');
+    } else {
+      res.innerHTML = '<div class="rcard" style="border-color:rgba(255,77,79,0.4)"><div class="rc-title" style="color:#ff4d4f">❌ 链上转账失败</div>' +
+        '<div class="rc-row"><span>原因</span><span>' + (d.message || '未知错误') + '</span></div></div>';
+      toast('❌ 链上转账失败：' + (d.message || ''));
+    }
+  }).catch(function(e){
+    res.innerHTML = '<div class="rcard" style="border-color:rgba(255,77,79,0.4)"><div class="rc-title" style="color:#ff4d4f">❌ 后端连接失败</div><div class="rc-row"><span>原因</span><span>' + (e.message || e) + '</span></div></div>';
+    toast('❌ 后端连接失败');
+  });
+}
+function saveCryptoLog(rec){
+  try {
+    var log = JSON.parse(localStorage.getItem('ues_crypto_log') || '[]');
+    log.unshift(rec); if (log.length > 50) log = log.slice(0, 50);
+    localStorage.setItem('ues_crypto_log', JSON.stringify(log));
+  } catch(e) {}
+}
+function renderCryptoLog(){
+  var box = document.getElementById('crResult');
+  if (!box) return;
+  var log = []; try { log = JSON.parse(localStorage.getItem('ues_crypto_log') || '[]'); } catch(e) {}
+  if (log.length === 0) return;
+  var h = '<div style="margin-top:12px;padding:10px;background:rgba(82,196,26,0.05);border:1px solid rgba(82,196,26,0.18);border-radius:8px">'
+    + '<div style="font-size:11px;font-weight:bold;color:#52C41A;margin-bottom:6px">📋 真实链上转账记录（最近 ' + log.length + ' 条 · 实时保存 · 离线保持）</div>';
+  for (var i = 0; i < Math.min(log.length, 10); i++) {
+    var t = log[i];
+    h += '<div style="font-size:10px;color:var(--text-dim);padding:4px 0;border-bottom:1px dashed rgba(255,255,255,0.08)">'
+      + '🪙 ' + (t.token === 'usdt' ? 'USDT' : (t.chain === 'tron' ? 'TRX' : 'ETH')) + ' ' + t.amount + ' → ' + t.to.slice(0, 20) + '...'
+      + '<span style="float:right;color:#52C41A">✅ 上链</span><br><span style="font-size:9px">' + (t.time || '') + ' · txid ' + (t.txid || '').slice(0, 24) + '</span></div>';
+  }
+  box.innerHTML = box.innerHTML + h;
+}
+
+function switchPay(tab,el){  document.querySelectorAll('.pay-tab').forEach(function(t){t.classList.remove('active')});
   document.querySelectorAll('.pay-section').forEach(function(s){s.classList.remove('active')});
   el.classList.add('active');
   document.getElementById('pay-'+tab).classList.add('active');
@@ -8540,6 +8675,11 @@ function switchPay(tab,el){
     try { var saved = localStorage.getItem(AP_BACKEND_KEY); if (saved) { var v = document.getElementById('apBackend'); if (v) v.value = saved; } } catch(e) {}
     renderAlipayLog();
     checkAlipayBackend();
+  }
+  if (tab === 'crypto') {
+    try { var cs = localStorage.getItem(CR_BACKEND_KEY); if (cs) { var cv = document.getElementById('crBackend'); if (cv) cv.value = cs; } } catch(e) {}
+    renderCryptoLog();
+    checkCryptoBackend();
   }
 }
 

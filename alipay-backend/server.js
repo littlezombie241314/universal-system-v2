@@ -22,6 +22,7 @@ app.use(express.json());
 
 const fs = require('fs');
 const path = require('path');
+const cryptoApi = require('./crypto');
 
 const MODE = process.env.ALIPAY_MODE || 'sandbox';
 const APP_ID = process.env.ALIPAY_APP_ID || '';
@@ -200,6 +201,26 @@ app.get('/api/alipay/transfer/query', async (req, res) => {
 });
 
 app.get('/api/health', (req, res) => res.json({ success: true, status: 'ok', mode: MODE }));
+
+/* ================= 加密货币真实转账（TRON TRC20 + Ethereum ERC20） ================= */
+app.get('/api/crypto/status', async (req, res) => {
+  try {
+    const b = await cryptoApi.getBalances();
+    res.json({ success: true, configured: !!b.configured, ...b });
+  } catch (e) {
+    res.json({ success: false, message: e.message || String(e) });
+  }
+});
+
+app.post('/api/crypto/transfer', async (req, res) => {
+  const { chain, to, amount, token } = req.body || {};
+  try {
+    const r = await cryptoApi.transfer({ chain, to, amount, token });
+    res.json(r);
+  } catch (e) {
+    res.json({ success: false, message: e.message || String(e) });
+  }
+});
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log('[真实支付宝后端] 运行于 :' + PORT + ' · 模式=' + MODE + ' · configured=' + cfgOk()));
