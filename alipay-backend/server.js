@@ -149,14 +149,25 @@ app.post('/api/alipay/transfer', async (req, res) => {
         payee_info: identity,
       },
     });
+    // 支付宝网关业务码：10000=成功；必须显式校验，否则业务失败会被误报为到账成功
+    const code = r && (r.code || r.errorCode);
+    if (code && code !== '10000') {
+      return res.json({
+        success: false,
+        code,
+        subCode: (r && (r.subCode || r.sub_code)) || '',
+        message: (r && (r.subMsg || r.sub_msg || r.msg)) || '支付宝网关拒绝该请求',
+        outBizNo,
+      });
+    }
     res.json({
       success: true,
       data: {
         orderId: outBizNo,
         outBizNo,
         status: 'SUCCESS',
-        tradeNo: r.trade_no || '',
-        payDate: r.pay_date || '',
+        tradeNo: (r && (r.tradeNo || r.trade_no)) || '',
+        payDate: (r && (r.payDate || r.pay_date)) || '',
         mode: 'real',
         channel: '支付宝官方·单笔转账',
         payeeAccount,
