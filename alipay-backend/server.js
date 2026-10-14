@@ -4,8 +4,9 @@
  * 环境变量（生产/沙箱二选一，由 ALIPAY_MODE 切换）：
  *   ALIPAY_MODE=sandbox|prod
  *   ALIPAY_APP_ID=        应用APPID（沙箱/生产各自）
- *   ALIPAY_PRIVATE_KEY=   应用私钥（RSA2，PKCS1或PKCS8，换行用 \n）
- *   ALIPAY_PUBLIC_KEY=    支付宝公钥（沙箱环境取沙箱公钥）
+ *   ALIPAY_PRIVATE_KEY=   应用私钥（RSA2，PKCS8，换行用 \n）
+ *   【公钥模式】ALIPAY_PUBLIC_KEY= 支付宝公钥（沙箱环境取沙箱公钥）
+ *   【证书模式】ALIPAY_APP_CERT=应用公钥证书 / ALIPAY_ALIPAY_CERT=支付宝公钥证书 / ALIPAY_ROOT_CERT=根证书
  *   ALIPAY_UID=           收款方支付宝UID（可选，若用固定收款账户）
  *   TRANSFER_AMOUNT_LIMIT=单笔限额（元，默认 100000）
  */
@@ -23,57 +24,74 @@ const MODE = process.env.ALIPAY_MODE || 'sandbox';
 const APP_ID = process.env.ALIPAY_APP_ID || '';
 const PRIVATE_KEY = (process.env.ALIPAY_PRIVATE_KEY || '').replace(/\\n/g, '\n');
 const ALIPAY_PUBLIC_KEY = (process.env.ALIPAY_PUBLIC_KEY || '').replace(/\\n/g, '\n');
+const APP_CERT = (process.env.ALIPAY_APP_CERT || '').replace(/\\n/g, '\n');
+const ALIPAY_CERT = (process.env.ALIPAY_ALIPAY_CERT || '').replace(/\\n/g, '\n');
+const ROOT_CERT = (process.env.ALIPAY_ROOT_CERT || '').replace(/\\n/g, '\n');
 const LIMIT = parseFloat(process.env.TRANSFER_AMOUNT_LIMIT || '100000');
 const GATEWAY = MODE === 'prod'
   ? 'https://openapi.alipay.com/gateway.do'
   : 'https://openapi.alipaydev.com/gateway.do';
 
+const certMode = !!(APP_CERT && ALIPAY_CERT && ROOT_CERT);
+
 let alipay = null;
-if (APP_ID && PRIVATE_KEY && ALIPAY_PUBLIC_KEY) {
+if (APP_ID && PRIVATE_KEY && (ALIPAY_PUBLIC_KEY || certMode)) {
   try {
-    alipay = new AlipaySdk({
+    const sdkCfg = {
       appId: APP_ID,
       keyType: 'PKCS8', // 应用私钥为 PKCS8 格式（-----BEGIN PRIVATE KEY-----），避免 SDK 默认按 PKCS1 重写导致 DECODER 失败
       privateKey: PRIVATE_KEY,
-      alipayPublicKey: ALIPAY_PUBLIC_KEY,
       gateway: GATEWAY,
       signType: 'RSA2',
       timeout: 15000,
-    });
-    console.log('[支付宝] SDK 已初始化，模式 =', MODE);
+    };
+    if (certMode) {
+      // 证书模式：应用公钥证书 + 支付宝公钥证书 + 根证书
+      sdkCfg.appCertContent = APP_CERT;
+      sdkCfg.alipayPublicCertContent = ALIPAY_CERT;
+      sdkCfg.alipayRootCertContent = ROOT_CERT;
+    } else {
+      sdkCfg.alipayPublicKey = ALIPAY_PUBLIC_KEY;
+    }
+    alipay = new AlipaySdk(sdkCfg);
+    console.log('[支付宝] SDK 已初始化，模式 =', MODE, '· 加签方式 =', certMode ? '证书' : '公钥');
   } catch (e) {
     console.error('[支付宝] SDK 初始化失败:', e.message);
   }
 }
 
-const cfgOk = () => !!(alipay && APP_ID && PRIVATE_KEY && ALIPAY_PUBLIC_KEY);
+const cfgOk = () => !!(alipay && APP_ID && PRIVATE_KEY && (ALIPAY_PUBLIC_KEY || certMode));
 
 app.get('/api/alipay/status', (req, res) => {
   res.json({
     success: true,
     configured: cfgOk(),
     mode: MODE,
+    certMode,
     appId: APP_ID ? APP_ID.slice(0, 8) + '****' : '',
     gateway: GATEWAY,
     limit: LIMIT,
-    message: cfgOk() ? '✅ 支付宝真实通道已就绪' : '⚠ 未配置凭证（ALIPAY_APP_ID/ALIPAY_PRIVATE_KEY/ALIPAY_PUBLIC_KEY），请在环境变量中配置',
+    message: cfgOk() ? '✅ 支付宝真实通道已就绪' : '⚠ 未配置凭证（APPID/私钥 + 公钥或证书三件），请在环境变量中配置',
   });
 });
 
-/** 凭证诊断（不泄露完整私钥：仅回显长度/首尾/换行特征，排查部署环境变量格式） */
+/** 凭证诊断（不泄露完整密钥：仅回显长度/首尾/换行特征，排查部署环境变量格式） */
 app.get('/api/alipay/diag', (req, res) => {
   const summarize = (s) => ({
     len: (s || '').length,
     head: (s || '').slice(0, 27),
     tail: (s || '').slice(-12),
     realNewlines: ((s || '').match(/\n/g) || []).length,
-    literalN: ((s || '').match(/\\n/g) || []).length,
   });
   res.json({
     success: true,
     appId: APP_ID,
+    certMode,
     privateKey: summarize(PRIVATE_KEY),
     alipayPublicKey: summarize(ALIPAY_PUBLIC_KEY),
+    appCert: summarize(APP_CERT),
+    alipayCert: summarize(ALIPAY_CERT),
+    rootCert: summarize(ROOT_CERT),
     sdkCtorOk: typeof AlipaySdk === 'function',
   });
 });
