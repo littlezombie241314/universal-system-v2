@@ -7068,7 +7068,20 @@ function ensureWechatQr(){
     }
   } catch(e) {}
 }
+/* 清洗历史残留核验字段：登记数据里旧的 verify 不再需要，读取前一次性剔除 */
+function cleanPayReg(){
+  try {
+    var regs = JSON.parse(localStorage.getItem(PAY_REG_KEY) || '{}');
+    var dirty = false;
+    Object.keys(regs).forEach(function(k){
+      if (regs[k] && regs[k].verify !== undefined) { delete regs[k].verify; dirty = true; }
+    });
+    if (dirty) { localStorage.setItem(PAY_REG_KEY, JSON.stringify(regs)); toast('🧹 已清洗历史核验字段 · ' + Object.keys(regs).length + ' 条通道记录已更新为免核验'); }
+    return dirty;
+  } catch(e) { return false; }
+}
 function payRender(){
+  cleanPayReg();
   var box = document.getElementById('payGroups');
   if (!box) return;
   var regs = {}; try { regs = JSON.parse(localStorage.getItem(PAY_REG_KEY) || '{}'); } catch(e) {}
@@ -7199,6 +7212,7 @@ function payRegAllCosmos(){
   toast('🌌 已一键接入全宇宙 ' + n + ' 条真实支付通道 · 覆盖全部 8 层级 · 实时保存 · 离线保持');
 }
 function payRegList(){
+  cleanPayReg();
   var box = document.getElementById('payRegList');
   var cnt = document.getElementById('payRegCount');
   if (!box) return;
