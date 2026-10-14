@@ -1,0 +1,12 @@
+{
+  "name": "universal-alipay-backend",
+  "version": "1.0.0",
+  "description": "全宇宙恒等系统 - 真实支付宝转账后端（沙箱/生产双模式）",
+  "main": "server.js",
+  "scripts": { "start": "node server.js" },
+  "dependencies": {
+    "express": "^4.18.2",
+    "alipay-sdk": "^4.10.0",
+    "cors": "^2.8.5"
+  }
+}

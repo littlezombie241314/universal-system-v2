@@ -1290,7 +1290,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.71 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.72 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -1832,6 +1832,7 @@ select option{background:#040b1a;color:var(--cyan)}
         <div class="pay-tab" onclick="switchPay('barcode',this)">📤 付款码</div>
         <div class="pay-tab" onclick="switchPay('scan',this)">📷 扫码支付</div>
         <div class="pay-tab" onclick="switchPay('transfer',this)">💸 星际转账</div>
+        <div class="pay-tab" onclick="switchPay('alipay',this)">🏦 真实支付宝</div>
         <div class="pay-tab" onclick="switchPay('withdraw',this)">🏧 余额提现</div>
       </div>
       <!-- 收款码 -->
@@ -2039,6 +2040,32 @@ select option{background:#040b1a;color:var(--cyan)}
             <button class="btn magenta" onclick="doTransfer()">💸 确认转账</button>
             <div class="pay-result" id="tfResult"></div>
           </div>
+        </div>
+      </div>
+      <!-- 真实支付宝（官方单笔转账） -->
+      <div class="pay-section" id="pay-alipay">
+        <div class="pay-body">
+          <div style="font-size:11px;color:var(--text-dim);line-height:1.8;margin-bottom:12px">🏦 <b style="color:#52C41A">真实支付宝转账</b>：调用<b style="color:var(--cyan)">支付宝官方单笔转账 API</b>（alipay.fund.trans.uni.transfer）· 真实资金 · 实时到账 · 不可逆。需后端已配置支付宝开放平台凭证（APPID/应用私钥/支付宝公钥）并签约「转账到支付宝账户」产品。</div>
+          <div style="margin:10px 0 14px;padding:10px;background:rgba(82,196,26,0.06);border:1px dashed rgba(82,196,26,0.3);border-radius:8px">
+            <div style="font-size:11px;color:#52C41A;font-weight:bold;margin-bottom:6px">🌐 真实支付宝后端</div>
+            <div class="pay-field"><label>后端地址</label>
+              <div style="display:flex;gap:6px"><input type="text" id="apBackend" style="flex:1" value="https://universal-pay-alipay.onrender.com" placeholder="https://<你的后端>.onrender.com"><button class="btn cyan" onclick="checkAlipayBackend()" style="padding:6px 14px;font-size:11px">🔍 检查状态</button></div>
+              <div style="font-size:10px;color:var(--text-dim);margin-top:4px">部署见《支付宝真实转账接入手册》第 5 步；地址保存在本机，可修改</div>
+            </div>
+            <div id="apStatus" style="margin-top:8px;font-size:11px"></div>
+          </div>
+          <div class="pay-field"><label>收款方支付宝账号（手机号/邮箱）</label><input type="text" id="apPayee" placeholder="如 15291571201" maxlength="60"></div>
+          <div class="pay-field"><label>收款方真实姓名</label><input type="text" id="apName" placeholder="收款方支付宝实名姓名" maxlength="30"></div>
+          <div class="pay-field"><label>转账金额（元）</label><input type="number" id="apAmount" placeholder="先小额测试，如 0.01" min="0.01" step="0.01">
+            <div class="quick-amt">
+              <button onclick="document.getElementById('apAmount').value=0.01">¥0.01 测试</button>
+              <button onclick="document.getElementById('apAmount').value=100">¥100</button>
+              <button onclick="document.getElementById('apAmount').value=10000">¥1万</button>
+            </div>
+          </div>
+          <div class="pay-field"><label>转账备注</label><input type="text" id="apNote" placeholder="备注（可选）" maxlength="30"></div>
+          <button class="btn magenta" onclick="doAlipayTransfer()">🏦 真实转账（真实资金）</button>
+          <div class="pay-result" id="apResult"></div>
         </div>
       </div>
       <!-- 余额提现 -->
@@ -4726,7 +4753,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.71 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.72 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -8420,12 +8447,100 @@ var autoMsgs=[
 })();
 
 /* ============ PAYMENT SYSTEM ============ */
+var AP_BACKEND_KEY = 'ues_alipay_backend';
+function apBackendUrl(){ var v = document.getElementById('apBackend'); return v ? v.value.trim().replace(/\/$/, '') : ''; }
+function checkAlipayBackend(){
+  var url = apBackendUrl();
+  var st = document.getElementById('apStatus');
+  if (!url) { toast('⚠ 请先填写后端地址'); return; }
+  try { localStorage.setItem(AP_BACKEND_KEY, url); } catch(e) {}
+  st.innerHTML = '<div style="color:var(--cyan)">⏳ 检查后端 ' + url + ' ...</div>';
+  fetch(url + '/api/alipay/status').then(function(r){ return r.json(); }).then(function(d){
+    if (d.success && d.configured) st.innerHTML = '<div style="padding:8px;background:rgba(82,196,26,0.1);border-radius:6px;color:#52C41A;line-height:1.8">✅ 支付宝真实通道已就绪<br><span style="font-size:10px">模式：' + (d.mode || '?') + ' · 单笔限额：¥' + (d.limit || '?') + '</span></div>';
+    else if (d.success) st.innerHTML = '<div style="padding:8px;background:rgba(255,169,64,0.1);border-radius:6px;color:#ffa940">⚠ ' + (d.message || '后端未配置凭证') + '</div>';
+    else st.innerHTML = '<div style="padding:8px;background:rgba(255,77,79,0.1);border-radius:6px;color:#ff4d4f">❌ ' + (d.message || '后端返回错误') + '</div>';
+    toast(d.success && d.configured ? '✅ 真实支付宝通道已就绪' : '⚠ ' + (d.message || '后端未就绪'));
+  }).catch(function(e){
+    st.innerHTML = '<div style="padding:8px;background:rgba(255,77,79,0.1);border-radius:6px;color:#ff4d4f">❌ 无法连接后端：' + (e.message || e) + '<br><span style="font-size:10px">确认后端已部署并配置凭证</span></div>';
+    toast('❌ 后端连接失败');
+  });
+}
+function doAlipayTransfer(){
+  var url = apBackendUrl();
+  var payee = document.getElementById('apPayee').value.trim();
+  var name = document.getElementById('apName').value.trim();
+  var amount = parseFloat(document.getElementById('apAmount').value);
+  var note = document.getElementById('apNote').value || '全宇宙恒等系统·真实转账';
+  var res = document.getElementById('apResult');
+  if (!url) { toast('⚠ 请先填写后端地址'); return; }
+  if (!payee) { toast('⚠ 请输入收款方支付宝账号'); return; }
+  if (!name) { toast('⚠ 请输入收款方真实姓名（与支付宝实名一致）'); return; }
+  if (!amount || amount <= 0) { toast('⚠ 请输入有效金额（先小额测试）'); return; }
+  res.className = 'pay-result show';
+  res.innerHTML = '<div class="rcard"><div class="rc-title" style="color:var(--magenta)">⏳ 支付宝官方转账处理中 ...</div><div style="font-size:10px;color:var(--text-dim);margin-top:4px">真实资金转账 · 不可逆 · 请确认信息</div></div>';
+  fetch(url + '/api/alipay/transfer', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ payeeAccount: payee, payeeName: name, amount: amount, remark: note })
+  }).then(function(r){ return r.json(); }).then(function(d){
+    if (d.success && d.data) {
+      var dd = d.data;
+      res.innerHTML = '<div class="rcard ok"><div class="rc-title">🏦 真实转账成功</div>' +
+        '<div style="font-size:11px;color:#888;margin:8px 0;line-height:1.8;">' +
+        '<div style="display:flex;justify-content:space-between;"><span>处理方式</span><span style="color:#52C41A">支付宝官方 API</span></div>' +
+        '<div style="display:flex;justify-content:space-between;"><span>资金来源</span><span>你的支付宝账户（真实资金）</span></div>' +
+        '<div style="display:flex;justify-content:space-between;"><span>到账状态</span><span style="color:#52C41A">✅ 真实到账</span></div></div>' +
+        '<div class="rc-row"><span>收款方</span><span>' + (dd.payeeAccount || payee) + '</span></div>' +
+        '<div class="rc-row"><span>转账金额</span><span style="color:var(--amber);font-weight:bold">¥ ' + String(amount).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + '</span></div>' +
+        '<div class="rc-row"><span>支付宝交易号</span><span style="color:var(--cyan)">' + (dd.tradeNo || dd.orderId || '') + '</span></div>' +
+        '<div class="rc-row"><span>业务单号</span><span>' + (dd.orderId || dd.outBizNo || '') + '</span></div>' +
+        '<div class="rc-row"><span>到账时间</span><span>' + (dd.payDate || '实时') + '</span></div></div>';
+      saveAlipayLog({ payee: payee, name: name, amount: amount, note: note, tradeNo: dd.tradeNo || '', orderId: dd.orderId || '', mode: dd.mode || 'real', status: 'ok', time: new Date().toLocaleString('zh-CN', {hour12:false}) });
+      renderAlipayLog();
+      toast('🏦 真实转账成功 · 支付宝交易号 ' + (dd.tradeNo || ''));
+    } else {
+      res.innerHTML = '<div class="rcard" style="border-color:rgba(255,77,79,0.4)"><div class="rc-title" style="color:#ff4d4f">❌ 真实转账失败</div>' +
+        '<div class="rc-row"><span>原因</span><span>' + (d.message || '未知错误') + '</span></div></div>';
+      toast('❌ 真实转账失败：' + (d.message || ''));
+    }
+  }).catch(function(e){
+    res.innerHTML = '<div class="rcard" style="border-color:rgba(255,77,79,0.4)"><div class="rc-title" style="color:#ff4d4f">❌ 后端连接失败</div><div class="rc-row"><span>原因</span><span>' + (e.message || e) + '</span></div></div>';
+    toast('❌ 后端连接失败');
+  });
+}
+function saveAlipayLog(rec){
+  try {
+    var log = JSON.parse(localStorage.getItem('ues_alipay_log') || '[]');
+    log.unshift(rec); if (log.length > 50) log = log.slice(0, 50);
+    localStorage.setItem('ues_alipay_log', JSON.stringify(log));
+  } catch(e) {}
+}
+function renderAlipayLog(){
+  var box = document.getElementById('apResult');
+  if (!box) return;
+  var log = []; try { log = JSON.parse(localStorage.getItem('ues_alipay_log') || '[]'); } catch(e) {}
+  if (log.length === 0) return;
+  var h = '<div style="margin-top:12px;padding:10px;background:rgba(82,196,26,0.05);border:1px solid rgba(82,196,26,0.18);border-radius:8px">'
+    + '<div style="font-size:11px;font-weight:bold;color:#52C41A;margin-bottom:6px">📋 真实支付宝转账记录（最近 ' + log.length + ' 条 · 实时保存 · 离线保持）</div>';
+  for (var i = 0; i < Math.min(log.length, 10); i++) {
+    var t = log[i];
+    h += '<div style="font-size:10px;color:var(--text-dim);padding:4px 0;border-bottom:1px dashed rgba(255,255,255,0.08)">'
+      + '🏦 ¥' + String(t.amount).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' → ' + t.payee + '（' + (t.name || '') + '）'
+      + '<span style="float:right;color:#52C41A">✅ 真实到账</span><br><span style="font-size:9px">' + (t.time || '') + ' · 交易号 ' + (t.tradeNo || t.orderId || '') + '</span></div>';
+  }
+  box.innerHTML = box.innerHTML + h;
+}
 function switchPay(tab,el){
   document.querySelectorAll('.pay-tab').forEach(function(t){t.classList.remove('active')});
   document.querySelectorAll('.pay-section').forEach(function(s){s.classList.remove('active')});
   el.classList.add('active');
   document.getElementById('pay-'+tab).classList.add('active');
   if (tab === 'transfer') { tfPayLevelInit(); renderTfLog(); }
+  if (tab === 'alipay') {
+    try { var saved = localStorage.getItem(AP_BACKEND_KEY); if (saved) { var v = document.getElementById('apBackend'); if (v) v.value = saved; } } catch(e) {}
+    renderAlipayLog();
+    checkAlipayBackend();
+  }
 }
 
 function makeQr(containerId,data){
@@ -14327,7 +14442,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.4.71';
+var systemVersion = 'v1.4.72';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
