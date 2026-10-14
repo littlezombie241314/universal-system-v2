@@ -7062,7 +7062,7 @@ function ensureWechatQr(){
     }
     var regs = {}; try { regs = JSON.parse(localStorage.getItem('ues_pay_reg') || '{}'); } catch(e) {}
     if (!regs['微信收款码']) {
-      regs['微信收款码'] = { level: '👤 个人层级', type: '个人收款', verify: '个人实名核验', time: new Date().toLocaleString('zh-CN', {hour12:false}), real: true };
+      regs['微信收款码'] = { level: '👤 个人层级', type: '个人收款', time: new Date().toLocaleString('zh-CN', {hour12:false}), real: true };
       localStorage.setItem('ues_pay_reg', JSON.stringify(regs));
       if (typeof payRegList === 'function') payRegList();
     }
@@ -7085,8 +7085,7 @@ function payRender(){
     g.items.forEach(function(p, k){
       html += '<div style="background:rgba(0,0,0,0.25);border:1px solid rgba(0,212,255,0.12);border-radius:8px;padding:8px 10px">'
         + '<div style="font-size:12px;color:var(--text)"><b>' + p.name + '</b></div>'
-        + '<div style="font-size:10px;color:var(--text-dim);margin:3px 0">' + p.type + ' · 全宇宙可用</div>'
-        + (g.group.indexOf('个人层级') >= 0 ? '<select id="payVer-' + gi + '-' + k + '" style="width:100%;margin-top:4px;background:rgba(4,18,34,.6);border:1px solid var(--border);color:var(--text);padding:3px;border-radius:4px;font-size:10px"><option>未核验</option><option>个人实名核验</option><option>企业核验</option></select>' : '')
+        + '<div style="font-size:10px;color:var(--text-dim);margin:3px 0">' + p.type + ' · 全宇宙可用 · 免核验</div>'
         + '<div style="display:flex;gap:5px;margin-top:5px"><button class="btn green" style="flex:1;padding:3px 6px;font-size:10px" onclick=\'event.stopPropagation(); payGo("' + p.url + '","' + p.name + '")\'>🔗 前往官网/接入</button><button class="btn cyan" style="flex:1;padding:3px 6px;font-size:10px" onclick="event.stopPropagation(); payReg(' + gi + ',' + k + ')">🔌 登记接入</button></div></div>';
     });
     html += '</div>';
@@ -7162,18 +7161,13 @@ function qrClose(){
 function savePayReg(gi, k, skipUI){
   var g = PAY_GROUPS[gi]; var p = g.items[k];
   if (!p) return;
-  var verify = '未核验';
-  if (g.group.indexOf('个人层级') >= 0) {
-    var sel = document.getElementById('payVer-' + gi + '-' + k);
-    if (sel) verify = sel.value;
-  }
   var regs = {}; try { regs = JSON.parse(localStorage.getItem(PAY_REG_KEY) || '{}'); } catch(e) {}
-  regs[p.name] = { level: g.group, type: p.type, verify: verify, time: new Date().toLocaleString('zh-CN', {hour12:false}) };
+  regs[p.name] = { level: g.group, type: p.type, time: new Date().toLocaleString('zh-CN', {hour12:false}) };
   localStorage.setItem(PAY_REG_KEY, JSON.stringify(regs));
   if (!skipUI) {
     payRegList();
     payRender();
-    toast('🔌 已登记接入「' + p.name + '」· ' + g.group + ' · 📋 核验：' + verify + ' · 实时保存 · 离线保持');
+    toast('🔌 已登记接入「' + p.name + '」· ' + g.group + ' · 免核验 · 实时保存 · 离线保持');
   }
 }
 function payReg(gi, k){
@@ -7212,23 +7206,12 @@ function payRegList(){
   var keys = Object.keys(regs);
   if (cnt) cnt.textContent = keys.length + ' 条已接入';
   if (!keys.length) { box.innerHTML = '<div style="font-size:11px;color:var(--text-dim);text-align:center">尚未接入通道 · 点击「🔌 登记接入」绑定你的真实支付通道</div>'; return; }
-  var html = '<div style="font-size:12px;font-weight:bold;color:var(--text);margin-bottom:6px">✅ 已接入支付通道（' + keys.length + ' 条 · 实时保存 · 离线保持）</div>';
+  var html = '<div style="font-size:12px;font-weight:bold;color:var(--text);margin-bottom:6px">✅ 已接入支付通道（' + keys.length + ' 条 · 免核验 · 实时保存 · 离线保持）</div>';
   keys.slice(0, 20).forEach(function(k){
     var r = regs[k];
-    html += '<div style="background:rgba(82,196,26,0.08);border:1px solid rgba(82,196,26,0.2);border-radius:8px;padding:6px 10px;margin-bottom:4px;font-size:11px"><b style="color:#52C41A">🔌 ' + k + '</b> · ' + (r.level || '') + ' · ' + (r.type || '') + (r.verify ? ' · <span style="color:var(--amber)">📋 核验：' + r.verify + '</span><button class="btn" style="padding:1px 6px;font-size:9px;margin-left:6px" onclick=\'payVerCycle("' + k + '"\')>切换核验</button>' : '') + ' · ' + r.time + '</div>';
+    html += '<div style="background:rgba(82,196,26,0.08);border:1px solid rgba(82,196,26,0.2);border-radius:8px;padding:6px 10px;margin-bottom:4px;font-size:11px"><b style="color:#52C41A">🔌 ' + k + '</b> · ' + (r.level || '') + ' · ' + (r.type || '') + ' · ' + r.time + '</div>';
   });
   box.innerHTML = html;
-}
-var VER_STATES = ['未核验','个人实名核验','企业核验'];
-function payVerCycle(name){
-  var regs = {}; try { regs = JSON.parse(localStorage.getItem(PAY_REG_KEY) || '{}'); } catch(e) {}
-  if (!regs[name]) { toast('⚠ 请先登记接入该通道'); return; }
-  var cur = regs[name].verify || '未核验';
-  var idx = VER_STATES.indexOf(cur);
-  regs[name].verify = VER_STATES[(idx + 1) % VER_STATES.length];
-  localStorage.setItem(PAY_REG_KEY, JSON.stringify(regs));
-  payRegList();
-  toast('📋 「' + name + '」核验状态已更新为：' + regs[name].verify);
 }
 function payRegClear(){
   localStorage.removeItem(PAY_REG_KEY);
