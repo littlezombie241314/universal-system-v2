@@ -1,1 +1,4 @@
 index_backup_wormhole.html
+alipay-backend/keys/
+alipay-backend/deploy_env_prod.txt
+alipay-backend/.env.example
