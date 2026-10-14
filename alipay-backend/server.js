@@ -20,13 +20,24 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+const fs = require('fs');
+const path = require('path');
+
 const MODE = process.env.ALIPAY_MODE || 'sandbox';
 const APP_ID = process.env.ALIPAY_APP_ID || '';
 const PRIVATE_KEY = (process.env.ALIPAY_PRIVATE_KEY || '').replace(/\\n/g, '\n');
 const ALIPAY_PUBLIC_KEY = (process.env.ALIPAY_PUBLIC_KEY || '').replace(/\\n/g, '\n');
-const APP_CERT = (process.env.ALIPAY_APP_CERT || '').replace(/\\n/g, '\n');
-const ALIPAY_CERT = (process.env.ALIPAY_ALIPAY_CERT || '').replace(/\\n/g, '\n');
-const ROOT_CERT = (process.env.ALIPAY_ROOT_CERT || '').replace(/\\n/g, '\n');
+// 证书优先取环境变量；未配置时尝试从仓库 certs/ 目录读取（证书为公开公钥材料）
+const certDir = path.join(__dirname, 'certs');
+const readCert = (name) => {
+  const fromEnv = process.env['ALIPAY_' + name];
+  if (fromEnv) return fromEnv.replace(/\\n/g, '\n');
+  try { return fs.readFileSync(path.join(certDir, name.toLowerCase() + '.pem'), 'utf8').trim(); }
+  catch (e) { return ''; }
+};
+const APP_CERT = readCert('APP_CERT');
+const ALIPAY_CERT = readCert('ALIPAY_CERT');
+const ROOT_CERT = readCert('ROOT_CERT');
 const LIMIT = parseFloat(process.env.TRANSFER_AMOUNT_LIMIT || '100000');
 const GATEWAY = MODE === 'prod'
   ? 'https://openapi.alipay.com/gateway.do'
