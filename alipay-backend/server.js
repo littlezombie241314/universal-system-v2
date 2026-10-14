@@ -33,6 +33,7 @@ if (APP_ID && PRIVATE_KEY && ALIPAY_PUBLIC_KEY) {
   try {
     alipay = new AlipaySdk({
       appId: APP_ID,
+      keyType: 'PKCS8', // 应用私钥为 PKCS8 格式（-----BEGIN PRIVATE KEY-----），避免 SDK 默认按 PKCS1 重写导致 DECODER 失败
       privateKey: PRIVATE_KEY,
       alipayPublicKey: ALIPAY_PUBLIC_KEY,
       gateway: GATEWAY,
