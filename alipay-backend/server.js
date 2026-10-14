@@ -59,6 +59,24 @@ app.get('/api/alipay/status', (req, res) => {
   });
 });
 
+/** 凭证诊断（不泄露完整私钥：仅回显长度/首尾/换行特征，排查部署环境变量格式） */
+app.get('/api/alipay/diag', (req, res) => {
+  const summarize = (s) => ({
+    len: (s || '').length,
+    head: (s || '').slice(0, 27),
+    tail: (s || '').slice(-12),
+    realNewlines: ((s || '').match(/\n/g) || []).length,
+    literalN: ((s || '').match(/\\n/g) || []).length,
+  });
+  res.json({
+    success: true,
+    appId: APP_ID,
+    privateKey: summarize(PRIVATE_KEY),
+    alipayPublicKey: summarize(ALIPAY_PUBLIC_KEY),
+    sdkCtorOk: typeof AlipaySdk === 'function',
+  });
+});
+
 /** 余额查询（alipay.fund.account.query - 查询支付宝账户余额，需签约） */
 app.get('/api/alipay/balance', async (req, res) => {
   if (!cfgOk()) return res.json({ success: false, configured: false, message: '支付宝通道未配置' });
