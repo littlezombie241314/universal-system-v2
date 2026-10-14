@@ -11,7 +11,9 @@
  */
 const express = require('express');
 const cors = require('cors');
-const AlipaySdk = require('alipay-sdk').default;
+const AlipaySdkModule = require('alipay-sdk');
+// 兼容不同版本导出：命名导出 AlipaySdk / default / 直接构造函数
+const AlipaySdk = AlipaySdkModule.AlipaySdk || AlipaySdkModule.default || AlipaySdkModule;
 
 const app = express();
 app.use(cors());
