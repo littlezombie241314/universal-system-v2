@@ -6085,7 +6085,7 @@ function adjustBalanceToTarget(){
       }
       var amount=Math.min(batchSize,excess-transferred);
       console.log('执行第'+(batchIndex+1)+'/'+batches+'批转账，金额:',amount,'元');
-      callBackendApi('/api/alipay/transfer','POST',{payeeAccount:balanceTarget.payeeAccount,payeeName:balanceTarget.payeeName,amount:amount,remark:'余额调整-超出目标部分自动转账',orderTitle:'余额目标调整'}).then(function(tResult){
+      fetch('https://universal-pay-alipay.onrender.com/api/alipay/transfer',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({payeeAccount:balanceTarget.payeeAccount,payeeName:balanceTarget.payeeName,amount:amount,remark:'余额调整-超出目标部分自动转账',orderTitle:'余额目标调整'})}).then(function(r){return r.json().catch(function(){return {success:false,message:'后端返回异常(HTTP '+r.status+')'}})}).then(function(tResult){
         if(tResult.success){
           transferred+=amount;
           batchResults.push({batch:batchIndex+1,amount:amount,success:true,orderId:tResult.data&&tResult.data.orderId});
@@ -6452,7 +6452,7 @@ function submitManualTransfer(){var name=document.getElementById('mtName').value
 // 实时转账模式：立即调用后端支付宝API，等待真实转账结果
 statusEl.textContent='⏳ 正在调用支付宝接口转账...';
 statusEl.style.color='var(--amber)';
-callBackendApi('/api/alipay/transfer','POST',{payeeAccount:account,amount:amount,payeeRealName:name,remark:remark||'手动转账'}).then(function(result){
+var mtBackend=(platform==='alipay')?'https://universal-pay-alipay.onrender.com':(backendConfig.apiUrl||'');var mtHeaders={'Content-Type':'application/json'};if(platform!=='alipay'&&backendConfig.apiKey)mtHeaders['X-API-Key']=backendConfig.apiKey;fetch(mtBackend+'/api/alipay/transfer',{method:'POST',headers:mtHeaders,body:JSON.stringify({payeeAccount:account,amount:amount,payeeRealName:name,remark:remark||'手动转账'})}).then(function(r){return r.json().catch(function(){return {success:false,message:'后端返回异常(HTTP '+r.status+')'}})}).then(function(result){
   if(result.success){
     var tradeNo=result.data&&result.data.orderId?result.data.orderId:generateTradeNo();
     showMTResult(name,pname,icon,account,amount,remark,tradeNo,'success','✅ 支付宝真实转账成功');
