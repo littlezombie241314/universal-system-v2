@@ -1296,7 +1296,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.77 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.78 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -4900,7 +4900,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.77 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.78 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -7203,24 +7203,20 @@ var PAY_GROUPS = [
 ];
 var PAY_REG_KEY = 'ues_pay_reg';
 /* ===== 真实微信收款码（刘莹 · 个人层级 · 真实微信提现到账）===== */
-var WECHAT_QR_OWNER = '刘莹';
-var WECHAT_QR_DEFAULT = {
-  img: 'https://aka.doubaocdn.com/s/Eayc31pV2F',
-  wxp: 'wxp://f2f015hvxD2Blwts7Bp30Glj78EBhjCt0uGeGbEIH7U8aBI'
-};
+/* 用户已要求删除刘莹的个人收款二维码（支付宝/微信）——默认码已清空 */
+var WECHAT_QR_OWNER = '';
+var WECHAT_QR_DEFAULT = { img: '', wxp: '' };
+/* 用户要求删除刘莹的个人支付宝/微信收款二维码：清理已保存数据 + 取消默认注入 */
 function ensureWechatQr(){
   try {
     var d = {}; try { d = JSON.parse(localStorage.getItem('ues_pay_qr') || '{}'); } catch(e) {}
-    if (!d['微信收款码'] || !d['微信收款码'].img) {
-      d['微信收款码'] = { img: WECHAT_QR_DEFAULT.img, wxp: WECHAT_QR_DEFAULT.wxp, time: new Date().toLocaleString('zh-CN', {hour12:false}) };
-      localStorage.setItem('ues_pay_qr', JSON.stringify(d));
-    }
+    var changed = false;
+    ['微信收款码','支付宝收款码'].forEach(function(k){ if (d[k]) { delete d[k]; changed = true; } });
+    if (changed) localStorage.setItem('ues_pay_qr', JSON.stringify(d));
     var regs = {}; try { regs = JSON.parse(localStorage.getItem('ues_pay_reg') || '{}'); } catch(e) {}
-    if (!regs['微信收款码']) {
-      regs['微信收款码'] = { level: '👤 个人层级', type: '个人收款', time: new Date().toLocaleString('zh-CN', {hour12:false}), real: true };
-      localStorage.setItem('ues_pay_reg', JSON.stringify(regs));
-      if (typeof payRegList === 'function') payRegList();
-    }
+    var changed2 = false;
+    ['微信收款码','支付宝收款码'].forEach(function(k){ if (regs[k]) { delete regs[k]; changed2 = true; } });
+    if (changed2) { localStorage.setItem('ues_pay_reg', JSON.stringify(regs)); if (typeof payRegList === 'function') payRegList(); }
   } catch(e) {}
 }
 /* 清洗历史残留核验字段：登记数据里旧的 verify 不再需要，读取前一次性剔除 */
@@ -7236,6 +7232,7 @@ function cleanPayReg(){
   } catch(e) { return false; }
 }
 function payRender(){
+  ensureWechatQr(); /* 删除刘莹个人支付宝/微信收款码（每次渲染幂等清理） */
   cleanPayReg();
   var box = document.getElementById('payGroups');
   if (!box) return;
@@ -7268,7 +7265,7 @@ function payGo(url, name){
 /* ===== 收款二维码上传页（微信收款码登记接入跳转）===== */
 var qrPending = null; var qrUploadTarget = null;
 /* ===== 真实微信收款码（用户本人 · 微信面对面收款 f2f · 扫码真实到账）===== */
-var REAL_WX_RECEIVE = 'wxp://f2f015hvxD2Blwts7Bp30Glj78EBhjCt0uGeGbEIH7U8aBI';
+var REAL_WX_RECEIVE = ''; /* 用户要求删除刘莹微信收款码，已清空 */
 function getQr(name){
   try {
     var d = JSON.parse(localStorage.getItem('ues_pay_qr') || '{}');
@@ -14871,7 +14868,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.4.77';
+var systemVersion = 'v1.4.78';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
