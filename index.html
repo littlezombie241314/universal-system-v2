@@ -4698,7 +4698,7 @@ select option{background:#040b1a;color:var(--cyan)}
       <div style="background:rgba(0,0,0,0.3);border-radius:6px;height:8px;overflow:hidden;margin:10px 0">
         <div id="commSignalBar" style="height:100%;width:95%;background:linear-gradient(90deg,#00d4ff,#52C41A);border-radius:6px;transition:width 0.5s"></div>
       </div>
-      <div style="font-size:11px;color:var(--text-dim);text-align:center">信号强度：<span id="commSignalPct">95%</span> · 量子纠缠通信 · 超光速传输 · 全频段加密</div>
+      <div style="font-size:11px;color:var(--text-dim);text-align:center">信号强度：<span id="commSignalPct">95%</span> · 量子纠缠通信 · 超光速传输 · ⚡超光速实时更新 · 全频段加密</div>
     </div>
 
     <!-- 星际频道列表 -->
@@ -15037,7 +15037,7 @@ setTimeout(function() {
     addCommLog('量子纠缠通信通道已激活', 'ok');
     addCommLog('信号强度：' + commState.signalStrength + '%', 'info');
     
-    // 定期更新通信状态
+    // 超光速实时更新（数据实时同步）
     setInterval(function(){
       // 随机波动信号强度
       commState.signalStrength = Math.min(100, Math.max(85, commState.signalStrength + Math.floor(Math.random()*5-2)));
@@ -15054,7 +15054,7 @@ setTimeout(function() {
       if(pct) pct.textContent = commState.signalStrength + '%';
       // 更新统计
       updateCommStats();
-    }, 3000);
+    }, 500);
   }
   
   function renderCivilizations(){
