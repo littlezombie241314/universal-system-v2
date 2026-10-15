@@ -6868,7 +6868,18 @@ function outdoorRegsRender(){
 function outdoorBook(i){
   var it = OUTDOOR_ITEMS[i];
   if (!it) return;
-  if (it.url) { window.open(it.url, '_blank'); toast('✓ 正在打开 ' + it.name + ' 官方预约网站：' + it.url); return; }
+  if (it.url) {
+    // 标准 a 标签跳转（真实用户手势下 100% 打开，兼容弹窗拦截环境）
+    var a = document.createElement('a');
+    a.href = it.url;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    toast('✓ 正在打开 ' + it.name + ' 官方预约网站：' + it.url);
+    return;
+  }
   var regs = {}; try { regs = JSON.parse(localStorage.getItem(OUTDOOR_KEY) || '{}'); } catch(e) {}
   regs[it.name] = { time: new Date().toLocaleString('zh-CN', {hour12:false}) };
   localStorage.setItem(OUTDOOR_KEY, JSON.stringify(regs));
