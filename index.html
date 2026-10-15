@@ -1290,7 +1290,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.72 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.73 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -2454,9 +2454,9 @@ select option{background:#040b1a;color:var(--cyan)}
             <div id="feelsLikeAutoDetail" style="font-size:9px;color:var(--text-dim);margin-top:3px">自动保持 30°C · 舒适体感 · 离线也自动保持 · 不可修改</div>
             <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
               <span style="font-size:11px;color:var(--text-dim)">🌡️ 气温锁定</span>
-              <span id="tempLockStatus" style="font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(82,196,26,0.2);color:#52C41A">🟢 锁定 25°C ~ 30°C</span>
+              <span id="tempLockStatus" style="font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(82,196,26,0.2);color:#52C41A">🟢 锁定 30°C ~ 40°C</span>
             </div>
-            <div id="tempLockDetail" style="font-size:9px;color:var(--text-dim);margin-top:3px">气温锁定 25°C ~ 30°C 舒适区间 · 自动保持 · 离线也保持 · 不可修改</div>
+            <div id="tempLockDetail" style="font-size:9px;color:var(--text-dim);margin-top:3px">气温锁定 30°C ~ 40°C 舒适区间 · 自动保持 · 离线也保持 · 不可修改</div>
           </div>
         </div>
         <div style="background:rgba(250,173,20,0.08);border:1px solid rgba(250,173,20,0.35);border-radius:8px;padding:10px;margin-bottom:12px;text-align:center">
@@ -2478,7 +2478,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:6px;font-size:11px">
               <div style="color:var(--text-dim)">宇宙数量：<span style="color:var(--text)">∞</span></div>
-              <div style="color:var(--text-dim)">平均温度：<span style="color:var(--text)">25°C ~ 30°C</span></div>
+              <div style="color:var(--text-dim)">平均温度：<span style="color:var(--text)">30°C ~ 40°C</span></div>
               <div style="color:var(--text-dim)">生态指数：<span style="color:#52C41A">100%</span></div>
             </div>
           </div>
@@ -2542,9 +2542,9 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:6px;font-size:11px">
               <div style="color:var(--text-dim)">国家数量：<span style="color:var(--text)">195</span></div>
-              <div style="color:var(--text-dim)">平均温度：<span style="color:var(--text)">25°C ~ 30°C（锁定）</span></div>
+              <div style="color:var(--text-dim)">平均温度：<span style="color:var(--text)">30°C ~ 40°C（锁定）</span></div>
               <div style="color:var(--text-dim)">气候适宜：<span style="color:#52C41A">100%</span></div>
-              <div style="color:var(--text-dim)">室外气温：<span id="countryTempText" style="color:#52C41A;font-weight:bold">锁定 25°C ~ 30°C</span></div>
+              <div style="color:var(--text-dim)">室外气温：<span id="countryTempText" style="color:#52C41A;font-weight:bold">锁定 30°C ~ 40°C</span></div>
             </div>
           </div>
           
@@ -4845,7 +4845,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.72 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.73 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -7787,22 +7787,22 @@ var IMM_LEVELS = [
   }, 1000);
 })();
 
-/* ===== 气候控制 · 国家层级（地球）室外气温锁定 25°C~30°C ===== */
+/* ===== 气候控制 · 国家层级（地球）室外气温锁定 30°C~40°C ===== */
 setInterval(function(){
-  var cur = 25 + (Math.sin(Date.now() / 30000 + 1) * 2.5 + 2.5); // 25.0 ~ 30.0
+  var cur = 30 + (Math.sin(Date.now() / 30000 + 1) * 5 + 5); // 30.0 ~ 40.0
   var el = document.getElementById('countryTempText');
   var offline = !navigator.onLine;
-  if (el) el.textContent = (offline ? '🔵 离线保持 ' : '锁定 ') + cur.toFixed(1) + '°C · 25°C~30°C';
+  if (el) el.textContent = (offline ? '🔵 离线保持 ' : '锁定 ') + cur.toFixed(1) + '°C · 30°C~40°C';
 }, 1000);
 
-/* ===== 气候控制 · 气温锁定 25°C~30°C ===== */
+/* ===== 气候控制 · 气温锁定 30°C~40°C ===== */
 setInterval(function(){
-  var cur = 25 + (Math.sin(Date.now() / 30000) * 2.5 + 2.5); // 25.0 ~ 30.0
+  var cur = 30 + (Math.sin(Date.now() / 30000) * 5 + 5); // 30.0 ~ 40.0
   var st = document.getElementById('tempLockStatus');
   var dt = document.getElementById('tempLockDetail');
   var offline = !navigator.onLine;
   if (st) st.textContent = (offline ? '🔵 离线保持 · ' : '🟢 自动保持 · ') + cur.toFixed(1) + '°C';
-  if (dt) dt.textContent = '气温锁定 25°C ~ 30°C 舒适区间 · 当前 ' + cur.toFixed(1) + '°C · 不可修改 · 离线也保持 · 实时保存';
+  if (dt) dt.textContent = '气温锁定 30°C ~ 40°C 舒适区间 · 当前 ' + cur.toFixed(1) + '°C · 不可修改 · 离线也保持 · 实时保存';
 }, 1000);
 
 /* ===== 气候控制 · 体感温度自动保持 30°C（离线也自动保持） ===== */
@@ -14633,7 +14633,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.4.72';
+var systemVersion = 'v1.4.73';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
