@@ -4456,6 +4456,73 @@ select option{background:#040b1a;color:var(--cyan)}
 
   <!-- COMMUNICATION -->
   <div class="section" id="sec-communication"><div class="grid">
+<!-- 🔧 片上系统(SoC)架构监控 -->
+    <div class="panel wide">
+      <div class="panel-hdr"><div class="panel-title"><span class="ico">🔧</span>片上系统(SoC)架构监控</div><div class="panel-badge" style="background:rgba(155,187,244,0.2);color:#9BBBF4">ARM架构 · 运行中</div></div>
+      <div style="padding:16px">
+        <div style="font-size:13px;color:var(--text-dim);margin-bottom:12px">系统运行于移动SoC架构，主芯片统一调度所有外设，支持Android/iOS/鸿蒙系统</div>
+        
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr)),gap:10px;margin-bottom:12px">
+          <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;text-align:center">
+            <div style="font-size:24px">🧠</div>
+            <div style="font-size:12px;font-weight:bold;color:var(--text);margin:4px 0">CPU</div>
+            <div style="font-size:10px;color:#52C41A">● 8核 2.84GHz</div>
+            <div style="font-size:9px;color:var(--text-dim)">ARM Cortex-X4</div>
+          </div>
+          
+          <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;text-align:center">
+            <div style="font-size:24px">🎮</div>
+            <div style="font-size:12px;font-weight:bold;color:var(--text);margin:4px 0">GPU</div>
+            <div style="font-size:10px;color:#52C41A">● 10核</div>
+            <div style="font-size:9px;color:var(--text-dim)">Mali-G715</div>
+          </div>
+          
+          <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;text-align:center">
+            <div style="font-size:24px">📷</div>
+            <div style="font-size:12px;font-weight:bold;color:var(--text);margin:4px 0">ISP</div>
+            <div style="font-size:10px;color:#52C41A">● 图像处理器</div>
+            <div style="font-size:9px;color:var(--text-dim)">18-bit</div>
+          </div>
+          
+          <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;text-align:center">
+            <div style="font-size:24px">📡</div>
+            <div style="font-size:12px;font-weight:bold;color:var(--text);margin:4px 0">基带芯片</div>
+            <div style="font-size:10px;color:#52C41A">● 5G/6G</div>
+            <div style="font-size:9px;color:var(--text-dim)">Snapdragon X75</div>
+          </div>
+        </div>
+        
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr)),gap:10px">
+          <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;text-align:center">
+            <div style="font-size:24px">💾</div>
+            <div style="font-size:12px;font-weight:bold;color:var(--text);margin:4px 0">内存</div>
+            <div style="font-size:10px;color:#52C41A">● 16GB LPDDR5X</div>
+          </div>
+          
+          <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;text-align:center">
+            <div style="font-size:24px">💿</div>
+            <div style="font-size:12px;font-weight:bold;color:var(--text);margin:4px 0">闪存</div>
+            <div style="font-size:10px;color:#52C41A">● 1TB UFS 4.0</div>
+          </div>
+          
+          <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;text-align:center">
+            <div style="font-size:24px">🔋</div>
+            <div style="font-size:12px;font-weight:bold;color:var(--text);margin:4px 0">电池</div>
+            <div style="font-size:10px;color:#52C41A">● 5000mAh</div>
+          </div>
+          
+          <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;text-align:center">
+            <div style="font-size:24px">🌡️</div>
+            <div style="font-size:12px;font-weight:bold;color:var(--text);margin:4px 0">温度</div>
+            <div style="font-size:10px;color:#52C41A">● 36.5°C</div>
+          </div>
+        </div>
+        
+        <div style="font-size:10px;color:var(--text-dim);text-align:center;margin-top:10px">片上系统(SoC)架构 · ARM处理器 · 支持Android/iOS/鸿蒙</div>
+      </div>
+    </div>
+
+
     
 
 
@@ -4631,7 +4698,7 @@ select option{background:#040b1a;color:var(--cyan)}
       <div style="background:rgba(0,0,0,0.3);border-radius:6px;height:8px;overflow:hidden;margin:10px 0">
         <div id="commSignalBar" style="height:100%;width:95%;background:linear-gradient(90deg,#00d4ff,#52C41A);border-radius:6px;transition:width 0.5s"></div>
       </div>
-      <div style="font-size:11px;color:var(--text-dim);text-align:center">信号强度：<span id="commSignalPct">95%</span> · 量子纠缠通信 · 超光速传输 · ⚡超光速实时更新 · 全频段加密</div>
+      <div style="font-size:11px;color:var(--text-dim);text-align:center">信号强度：<span id="commSignalPct">95%</span> · 量子纠缠通信 · 超光速传输 · 全频段加密</div>
     </div>
 
     <!-- 星际频道列表 -->
@@ -14970,7 +15037,7 @@ setTimeout(function() {
     addCommLog('量子纠缠通信通道已激活', 'ok');
     addCommLog('信号强度：' + commState.signalStrength + '%', 'info');
     
-    // 超光速实时更新（数据实时同步，无需人工验证）
+    // 定期更新通信状态
     setInterval(function(){
       // 随机波动信号强度
       commState.signalStrength = Math.min(100, Math.max(85, commState.signalStrength + Math.floor(Math.random()*5-2)));
@@ -14987,7 +15054,7 @@ setTimeout(function() {
       if(pct) pct.textContent = commState.signalStrength + '%';
       // 更新统计
       updateCommStats();
-    }, 500);
+    }, 3000);
   }
   
   function renderCivilizations(){
