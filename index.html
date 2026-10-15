@@ -8644,6 +8644,22 @@ function checkAlipayBackend(){
     toast('❌ 后端连接失败');
   });
 }
+function apAlipayErrTip(msg, d){
+  var m = (msg || '') + ' ' + (d.subCode || d.code || '');
+  if (m.indexOf('PAYER_BALANCE_PAYMENT_NOT_ENABLED') >= 0 || m.indexOf('余额支付') >= 0)
+    return '付款方支付宝账户未开通「余额支付」：打开支付宝 App → 我的 → 设置 → 支付设置 → 开启「余额支付」。若显示不可用，说明该账户不支持余额支付，需更换为支持余额支付的付款账户（实名等级不足请先完成高级实名）。';
+  if (m.indexOf('PAYER_BALANCE_NOT_ENOUGH') >= 0 || m.indexOf('余额不足') >= 0)
+    return '付款方支付宝账户余额不足：本次转账 ¥' + (document.getElementById('apAmount') ? document.getElementById('apAmount').value : '') + '，请先向付款方支付宝账户充值足额资金后再转账。';
+  if (m.indexOf('ISV') >= 0 || m.indexOf('权限') >= 0 || m.indexOf('PRODUCT') >= 0)
+    return '产品签约/权限问题：确认支付宝开放平台已签约「转账到支付宝账户」（alipay.fund.trans.uni.transfer）且状态为「已生效」，并确认发起账户与签约账户一致。';
+  if (m.indexOf('PAYEE_ACCOUNT_NOT_MATCH') >= 0 || m.indexOf('姓名') >= 0 || m.indexOf('账号') >= 0)
+    return '收款方支付宝账号与真实姓名不匹配：请核对收款方账号（手机号/邮箱）与实名姓名完全一致。';
+  if (m.indexOf('AMOUNT') >= 0 || m.indexOf('LIMIT') >= 0)
+    return '金额超限：本次转账超出后端单笔限额或支付宝官方限额，请降低金额或调整后端 TRANSFER_AMOUNT_LIMIT。';
+  if (m.indexOf('CERT') >= 0 || m.indexOf('签名') >= 0 || m.indexOf('sign') >= 0)
+    return '证书/签名配置错误：检查后端 ALIPAY_PRIVATE_KEY 与支付宝公钥（或应用公钥证书）是否配置正确、未过期。';
+  return '请按支付宝官方错误提示处理：核对收款方账号与姓名、付款方余额与实名、产品签约状态；必要时查看支付宝开放平台控制台「开发助手」定位。';
+}
 function doAlipayTransfer(){
   var url = apBackendUrl();
   var payee = document.getElementById('apPayee').value.trim();
@@ -8678,9 +8694,13 @@ function doAlipayTransfer(){
       renderAlipayLog();
       toast('🏦 真实转账成功 · 支付宝交易号 ' + (dd.tradeNo || ''));
     } else {
+      var errMsg = d.message || '未知错误';
+      var tip = apAlipayErrTip(errMsg, d);
       res.innerHTML = '<div class="rcard" style="border-color:rgba(255,77,79,0.4)"><div class="rc-title" style="color:#ff4d4f">❌ 真实转账失败</div>' +
-        '<div class="rc-row"><span>原因</span><span>' + (d.message || '未知错误') + '</span></div></div>';
-      toast('❌ 真实转账失败：' + (d.message || ''));
+        '<div class="rc-row"><span>原因</span><span>' + errMsg + '</span></div>' +
+        (d.code || d.subCode ? '<div class="rc-row"><span>错误码</span><span style="color:var(--cyan)">' + (d.subCode || d.code) + '</span></div>' : '') +
+        '<div style="margin-top:8px;padding:8px;background:rgba(255,169,64,0.1);border-radius:6px;font-size:10px;color:#ffa940;line-height:1.8">🔧 解决方案：' + tip + '</div></div>';
+      toast('❌ 真实转账失败：' + errMsg);
     }
   }).catch(function(e){
     res.innerHTML = '<div class="rcard" style="border-color:rgba(255,77,79,0.4)"><div class="rc-title" style="color:#ff4d4f">❌ 后端连接失败</div><div class="rc-row"><span>原因</span><span>' + (e.message || e) + '</span></div></div>';

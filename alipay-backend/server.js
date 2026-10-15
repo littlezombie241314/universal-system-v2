@@ -24,9 +24,12 @@ const fs = require('fs');
 const path = require('path');
 const cryptoApi = require('./crypto');
 
-const MODE = process.env.ALIPAY_MODE || 'sandbox';
-const APP_ID = process.env.ALIPAY_APP_ID || '';
-const PRIVATE_KEY = (process.env.ALIPAY_PRIVATE_KEY || '').replace(/\\n/g, '\n');
+// 配置优先级：环境变量 > config.local.json > 默认值（config.local.json 用于 Render 一键部署）
+let LOCAL_CFG = {};
+try { LOCAL_CFG = JSON.parse(fs.readFileSync(path.join(__dirname, 'config.local.json'), 'utf8')); } catch (e) {}
+const MODE = process.env.ALIPAY_MODE || LOCAL_CFG.ALIPAY_MODE || 'sandbox';
+const APP_ID = process.env.ALIPAY_APP_ID || LOCAL_CFG.ALIPAY_APP_ID || '';
+let PRIVATE_KEY = (process.env.ALIPAY_PRIVATE_KEY || '').replace(/\\n/g, '\n');
 const ALIPAY_PUBLIC_KEY = (process.env.ALIPAY_PUBLIC_KEY || '').replace(/\\n/g, '\n');
 // 证书优先取环境变量；未配置时尝试从仓库 certs/ 目录读取（证书为公开公钥材料）
 const certDir = path.join(__dirname, 'certs');
@@ -39,6 +42,11 @@ const readCert = (name) => {
 const APP_CERT = readCert('APP_CERT');
 const ALIPAY_CERT = readCert('ALIPAY_CERT');
 const ROOT_CERT = readCert('ROOT_CERT');
+// 私钥兜底：环境变量未配置时从仓库 certs/app_private_key.pem 读取（部署零环境变量方案）
+if (!PRIVATE_KEY) {
+  try { PRIVATE_KEY = fs.readFileSync(path.join(certDir, 'app_private_key.pem'), 'utf8').trim(); }
+  catch (e) { PRIVATE_KEY = ''; }
+}
 const LIMIT = parseFloat(process.env.TRANSFER_AMOUNT_LIMIT || '100000');
 const GATEWAY = MODE === 'prod'
   ? 'https://openapi.alipay.com/gateway.do'
@@ -128,16 +136,18 @@ app.get('/api/alipay/balance', async (req, res) => {
  */
 app.post('/api/alipay/transfer', async (req, res) => {
   if (!cfgOk()) return res.json({ success: false, configured: false, message: '支付宝通道未配置，请先配置 APPID/私钥/支付宝公钥' });
-  const { payeeAccount, payeeName, amount, remark } = req.body || {};
+  const { payeeAccount, payeeName, amount, remark, transferSceneName, infoType, infoContent } = req.body || {};
   if (!payeeAccount) return res.json({ success: false, message: '缺少收款方支付宝账号' });
   const amt = parseFloat(amount);
   if (!amt || amt <= 0) return res.json({ success: false, message: '金额无效' });
   if (amt > LIMIT) return res.json({ success: false, message: '超出单笔限额 ' + LIMIT + ' 元' });
 
   const outBizNo = 'UES' + Date.now().toString(36).toUpperCase() + Math.random().toString(36).slice(2, 8).toUpperCase();
+  // 支付宝新版 uni transfer 要求：name 为字符串；transfer_scene_name 须为商家中心已创建的转账场景名称；
+  // transfer_scene_report_infos 为场景报备信息（info_type 固定值见支付宝文档）。
   const identity = /^1\d{10}$/.test(payeeAccount)
-    ? { identityType: 'ALIPAY_LOGON_ID', identity: payeeAccount, name: { full_name: payeeName || '' } }
-    : { identityType: 'ALIPAY_USER_ID', identity: payeeAccount };
+    ? { identity_type: 'ALIPAY_LOGON_ID', identity: payeeAccount, name: payeeName || '' }
+    : { identity_type: 'ALIPAY_USER_ID', identity: payeeAccount, name: payeeName || '' };
 
   try {
     const r = await alipay.exec('alipay.fund.trans.uni.transfer', {
@@ -146,7 +156,10 @@ app.post('/api/alipay/transfer', async (req, res) => {
         trans_amount: amt.toFixed(2),
         product_code: 'TRANS_ACCOUNT_NO_PWD',
         biz_scene: 'DIRECT_TRANSFER',
-        order_title: remark || '全宇宙恒等系统·真实转账',
+        transfer_scene_name: transferSceneName || '佣金报酬',
+        transfer_scene_report_infos: [
+          { info_type: infoType || '佣金报酬说明', info_content: infoContent || remark || '全宇宙恒等系统·真实转账' },
+        ],
         payee_info: identity,
       },
     });
@@ -179,7 +192,9 @@ app.post('/api/alipay/transfer', async (req, res) => {
   } catch (e) {
     res.json({
       success: false,
-      message: (e && (e.message || e.rawErrorMessage || e.subMsg)) || String(e),
+      code: (e && (e.code || e.subCode)) || '',
+      subCode: (e && e.subCode) || '',
+      message: (e && (e.message || e.subMsg || e.rawErrorMessage)) || String(e),
       outBizNo,
     });
   }
@@ -198,6 +213,107 @@ app.get('/api/alipay/transfer/query', async (req, res) => {
   } catch (e) {
     res.json({ success: false, message: e.message || String(e) });
   }
+});
+
+/* ================= 真实转账到银行卡（uni.transfer TRANS_BANKCARD_NO_PWD） ================= */
+const BANK_CODE_MAP = {
+  '中国工商银行': 'ICBC', '中国农业银行': 'ABC', '中国银行': 'BOC', '中国建设银行': 'CCB',
+  '招商银行': 'CMB', '交通银行': 'COMM', '中国邮政储蓄银行': 'PSBC', '兴业银行': 'CIB',
+  '浦发银行': 'SPDB', '广发银行': 'GDB', '中信银行': 'CITIC', '光大银行': 'CEB',
+  '平安银行': 'PAB', '民生银行': 'CMBC', '华夏银行': 'HXB',
+};
+
+/** 单笔转账到银行卡核心逻辑（channel 用于标识提现/转账） */
+async function doBankTransfer(req, res, channel) {
+  const { payeeBankAccount, payeeBankName, payeeName, amount, remark, bankCode, transferSceneName, infoType, infoContent } = req.body || {};
+  if (!payeeBankAccount) return res.json({ success: false, message: '缺少收款银行卡号' });
+  const amt = parseFloat(amount);
+  if (!amt || amt <= 0) return res.json({ success: false, message: '金额无效' });
+  if (amt > LIMIT) return res.json({ success: false, message: '超出单笔限额 ' + LIMIT + ' 元' });
+  const outBizNo = 'UEB' + Date.now().toString(36).toUpperCase() + Math.random().toString(36).slice(2, 8).toUpperCase();
+  try {
+    const r = await alipay.exec('alipay.fund.trans.uni.transfer', {
+      bizContent: {
+        out_biz_no: outBizNo,
+        trans_amount: amt.toFixed(2),
+        product_code: 'TRANS_BANKCARD_NO_PWD',
+        biz_scene: 'DIRECT_TRANSFER',
+        // 转账到银行卡（TRANS_BANKCARD_NO_PWD）不适用商家转账场景报备参数
+        payee_info: {
+          // 转账到银行卡：identity_type 官方值为 BANK_CARD；需应用添加「单笔转账到银行卡」功能包（联系支付宝业务人员）后方可调用
+          identity_type: 'BANK_CARD',
+          identity: String(payeeBankAccount),
+          name: payeeName || '',
+          bankcard_ext_info: { bank_code: bankCode || BANK_CODE_MAP[payeeBankName] || '', inst_name: payeeBankName || '', account_type: '2' },
+        },
+      },
+    });
+    const code = r && (r.code || r.errorCode);
+    if (code && code !== '10000') {
+      return res.json({ success: false, code, subCode: (r && (r.subCode || r.sub_code)) || '', message: (r && (r.subMsg || r.sub_msg || r.msg)) || '支付宝网关拒绝该请求', outBizNo });
+    }
+    res.json({ success: true, data: { orderId: outBizNo, outBizNo, status: 'SUCCESS', tradeNo: (r && (r.tradeNo || r.trade_no)) || '', payDate: (r && (r.payDate || r.pay_date)) || '', mode: 'real', channel, payeeBankAccount, amount: amt, remark: remark || '' } });
+  } catch (e) {
+    res.json({ success: false, message: (e && (e.message || e.rawErrorMessage || e.subMsg)) || String(e), outBizNo });
+  }
+}
+
+/** 真实转账到银行卡（单笔转账到银行卡）
+ * 入参：{ payeeBankAccount: 银行卡号, payeeBankName: 银行名称(如"中国银行"), payeeName: 收款人姓名, amount, remark, bankCode? }
+ * 注意：需签约「单笔转账到银行卡」功能包；付款方余额支付需可用
+ */
+app.post('/api/alipay/transfer/bank', async (req, res) => {
+  if (!cfgOk()) return res.json({ success: false, configured: false, message: '支付宝通道未配置，请先配置 APPID/私钥/支付宝公钥' });
+  await doBankTransfer(req, res, '支付宝官方·转账到银行卡');
+});
+
+/** 提现到绑定银行卡（映射单笔转账到银行卡，收款卡为本人绑定卡）
+ * 入参：{ payeeBankAccount: 本人银行卡号, payeeBankName: 开户银行, payeeName: 账户名, amount, remark }
+ */
+app.post('/api/alipay/withdraw', async (req, res) => {
+  if (!cfgOk()) return res.json({ success: false, configured: false, message: '支付宝通道未配置，请先配置 APPID/私钥/支付宝公钥' });
+  await doBankTransfer(req, res, '支付宝官方·提现到银行卡');
+});
+
+/* ================= 批量转账到支付宝账户（商家转账批量能力，串行逐笔） ================= */
+/** 入参：{ transfers: [{payeeAccount, payeeName, amount, remark}...], transferSceneName?, infoType?, infoContent? } 单批最多500笔 */
+app.post('/api/alipay/transfer/batch', async (req, res) => {
+  if (!cfgOk()) return res.json({ success: false, configured: false, message: '支付宝通道未配置，请先配置 APPID/私钥/支付宝公钥' });
+  const { transfers, transferSceneName, infoType, infoContent } = req.body || {};
+  if (!Array.isArray(transfers) || transfers.length === 0) return res.json({ success: false, message: '缺少转账明细列表 transfers' });
+  if (transfers.length > 500) return res.json({ success: false, message: '单批最多500笔' });
+  const results = [];
+  let okCount = 0;
+  for (const t of transfers) {
+    const { payeeAccount, payeeName, amount, remark } = t || {};
+    if (!payeeAccount || !amount) { results.push({ payeeAccount: payeeAccount || '', amount: amount || '', success: false, message: '明细缺少收款账号或金额' }); continue; }
+    const amt = parseFloat(amount);
+    if (!amt || amt <= 0) { results.push({ payeeAccount, amount, success: false, message: '金额无效' }); continue; }
+    const outBizNo = 'UEB' + Date.now().toString(36).toUpperCase() + Math.random().toString(36).slice(2, 8).toUpperCase();
+    const identity = /^1\d{10}$/.test(payeeAccount)
+      ? { identity_type: 'ALIPAY_LOGON_ID', identity: payeeAccount, name: payeeName || '' }
+      : { identity_type: 'ALIPAY_USER_ID', identity: payeeAccount, name: payeeName || '' };
+    try {
+      const r = await alipay.exec('alipay.fund.trans.uni.transfer', {
+        bizContent: {
+          out_biz_no: outBizNo,
+          trans_amount: amt.toFixed(2),
+          product_code: 'TRANS_ACCOUNT_NO_PWD',
+          biz_scene: 'DIRECT_TRANSFER',
+          transfer_scene_name: transferSceneName || '佣金报酬',
+          transfer_scene_report_infos: [ { info_type: infoType || '佣金报酬说明', info_content: infoContent || remark || '全宇宙恒等系统·真实转账' } ],
+          payee_info: identity,
+        },
+      });
+      const code = r && (r.code || r.errorCode);
+      if (code && code !== '10000') { results.push({ payeeAccount, payeeName, amount: amt, success: false, code, message: (r && (r.subMsg || r.sub_msg || r.msg)) || '支付宝网关拒绝该请求' }); continue; }
+      okCount++;
+      results.push({ payeeAccount, payeeName, amount: amt, success: true, outBizNo, tradeNo: (r && (r.tradeNo || r.trade_no)) || '' });
+    } catch (e) {
+      results.push({ payeeAccount, payeeName, amount: amt, success: false, message: (e && (e.message || e.rawErrorMessage || e.subMsg)) || String(e) });
+    }
+  }
+  res.json({ success: okCount > 0, total: transfers.length, successCount: okCount, results });
 });
 
 app.get('/api/health', (req, res) => res.json({ success: true, status: 'ok', mode: MODE }));
