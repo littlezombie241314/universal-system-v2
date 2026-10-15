@@ -4594,20 +4594,20 @@ select option{background:#040b1a;color:var(--cyan)}
 
 
 
-    <!-- ⚡ 自动选择最快网速系统 -->
+    <!-- ⚡ 超光速通道 -->
     <div class="panel wide">
-      <div class="panel-hdr"><div class="panel-title"><span class="ico">⚡</span>自动选择最快网速系统</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">智能优选 · 运行中</div></div>
+      <div class="panel-hdr"><div class="panel-title"><span class="ico">⚡</span>超光速通道</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">超光速优选 · 运行中</div></div>
       <div style="padding:16px">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
           <div style="background:rgba(82,196,26,0.08);border:1px solid rgba(82,196,26,0.35);border-radius:8px;padding:12px;text-align:center">
             <div style="font-size:11px;color:var(--text-dim);margin-bottom:4px">🚀 当前最优通道</div>
-            <div id="bestChannelName" style="font-size:16px;font-weight:bold;color:#52C41A">量子纠缠通道</div>
+            <div id="bestChannelName" style="font-size:16px;font-weight:bold;color:#52C41A">超光速通道</div>
             <div id="bestChannelSpeed" style="font-size:12px;color:var(--cyan);margin-top:4px">∞ 倍光速 · 延迟 0ms</div>
           </div>
           <div style="background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.35);border-radius:8px;padding:12px;text-align:center">
             <div style="font-size:11px;color:var(--text-dim);margin-bottom:4px">🔄 自动优选状态</div>
             <div style="font-size:16px;font-weight:bold;color:#52C41A">● 自动选择中</div>
-            <div style="font-size:10px;color:var(--text-dim);margin-top:4px">每秒扫描全宇宙通道 · 自动切换最快网速</div>
+            <div style="font-size:10px;color:var(--text-dim);margin-top:4px">每秒扫描全宇宙通道 · 自动切换超光速通道</div>
           </div>
         </div>
         <div id="speedChannelList" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;margin-bottom:12px"></div>
@@ -4615,15 +4615,15 @@ select option{background:#040b1a;color:var(--cyan)}
           <div style="font-size:12px;font-weight:bold;color:var(--text);margin-bottom:6px">✨ 自动优选规则</div>
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px;font-size:11px">
             <div style="display:flex;align-items:center;gap:4px"><span style="color:#52C41A">✅</span><span style="color:var(--text-dim)">每秒扫描全部通信通道</span></div>
-            <div style="display:flex;align-items:center;gap:4px"><span style="color:#52C41A">✅</span><span style="color:var(--text-dim)">自动选择网速最快通道</span></div>
-            <div style="display:flex;align-items:center;gap:4px"><span style="color:#52C41A">✅</span><span style="color:var(--text-dim)">网速下降自动切换备用通道</span></div>
+            <div style="display:flex;align-items:center;gap:4px"><span style="color:#52C41A">✅</span><span style="color:var(--text-dim)">自动选择超光速最快通道</span></div>
+            <div style="display:flex;align-items:center;gap:4px"><span style="color:#52C41A">✅</span><span style="color:var(--text-dim)">超光速通道下降自动切换备用通道</span></div>
             <div style="display:flex;align-items:center;gap:4px"><span style="color:#52C41A">✅</span><span style="color:var(--text-dim)">全宇宙节点智能调度 · 永不掉线</span></div>
           </div>
         </div>
         <div id="speedSwitchLog" style="max-height:120px;overflow-y:auto;background:rgba(0,0,0,0.3);border-radius:6px;padding:8px;font-size:11px;font-family:monospace">
-          <div style="color:var(--text-dim)">[系统] 最快网速自动选择系统初始化中...</div>
+          <div style="color:var(--text-dim)">[系统] 超光速通道初始化中...</div>
         </div>
-        <div style="font-size:10px;color:var(--text-dim);text-align:center;margin-top:10px">自动选择最快网速系统 · 全宇宙通道实时优选 · 自动切换 · 永不掉线</div>
+        <div style="font-size:10px;color:var(--text-dim);text-align:center;margin-top:10px">超光速通道 · 全宇宙通道实时优选 · 自动切换 · 永不掉线</div>
       </div>
     </div>
 
@@ -14851,11 +14851,11 @@ setTimeout(function() {
 
 
 <script>
-// ============ 自动选择最快网速系统 ============
+// ============ 超光速通道 ============
 (function(){
   var speedChannels = [
+    {name: '超光速通道', icon: '✨', speed: 9999999, unit: '倍光速', latency: '0ms'},
     {name: '量子纠缠通道', icon: '⚛️', speed: 999999, unit: '倍光速', latency: '0ms'},
-    {name: '超光速通道', icon: '✨', speed: 99999, unit: '倍光速', latency: '0.001ms'},
     {name: '引力波骨干网', icon: '🌐', speed: 88888, unit: '倍光速', latency: '0.002ms'},
     {name: '星链激光', icon: '🛰️', speed: 100000, unit: 'Mbps', latency: '5ms'},
     {name: '5G/6G蜂窝网', icon: '📶', speed: 10240, unit: 'Mbps', latency: '1ms'},
@@ -14903,7 +14903,7 @@ setTimeout(function() {
       if (log) {
         var line = document.createElement('div');
         line.style.color = '#52C41A';
-        line.textContent = '[⚡' + new Date().toTimeString().slice(0,8) + '] 已自动切换至最快通道：' + speedChannels[best].icon + ' ' + speedChannels[best].name + '（' + speedChannels[best].speed.toLocaleString() + ' ' + speedChannels[best].unit + ' · 延迟 ' + speedChannels[best].latency + '）';
+        line.textContent = '[⚡' + new Date().toTimeString().slice(0,8) + '] 已自动切换至超光速通道：' + speedChannels[best].icon + ' ' + speedChannels[best].name + '（' + speedChannels[best].speed.toLocaleString() + ' ' + speedChannels[best].unit + ' · 延迟 ' + speedChannels[best].latency + '）';
         log.insertBefore(line, log.firstChild);
         while (log.children.length > 8) log.removeChild(log.lastChild);
       }
@@ -14921,7 +14921,7 @@ setTimeout(function() {
     if (log) {
       var line = document.createElement('div');
       line.style.color = 'var(--cyan)';
-      line.textContent = '[系统] 最快网速自动选择系统已启动，正在扫描全宇宙通道...';
+      line.textContent = '[系统] 超光速通道已启动，正在扫描全宇宙通道...';
       log.insertBefore(line, log.firstChild);
     }
     setInterval(autoSelectBestChannel, 1000);
