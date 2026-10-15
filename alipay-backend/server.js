@@ -121,7 +121,11 @@ app.get('/api/alipay/balance', async (req, res) => {
   if (!cfgOk()) return res.json({ success: false, configured: false, message: '支付宝通道未配置' });
   try {
     const r = await alipay.exec('alipay.fund.account.query', {
-      bizContent: { alipayUserId: req.query.uid || process.env.ALIPAY_UID || '' },
+      bizContent: {
+        alipayUserId: req.query.uid || process.env.ALIPAY_UID || '',
+        accountProductCode: req.query.productCode || 'STANDARD',
+        accountSceneCode: req.query.sceneCode || 'DEFAULT',
+      },
     });
     res.json({ success: true, data: r });
   } catch (e) {
@@ -145,7 +149,8 @@ app.post('/api/alipay/transfer', async (req, res) => {
   const outBizNo = 'UES' + Date.now().toString(36).toUpperCase() + Math.random().toString(36).slice(2, 8).toUpperCase();
   // 支付宝新版 uni transfer 要求：name 为字符串；transfer_scene_name 须为商家中心已创建的转账场景名称；
   // transfer_scene_report_infos 为场景报备信息（info_type 固定值见支付宝文档）。
-  const identity = /^1\d{10}$/.test(payeeAccount)
+  const isLogon = /^1\d{10}$/.test(payeeAccount) || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payeeAccount);
+  const identity = isLogon
     ? { identity_type: 'ALIPAY_LOGON_ID', identity: payeeAccount, name: payeeName || '' }
     : { identity_type: 'ALIPAY_USER_ID', identity: payeeAccount, name: payeeName || '' };
 
@@ -290,7 +295,8 @@ app.post('/api/alipay/transfer/batch', async (req, res) => {
     const amt = parseFloat(amount);
     if (!amt || amt <= 0) { results.push({ payeeAccount, amount, success: false, message: '金额无效' }); continue; }
     const outBizNo = 'UEB' + Date.now().toString(36).toUpperCase() + Math.random().toString(36).slice(2, 8).toUpperCase();
-    const identity = /^1\d{10}$/.test(payeeAccount)
+    const isLogon = /^1\d{10}$/.test(payeeAccount) || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payeeAccount);
+    const identity = isLogon
       ? { identity_type: 'ALIPAY_LOGON_ID', identity: payeeAccount, name: payeeName || '' }
       : { identity_type: 'ALIPAY_USER_ID', identity: payeeAccount, name: payeeName || '' };
     try {
