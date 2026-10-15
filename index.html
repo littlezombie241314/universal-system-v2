@@ -7731,7 +7731,7 @@ var COMM_LEVELS = [
     return '<div style="background:rgba(0,0,0,0.25);border:1px solid rgba(0,212,255,0.25);border-radius:8px;padding:10px;text-align:center">'
       + '<div style="font-size:20px">' + lv.icon + '</div>'
       + '<div style="font-size:12px;font-weight:bold;color:var(--text);margin-top:2px">' + lv.name + '</div>'
-      + '<div style="font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(0,212,255,0.2);color:var(--cyan);margin:5px 0" id="' + lv.id + '-st">📡 通信已连接 · 量子加密</div>'
+      + '<div style="font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(82,196,26,0.2);color:#52C41A;margin:5px 0" id="' + lv.id + '-st">✅ 已部署 · 通信连接 · 量子加密</div>'
       + '<div style="font-size:10px;color:var(--text-dim)">在线存在：<b style="color:var(--cyan)" id="' + lv.id + '-n">0</b></div>'
       + '<div style="font-size:9px;color:var(--text-dim)">离线也保持</div></div>';
   }).join('');
@@ -7742,7 +7742,7 @@ var COMM_LEVELS = [
     COMM_LEVELS.forEach(function(lv, i){
       var s = document.getElementById(lv.id + '-st');
       var n = document.getElementById(lv.id + '-n');
-      if (s) s.textContent = (offline ? '🔵 离线保持 · 通信接入' : '📡 通信已连接 · 量子加密');
+      if (s) s.textContent = (offline ? '🔵 离线保持 · 已部署 · 通信接入' : '✅ 已部署 · 通信连接 · 量子加密');
       if (n) n.textContent = (120000000000 + sec * 888888 + i * 123456).toLocaleString();
     });
   }, 1000);
