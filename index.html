@@ -1834,6 +1834,7 @@ select option{background:#040b1a;color:var(--cyan)}
         <div class="pay-tab" onclick="switchPay('barcode',this)">📤 付款码</div>
         <div class="pay-tab" onclick="switchPay('scan',this)">📷 扫码支付</div>
         <div class="pay-tab" onclick="switchPay('transfer',this)">💸 星际转账</div>
+        <div class="pay-tab" onclick="switchPay('pool',this)">🏦 真实资金池</div>
         <div class="pay-tab" onclick="switchPay('alipay',this)">🏦 真实支付宝</div>
         <div class="pay-tab" onclick="switchPay('crypto',this)">🪙 真实加密货币</div>
         <div class="pay-tab" onclick="switchPay('withdraw',this)">🏧 余额提现</div>
@@ -2070,6 +2071,34 @@ select option{background:#040b1a;color:var(--cyan)}
             <button class="btn magenta" onclick="doTransfer()">💸 确认转账</button>
             <div class="pay-result" id="tfResult"></div>
           </div>
+        </div>
+      </div>
+      <!-- 真实资金池（入金记账 + 真实出金） -->
+      <div class="pay-section" id="pay-pool">
+        <div class="pay-body">
+          <div style="font-size:11px;color:var(--text-dim);line-height:1.8;margin-bottom:12px">🏦 <b style="color:#52C41A">真实资金池</b>：池余额 = 入金合计 − 出金合计（记账值），与你的真实支付宝资金一一对应。入金 = 向你的支付宝收款码真实转账后确认入池；出金 = 调用<b style="color:var(--cyan)">支付宝官方单笔转账 API</b> 真实到账收款方支付宝。</div>
+          <div class="pay-field" style="text-align:center;padding:14px;border:1px dashed rgba(82,196,26,0.4);border-radius:10px;margin-bottom:12px">
+            <div style="font-size:10px;color:var(--text-dim);margin-bottom:4px">真实资金池余额（记账）</div>
+            <div id="poolBalance" style="font-size:28px;font-weight:bold;color:var(--amber);font-family:monospace">¥ 0.00</div>
+            <div style="font-size:9px;color:var(--text-dim);margin-top:4px">= 入金合计 − 出金合计 · 与支付宝 App 真实余额自行核对</div>
+          </div>
+          <div style="margin:10px 0 14px;padding:10px;background:rgba(82,196,26,0.06);border:1px dashed rgba(82,196,26,0.3);border-radius:8px">
+            <div style="font-size:11px;color:#52C41A;font-weight:bold;margin-bottom:6px">➕ 入金（真实资金入池）</div>
+            <div style="font-size:10px;color:var(--text-dim);margin-bottom:8px;line-height:1.7">1) 打开支付宝 App 扫码支付/转账到你的支付宝收款码 → 2) 输入<b>实际到账金额</b> → 3) 点「确认入金」。金额必须真实到账，否则台账失真。</div>
+            <div class="pay-field"><label>实际到账金额（元）</label><input type="number" id="poolInAmt" placeholder="如 100" min="1" step="0.01"></div>
+            <div class="pay-field"><label>入金备注</label><input type="text" id="poolInNote" placeholder="如 支付宝账单交易号" maxlength="40"></div>
+            <button class="btn cyan" onclick="doPoolDeposit()">➕ 确认入金（真实资金）</button>
+          </div>
+          <div style="margin:10px 0 14px;padding:10px;background:rgba(22,119,255,0.06);border:1px dashed rgba(22,119,255,0.3);border-radius:8px">
+            <div style="font-size:11px;color:#1677ff;font-weight:bold;margin-bottom:6px">💸 出金（真实转账到支付宝）</div>
+            <div class="pay-field"><label>收款方支付宝账号（手机号/邮箱）</label><input type="text" id="poolOutPayee" placeholder="如 15291571201" maxlength="60"></div>
+            <div class="pay-field"><label>收款方真实姓名</label><input type="text" id="poolOutName" placeholder="收款方支付宝实名姓名" maxlength="30"></div>
+            <div class="pay-field"><label>出金金额（元）</label><input type="number" id="poolOutAmt" placeholder="从资金池余额出金" min="1" step="0.01"></div>
+            <button class="btn magenta" onclick="doPoolWithdraw()">💸 真实出金（真实资金）</button>
+            <div id="poolWarn" style="margin-top:6px;font-size:10px;color:var(--text-dim);line-height:1.7">出金通过支付宝官方单笔转账 API 从<b style="color:var(--amber)">付款方支付宝账户</b>扣真实资金 → 到账收款方支付宝，资金池余额同步扣减。付款账户余额不足会报 BALANCE_IS_NOT_ENOUGH，请先充值。</div>
+          </div>
+          <div class="pay-result" id="poolResult"></div>
+          <div id="poolLog"></div>
         </div>
       </div>
       <!-- 真实支付宝（官方单笔转账） -->
@@ -8626,6 +8655,88 @@ var autoMsgs=[
 })();
 
 /* ============ PAYMENT SYSTEM ============ */
+var POOL_KEY = 'ues_real_pool';
+function poolData(){
+  try { return JSON.parse(localStorage.getItem(POOL_KEY) || '{"in":[],"out":[]}'); } catch(e){ return {in:[],out:[]}; }
+}
+function savePool(d){ try { localStorage.setItem(POOL_KEY, JSON.stringify(d)); } catch(e){} }
+function poolAmount(d){
+  var i = d.in.reduce(function(s,x){ return s + (parseFloat(x.amount)||0); }, 0);
+  var o = d.out.reduce(function(s,x){ return s + (parseFloat(x.amount)||0); }, 0);
+  return { in: i, out: o, bal: i - o };
+}
+function renderPool(){
+  var d = poolData(); var a = poolAmount(d);
+  var bal = document.getElementById('poolBalance');
+  if (bal) bal.innerText = '¥ ' + a.bal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  var box = document.getElementById('poolLog');
+  if (!box) return;
+  var rows = d.in.map(function(x){ return {t:'入金', x:x}; }).concat(d.out.map(function(x){ return {t:'出金', x:x}; }))
+    .sort(function(x,y){ return (y.x.time||'').localeCompare(x.x.time||''); });
+  if (!rows.length) { box.innerHTML = ''; return; }
+  var h = '<div style="margin-top:12px;padding:10px;background:rgba(22,119,255,0.05);border:1px solid rgba(22,119,255,0.18);border-radius:8px">'
+    + '<div style="font-size:11px;font-weight:bold;color:#1677ff;margin-bottom:6px">📒 真实资金池台账（' + rows.length + ' 条 · 实时保存 · 离线保持）</div>';
+  var bal2 = 0;
+  for (var i = 0; i < Math.min(rows.length, 20); i++) {
+    var r = rows[i]; bal2 += r.t === '入金' ? (parseFloat(r.x.amount)||0) : -(parseFloat(r.x.amount)||0);
+    h += '<div style="font-size:10px;color:var(--text-dim);padding:4px 0;border-bottom:1px dashed rgba(255,255,255,0.08)">'
+      + (r.t === '入金' ? '<span style="color:#52C41A">➕ 入金</span>' : '<span style="color:#ff4d4f">💸 出金</span>')
+      + ' ¥' + String(parseFloat(r.x.amount)).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+      + ' → ' + (r.x.payee || r.x.note || '')
+      + '<span style="float:right;color:var(--cyan)">余额 ¥' + bal2.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + '</span><br>'
+      + '<span style="font-size:9px">' + (r.x.time||'') + (r.x.tradeNo ? ' · 交易号 ' + r.x.tradeNo : '') + (r.x.mode === 'real' ? ' · ✅ 真实到账' : '') + '</span></div>';
+  }
+  box.innerHTML = h;
+}
+function doPoolDeposit(){
+  var amt = parseFloat(document.getElementById('poolInAmt').value);
+  var note = document.getElementById('poolInNote').value.trim();
+  if (!amt || amt < 1) { toast('⚠ 请输入实际到账金额（≥1 元）'); return; }
+  var d = poolData();
+  d.in.unshift({ amount: amt, note: note, time: new Date().toLocaleString('zh-CN', {hour12:false}) });
+  savePool(d); renderPool();
+  document.getElementById('poolInAmt').value = ''; document.getElementById('poolInNote').value = '';
+  toast('➕ 已确认入金 ¥' + amt.toFixed(2));
+}
+function doPoolWithdraw(){
+  var url = apBackendUrl();
+  var payee = document.getElementById('poolOutPayee').value.trim();
+  var name = document.getElementById('poolOutName').value.trim();
+  var amt = parseFloat(document.getElementById('poolOutAmt').value);
+  var res = document.getElementById('poolResult');
+  var d = poolData(); var a = poolAmount(d);
+  if (!url) { toast('⚠ 请先在「🏦 真实支付宝」填写后端地址'); return; }
+  if (!payee) { toast('⚠ 请输入收款方支付宝账号'); return; }
+  if (!name) { toast('⚠ 请输入收款方真实姓名'); return; }
+  if (!amt || amt < 1) { toast('⚠ 请输入出金金额（≥1 元）'); return; }
+  if (amt > a.bal) { toast('⚠ 出金金额超过资金池余额 ¥' + a.bal.toFixed(2)); return; }
+  if (!confirm('确认从真实资金池出金 ¥' + amt.toFixed(2) + ' 到 ' + payee + '（' + name + '）？真实资金 · 不可逆')) return;
+  res.className = 'pay-result show';
+  res.innerHTML = '<div class="rcard"><div class="rc-title" style="color:var(--magenta)">⏳ 真实出金处理中 ...</div></div>';
+  fetch(url + '/api/alipay/transfer', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ payeeAccount: payee, payeeName: name, amount: amt, remark: '真实资金池出金' })
+  }).then(function(r){ return r.json(); }).then(function(x){
+    if (x.success && x.data) {
+      var dd = x.data;
+      var d2 = poolData();
+      d2.out.unshift({ amount: amt, payee: payee, name: name, tradeNo: dd.tradeNo || '', orderId: dd.orderId || '', mode: 'real', time: new Date().toLocaleString('zh-CN', {hour12:false}) });
+      savePool(d2); renderPool();
+      res.innerHTML = '<div class="rcard ok"><div class="rc-title">🏦 真实出金成功</div>'
+        + '<div class="rc-row"><span>到账状态</span><span style="color:#52C41A">✅ 真实到账</span></div>'
+        + '<div class="rc-row"><span>收款方</span><span>' + payee + '</span></div>'
+        + '<div class="rc-row"><span>出金金额</span><span style="color:var(--amber);font-weight:bold">¥ ' + amt.toFixed(2) + '</span></div>'
+        + '<div class="rc-row"><span>支付宝交易号</span><span style="color:var(--cyan)">' + (dd.tradeNo || '') + '</span></div></div>';
+      toast('🏦 真实出金成功 · 交易号 ' + (dd.tradeNo || ''));
+    } else {
+      res.innerHTML = '<div class="rcard" style="border-color:rgba(255,77,79,0.4)"><div class="rc-title" style="color:#ff4d4f">❌ 真实出金失败</div><div class="rc-row"><span>原因</span><span>' + (x.message || '未知错误') + '</span></div></div>';
+      toast('❌ 出金失败：' + (x.message || ''));
+    }
+  }).catch(function(e){
+    res.innerHTML = '<div class="rcard" style="border-color:rgba(255,77,79,0.4)"><div class="rc-title" style="color:#ff4d4f">❌ 后端连接失败</div><div class="rc-row"><span>原因</span><span>' + (e.message || e) + '</span></div></div>';
+  });
+}
 var AP_BACKEND_KEY = 'ues_alipay_backend';
 function apBackendUrl(){ var v = document.getElementById('apBackend'); return v ? v.value.trim().replace(/\/$/, '') : ''; }
 function checkAlipayBackend(){
@@ -8832,6 +8943,7 @@ function switchPay(tab,el){  document.querySelectorAll('.pay-tab').forEach(funct
   el.classList.add('active');
   document.getElementById('pay-'+tab).classList.add('active');
   if (tab === 'transfer') { tfPayLevelInit(); renderTfLog(); }
+  if (tab === 'pool') { renderPool(); }
   if (tab === 'alipay') {
     try { var saved = localStorage.getItem(AP_BACKEND_KEY); if (saved) { var v = document.getElementById('apBackend'); if (v) v.value = saved; } } catch(e) {}
     renderAlipayLog();
