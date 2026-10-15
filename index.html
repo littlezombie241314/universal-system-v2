@@ -1442,10 +1442,12 @@ select option{background:#040b1a;color:var(--cyan)}
           <div><label style="font-size:10px;color:var(--text-dim);display:block;margin-bottom:3px">收款人姓名：</label><input type="text" id="mtName" placeholder="请输入收款人姓名" style="width:100%;background:rgba(4,18,34,.6);border:1px solid var(--border);color:var(--cyan);padding:6px 8px;font-size:12px;font-family:var(--mono);border-radius:2px"></div>
           <div><label style="font-size:10px;color:var(--text-dim);display:block;margin-bottom:3px">账户类型：</label><select id="mtPlatform" style="width:100%;background:rgba(4,18,34,.6);border:1px solid var(--border);color:var(--cyan);padding:6px 8px;font-size:12px;border-radius:2px"><option value="alipay">支付宝</option><option value="wechat">微信钱包</option><option value="bank">银行卡</option><option value="ecny">数字人民币</option><option value="paypal">PayPal</option><option value="stripe">Stripe</option><option value="applepay">Apple Pay</option><option value="googlepay">Google Pay</option><option value="visa">Visa信用卡</option><option value="mastercard">Mastercard</option><option value="unionpay">银联卡</option><option value="swift">SWIFT国际转账</option><option value="sepa">SEPA欧元转账</option><option value="mpesa">M-Pesa</option><option value="paytm">Paytm</option><option value="upi">UPI</option><option value="pix">Pix</option><option value="gcash">GCash</option><option value="bitcoin">Bitcoin</option><option value="ethereum">Ethereum</option><option value="usdt">USDT</option></select></div>
           <div><label style="font-size:10px;color:var(--text-dim);display:block;margin-bottom:3px">收款账号：</label><input type="text" id="mtAccount" placeholder="支付宝账号/银行卡号/钱包地址" style="width:100%;background:rgba(4,18,34,.6);border:1px solid var(--border);color:var(--cyan);padding:6px 8px;font-size:12px;font-family:var(--mono);border-radius:2px"></div>
+          <div><label style="font-size:10px;color:var(--text-dim);display:block;margin-bottom:3px">开户银行（银行卡转账时填）：</label><input type="text" id="mtBankName" placeholder="如：中国工商银行" style="width:100%;background:rgba(4,18,34,.6);border:1px solid var(--border);color:var(--cyan);padding:6px 8px;font-size:12px;font-family:var(--mono);border-radius:2px"></div>
           <div><label style="font-size:10px;color:var(--text-dim);display:block;margin-bottom:3px">转账金额（元）：</label><input type="number" id="mtAmount" placeholder="请输入转账金额" value="9000" min="0.01" step="0.01" style="width:100%;background:rgba(4,18,34,.6);border:1px solid var(--border);color:var(--cyan);padding:6px 8px;font-size:12px;font-family:var(--mono);border-radius:2px"></div>
           <div style="grid-column:1/-1"><label style="font-size:10px;color:var(--text-dim);display:block;margin-bottom:3px">转账备注（可选）：</label><input type="text" id="mtRemark" placeholder="工资/报销/货款等" style="width:100%;background:rgba(4,18,34,.6);border:1px solid var(--border);color:var(--cyan);padding:6px 8px;font-size:12px;font-family:var(--mono);border-radius:2px"></div>
           <div style="grid-column:1/-1;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
             <button class="btn green" onclick="submitManualTransfer()">✅ 确认转账</button>
+            <button class="btn green" onclick="submitWithdraw()">🏦 提现到本人银行卡</button>
             <button class="btn" onclick="clearManualTransfer()">🔄 清空表单</button>
             <span id="mtStatus" style="font-size:11px;color:var(--text-dim)">等待输入收款人信息</span>
           </div>
@@ -6460,7 +6462,9 @@ function submitManualTransfer(){var name=document.getElementById('mtName').value
 // 实时转账模式：立即调用后端支付宝API，等待真实转账结果
 statusEl.textContent='⏳ 正在调用支付宝接口转账...';
 statusEl.style.color='var(--amber)';
-var mtBackend=(platform==='alipay')?'https://universal-pay-alipay.onrender.com':(backendConfig.apiUrl||'');var mtHeaders={'Content-Type':'application/json'};if(platform!=='alipay'&&backendConfig.apiKey)mtHeaders['X-API-Key']=backendConfig.apiKey;fetch(mtBackend+'/api/alipay/transfer',{method:'POST',headers:mtHeaders,body:JSON.stringify({payeeAccount:account,amount:amount,payeeRealName:name,remark:remark||'手动转账'})}).then(function(r){return r.json().catch(function(){return {success:false,message:'后端返回异常(HTTP '+r.status+')'}})}).then(function(result){
+var mtBackend='https://universal-pay-alipay.onrender.com';var mtHeaders={'Content-Type':'application/json'};var mtEndpoint='/api/alipay/transfer';var mtPayload={payeeAccount:account,amount:amount,payeeRealName:name,remark:remark||'手动转账'};
+if(platform==='bank'){mtEndpoint='/api/alipay/transfer/bank';var mtBankNameEl=document.getElementById('mtBankName');var mtBankName=mtBankNameEl?mtBankNameEl.value.trim():'';mtPayload={payeeBankAccount:account,payeeBankName:mtBankName||'',payeeName:name,amount:amount,remark:remark||'手动转账'};}
+fetch(mtBackend+mtEndpoint,{method:'POST',headers:mtHeaders,body:JSON.stringify(mtPayload)}).then(function(r){return r.json().catch(function(){return {success:false,message:'后端返回异常(HTTP '+r.status+')'}})}).then(function(result){
   if(result.success){
     var tradeNo=result.data&&result.data.orderId?result.data.orderId:generateTradeNo();
     showMTResult(name,pname,icon,account,amount,remark,tradeNo,'success','✅ 支付宝真实转账成功');
@@ -6484,6 +6488,39 @@ var mtBackend=(platform==='alipay')?'https://universal-pay-alipay.onrender.com':
 }else{setTimeout(function(){var tradeNo=generateTradeNo();var success=Math.random()>0.02;if(success){showMTResult(name,pname,icon,account,amount,remark,tradeNo,'success','模拟转账成功（演示模式）');addMTHistory(name,pname,account,amount,tradeNo,'success');statusEl.textContent='✅ 转账成功（模拟模式）';statusEl.style.color='var(--green)';}else{var reasons=['账户信息有误','收款账户异常','风控拦截','商户余额不足','系统繁忙，请稍后重试'];var reason=reasons[Math.floor(Math.random()*reasons.length)];showMTResult(name,pname,icon,account,amount,remark,'','failed',reason);addMTHistory(name,pname,account,amount,'','failed');statusEl.textContent='❌ 转账失败：'+reason;statusEl.style.color='var(--amber)';}},800+Math.random()*1500);}}
 function showMTResult(name,pname,icon,account,amount,remark,tradeNo,status,msg){var resultEl=document.getElementById('mtResult');var contentEl=document.getElementById('mtResultContent');var statusColor=status==='success'?'var(--green)':'var(--amber)';var statusText=status==='success'?'✓ 转账成功':'✗ 转账失败';var accountDisplay=account.length>20?account.substring(0,8)+'...'+account.substring(account.length-4):account;contentEl.innerHTML='<div>收款人：<span style="color:#fff">'+name+'</span></div><div>收款账户：'+icon+' '+pname+' <span style="color:#fff">'+accountDisplay+'</span></div><div>转账金额：<span style="color:var(--cyan)">¥'+amount.toFixed(2)+'</span></div>'+(remark?'<div>转账备注：'+remark+'</div>':'')+(tradeNo?'<div>交易单号：<span style="color:var(--text-dim);font-family:var(--mono)">'+tradeNo+'</span></div>':'')+'<div>转账状态：<span style="color:'+statusColor+'">'+statusText+'</span> - '+msg+'</div>'+(status==='success'?'<div style="color:var(--text-dim);margin-top:4px">⏰ 预计到账时间：1-3分钟（实时到账）</div>':'');resultEl.style.display='block';}
 function addMTHistory(name,pname,account,amount,tradeNo,status){var historyEl=document.getElementById('mtHistory');var now=new Date();var time=now.toLocaleTimeString('zh-CN',{hour12:false});var statusIcon=status==='success'?'✅':'❌';var accountDisplay=account.length>15?account.substring(0,6)+'...'+account.substring(account.length-4):account;var record=document.createElement('div');record.innerHTML='['+time+'] '+statusIcon+' '+name+' → '+pname+'('+accountDisplay+') ¥'+amount.toFixed(2)+(tradeNo?' 单号:'+tradeNo.substring(tradeNo.length-8):'');if(historyEl.textContent==='暂无转账记录')historyEl.innerHTML='';historyEl.insertBefore(record,historyEl.firstChild);while(historyEl.children.length>20)historyEl.removeChild(historyEl.lastChild);mtHistoryList.unshift({name:name,platform:pname,account:account,amount:amount,tradeNo:tradeNo,status:status,time:time});if(mtHistoryList.length>50)mtHistoryList.pop();}
+
+/* ============ 🏦 提现到本人银行卡（真实接口） ============ */
+function submitWithdraw(){
+  var name=document.getElementById('mtName').value.trim();
+  var account=document.getElementById('mtAccount').value.trim();
+  var bankNameEl=document.getElementById('mtBankName');
+  var bankName=bankNameEl?bankNameEl.value.trim():'';
+  var amount=parseFloat(document.getElementById('mtAmount').value);
+  var statusEl=document.getElementById('mtStatus');
+  if(!account){statusEl.textContent='⚠️ 请输入本人银行卡号';statusEl.style.color='var(--amber)';return;}
+  if(!amount||amount<=0){statusEl.textContent='⚠️ 请输入有效金额';statusEl.style.color='var(--amber)';return;}
+  var mode=document.getElementById('salaryMode').value;
+  if(mode==='real'&&backendConfig.connected){
+    statusEl.textContent='⏳ 正在调用支付宝提现接口...';statusEl.style.color='var(--amber)';
+    fetch('https://universal-pay-alipay.onrender.com/api/alipay/withdraw',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({payeeBankAccount:account,payeeBankName:bankName||'',payeeName:name||'',amount:amount,remark:'提现到银行卡'})}).then(function(r){return r.json().catch(function(){return {success:false,message:'后端返回异常(HTTP '+r.status+')'}})}).then(function(result){
+      if(result.success){
+        var tradeNo=result.data&&result.data.orderId?result.data.orderId:generateTradeNo();
+        statusEl.textContent='✅ 提现成功，订单号：'+tradeNo;statusEl.style.color='var(--green)';
+        showMTResult(name,'银行卡','🏦',account,amount,'提现到银行卡',tradeNo,'success','✅ 支付宝真实提现成功');
+        setTimeout(function(){fetchMerchantBalance();},1000);
+      }else{
+        statusEl.textContent='❌ 提现失败：'+(result.message||'未知错误');statusEl.style.color='var(--amber)';
+        showMTResult(name,'银行卡','🏦',account,amount,'提现到银行卡','','failed',result.message||'提现失败');
+      }
+    }).catch(function(err){
+      statusEl.textContent='❌ 后端调用异常：'+err.message;statusEl.style.color='var(--amber)';
+    });
+  }else{
+    var tradeNo=generateTradeNo();
+    showMTResult(name,'银行卡','🏦',account,amount,'提现到银行卡',tradeNo,'success','✅ 提现成功（模拟模式）');
+    statusEl.textContent='✅ 提现成功（模拟模式）';statusEl.style.color='var(--green)';
+  }
+}
 
 var autoRefillOn=true,autoRefillTimer=null,autoRefillCount=0;
 function startAutoRefill(silent){
