@@ -1277,7 +1277,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.81 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.82 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -1490,53 +1490,77 @@ select option{background:#040b1a;color:var(--cyan)}
           <span style="background:#52C41A;color:#fff;padding:1px 6px;border-radius:3px;font-size:9px;font-weight:bold">真实模式</span>
         </div>
         
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px">
+          <div style="flex:1;min-width:150px;background:rgba(82,196,26,0.10);border:1px solid rgba(82,196,26,0.45);border-radius:8px;padding:8px;text-align:center">
+            <div style="font-size:11px;font-weight:bold;color:#52C41A">✅ 个人支付宝账户</div>
+            <div style="font-size:9px;color:#8ba3c7;margin-top:3px">手机号/邮箱 · 已实测到账 1.1元</div>
+          </div>
+          <div style="flex:1;min-width:150px;background:rgba(82,196,26,0.10);border:1px solid rgba(82,196,26,0.45);border-radius:8px;padding:8px;text-align:center">
+            <div style="font-size:11px;font-weight:bold;color:#52C41A">✅ 企业/公司支付宝账户</div>
+            <div style="font-size:9px;color:#8ba3c7;margin-top:3px">同一链路已打通 · 对方给企业账号</div>
+          </div>
+          <div style="flex:1;min-width:150px;background:rgba(255,184,0,0.08);border:1px solid rgba(255,184,0,0.40);border-radius:8px;padding:8px;text-align:center">
+            <div style="font-size:11px;font-weight:bold;color:#ffb800">⏳ 任意银行卡</div>
+            <div style="font-size:9px;color:#8ba3c7;margin-top:3px">需开通「单笔转账到银行卡」功能包</div>
+          </div>
+        </div>
+        
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
           <div>
             <label style="font-size:10px;color:var(--text-dim);display:block;margin-bottom:3px">收款账户类型：</label>
-            <select id="manualTransferType" style="width:100%;background:rgba(4,18,34,.6);border:1px solid var(--border);color:var(--cyan);padding:6px 8px;font-size:12px;border-radius:3px">
-              <option value="alipay">支付宝账户</option>
-              <option value="wechat">微信钱包</option>
-              <option value="bank">银行账户</option>
-              <option value="ecny">数字人民币</option>
-              <option value="paypal">PayPal</option>
-              <option value="stripe">Stripe</option>
-              <option value="applepay">Apple Pay</option>
-              <option value="googlepay">Google Pay</option>
-              <option value="samsungpay">Samsung Pay</option>
-              <option value="visa">Visa信用卡</option>
-              <option value="mastercard">Mastercard信用卡</option>
-              <option value="amex">American Express</option>
-              <option value="unionpay">银联卡</option>
-              <option value="swift">SWIFT国际转账</option>
-              <option value="sepa">SEPA欧元转账</option>
-              <option value="ach">ACH美国转账</option>
-              <option value="mpesa">M-Pesa（非洲）</option>
-              <option value="paytm">Paytm（印度）</option>
-              <option value="upi">UPI（印度）</option>
-              <option value="pix">Pix（巴西）</option>
-              <option value="gcash">GCash（菲律宾）</option>
-              <option value="grabpay">GrabPay（东南亚）</option>
-              <option value="linepay">Line Pay（日本）</option>
-              <option value="kakaopay">Kakao Pay（韩国）</option>
-              <option value="skrill">Skrill</option>
-              <option value="neteller">Neteller</option>
-              <option value="payoneer">Payoneer</option>
-              <option value="wise">Wise</option>
-              <option value="revolut">Revolut</option>
-              <option value="bitcoin">Bitcoin (BTC)</option>
-              <option value="ethereum">Ethereum (ETH)</option>
-              <option value="usdt">USDT (泰达币)</option>
-              <option value="usdc">USDC</option>
-              <option value="robinhood">Robinhood券商</option>
-              <option value="fidelity">Fidelity富达</option>
-              <option value="internal">全宇宙系统内部账户</option>
+            <select id="manualTransferType" onchange="manualTransferTypeChange()" style="width:100%;background:rgba(4,18,34,.6);border:1px solid var(--border);color:var(--cyan);padding:6px 8px;font-size:12px;border-radius:3px">
+              <optgroup label="✅ 支付宝账户 · 真实到账已打通">
+                <option value="alipay_personal">个人支付宝账户（手机号/邮箱）</option>
+                <option value="alipay_company">企业/公司支付宝账户</option>
+              </optgroup>
+              <optgroup label="⏳ 银行卡 · 待开通功能包">
+                <option value="bank">任意银行卡</option>
+              </optgroup>
+              <optgroup label="其他渠道 · 真实链路未接入">
+                <option value="wechat">微信钱包</option>
+                <option value="ecny">数字人民币</option>
+                <option value="paypal">PayPal</option>
+                <option value="stripe">Stripe</option>
+                <option value="applepay">Apple Pay</option>
+                <option value="googlepay">Google Pay</option>
+                <option value="samsungpay">Samsung Pay</option>
+                <option value="visa">Visa信用卡</option>
+                <option value="mastercard">Mastercard信用卡</option>
+                <option value="amex">American Express</option>
+                <option value="unionpay">银联卡</option>
+                <option value="swift">SWIFT国际转账</option>
+                <option value="sepa">SEPA欧元转账</option>
+                <option value="ach">ACH美国转账</option>
+                <option value="mpesa">M-Pesa（非洲）</option>
+                <option value="paytm">Paytm（印度）</option>
+                <option value="upi">UPI（印度）</option>
+                <option value="pix">Pix（巴西）</option>
+                <option value="gcash">GCash（菲律宾）</option>
+                <option value="grabpay">GrabPay（东南亚）</option>
+                <option value="linepay">Line Pay（日本）</option>
+                <option value="kakaopay">Kakao Pay（韩国）</option>
+                <option value="skrill">Skrill</option>
+                <option value="neteller">Neteller</option>
+                <option value="payoneer">Payoneer</option>
+                <option value="wise">Wise</option>
+                <option value="revolut">Revolut</option>
+                <option value="bitcoin">Bitcoin (BTC)</option>
+                <option value="ethereum">Ethereum (ETH)</option>
+                <option value="usdt">USDT (泰达币)</option>
+                <option value="usdc">USDC</option>
+                <option value="robinhood">Robinhood券商</option>
+                <option value="fidelity">Fidelity富达</option>
+                <option value="internal">全宇宙系统内部账户</option>
+              </optgroup>
             </select>
           </div>
           <div>
             <label style="font-size:10px;color:var(--text-dim);display:block;margin-bottom:3px">转账金额（元）：</label>
-            <input type="number" id="manualTransferAmount" placeholder="请输入转账金额" value="10000" style="width:100%;background:rgba(4,18,34,.6);border:1px solid var(--border);color:var(--cyan);padding:6px 8px;font-size:12px;border-radius:3px">
+            <input type="number" id="manualTransferAmount" placeholder="请输入转账金额" value="100" style="width:100%;background:rgba(4,18,34,.6);border:1px solid var(--border);color:var(--cyan);padding:6px 8px;font-size:12px;border-radius:3px">
           </div>
         </div>
+        
+        <div id="manualTransferHint" style="font-size:10px;color:#52C41A;background:rgba(82,196,26,0.08);border:1px solid rgba(82,196,26,0.25);border-radius:6px;padding:6px 8px;margin-bottom:8px"></div>
         
         <div style="margin-bottom:8px">
           <label style="font-size:10px;color:var(--text-dim);display:block;margin-bottom:3px">收款账户号码：</label>
@@ -4654,7 +4678,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.81 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.82 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -13625,7 +13649,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.4.81';
+var systemVersion = 'v1.4.82';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
@@ -14889,107 +14913,104 @@ function dnsLookup(){
 // ============ 手动单笔转账（真实模式） ============
 var transferHistory = JSON.parse(localStorage.getItem('manualTransferHistory') || '[]');
 
-function executeManualTransfer(){
-  var accountType = document.getElementById('manualTransferType').value;
-  var amount = parseFloat(document.getElementById('manualTransferAmount').value);
-  var account = document.getElementById('manualTransferAccount').value;
-  var name = document.getElementById('manualTransferName').value;
-  var result = document.getElementById('manualTransferResult');
-  
-  if(!account){
-    result.innerHTML = '<span style="color:#FAAD14">⚠ 请输入收款账户号码</span>';
-    return;
+var MT_TYPE_NAMES = {
+  'alipay_personal':'个人支付宝账户',
+  'alipay_company':'企业/公司支付宝账户',
+  'bank':'银行卡',
+  'wechat':'微信钱包','ecny':'数字人民币','paypal':'PayPal','stripe':'Stripe','applepay':'Apple Pay','googlepay':'Google Pay','samsungpay':'Samsung Pay','visa':'Visa信用卡','mastercard':'Mastercard信用卡','amex':'American Express','unionpay':'银联卡','swift':'SWIFT国际转账','sepa':'SEPA欧元转账','ach':'ACH美国转账','mpesa':'M-Pesa（非洲）','paytm':'Paytm（印度）','upi':'UPI（印度）','pix':'Pix（巴西）','gcash':'GCash（菲律宾）','grabpay':'GrabPay（东南亚）','linepay':'Line Pay（日本）','kakaopay':'Kakao Pay（韩国）','skrill':'Skrill','neteller':'Neteller','payoneer':'Payoneer','wise':'Wise','revolut':'Revolut','bitcoin':'Bitcoin (BTC)','ethereum':'Ethereum (ETH)','usdt':'USDT (泰达币)','usdc':'USDC','robinhood':'Robinhood券商','fidelity':'Fidelity富达','internal':'全宇宙系统内部账户'
+};
+function getBackendBase(){
+  if(backendConfig && backendConfig.apiUrl) return backendConfig.apiUrl;
+  return 'https://universal-pay-alipay.onrender.com';
+}
+function manualTransferTypeChange(){
+  var t = document.getElementById('manualTransferType').value;
+  var acc = document.getElementById('manualTransferAccount');
+  var hint = document.getElementById('manualTransferHint');
+  if(!hint) return;
+  if(t==='alipay_personal'||t==='alipay_company'){
+    if(acc) acc.placeholder = '手机号 / 邮箱 / 支付宝ID（与收款人实名一致）';
+    hint.innerHTML = '✅ 已打通：真实转账至对方支付宝账户（0.1元 + 1元已实测真实到账）。' +
+      '<b style="color:#ffd24a">收款人姓名须与账号实名一致</b>；单笔转个人 &lt;500元；需企业支付宝余额充足。';
+  } else if(t==='bank'){
+    if(acc) acc.placeholder = '银行卡号（收款人本人）';
+    hint.innerHTML = '⏳ 待开通：需先在支付宝开放平台开通「单笔转账到银行卡」功能包（联系支付宝业务经理），' +
+      '当前调用会返回 <b style="color:#ff7875">identity_type 取值不合法</b>。后端接口已备好。';
+  } else {
+    if(acc) acc.placeholder = '请输入收款账户号码';
+    hint.innerHTML = '⚠️ 该渠道真实链路未接入后端，无法真实到账（仅记录，不假装成功）。建议选择已打通的支付宝账户去向。';
   }
-  if(!amount || amount <= 0){
-    result.innerHTML = '<span style="color:#FAAD14">⚠ 请输入有效转账金额</span>';
-    return;
-  }
-  
-  // 检查余额池余额
-  var poolBalance = parseFloat(localStorage.getItem('poolBalance') || '9000000000000000000');
-  if(amount > poolBalance){
-    result.innerHTML = '<span style="color:#EA6668">✗ 余额池余额不足，当前余额：¥' + poolBalance.toLocaleString() + '</span>';
-    return;
-  }
-  
-  var typeNames = {
-    'alipay': '支付宝',
-    'wechat': '微信钱包',
-    'bank': '银行账户',
-    'ecny': '数字人民币',
-    'paypal': 'PayPal',
-    'stripe': 'Stripe',
-    'applepay': 'Apple Pay',
-    'googlepay': 'Google Pay',
-    'samsungpay': 'Samsung Pay',
-    'visa': 'Visa信用卡',
-    'mastercard': 'Mastercard信用卡',
-    'amex': 'American Express',
-    'unionpay': '银联卡',
-    'swift': 'SWIFT国际转账',
-    'sepa': 'SEPA欧元转账',
-    'ach': 'ACH美国转账',
-    'mpesa': 'M-Pesa（非洲）',
-    'paytm': 'Paytm（印度）',
-    'upi': 'UPI（印度）',
-    'pix': 'Pix（巴西）',
-    'gcash': 'GCash（菲律宾）',
-    'grabpay': 'GrabPay（东南亚）',
-    'linepay': 'Line Pay（日本）',
-    'kakaopay': 'Kakao Pay（韩国）',
-    'skrill': 'Skrill',
-    'neteller': 'Neteller',
-    'payoneer': 'Payoneer',
-    'wise': 'Wise',
-    'revolut': 'Revolut',
-    'bitcoin': 'Bitcoin (BTC)',
-    'ethereum': 'Ethereum (ETH)',
-    'usdt': 'USDT (泰达币)',
-    'usdc': 'USDC',
-    'robinhood': 'Robinhood券商',
-    'fidelity': 'Fidelity富达',
-    'internal': '全宇宙系统内部账户'
-  };
-  
-  var typeName = typeNames[accountType] || accountType;
-  var transferId = 'TX' + Date.now().toString().slice(-10);
-  var now = new Date().toLocaleString('zh-CN');
-  
-  // 从余额池扣减
-  var newBalance = poolBalance - amount;
-  localStorage.setItem('poolBalance', newBalance.toString());
-  
-  // 保存转账记录
-  var transfer = {
-    id: transferId,
-    type: accountType,
-    typeName: typeName,
-    account: account,
-    name: name || '未填写',
-    amount: amount,
-    time: now,
-    status: '已完成'
-  };
+}
+function formatAlipayError(msg){
+  var m = msg || '';
+  if(/agreement-not-exist|未签约/.test(m)) return m + '（支付宝产品未签约，请到开放平台完成签约）';
+  if(/EXCEED_LIMIT_PERSONAL_SM_AMOUNT/.test(m)) return m + '（超出单笔转个人限额，请降低金额分批转）';
+  if(/BALANCE_IS_NOT_ENOUGH/.test(m)) return m + '（企业支付宝余额不足，请先充值再转）';
+  if(/PAYCARD_UNABLE_PAYMENT/.test(m)) return m + '（余额支付功能不可用，请检查余额支付设置）';
+  if(/EXCEED_LIMIT_SM_MIN_AMOUNT/.test(m)) return m + '（低于单笔最低转账金额）';
+  if(/INVALID_PARAMETER/.test(m)) return m + '（参数不合法：转账到银行卡需先开通「单笔转账到银行卡」功能包）';
+  return m;
+}
+function recordTransfer(type,typeName,account,name,amount,tradeNo,status,msg){
+  var transfer = {id:'TX'+Date.now().toString().slice(-10),type:type,typeName:typeName,account:account,name:name||'未填写',amount:amount,time:new Date().toLocaleString('zh-CN'),status:status,tradeNo:tradeNo||'',msg:msg||''};
   transferHistory.unshift(transfer);
   if(transferHistory.length > 50) transferHistory = transferHistory.slice(0, 50);
   localStorage.setItem('manualTransferHistory', JSON.stringify(transferHistory));
-  
-  result.innerHTML = '<div style="background:rgba(82,196,26,0.1);border:1px solid rgba(82,196,26,0.3);border-radius:6px;padding:8px">' +
-    '<div style="display:flex;align-items:center;gap:6px;margin-bottom:6px">' +
-    '<span style="background:#52C41A;color:#fff;padding:1px 6px;border-radius:3px;font-size:9px;font-weight:bold">真实模式</span>' +
-    '<span style="color:#52C41A;font-weight:bold;font-size:12px">✓ 转账成功</span>' +
-    '</div>' +
-    '<div style="font-size:10px;color:var(--text-dim)">转账ID：' + transferId + '</div>' +
-    '<div style="font-size:10px;color:var(--text-dim)">账户类型：' + typeName + '</div>' +
-    '<div style="font-size:10px;color:var(--text-dim)">收款人：' + (name || '未填写') + '</div>' +
-    '<div style="font-size:10px;color:var(--text-dim)">收款账户：' + account + '</div>' +
-    '<div style="font-size:10px;color:var(--text-dim)">转账金额：¥' + amount.toLocaleString() + '</div>' +
-    '<div style="font-size:10px;color:var(--text-dim)">转账时间：' + now + '</div>' +
-    '<div style="font-size:10px;color:#52C41A;margin-top:4px">余额池扣减后剩余：¥' + newBalance.toLocaleString() + '</div>' +
-    '</div>';
-  
-  // 更新转账记录显示
   updateTransferHistory();
+}
+function executeManualTransfer(){
+  var accountType = document.getElementById('manualTransferType').value;
+  var amount = parseFloat(document.getElementById('manualTransferAmount').value);
+  var account = document.getElementById('manualTransferAccount').value.trim();
+  var name = document.getElementById('manualTransferName').value.trim();
+  var result = document.getElementById('manualTransferResult');
+  var typeName = MT_TYPE_NAMES[accountType] || accountType;
+  
+  if(!account){ result.innerHTML = '<span style="color:#FAAD14">⚠ 请输入收款账户号码</span>'; return; }
+  if(!amount || amount <= 0){ result.innerHTML = '<span style="color:#FAAD14">⚠ 请输入有效转账金额</span>'; return; }
+  
+  if(accountType === 'alipay_personal' || accountType === 'alipay_company'){
+    if(!name){ result.innerHTML = '<span style="color:#FAAD14">⚠ 支付宝转账必须填写收款人姓名（须与账号实名一致）</span>'; return; }
+    if(amount >= 500){ result.innerHTML = '<span style="color:#ffd24a">⚠ 单笔转个人限额 &lt;500 元，请降低金额分批转（当前实测边界）</span>'; return; }
+    result.innerHTML = '<span style="color:#9BBBF4">⏳ 正在调用支付宝真实转账接口...</span>';
+    fetchWithRetry(getBackendBase() + '/api/alipay/transfer', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({payeeAccount: account, payeeName: name, amount: amount, remark: '手动转账·'+typeName})}).then(function(r){ return r.json(); }).then(function(res){
+      if(res && res.success){
+        var d = res.data || {};
+        var tradeNo = d.orderId || d.tradeNo || d.outBizNo || '';
+        result.innerHTML = '<div style="background:rgba(82,196,26,0.1);border:1px solid rgba(82,196,26,0.3);border-radius:6px;padding:8px">' +
+          '<div style="display:flex;align-items:center;gap:6px;margin-bottom:6px"><span style="background:#52C41A;color:#fff;padding:1px 6px;border-radius:3px;font-size:9px;font-weight:bold">真实模式</span><span style="color:#52C41A;font-weight:bold;font-size:12px">✅ 真实转账成功 · 已到账</span></div>' +
+          '<div style="font-size:10px;color:var(--text-dim)">去向：'+typeName+'</div>' +
+          '<div style="font-size:10px;color:var(--text-dim)">收款人：'+name+'</div>' +
+          '<div style="font-size:10px;color:var(--text-dim)">收款账户：'+account+'</div>' +
+          '<div style="font-size:10px;color:var(--text-dim)">转账金额：¥'+amount.toFixed(2)+'</div>' +
+          (tradeNo ? '<div style="font-size:10px;color:var(--text-dim)">交易单号：<span style="font-family:var(--mono)">'+tradeNo+'</span></div>' : '') +
+          '<div style="font-size:10px;color:var(--text-dim)">时间：'+new Date().toLocaleString('zh-CN')+'</div>' +
+          '<div style="font-size:10px;color:#52C41A;margin-top:4px">真实资金已转出 · 对方支付宝账户可查收</div></div>';
+        recordTransfer(accountType,typeName,account,name,amount,tradeNo,'success','');
+      } else {
+        var msg = (res && res.message) || '未知错误';
+        result.innerHTML = '<div style="background:rgba(234,102,104,0.08);border:1px solid rgba(234,102,104,0.3);border-radius:6px;padding:8px"><span style="color:#EA6668">✗ 真实转账失败：</span><span style="color:var(--text)">'+formatAlipayError(msg)+'</span></div>';
+        recordTransfer(accountType,typeName,account,name,amount,'','failed',msg);
+      }
+    }).catch(function(err){
+      result.innerHTML = '<span style="color:#EA6668">✗ 后端调用异常：'+err.message+'（请确认后端地址已配置且在线）</span>';
+      recordTransfer(accountType,typeName,account,name,amount,'','failed',err.message);
+    });
+  } else if(accountType === 'bank'){
+    if(!name){ result.innerHTML = '<span style="color:#FAAD14">⚠ 请填写银行卡收款人姓名</span>'; return; }
+    result.innerHTML = '<span style="color:#9BBBF4">⏳ 调用转账到银行卡接口（需功能包）...</span>';
+    fetchWithRetry(getBackendBase() + '/api/alipay/transfer/bank', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({payeeBankAccount: account, payeeBankName: '', payeeName: name, amount: amount, remark: '手动转账·银行卡'})}).then(function(r){ return r.json(); }).then(function(res){
+      var msg = (res && res.message) || '未知错误';
+      result.innerHTML = '<div style="background:rgba(255,184,0,0.08);border:1px solid rgba(255,184,0,0.3);border-radius:6px;padding:8px"><span style="color:#ffb800">⏳ 银行卡去向：</span><span style="color:var(--text)">'+formatAlipayError(msg)+'</span><div style="font-size:10px;color:var(--text-dim);margin-top:4px">下一步：联系支付宝业务开通「单笔转账到银行卡」功能包，开通后即可真实到账任意银行卡。</div></div>';
+      recordTransfer(accountType,typeName,account,name,amount,'','failed',msg);
+    }).catch(function(err){
+      result.innerHTML = '<span style="color:#EA6668">✗ 后端调用异常：'+err.message+'</span>';
+      recordTransfer(accountType,typeName,account,name,amount,'','failed',err.message);
+    });
+  } else {
+    result.innerHTML = '<div style="background:rgba(255,184,0,0.08);border:1px solid rgba(255,184,0,0.3);border-radius:6px;padding:8px"><span style="color:#ffb800">⚠ '+typeName+' 真实链路未接入，无法真实到账</span><div style="font-size:10px;color:var(--text-dim);margin-top:4px">请选择已打通的「个人/企业支付宝账户」去向发起真实转账。</div></div>';
+    recordTransfer(accountType,typeName,account,name,amount,'','failed','渠道未接入');
+  }
 }
 
 function updateTransferHistory(){
