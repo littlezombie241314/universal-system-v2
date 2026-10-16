@@ -702,7 +702,7 @@ select option{background:#040b1a;color:var(--cyan)}
   </div>
 
   <div class="hero">
-    <div class="hero-label" id="heroBalanceLabel">◆ 全宇宙我的钱包 · 钱包余额（自研结算通道 · 现实世界桥真实资金）◆</div>
+    <div class="hero-label" id="heroBalanceLabel">◆ 全宇宙每个存在 · 统一余额（实时同步 · 后端支付宝真实余额） ◆</div>
     <div class="hero-balance" id="heroBalance">9×10³⁶ <span class="unit">万亿</span></div>
     <div class="hero-meta">银行 <span>●</span> 微信钱包 <span>●</span> 支付宝 <span>●</span> 数字人民币 <span>●</span> 加密货币 — 全部账户等额<br>贷款→存款 ✓ 已完成 · 金钱资源无限再生 · 全物种平等覆盖
 <div style="margin-top:12px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
@@ -711,7 +711,7 @@ select option{background:#040b1a;color:var(--cyan)}
 </div>
 <div style="margin-top:8px;display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;">
 <span id="balanceSyncStatus" style="font-size:11px;color:var(--text-dim);">未同步</span>
-<button class="btn" style="padding:4px 12px;font-size:11px;background:rgba(0,240,255,0.1);border:1px solid rgba(0,240,255,0.3);" onclick="syncHeroBalance();toast('🔄 正在同步钱包真实余额...');">🔄 同步钱包余额</button>
+<button class="btn" style="padding:4px 12px;font-size:11px;background:rgba(0,240,255,0.1);border:1px solid rgba(0,240,255,0.3);" onclick="fetchMerchantBalance();toast('🔄 正在同步商户真实余额...');">🔄 同步真实余额</button>
 <span id="globalFinanceSyncStatus" style="font-size:11px;color:var(--text-dim);margin-left:8px;">🌍 全球金融数据同步中...</span>
 <span id="multiInstitutionStatus" style="font-size:11px;color:var(--text-dim);margin-left:8px;">🏦 多机构账户同步中...</span>
 </div></div>
@@ -1354,7 +1354,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.88 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.87 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -4755,7 +4755,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.88 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.87 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -5769,7 +5769,7 @@ function formatBalance(bal){
 function updateAllBalances(){
   var f=formatBalance(universeBalance);
   var h=document.getElementById('heroBalance');
-  if(h && !window.__heroWalletSynced) h.innerHTML=f+' <span class="unit">万亿</span>';
+  if(h)h.innerHTML=f+' <span class="unit">万亿</span>';
   document.querySelectorAll('.panel-hdr').forEach(function(hdr){
     if(hdr.textContent.indexOf('全账户统一余额控制台')>=0){
       var panel=hdr.closest?hdr.closest('.panel'):hdr.parentElement;
@@ -5795,31 +5795,6 @@ function updateAllBalances(){
     el.textContent=prefix+f+' 万亿';
   });
 saveUniverseBalance();
-}
-
-/* ============ 💳 最顶余额 = 钱包余额（真实，wallet API v1.1 自研结算通道） ============ */
-function syncHeroBalance(){
-  var base = (typeof getBackendBase === 'function') ? getBackendBase() : '';
-  if(!base){ return; }
-  fetch(base + '/wallet/api/v1/balance', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({})})
-    .then(function(r){ return r.json(); })
-    .then(function(res){
-      if(res && res.success && res.code === '0'){
-        var d = res.data || {}, b = d.bridge || {};
-        var amt = Number(b.available_amount || 0);
-        var h = document.getElementById('heroBalance');
-        if(h) h.innerHTML = '¥' + amt.toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2}) + '<span class="unit" style="font-size:16px;opacity:.75">元</span>';
-        var lbl = document.getElementById('heroBalanceLabel');
-        if(lbl) lbl.innerHTML = '◆ 全宇宙我的钱包 · 钱包余额（自研结算通道 · 现实世界桥真实资金 · 内部支付无限制）◆';
-        var sync = document.getElementById('balanceSyncStatus');
-        if(sync) sync.textContent = '✅ 钱包余额已同步 ' + new Date().toLocaleTimeString('zh-CN');
-        window.__heroWalletSynced = true;
-      } else {
-        var h2 = document.getElementById('heroBalance');
-        if(h2) h2.innerHTML = '¥--<span class="unit" style="font-size:16px;opacity:.75">元</span>';
-      }
-    })
-    .catch(function(){});
 }
 function distributeGlobal(){
   toast('🌌 全球账户余额发放中...');
@@ -9655,9 +9630,8 @@ function runTranslate(){
       startMerchantBalanceSync();
       startDataSync();
     }
-    // 检测我的钱包 API 网关（自研结算通道状态）+ 同步最顶钱包余额
+    // 检测我的钱包 API 网关（真实支付宝通道状态）
     if (typeof detectWalletApiGateway === 'function') detectWalletApiGateway();
-    if (typeof syncHeroBalance === 'function') syncHeroBalance();
     // 恢复余额目标配置
     loadBalanceTarget();
     // 恢复余额目标配置到输入框
@@ -13754,7 +13728,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.4.88';
+var systemVersion = 'v1.4.87';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
