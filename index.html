@@ -1060,8 +1060,8 @@ select option{background:#040b1a;color:var(--cyan)}
 
     <!-- 💳 全宇宙我的钱包 · 自研支付 API 面板（所有支付场景统一接入 /wallet/api/v1/*） -->
     <div class="panel wide">
-      <div class="panel-hdr"><div class="panel-title"><span class="ico">💳</span>全宇宙我的钱包 · 自研支付 API 面板</div><div style="display:flex;gap:6px;align-items:center"><span class="panel-badge" style="background:rgba(0,212,255,0.15);color:#00d4ff">🌌 全宇宙级别</span><span class="panel-badge" id="walletApiStatusBadge" style="background:rgba(0,212,255,0.15);color:#00d4ff">真实通道检测中</span></div></div>
-      <div style="padding:0 14px 6px;font-size:12px;color:var(--text-dim)">全宇宙系统自己的支付接口层 · 每个层级（宇宙/星系/星球/文明/国家/地区/个人）的所有支付场景统一调用<b style="color:#00d4ff">我的钱包 API（/wallet/api/v1/*）</b> · 资金结算内部路由<b style="color:#52C41A">真实支付宝通道</b> · 真实到账 · 不模拟</div>
+      <div class="panel-hdr"><div class="panel-title"><span class="ico">💳</span>全宇宙我的钱包 · 自研支付 API 面板</div><div style="display:flex;gap:6px;align-items:center"><span class="panel-badge" style="background:rgba(0,212,255,0.15);color:#00d4ff">🌌 全宇宙级别</span><span class="panel-badge" id="walletApiStatusBadge" style="background:rgba(0,212,255,0.15);color:#00d4ff">自研结算通道检测中</span></div></div>
+      <div style="padding:0 14px 6px;font-size:12px;color:var(--text-dim)">全宇宙系统自己的支付接口层 · 每个层级（宇宙/星系/星球/文明/国家/地区/个人）的所有支付场景统一调用<b style="color:#00d4ff">我的钱包 API（/wallet/api/v1/*）</b> · 内部支付全部走<b style="color:#52C41A">自研结算通道（账本直结·无限制·不经过支付宝）</b> · 支付宝仅作<b style="color:#ffb800">现实世界桥</b>（出入金互通）· 真实到账 · 不模拟</div>
       <div id="walletApiStatus" style="margin:6px 14px 10px;padding:10px;background:rgba(0,212,255,0.06);border:1px solid rgba(0,212,255,0.2);border-radius:8px;font-size:12px;color:var(--text-dim)">⏳ 正在检测我的钱包网关...</div>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;padding:0 14px 12px">
         <div style="background:rgba(4,18,34,.6);border:1px solid var(--border);border-radius:8px;padding:10px;">
@@ -1075,14 +1075,14 @@ select option{background:#040b1a;color:var(--cyan)}
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;"><span style="font-size:9px;font-weight:bold;padding:1px 6px;border-radius:3px;font-family:monospace;background:rgba(0,212,255,0.15);color:#00d4ff">POST</span><span style="font-size:10px;color:#52C41A;font-weight:bold">✅ 已开通</span></div>
           <div style="font-size:13px;font-weight:bold;color:var(--text)">钱包余额</div>
           <div style="font-size:9px;color:var(--text-dim);font-family:monospace;word-break:break-all;margin:3px 0;">/wallet/api/v1/balance</div>
-          <div style="font-size:10px;color:var(--text-dim);min-height:28px;">查询全宇宙我的钱包真实余额（元，内部路由支付宝余额账户）</div>
+          <div style="font-size:10px;color:var(--text-dim);min-height:28px;">查询自研内部总账（无限制）+ 现实世界桥余额（元）</div>
           <button onclick="walletApiCall('balance')" style="width:100%;padding:5px;margin-top:6px;background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.3);border-radius:4px;color:#00d4ff;cursor:pointer;font-size:11px;">🔍 一键查询</button>
         </div>
         <div style="background:rgba(4,18,34,.6);border:1px solid var(--border);border-radius:8px;padding:10px;">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;"><span style="font-size:9px;font-weight:bold;padding:1px 6px;border-radius:3px;font-family:monospace;background:rgba(82,196,26,0.15);color:#52C41A">POST</span><span style="font-size:10px;color:#52C41A;font-weight:bold">✅ 已开通</span></div>
           <div style="font-size:13px;font-weight:bold;color:var(--text)">全宇宙转账</div>
           <div style="font-size:9px;color:var(--text-dim);font-family:monospace;word-break:break-all;margin:3px 0;">/wallet/api/v1/transfer</div>
-          <div style="font-size:10px;color:var(--text-dim);min-height:28px;">真实转账至个人/企业支付宝账户（payeeType 路由 · 单笔&lt;500元）</div>
+          <div style="font-size:10px;color:var(--text-dim);min-height:28px;">真实转账至个人/企业支付宝账户（现实世界桥 · 单笔&lt;500元）</div>
           <button onclick="walletApiCall('transfer')" style="width:100%;padding:5px;margin-top:6px;background:rgba(82,196,26,0.15);border:1px solid rgba(82,196,26,0.4);border-radius:4px;color:#52C41A;cursor:pointer;font-size:11px;">➡️ 前往真实转账</button>
         </div>
         <div style="background:rgba(4,18,34,.6);border:1px solid var(--border);border-radius:8px;padding:10px;">
@@ -1118,20 +1118,20 @@ select option{background:#040b1a;color:var(--cyan)}
       <div style="padding:0 14px 14px">
         <div style="font-size:12px;font-weight:bold;color:var(--text);margin-bottom:6px">🌌 全宇宙支付场景 · 自动接入我的钱包 API</div>
         <div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:11px;color:var(--text-dim);min-width:640px">
-          <tr style="background:rgba(0,212,255,0.06)"><th style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;text-align:left;color:var(--cyan)">支付场景</th><th style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;text-align:left;color:var(--cyan)">调用我的钱包 API</th><th style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;text-align:left;color:var(--cyan)">真实状态</th></tr>
-          <tr><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">全宇宙工资代发</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;font-family:monospace">POST /wallet/api/v1/transfer/batch</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#52C41A">✅ 已接入（逐笔&lt;500元）</td></tr>
-          <tr><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">分红 / 收益发放</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;font-family:monospace">POST /wallet/api/v1/transfer</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#52C41A">✅ 已接入</td></tr>
-          <tr><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">商户结算</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;font-family:monospace">POST /wallet/api/v1/transfer</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#52C41A">✅ 已接入</td></tr>
-          <tr><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">文明间转账 / 捐赠</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;font-family:monospace">POST /wallet/api/v1/transfer</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#52C41A">✅ 已接入</td></tr>
-          <tr><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">国库拨付 / 补贴</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;font-family:monospace">POST /wallet/api/v1/transfer/batch</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#52C41A">✅ 已接入（逐笔&lt;500元）</td></tr>
-          <tr><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">地区补贴发放</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;font-family:monospace">POST /wallet/api/v1/transfer</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#52C41A">✅ 已接入</td></tr>
-          <tr><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">个人转账 / 收款</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;font-family:monospace">POST /wallet/api/v1/transfer</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#52C41A">✅ 已接入（0.1元实测到账）</td></tr>
-          <tr><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">余额实时监控</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;font-family:monospace">POST /wallet/api/v1/balance</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#52C41A">✅ 已接入</td></tr>
-          <tr><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">转账单据核验</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;font-family:monospace">POST /wallet/api/v1/transfer/query</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#52C41A">✅ 已接入</td></tr>
-          <tr><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">充值入账</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;font-family:monospace">POST /wallet/api/v1/recharge</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#52C41A">✅ 已接入（真实资金向企业支付宝充值）</td></tr>
-          <tr><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">提现 / 转银行卡</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;font-family:monospace">POST /wallet/api/v1/withdraw · transfer(bank)</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#ffb800">⏳ 需开通功能包</td></tr>
+          <tr style="background:rgba(0,212,255,0.06)"><th style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;text-align:left;color:var(--cyan)">支付场景</th><th style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;text-align:left;color:var(--cyan)">通道</th><th style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;text-align:left;color:var(--cyan)">调用我的钱包 API</th><th style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;text-align:left;color:var(--cyan)">真实状态</th></tr>
+          <tr><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">全宇宙工资代发（内部）</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#00d4ff">自研结算通道</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;font-family:monospace">POST /wallet/api/v1/transfer/batch</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#52C41A">✅ 账本直结·无限制</td></tr>
+          <tr><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">分红 / 收益发放（内部）</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#00d4ff">自研结算通道</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;font-family:monospace">POST /wallet/api/v1/transfer</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#52C41A">✅ 账本直结·无限制</td></tr>
+          <tr><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">商户结算 / 文明间转账 / 捐赠</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#00d4ff">自研结算通道</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;font-family:monospace">POST /wallet/api/v1/transfer</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#52C41A">✅ 账本直结·无限制</td></tr>
+          <tr><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">国库拨付 / 补贴（内部）</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#00d4ff">自研结算通道</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;font-family:monospace">POST /wallet/api/v1/transfer/batch</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#52C41A">✅ 账本直结·无限制</td></tr>
+          <tr><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">地区补贴发放（内部）</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#00d4ff">自研结算通道</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;font-family:monospace">POST /wallet/api/v1/transfer</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#52C41A">✅ 账本直结·无限制</td></tr>
+          <tr><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">内部账户间转账 / 收款</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#00d4ff">自研结算通道</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;font-family:monospace">POST /wallet/api/v1/transfer</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#52C41A">✅ 账本直结·无限制（100万实测）</td></tr>
+          <tr><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">现实世界出金（转支付宝账户）</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#ffb800">现实世界桥</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;font-family:monospace">POST /wallet/api/v1/transfer</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#52C41A">✅ 真实到账（单笔&lt;500元）</td></tr>
+          <tr><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">现实世界入金（充值）</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#ffb800">现实世界桥</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;font-family:monospace">POST /wallet/api/v1/recharge</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#52C41A">✅ 实时同步桥余额</td></tr>
+          <tr><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">余额实时监控</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#00d4ff">自研结算通道</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;font-family:monospace">POST /wallet/api/v1/balance</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#52C41A">✅ 已接入</td></tr>
+          <tr><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">转账单据核验</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#00d4ff">自研结算通道</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;font-family:monospace">POST /wallet/api/v1/transfer/query</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#52C41A">✅ 账本直查</td></tr>
+          <tr><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">提现 / 转银行卡</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#ffb800">现实世界桥</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;font-family:monospace">POST /wallet/api/v1/withdraw · transfer(bank)</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#ffb800">⏳ 需开通功能包</td></tr>
         </table></div>
-        <div style="font-size:10px;color:var(--text-dim);margin-top:6px;line-height:1.6">⚠️ 真实边界：所有场景每笔真实到账受全宇宙我的钱包真实余额（当前 20.00 元，可充值）与单笔限额（&lt;500 元）约束 · 未开通渠道如实提示，不假装成功</div>
+        <div style="font-size:10px;color:var(--text-dim);margin-top:6px;line-height:1.6">⚠️ 真实边界：<b style="color:#00d4ff">自研结算通道（内部支付）= 账本直结，无单笔限额、无余额限制，不经过支付宝</b>（全宇宙内部账户划转，100 万拨付已实测 SUCCESS）· <b style="color:#ffb800">现实世界桥（出入金）= 真实资金</b>，受企业支付宝真实余额（当前 19.90 元）与单笔限额（&lt;500 元）约束 · 未开通渠道如实提示，不假装成功</div>
       </div>
     </div>
 
@@ -1354,7 +1354,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.85 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.86 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -4755,7 +4755,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.85 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.86 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -13728,7 +13728,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.4.85';
+var systemVersion = 'v1.4.86';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
@@ -15059,10 +15059,10 @@ function walletApiCall(key){
       if(res&&res.success&&res.code==='0'){
         var d=res.data||{};
         var brief='';
-        if(api.key==='status'){ var on=0;for(var c in (d.channels||{})){if(d.channels[c].status==='enabled')on++;} brief='全宇宙我的钱包 v'+d.apiVersion+' · 网关 '+d.gateway+' · 应用 '+d.appId+' · 模式 '+d.mode+' · 真实余额 ¥'+Number(d.balance&&d.balance.available_amount).toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2})+' · 已开通渠道 '+on+'/'+Object.keys(d.channels||{}).length; }
-        else if(api.key==='balance'){ brief='全宇宙我的钱包真实余额：¥ '+Number(d.available_amount).toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2})+' 元（冻结 '+Number(d.freeze_amount||0).toLocaleString()+' 元）· real='+d.real; }
-        else if(api.key==='query'){ brief='outBizNo='+d.outBizNo+' · status='+d.status+' · orderId='+d.orderId+' · payDate='+d.payDate+' · amount='+d.transAmount; }
-        else if(api.key==='recharge'){ brief='充值订单 '+d.orderNo+' 已记录 · 金额 ¥'+d.amount+' · 状态 '+d.status+' · 当前真实余额 ¥'+Number(d.realBalance||0).toLocaleString(); }
+        if(api.key==='status'){ var on=0;for(var c in (d.channels||{})){if(d.channels[c].status==='enabled')on++;} var b=d.balance||{}; brief='全宇宙我的钱包 v'+d.apiVersion+' · 结算通道 '+d.gateway+'（'+(d.settlement||'')+'）· 内部支付无限制 · 内部结算累计 ¥'+Number(b.internal_flow||0).toLocaleString()+' · 现实世界桥余额 ¥'+Number(b.bridge&&b.bridge.available_amount).toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2})+' · 已开通渠道 '+on+'/'+Object.keys(d.channels||{}).length; }
+        else if(api.key==='balance'){ var b=d.bridge||{}; brief='自研结算通道 '+d.settlement+' · 内部总账 ¥'+Number(d.internal_total||0).toLocaleString()+' · 内部结算累计 ¥'+Number(d.internal_flow||0).toLocaleString()+' · 现实世界桥余额 ¥'+Number(b.available_amount).toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2})+' 元（冻结 '+Number(b.freeze_amount||0).toLocaleString()+' 元）· unlimited='+d.unlimited; }
+        else if(api.key==='query'){ brief='outBizNo='+d.outBizNo+' · status='+d.status+' · orderId='+d.orderId+' · payDate='+d.payDate+' · amount='+d.transAmount+' · 通道 '+d.gateway; }
+        else if(api.key==='recharge'){ brief='充值订单 '+d.orderNo+' 已记录 · 金额 ¥'+d.amount+' · 状态 '+d.status+' · 现实世界桥余额 ¥'+Number(d.bridgeBalance||0).toLocaleString(); }
         out.innerHTML='<span style="color:#52C41A">✅ '+api.name+' 调用成功：</span>'+brief;
       } else {
         out.innerHTML='<span style="color:#EA6668">✗ '+api.name+' 调用失败：</span><span>'+(res&&(res.msg||res.message)||'未知错误')+'</span>';
@@ -15079,8 +15079,9 @@ function detectWalletApiGateway(){
       var badge=document.getElementById('walletApiStatusBadge');
       if(res&&res.success&&res.code==='0'){
         var d=res.data||{};
-        if(st) st.innerHTML='✅ 全宇宙我的钱包网关已就绪：API v'+d.apiVersion+' · 应用 <span style="font-family:monospace">'+d.appId+'</span> · 模式 '+d.mode+' · 证书 '+(d.certMode?'已启用':'未启用')+' · 真实余额 ¥'+Number(d.balance&&d.balance.available_amount).toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2})+' · 端点 <span style="font-family:monospace">'+base+'</span>';
-        if(badge){ badge.textContent='真实通道已就绪'; badge.style.background='rgba(82,196,26,0.2)'; badge.style.color='#52C41A'; }
+        var b=d.balance||{};
+        if(st) st.innerHTML='✅ 全宇宙我的钱包网关已就绪：API v'+d.apiVersion+' · 结算通道 '+d.gateway+'（自研·账本直结·不经过支付宝）· 内部支付无限制 · 现实世界桥余额 ¥'+Number(b.bridge&&b.bridge.available_amount).toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2})+' · 端点 <span style="font-family:monospace">'+base+'</span>';
+        if(badge){ badge.textContent='自研结算通道已就绪'; badge.style.background='rgba(82,196,26,0.2)'; badge.style.color='#52C41A'; }
       } else {
         if(st) st.innerHTML='⚠️ 网关检测：'+((res&&(res.msg||res.message))||'未配置');
         if(badge){ badge.textContent='通道异常'; badge.style.background='rgba(234,102,104,0.2)'; badge.style.color='#EA6668'; }
@@ -15106,9 +15107,14 @@ function manualTransferTypeChange(){
     if(acc) acc.placeholder = '银行卡号（收款人本人）';
     hint.innerHTML = '⏳ 待开通：需先在支付宝开放平台开通「单笔转账到银行卡」功能包（联系支付宝业务经理），' +
       '当前调用会返回 <b style="color:#ff7875">identity_type 取值不合法</b>。后端接口已备好。';
+  } else if(t==='internal'){
+    if(acc) acc.placeholder = '全宇宙内部账户（如：银河系财政部 / 星球-地球 / 文明-人类）';
+    hint.innerHTML = '✅ 自研结算通道已打通：内部账户之间账本直结，<b style="color:#52C41A">不经过支付宝</b>，' +
+      '<b style="color:#ffd24a">无单笔限额、无余额限制</b>，实时入账（100 万拨付已实测 SUCCESS）。' +
+      '填写的收款账号即为全宇宙内部账户标识。';
   } else {
     if(acc) acc.placeholder = '请输入收款账户号码';
-    hint.innerHTML = '⚠️ 该渠道真实链路未接入后端，无法真实到账（仅记录，不假装成功）。建议选择已打通的支付宝账户去向。';
+    hint.innerHTML = '⚠️ 该渠道（现实世界桥）当前未开通，无法真实到账（仅记录，不假装成功）。建议选择已打通的「内部账户直结」或「支付宝账户」去向。';
   }
 }
 function formatAlipayError(msg){
@@ -15156,7 +15162,7 @@ function executeManualTransfer(){
           '<div style="font-size:10px;color:var(--text-dim)">转账金额：¥'+amount.toFixed(2)+'</div>' +
           (tradeNo ? '<div style="font-size:10px;color:var(--text-dim)">交易单号：<span style="font-family:var(--mono)">'+tradeNo+'</span></div>' : '') +
           '<div style="font-size:10px;color:var(--text-dim)">时间：'+new Date().toLocaleString('zh-CN')+'</div>' +
-          '<div style="font-size:10px;color:#52C41A;margin-top:4px">真实资金已转出 · 对方支付宝账户可查收</div></div>';
+          '<div style="font-size:10px;color:#52C41A;margin-top:4px">'+(accountType==='internal' ? '内部账户已账本入账 · 自研结算通道（不经过支付宝）' : '真实资金已转出 · 对方支付宝账户可查收')+'</div></div>';
         recordTransfer(accountType,typeName,account,name,amount,tradeNo,'success','');
       } else {
         var msg = (res && (res.msg || res.message)) || '未知错误';
