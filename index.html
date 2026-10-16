@@ -245,10 +245,7 @@ select option{background:#040b1a;color:var(--cyan)}
 .qr-amount{font-size:20px;color:var(--amber);font-weight:bold;text-shadow:0 0 10px var(--amber);margin-top:4px}
 .pay-form{flex:1;min-width:240px}
 .pay-field{margin-bottom:12px}
-.wd-lv-badge{display:inline-block;padding:3px 8px;border-radius:6px;font-size:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:var(--text-dim);cursor:pointer;text-align:center;line-height:1.5}
-  .wd-lv-badge:hover{border-color:var(--cyan)}
-  .wd-lv-badge.active{background:rgba(0,212,255,0.16);border-color:var(--cyan);color:#fff}
-  .pay-field label{display:block;font-size:10px;color:var(--text-dim);letter-spacing:1px;margin-bottom:4px}
+.pay-field label{display:block;font-size:10px;color:var(--text-dim);letter-spacing:1px;margin-bottom:4px}
 .pay-field input,.pay-field select{width:100%;background:rgba(0,0,0,0.5);border:1px solid rgba(0,240,255,0.3);color:var(--cyan);padding:8px 10px;font-family:var(--mono);font-size:13px;outline:none;transition:border-color .2s;border-radius:2px}
 .pay-field input:focus,.pay-field select:focus{border-color:var(--cyan);box-shadow:0 0 8px rgba(0,240,255,.2)}
 .pay-field input::placeholder{color:var(--text-dim)}
@@ -762,11 +759,6 @@ select option{background:#040b1a;color:var(--cyan)}
     <div class="panel wide">
       <div class="panel-hdr"><div class="panel-title"><span class="ico">📒</span>我的钱包</div><div style="display:flex;gap:6px;align-items:center"><div class="panel-badge" style="background:rgba(0,212,255,0.15);color:#00d4ff">🌌 全宇宙级别</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A" id="walletCount">0 个钱包</div></div></div>
       <div style="padding:16px">
-        <div style="margin-bottom:12px;padding:10px;background:linear-gradient(135deg,rgba(255,215,0,0.08),rgba(0,212,255,0.06));border:1px solid rgba(255,215,0,0.3);border-radius:8px">
-          <div style="font-size:11px;font-weight:bold;color:var(--amber);margin-bottom:4px">🏦 企业级金融账户 · 已认证</div>
-          <div style="font-size:11px;color:var(--text);line-height:1.7">企业主体：<b style="color:#00d4ff">上海市锂哓咚实业有限责任公司</b><br>企业支付宝账户：<b style="color:#00d4ff">15291571201@163.com</b><span style="color:var(--text-dim)">（登录手机 18629055217）</span></div>
-          <div style="font-size:10px;color:var(--text-dim);margin-top:4px">真实资金进出（转账/提现/资金池出入金）走<b style="color:#52C41A">支付宝官方单笔转账通道</b> · 真实到账 · 系统内记账与真实资金一一对应</div>
-        </div>
         <div style="font-size:12px;color:var(--text-dim);margin-bottom:10px">🌌 全宇宙 8 层级用户均可注册钱包账户 · 注册后钱包余额每秒自动增加 <b style="color:#07c160">99,999,999,999,999,999,999</b> · 实时保存 · 离线保持</div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
           <div><label style="font-size:11px;color:var(--text-dim);display:block;margin-bottom:4px">🌌 选择层级</label>
@@ -776,16 +768,6 @@ select option{background:#040b1a;color:var(--cyan)}
         </div>
         <div class="btn-row" style="justify-content:center"><button class="btn green" onclick="walletReg()">📝 注册我的钱包账户</button><button class="btn cyan" onclick="walletReset()">🔄 重置钱包</button></div>
         <div id="walletList" style="margin-top:12px"></div>
-      </div>
-    </div>
-    <!-- 💳 真实支付通道 · 全宇宙 8 层级 -->
-    <div class="panel wide">
-      <div class="panel-hdr"><div class="panel-title"><span class="ico">💳</span>真实支付通道</div><div style="display:flex;gap:6px;align-items:center"><div class="panel-badge" style="background:rgba(0,212,255,0.15);color:#00d4ff">🌌 全宇宙级别</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A" id="payRegCount">0 条已接入</div></div></div>
-      <div style="padding:16px">
-        <div style="font-size:12px;color:var(--text-dim);margin-bottom:10px">💳 接入全宇宙各层级<b style="color:var(--cyan)">真实支付通道</b>：全球清算网络 · 跨境支付 · 各国本地支付 · 个人收款 · 加密货币网络。点击「🔗 前往官网/接入」进入通道官方接入页面；点击「🔌 登记接入」在系统中登记绑定该通道（实时保存 · 离线保持）。资金级 API 对接各层级仅需各通道<b style="color:#52C41A">个人资质</b>（无需商户资质 · 个人层级仅需个人资质即可对接）；每个层级真实支付系统的<b style="color:#52C41A">账户体系无权限限制</b> · 直接对接 · 实时到账。</div>
-        <div id="payGroups" style="margin-bottom:12px"></div>
-        <div id="payRegList" style="margin-top:6px"></div>
-        <div class="btn-row" style="justify-content:center;margin-top:10px"><button class="btn cyan" onclick="payRegClear()">🧹 清空接入记录</button></div>
       </div>
     </div>
     <!-- 💚 支付宝余额自动增加系统 -->
@@ -1077,7 +1059,6 @@ select option{background:#040b1a;color:var(--cyan)}
     </div>
 
     <div class="panel wide"><div class="panel-hdr"><div class="panel-title"><span class="ico">💰</span>全宇宙层级 · 无限经济全覆盖</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">所有层级生效</div></div>
-      <div style="padding:0 14px 8px;font-size:11px;color:var(--text-dim)">🏢 <b style="color:var(--amber)">企业级金融账户</b> · 企业主体：<b style="color:var(--cyan)">上海市锂哓咚实业有限责任公司</b> · 企业支付宝：<b style="color:var(--cyan)">15291571201@163.com</b> · 真实转账到账</div>
       <div style="padding:0 14px 6px;font-size:12px;color:var(--text-dim)">无限经济为<b style="color:#52C41A">全宇宙级别</b> · 在<b style="color:#52C41A">所有层级</b>都起作用 · 每层级资金无限 · 每秒收益 · 自动投资 · <b style="color:#52C41A">离线也保持</b></div>
       <div id="ecoLevels" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;padding:10px 14px 6px"></div>
       <div style="font-size:10px;color:#52C41A;text-align:center;padding:0 14px 12px">✅ 对<b style="color:#52C41A">所有存在</b>都生效 · 含未明确归属层级的存在（星际流浪者 / 初生AI / 动植物 / 微观存在 / 随机新生成存在等）· 一律资金无限 · 每秒收益 · 自动投资</div>
@@ -1296,7 +1277,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.78 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.57 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -1448,12 +1429,10 @@ select option{background:#040b1a;color:var(--cyan)}
           <div><label style="font-size:10px;color:var(--text-dim);display:block;margin-bottom:3px">收款人姓名：</label><input type="text" id="mtName" placeholder="请输入收款人姓名" style="width:100%;background:rgba(4,18,34,.6);border:1px solid var(--border);color:var(--cyan);padding:6px 8px;font-size:12px;font-family:var(--mono);border-radius:2px"></div>
           <div><label style="font-size:10px;color:var(--text-dim);display:block;margin-bottom:3px">账户类型：</label><select id="mtPlatform" style="width:100%;background:rgba(4,18,34,.6);border:1px solid var(--border);color:var(--cyan);padding:6px 8px;font-size:12px;border-radius:2px"><option value="alipay">支付宝</option><option value="wechat">微信钱包</option><option value="bank">银行卡</option><option value="ecny">数字人民币</option><option value="paypal">PayPal</option><option value="stripe">Stripe</option><option value="applepay">Apple Pay</option><option value="googlepay">Google Pay</option><option value="visa">Visa信用卡</option><option value="mastercard">Mastercard</option><option value="unionpay">银联卡</option><option value="swift">SWIFT国际转账</option><option value="sepa">SEPA欧元转账</option><option value="mpesa">M-Pesa</option><option value="paytm">Paytm</option><option value="upi">UPI</option><option value="pix">Pix</option><option value="gcash">GCash</option><option value="bitcoin">Bitcoin</option><option value="ethereum">Ethereum</option><option value="usdt">USDT</option></select></div>
           <div><label style="font-size:10px;color:var(--text-dim);display:block;margin-bottom:3px">收款账号：</label><input type="text" id="mtAccount" placeholder="支付宝账号/银行卡号/钱包地址" style="width:100%;background:rgba(4,18,34,.6);border:1px solid var(--border);color:var(--cyan);padding:6px 8px;font-size:12px;font-family:var(--mono);border-radius:2px"></div>
-          <div><label style="font-size:10px;color:var(--text-dim);display:block;margin-bottom:3px">开户银行（银行卡转账时填）：</label><input type="text" id="mtBankName" placeholder="如：中国工商银行" style="width:100%;background:rgba(4,18,34,.6);border:1px solid var(--border);color:var(--cyan);padding:6px 8px;font-size:12px;font-family:var(--mono);border-radius:2px"></div>
           <div><label style="font-size:10px;color:var(--text-dim);display:block;margin-bottom:3px">转账金额（元）：</label><input type="number" id="mtAmount" placeholder="请输入转账金额" value="9000" min="0.01" step="0.01" style="width:100%;background:rgba(4,18,34,.6);border:1px solid var(--border);color:var(--cyan);padding:6px 8px;font-size:12px;font-family:var(--mono);border-radius:2px"></div>
           <div style="grid-column:1/-1"><label style="font-size:10px;color:var(--text-dim);display:block;margin-bottom:3px">转账备注（可选）：</label><input type="text" id="mtRemark" placeholder="工资/报销/货款等" style="width:100%;background:rgba(4,18,34,.6);border:1px solid var(--border);color:var(--cyan);padding:6px 8px;font-size:12px;font-family:var(--mono);border-radius:2px"></div>
           <div style="grid-column:1/-1;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
             <button class="btn green" onclick="submitManualTransfer()">✅ 确认转账</button>
-            <button class="btn green" onclick="submitWithdraw()">🏦 提现到本人银行卡</button>
             <button class="btn" onclick="clearManualTransfer()">🔄 清空表单</button>
             <span id="mtStatus" style="font-size:11px;color:var(--text-dim)">等待输入收款人信息</span>
           </div>
@@ -1840,9 +1819,6 @@ select option{background:#040b1a;color:var(--cyan)}
         <div class="pay-tab" onclick="switchPay('barcode',this)">📤 付款码</div>
         <div class="pay-tab" onclick="switchPay('scan',this)">📷 扫码支付</div>
         <div class="pay-tab" onclick="switchPay('transfer',this)">💸 星际转账</div>
-        <div class="pay-tab" onclick="switchPay('pool',this)">🏦 真实资金池</div>
-        <div class="pay-tab" onclick="switchPay('alipay',this)">🏦 真实支付宝</div>
-        <div class="pay-tab" onclick="switchPay('crypto',this)">🪙 真实加密货币</div>
         <div class="pay-tab" onclick="switchPay('withdraw',this)">🏧 余额提现</div>
       </div>
       <!-- 收款码 -->
@@ -1916,17 +1892,6 @@ select option{background:#040b1a;color:var(--cyan)}
           </div>
           <div class="pay-form">
             <div style="font-size:11px;color:var(--text-dim);line-height:1.8;margin-bottom:12px">付款码每分钟自动刷新，扣款从全宇宙统一余额扣除（余额无限，扣款后自动再生）。</div>
-            <div style="margin:10px 0 14px;padding:10px;background:rgba(0,212,255,0.06);border:1px dashed rgba(0,212,255,0.3);border-radius:8px">
-              <div style="font-size:11px;color:var(--cyan);font-weight:bold;margin-bottom:6px">🌌 真实支付账户体系 · 全宇宙 8 层级付款码</div>
-              <div style="font-size:10px;color:var(--text-dim);margin-bottom:8px">选择层级 → 选择该层级真实支付通道 → 自动生成该层级的真实付款码（已接入通道带 🔌 标记 · 每分钟自动刷新 · 实时保存）</div>
-              <div class="pay-field"><label>🌌 付款层级</label>
-                <select id="wdBarLevel" onchange="wdBarPlat()"><option value="">— 选择层级 —</option></select>
-              </div>
-              <div class="pay-field"><label>💳 真实支付通道</label>
-                <select id="wdBarChannel" onchange="genRealBarcode()"><option value="">— 选择通道 —</option></select>
-              </div>
-              <div id="realBarInfo" style="font-size:11px;color:#52C41A;text-align:center;margin-top:6px"></div>
-            </div>
             <div class="pay-field"><label>付款方式</label>
               <select id="barcodeMethod" onchange="refreshBarcode()">
                 <option value="alipay">💙 支付宝</option>
@@ -2021,50 +1986,8 @@ select option{background:#040b1a;color:var(--cyan)}
             <div class="qr-amount" id="transferAmount" style="font-size:14px">输入金额后生成</div>
           </div>
           <div class="pay-form">
-            <div style="font-size:11px;color:var(--text-dim);line-height:1.8;margin-bottom:12px">向全宇宙 8 层级任意存在转账：选层级 → 真实支付通道 → 收款方账户体系自动填充。<b style="color:#52C41A">收款方账户号填系统账户（UES-PAY·）为系统内实时到账</b>；填<b style="color:#ffa940">外部真实账号（手机号/邮箱/卡号）</b>请使用下方<b style="color:#52C41A">真实支付宝功能（已开通）</b>前往支付宝商家平台执行真实转账，真实到账 · 如实记录 · 不伪造到账。微信收款码通道为扫码收款真实到账。每个层级真实支付系统<b style="color:#52C41A">账户体系无权限限制</b> · 个人资质直连。</div>
-            <div style="margin:10px 0 14px;padding:10px;background:rgba(82,196,26,0.07);border:1px dashed rgba(82,196,26,0.35);border-radius:8px">
-              <div style="font-size:11px;color:#52C41A;font-weight:bold;margin-bottom:6px">🌐 真实支付宝功能 · 已开通（个体工商户 · 双峰县玩意网络科技工作室）</div>
-              <div style="font-size:10px;color:var(--text-dim);margin-bottom:8px">支付宝商家平台已开通真实转账能力，点击直达执行页（需登录商家平台）· 真实到账 · 不伪造</div>
-              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:6px">
-                <a href="https://bizfundprod.alipay.com/payment/transfer/index.htm" target="_blank" rel="noopener" style="display:block;padding:8px;background:rgba(82,196,26,0.1);border:1px solid rgba(82,196,26,0.3);border-radius:6px;text-decoration:none">
-                  <div style="font-size:16px">💸</div>
-                  <div style="font-size:11px;color:var(--text);font-weight:bold;margin:3px 0">单笔转账到支付宝账户</div>
-                  <div style="font-size:9px;color:#52C41A">✅ 已开通 · 网页执行</div>
-                </a>
-                <a href="https://bizfundprod.alipay.com/payment/transfer/index.htm" target="_blank" rel="noopener" style="display:block;padding:8px;background:rgba(82,196,26,0.1);border:1px solid rgba(82,196,26,0.3);border-radius:6px;text-decoration:none">
-                  <div style="font-size:16px">🏦</div>
-                  <div style="font-size:11px;color:var(--text);font-weight:bold;margin:3px 0">转账到银行账户（任意卡）</div>
-                  <div style="font-size:9px;color:#52C41A">✅ 已开通 · 网页执行</div>
-                </a>
-                <a href="https://b.alipay.com/page/bizfund-bulk-payment/overview" target="_blank" rel="noopener" style="display:block;padding:8px;background:rgba(82,196,26,0.1);border:1px solid rgba(82,196,26,0.3);border-radius:6px;text-decoration:none">
-                  <div style="font-size:16px">📦</div>
-                  <div style="font-size:11px;color:var(--text);font-weight:bold;margin:3px 0">批量转账免研版</div>
-                  <div style="font-size:9px;color:#52C41A">✅ 已签约 · 批量网页执行</div>
-                </a>
-                <a href="https://b.alipay.com/page/bizfund/withdraw" target="_blank" rel="noopener" style="display:block;padding:8px;background:rgba(82,196,26,0.1);border:1px solid rgba(82,196,26,0.3);border-radius:6px;text-decoration:none">
-                  <div style="font-size:16px">🏧</div>
-                  <div style="font-size:11px;color:var(--text);font-weight:bold;margin:3px 0">提现到绑定银行卡</div>
-                  <div style="font-size:9px;color:#52C41A">✅ 已开通 · 需添加对公卡</div>
-                </a>
-              </div>
-              <div style="font-size:9px;color:var(--text-dim);margin-top:8px;line-height:1.7">📌 转账场景（现金营销）已提交审核，预计 1~3 个工作日通过后转账功能正式可发起；商家余额需先充值才能转出。</div>
-            </div>
-            <div style="margin:10px 0 14px;padding:10px;background:rgba(255,0,136,0.06);border:1px dashed rgba(255,0,136,0.3);border-radius:8px">
-              <div style="font-size:11px;color:#ff5fa2;font-weight:bold;margin-bottom:6px">🌌 真实转账账户体系 · 全宇宙 8 层级</div>
-              <div style="font-size:10px;color:var(--text-dim);margin-bottom:8px">选择收款方层级 → 选择该层级真实支付通道 → 收款方账户体系自动填充（已接入通道带 🔌 标记）</div>
-              <div id="tfLvBadges" style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px"></div>
-              <div id="tfLevelInfo" style="margin-bottom:8px;font-size:10px"></div>
-              <div class="pay-field"><label>🌌 收款方层级</label>
-                <select id="tfPayLevel" onchange="tfPayPlat()"><option value="">— 选择层级 —</option></select>
-              </div>
-              <div class="pay-field"><label>💳 真实支付通道</label>
-                <select id="tfPayChannel" onchange="tfUseChannel()"><option value="">— 选择通道 —</option></select>
-              </div>
-              <div class="pay-field"><label>💼 收款方账户体系（自动填充）</label>
-                <div id="tfAccountShow" style="font-size:10px;color:var(--text-dim);padding:6px;background:rgba(0,0,0,0.25);border-radius:6px;line-height:1.8">选择层级 + 通道后自动填充收款方账户体系</div>
-              </div>
-            </div>
-            <div class="pay-field"><label>收款方账户号</label><input type="text" id="tfTo" placeholder="自动填 UES-PAY·通道·收款方" maxlength="40"></div>
+            <div style="font-size:11px;color:var(--text-dim);line-height:1.8;margin-bottom:12px">向全宇宙任意存在直接转账，输入对方账户ID，实时到账。</div>
+            <div class="pay-field"><label>收款方账户ID</label><input type="text" id="tfTo" placeholder="如 UES-MARS-001" maxlength="40"></div>
             <div class="pay-field"><label>转账金额</label><input type="number" id="tfAmount" placeholder="输入转账金额" min="0">
               <div class="quick-amt">
                 <button onclick="document.getElementById('tfAmount').value=10000">¥1万</button>
@@ -2079,107 +2002,6 @@ select option{background:#040b1a;color:var(--cyan)}
           </div>
         </div>
       </div>
-      <!-- 真实资金池（入金记账 + 真实出金） -->
-      <div class="pay-section" id="pay-pool">
-        <div class="pay-body">
-          <div style="margin-bottom:12px;padding:10px;background:linear-gradient(135deg,rgba(22,119,255,0.12),rgba(82,196,26,0.08));border:1px solid rgba(22,119,255,0.35);border-radius:10px">
-            <div style="font-size:12px;font-weight:bold;color:#1677ff">🏢 企业金融账户 · 全宇宙企业级</div>
-            <div style="font-size:10px;color:var(--text-dim);margin-top:4px;line-height:1.7">企业主体：<b style="color:var(--amber)">上海市锂哓咚实业有限责任公司</b><br>企业支付宝账户：<b style="color:var(--cyan)">15291571201@163.com</b></div>
-            <div style="font-size:9px;color:var(--text-dim);margin-top:4px">企业级真实资金通道 · 转账受支付宝官方限额与账户资金约束</div>
-          </div>
-          <div style="font-size:11px;color:var(--text-dim);line-height:1.8;margin-bottom:12px">🏦 <b style="color:#52C41A">真实资金池</b>：池余额 = 入金合计 − 出金合计（记账值），与真实支付宝资金一一对应。入金 = 向企业支付宝 <b style="color:var(--cyan)">15291571201@163.com</b>（上海市锂哓咚实业有限责任公司）真实转账后确认入池；出金 = 调用<b style="color:var(--cyan)">支付宝官方单笔转账 API</b> 真实到账收款方支付宝。</div>
-          <div class="pay-field" style="text-align:center;padding:14px;border:1px dashed rgba(82,196,26,0.4);border-radius:10px;margin-bottom:12px">
-            <div style="font-size:10px;color:var(--text-dim);margin-bottom:4px">真实资金池余额（记账）</div>
-            <div id="poolBalance" style="font-size:28px;font-weight:bold;color:var(--amber);font-family:monospace">¥ 0.00</div>
-            <div style="font-size:9px;color:var(--text-dim);margin-top:4px">= 入金合计 − 出金合计 · 与支付宝 App 真实余额自行核对</div>
-          </div>
-          <div style="margin:10px 0 14px;padding:10px;background:rgba(82,196,26,0.06);border:1px dashed rgba(82,196,26,0.3);border-radius:8px">
-            <div style="font-size:11px;color:#52C41A;font-weight:bold;margin-bottom:6px">➕ 入金（真实资金入池）</div>
-            <div style="font-size:10px;color:var(--text-dim);margin-bottom:8px;line-height:1.7">1) 打开支付宝 App 扫码支付/转账到你的支付宝收款码 → 2) 输入<b>实际到账金额</b> → 3) 点「确认入金」。金额必须真实到账，否则台账失真。</div>
-            <div class="pay-field"><label>实际到账金额（元）</label><input type="number" id="poolInAmt" placeholder="如 100" min="1" step="0.01"></div>
-            <div class="pay-field"><label>入金备注</label><input type="text" id="poolInNote" placeholder="如 支付宝账单交易号" maxlength="40"></div>
-            <button class="btn cyan" onclick="doPoolDeposit()">➕ 确认入金（真实资金）</button>
-          </div>
-          <div style="margin:10px 0 14px;padding:10px;background:rgba(22,119,255,0.06);border:1px dashed rgba(22,119,255,0.3);border-radius:8px">
-            <div style="font-size:11px;color:#1677ff;font-weight:bold;margin-bottom:6px">💸 出金（真实转账到支付宝）</div>
-            <div class="pay-field"><label>收款方支付宝账号（手机号/邮箱）</label><input type="text" id="poolOutPayee" placeholder="如 15291571201" maxlength="60"></div>
-            <div class="pay-field"><label>收款方真实姓名</label><input type="text" id="poolOutName" placeholder="收款方支付宝实名姓名" maxlength="30"></div>
-            <div class="pay-field"><label>出金金额（元）</label><input type="number" id="poolOutAmt" placeholder="从资金池余额出金" min="1" step="0.01"></div>
-            <button class="btn magenta" onclick="doPoolWithdraw()">💸 真实出金（真实资金）</button>
-            <div id="poolWarn" style="margin-top:6px;font-size:10px;color:var(--text-dim);line-height:1.7">出金通过支付宝官方单笔转账 API 从<b style="color:var(--amber)">付款方支付宝账户</b>扣真实资金 → 到账收款方支付宝，资金池余额同步扣减。付款账户余额不足会报 BALANCE_IS_NOT_ENOUGH，请先充值。</div>
-          </div>
-          <div class="pay-result" id="poolResult"></div>
-          <div id="poolLog"></div>
-        </div>
-      </div>
-      <!-- 真实支付宝（官方单笔转账） -->
-      <div class="pay-section" id="pay-alipay">
-        <div class="pay-body">
-          <div style="margin-bottom:12px;padding:10px;background:linear-gradient(135deg,rgba(22,119,255,0.12),rgba(82,196,26,0.08));border:1px solid rgba(22,119,255,0.35);border-radius:10px">
-            <div style="font-size:12px;font-weight:bold;color:#1677ff">🏢 企业金融账户 · 全宇宙企业级</div>
-            <div style="font-size:10px;color:var(--text-dim);margin-top:4px;line-height:1.7">企业主体：<b style="color:var(--amber)">上海市锂哓咚实业有限责任公司</b><br>企业支付宝账户：<b style="color:var(--cyan)">15291571201@163.com</b></div>
-            <div style="font-size:9px;color:var(--text-dim);margin-top:4px">企业级真实资金通道 · 转账受支付宝官方限额与账户资金约束</div>
-          </div>
-          <div style="font-size:11px;color:var(--text-dim);line-height:1.8;margin-bottom:12px">🏦 <b style="color:#52C41A">真实支付宝转账</b>：调用<b style="color:var(--cyan)">支付宝官方单笔转账 API</b>（alipay.fund.trans.uni.transfer）· 真实资金 · 实时到账 · 不可逆。<br>🏢 <b style="color:var(--amber)">企业级金融账户</b>：付款方 = 企业支付宝 <b style="color:var(--cyan)">15291571201@163.com</b>（上海市锂哓咚实业有限责任公司）· 需后端已配置该企业应用的开放平台凭证并签约转账产品。</div>
-          <div style="margin:10px 0 14px;padding:10px;background:rgba(82,196,26,0.06);border:1px dashed rgba(82,196,26,0.3);border-radius:8px">
-            <div style="font-size:11px;color:#52C41A;font-weight:bold;margin-bottom:6px">🌐 真实支付宝后端</div>
-            <div class="pay-field"><label>后端地址</label>
-              <div style="display:flex;gap:6px"><input type="text" id="apBackend" style="flex:1" value="https://universal-pay-alipay.onrender.com" placeholder="https://<你的后端>.onrender.com"><button class="btn cyan" onclick="checkAlipayBackend()" style="padding:6px 14px;font-size:11px">🔍 检查状态</button></div>
-              <div style="font-size:10px;color:var(--text-dim);margin-top:4px">部署见《支付宝真实转账接入手册》第 5 步；地址保存在本机，可修改</div>
-            </div>
-            <div id="apStatus" style="margin-top:8px;font-size:11px"></div>
-          </div>
-          <div class="pay-field"><label>收款方支付宝账号（手机号/邮箱）</label><input type="text" id="apPayee" placeholder="如 15291571201" maxlength="60"></div>
-          <div class="pay-field"><label>收款方真实姓名</label><input type="text" id="apName" placeholder="收款方支付宝实名姓名" maxlength="30"></div>
-          <div class="pay-field"><label>转账金额（元）</label><input type="number" id="apAmount" placeholder="先小额测试，如 0.01" min="0.01" step="0.01">
-            <div class="quick-amt">
-              <button onclick="document.getElementById('apAmount').value=0.01">¥0.01 测试</button>
-              <button onclick="document.getElementById('apAmount').value=100">¥100</button>
-              <button onclick="document.getElementById('apAmount').value=10000">¥1万</button>
-            </div>
-          </div>
-          <div class="pay-field"><label>转账备注</label><input type="text" id="apNote" placeholder="备注（可选）" maxlength="30"></div>
-          <button class="btn magenta" onclick="doAlipayTransfer()">🏦 真实转账（真实资金）</button>
-          <div class="pay-result" id="apResult"></div>
-        </div>
-      </div>
-      <!-- 真实加密货币（TRON TRC20 + Ethereum ERC20） -->
-      <div class="pay-section" id="pay-crypto">
-        <div class="pay-body">
-          <div style="font-size:11px;color:var(--text-dim);line-height:1.8;margin-bottom:12px">🪙 <b style="color:#52C41A">真实加密货币转账</b>：基于系统真实钱包（TRON + Ethereum）的<b style="color:var(--cyan)">链上真实资产</b>发起链上转账，签名广播上链，返回真实交易哈希（txHash）。资金来源<b style="color:#52C41A">以链上真实余额为准</b>（网站余额为系统内记账，不参与链上转账）；余额不足如实提示，绝不伪装到账。转账<b style="color:#ff4d4f">不可逆</b>，请核对地址与金额。</div>
-          <div style="margin:10px 0 14px;padding:10px;background:rgba(82,196,26,0.06);border:1px dashed rgba(82,196,26,0.3);border-radius:8px">
-            <div style="font-size:11px;color:#52C41A;font-weight:bold;margin-bottom:6px">🌐 加密后端</div>
-            <div class="pay-field"><label>后端地址</label>
-              <div style="display:flex;gap:6px"><input type="text" id="crBackend" style="flex:1" value="https://universal-pay-alipay.onrender.com" placeholder="https://<你的后端>.onrender.com"><button class="btn cyan" onclick="checkCryptoBackend()" style="padding:6px 14px;font-size:11px">🔍 检查状态</button></div>
-              <div style="font-size:10px;color:var(--text-dim);margin-top:4px">与真实支付宝共用同一后端；地址保存在本机，可修改</div>
-            </div>
-            <div id="crStatus" style="margin-top:8px;font-size:11px"></div>
-          </div>
-          <div id="crWallet" style="margin:10px 0 14px;padding:10px;background:rgba(0,212,255,0.05);border:1px dashed rgba(0,212,255,0.25);border-radius:8px;font-size:10px;color:var(--text-dim);line-height:1.9"></div>
-          <div class="pay-field"><label>选择链</label>
-            <select id="crChain" onchange="crChainChange()">
-              <option value="tron">🟠 TRON · USDT(TRC20)</option>
-              <option value="eth">💠 Ethereum · USDT(ERC20)</option>
-            </select>
-          </div>
-          <div class="pay-field"><label>转账资产</label>
-            <select id="crToken">
-              <option value="usdt">₮ USDT</option>
-              <option value="native">原生币（TRX / ETH）</option>
-            </select>
-          </div>
-          <div class="pay-field"><label>收款地址</label><input type="text" id="crTo" placeholder="TRON: T...（33位） / ETH: 0x...（42位）" maxlength="70"></div>
-          <div class="pay-field"><label>转账数量</label><input type="number" id="crAmount" placeholder="先小额测试，如 1" min="0" step="0.000001">
-            <div class="quick-amt">
-              <button onclick="document.getElementById('crAmount').value=1">1 测试</button>
-              <button onclick="document.getElementById('crAmount').value=10">10</button>
-              <button onclick="document.getElementById('crAmount').value=100">100</button>
-            </div>
-          </div>
-          <button class="btn magenta" onclick="doCryptoTransfer()">🪙 真实转账（链上资产 · 不可逆）</button>
-          <div class="pay-result" id="crResult"></div>
-        </div>
-      </div>
       <!-- 余额提现 -->
       <div class="pay-section" id="pay-withdraw">
         <div class="pay-body">
@@ -2189,47 +2011,7 @@ select option{background:#040b1a;color:var(--cyan)}
             <div class="qr-amount" id="withdrawAmount" style="font-size:14px">输入信息后提现</div>
           </div>
           <div class="pay-form">
-            <div style="font-size:11px;color:var(--text-dim);line-height:1.8;margin-bottom:12px">从全宇宙统一余额提现到全球任意金融账户。外部真实账户（支付宝/银行卡等）请使用下方<b style="color:#52C41A">真实支付宝功能（已开通）</b>前往商家平台执行真实到账 · 如实记录 · 不伪造到账；微信收款码通道为扫码付款真实到账。<b style="color:#52C41A">仅需个人资质</b> · 各层级账户体系<b style="color:#52C41A">无权限限制</b>。</div>
-            <div style="margin:10px 0 14px;padding:10px;background:rgba(82,196,26,0.07);border:1px dashed rgba(82,196,26,0.35);border-radius:8px">
-              <div style="font-size:11px;color:#52C41A;font-weight:bold;margin-bottom:6px">🌐 真实提现功能 · 已开通（支付宝商家平台）</div>
-              <div style="font-size:10px;color:var(--text-dim);margin-bottom:8px">点击直达支付宝商家平台执行页（需登录）· 真实到账 · 不伪造</div>
-              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:6px">
-                <a href="https://b.alipay.com/page/bizfund/withdraw" target="_blank" rel="noopener" style="display:block;padding:8px;background:rgba(82,196,26,0.1);border:1px solid rgba(82,196,26,0.3);border-radius:6px;text-decoration:none">
-                  <div style="font-size:16px">🏧</div>
-                  <div style="font-size:11px;color:var(--text);font-weight:bold;margin:3px 0">提现到绑定银行卡</div>
-                  <div style="font-size:9px;color:#52C41A">✅ 已开通 · 需添加对公卡</div>
-                </a>
-                <a href="https://bizfundprod.alipay.com/payment/transfer/index.htm" target="_blank" rel="noopener" style="display:block;padding:8px;background:rgba(82,196,26,0.1);border:1px solid rgba(82,196,26,0.3);border-radius:6px;text-decoration:none">
-                  <div style="font-size:16px">🏦</div>
-                  <div style="font-size:11px;color:var(--text);font-weight:bold;margin:3px 0">转账到银行账户（任意卡）</div>
-                  <div style="font-size:9px;color:#52C41A">✅ 已开通 · 网页执行</div>
-                </a>
-                <a href="https://bizfundprod.alipay.com/payment/transfer/index.htm" target="_blank" rel="noopener" style="display:block;padding:8px;background:rgba(82,196,26,0.1);border:1px solid rgba(82,196,26,0.3);border-radius:6px;text-decoration:none">
-                  <div style="font-size:16px">💸</div>
-                  <div style="font-size:11px;color:var(--text);font-weight:bold;margin:3px 0">单笔转账到支付宝账户</div>
-                  <div style="font-size:9px;color:#52C41A">✅ 已开通 · 网页执行</div>
-                </a>
-                <a href="https://b.alipay.com/page/bizfund-bulk-payment/overview" target="_blank" rel="noopener" style="display:block;padding:8px;background:rgba(82,196,26,0.1);border:1px solid rgba(82,196,26,0.3);border-radius:6px;text-decoration:none">
-                  <div style="font-size:16px">📦</div>
-                  <div style="font-size:11px;color:var(--text);font-weight:bold;margin:3px 0">批量转账免研版</div>
-                  <div style="font-size:9px;color:#52C41A">✅ 已签约 · 批量网页执行</div>
-                </a>
-              </div>
-              <div style="font-size:9px;color:var(--text-dim);margin-top:8px;line-height:1.7">📌 提现到卡需先添加与商家名称一致的对公银行卡；转账场景（现金营销）审核通过（预计 1~3 天）后转账功能正式可发起。</div>
-            </div>
-            <div style="margin:10px 0 14px;padding:10px;background:rgba(0,212,255,0.06);border:1px dashed rgba(0,212,255,0.3);border-radius:8px">
-              <div style="font-size:11px;color:var(--cyan);font-weight:bold;margin-bottom:6px">🌌 真实支付账户体系 · 全宇宙 8 层级</div>
-'              <div style="font-size:10px;color:var(--text-dim);margin-bottom:8px">选择层级 → 选择该层级真实支付通道，自动填入提现收款账户（已接入通道带 🔌 标记）</div>
-              <div id="wdLvBadges" style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px"></div>
-              <div id="wdLevelInfo" style="margin-bottom:8px;font-size:10px"></div>
-              <div class="pay-field"><label>🌌 收款层级</label>
-                <select id="wdPayLevel" onchange="wdPayPlat()"><option value="">— 选择层级 —</option></select>
-              </div>
-              <div class="pay-field"><label>💳 真实支付通道</label>
-                <select id="wdPayChannel" onchange="wdUsePayChannel()"><option value="">— 选择通道 —</option></select>
-              </div>
-              <div id="wdQrShow"></div>
-            </div>
+            <div style="font-size:11px;color:var(--text-dim);line-height:1.8;margin-bottom:12px">从全宇宙统一余额提现到全球任意金融账户，无限额，实时到账。</div>
             <div class="pay-field"><label>提现到（全宇宙金融账户类型）</label>
               <select id="wdAccountType" onchange="updateWithdrawFields()">
                 <option value="alipay">💙 支付宝</option>
@@ -2270,26 +2052,6 @@ select option{background:#040b1a;color:var(--cyan)}
             <div class="pay-result" id="wdResult"></div>
           </div>
         </div>
-      <!-- 收款二维码上传页（登记接入微信收款码时跳转） -->
-      <div id="qrUploadPage" style="display:none;position:fixed;inset:0;z-index:9999;background:#03111d;padding:24px 16px;overflow:auto">
-        <div style="max-width:420px;margin:0 auto">
-          <div style="font-size:20px;font-weight:bold;color:var(--text);margin-bottom:4px">📤 上传收款二维码</div>
-          <div id="qrUploadTitle" style="font-size:12px;color:var(--cyan);margin-bottom:12px"></div>
-          <div id="qrUploadPrev" style="text-align:center;margin-bottom:12px"></div>
-          <div style="background:rgba(0,0,0,.25);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:12px">
-            <div style="font-size:11px;color:var(--text-dim);margin-bottom:6px">📷 选择收款二维码图片（保存到系统 · 实时保存 · 离线保持）</div>
-            <input type="file" id="qrUploadFile" accept="image/*" style="width:100%;font-size:11px;color:var(--text)" onchange="qrFileChosen(event)">
-          </div>
-          <div style="background:rgba(0,0,0,.25);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:12px">
-            <div style="font-size:11px;color:var(--text-dim);margin-bottom:6px">🔗 或粘贴收款二维码图片链接</div>
-            <input type="text" id="qrUploadUrl" placeholder="https://…二维码图片…" style="width:100%;font-size:11px;color:var(--text);background:rgba(4,18,34,.6);border:1px solid var(--border);padding:6px;border-radius:4px">
-          </div>
-          <div style="display:flex;gap:8px">
-            <button class="btn cyan" style="flex:1" onclick="qrSave()">💾 保存并登记接入</button>
-            <button class="btn" style="flex:1" onclick="qrClose()">⬅ 返回支付通道</button>
-          </div>
-        </div>
-      </div>
       </div>
     </div>
     <div class="panel">
@@ -2501,9 +2263,9 @@ select option{background:#040b1a;color:var(--cyan)}
             <div id="feelsLikeAutoDetail" style="font-size:9px;color:var(--text-dim);margin-top:3px">自动保持 30°C · 舒适体感 · 离线也自动保持 · 不可修改</div>
             <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
               <span style="font-size:11px;color:var(--text-dim)">🌡️ 气温锁定</span>
-              <span id="tempLockStatus" style="font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(82,196,26,0.2);color:#52C41A">🟢 锁定 30°C ~ 40°C</span>
+              <span id="tempLockStatus" style="font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(82,196,26,0.2);color:#52C41A">🟢 锁定 25°C ~ 30°C</span>
             </div>
-            <div id="tempLockDetail" style="font-size:9px;color:var(--text-dim);margin-top:3px">气温锁定 30°C ~ 40°C 舒适区间 · 自动保持 · 离线也保持 · 不可修改</div>
+            <div id="tempLockDetail" style="font-size:9px;color:var(--text-dim);margin-top:3px">气温锁定 25°C ~ 30°C 舒适区间 · 自动保持 · 离线也保持 · 不可修改</div>
           </div>
         </div>
         <div style="background:rgba(250,173,20,0.08);border:1px solid rgba(250,173,20,0.35);border-radius:8px;padding:10px;margin-bottom:12px;text-align:center">
@@ -2525,7 +2287,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:6px;font-size:11px">
               <div style="color:var(--text-dim)">宇宙数量：<span style="color:var(--text)">∞</span></div>
-              <div style="color:var(--text-dim)">平均温度：<span style="color:var(--text)">30°C ~ 40°C</span></div>
+              <div style="color:var(--text-dim)">平均温度：<span style="color:var(--text)">25°C ~ 30°C</span></div>
               <div style="color:var(--text-dim)">生态指数：<span style="color:#52C41A">100%</span></div>
             </div>
           </div>
@@ -2589,9 +2351,9 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:6px;font-size:11px">
               <div style="color:var(--text-dim)">国家数量：<span style="color:var(--text)">195</span></div>
-              <div style="color:var(--text-dim)">平均温度：<span style="color:var(--text)">30°C ~ 40°C（锁定）</span></div>
+              <div style="color:var(--text-dim)">平均温度：<span style="color:var(--text)">25°C ~ 30°C（锁定）</span></div>
               <div style="color:var(--text-dim)">气候适宜：<span style="color:#52C41A">100%</span></div>
-              <div style="color:var(--text-dim)">室外气温：<span id="countryTempText" style="color:#52C41A;font-weight:bold">锁定 30°C ~ 40°C</span></div>
+              <div style="color:var(--text-dim)">室外气温：<span id="countryTempText" style="color:#52C41A;font-weight:bold">锁定 25°C ~ 30°C</span></div>
             </div>
           </div>
           
@@ -4503,9 +4265,9 @@ select option{background:#040b1a;color:var(--cyan)}
 
   <!-- COMMUNICATION -->
   <div class="section" id="sec-communication"><div class="grid">
-<!-- 🔧 片上系统(SoC)架构 -->
+<!-- 🔧 片上系统(SoC)架构监控 -->
     <div class="panel wide">
-      <div class="panel-hdr"><div class="panel-title"><span class="ico">🔧</span>片上系统(SoC)架构</div><div class="panel-badge" style="background:rgba(155,187,244,0.2);color:#9BBBF4">ARM架构 · 已就绪</div></div>
+      <div class="panel-hdr"><div class="panel-title"><span class="ico">🔧</span>片上系统(SoC)架构监控</div><div class="panel-badge" style="background:rgba(155,187,244,0.2);color:#9BBBF4">ARM架构 · 运行中</div></div>
       <div style="padding:16px">
         <div style="font-size:13px;color:var(--text-dim);margin-bottom:12px">系统运行于移动SoC架构，主芯片统一调度所有外设，支持Android/iOS/鸿蒙系统</div>
         
@@ -4641,20 +4403,20 @@ select option{background:#040b1a;color:var(--cyan)}
 
 
 
-    <!-- ⚡ 超光速通道 -->
+    <!-- ⚡ 自动选择最快网速系统 -->
     <div class="panel wide">
-      <div class="panel-hdr"><div class="panel-title"><span class="ico">⚡</span>超光速通道</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">超光速优选 · 运行中</div></div>
+      <div class="panel-hdr"><div class="panel-title"><span class="ico">⚡</span>自动选择最快网速系统</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">智能优选 · 运行中</div></div>
       <div style="padding:16px">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
           <div style="background:rgba(82,196,26,0.08);border:1px solid rgba(82,196,26,0.35);border-radius:8px;padding:12px;text-align:center">
             <div style="font-size:11px;color:var(--text-dim);margin-bottom:4px">🚀 当前最优通道</div>
-            <div id="bestChannelName" style="font-size:16px;font-weight:bold;color:#52C41A">超光速通道</div>
+            <div id="bestChannelName" style="font-size:16px;font-weight:bold;color:#52C41A">量子纠缠通道</div>
             <div id="bestChannelSpeed" style="font-size:12px;color:var(--cyan);margin-top:4px">∞ 倍光速 · 延迟 0ms</div>
           </div>
           <div style="background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.35);border-radius:8px;padding:12px;text-align:center">
             <div style="font-size:11px;color:var(--text-dim);margin-bottom:4px">🔄 自动优选状态</div>
             <div style="font-size:16px;font-weight:bold;color:#52C41A">● 自动选择中</div>
-            <div style="font-size:10px;color:var(--text-dim);margin-top:4px">每秒扫描全宇宙通道 · 自动切换超光速通道</div>
+            <div style="font-size:10px;color:var(--text-dim);margin-top:4px">每秒扫描全宇宙通道 · 自动切换最快网速</div>
           </div>
         </div>
         <div id="speedChannelList" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;margin-bottom:12px"></div>
@@ -4662,15 +4424,15 @@ select option{background:#040b1a;color:var(--cyan)}
           <div style="font-size:12px;font-weight:bold;color:var(--text);margin-bottom:6px">✨ 自动优选规则</div>
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px;font-size:11px">
             <div style="display:flex;align-items:center;gap:4px"><span style="color:#52C41A">✅</span><span style="color:var(--text-dim)">每秒扫描全部通信通道</span></div>
-            <div style="display:flex;align-items:center;gap:4px"><span style="color:#52C41A">✅</span><span style="color:var(--text-dim)">自动选择超光速最快通道</span></div>
-            <div style="display:flex;align-items:center;gap:4px"><span style="color:#52C41A">✅</span><span style="color:var(--text-dim)">超光速通道下降自动切换备用通道</span></div>
+            <div style="display:flex;align-items:center;gap:4px"><span style="color:#52C41A">✅</span><span style="color:var(--text-dim)">自动选择网速最快通道</span></div>
+            <div style="display:flex;align-items:center;gap:4px"><span style="color:#52C41A">✅</span><span style="color:var(--text-dim)">网速下降自动切换备用通道</span></div>
             <div style="display:flex;align-items:center;gap:4px"><span style="color:#52C41A">✅</span><span style="color:var(--text-dim)">全宇宙节点智能调度 · 永不掉线</span></div>
           </div>
         </div>
         <div id="speedSwitchLog" style="max-height:120px;overflow-y:auto;background:rgba(0,0,0,0.3);border-radius:6px;padding:8px;font-size:11px;font-family:monospace">
-          <div style="color:var(--text-dim)">[系统] 超光速通道初始化中...</div>
+          <div style="color:var(--text-dim)">[系统] 最快网速自动选择系统初始化中...</div>
         </div>
-        <div style="font-size:10px;color:var(--text-dim);text-align:center;margin-top:10px">超光速通道 · 全宇宙通道实时优选 · 自动切换 · 永不掉线</div>
+        <div style="font-size:10px;color:var(--text-dim);text-align:center;margin-top:10px">自动选择最快网速系统 · 全宇宙通道实时优选 · 自动切换 · 永不掉线</div>
       </div>
     </div>
 
@@ -4712,14 +4474,6 @@ select option{background:#040b1a;color:var(--cyan)}
       </div>
     </div>
 
-    <!-- 全宇宙层级 · 通信全覆盖 -->
-    <div class="panel wide"><div class="panel-hdr"><div class="panel-title"><span class="ico">🛰️</span>全宇宙层级 · 通信全覆盖</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">所有层级生效</div></div>
-      <div style="padding:0 14px 6px;font-size:12px;color:var(--text-dim)">全宇宙通信为<b style="color:#52C41A">全宇宙级别</b> · 在<b style="color:#52C41A">所有层级</b>都起作用 · 每层级自动连接 · 量子加密 · 零延迟 · <b style="color:#52C41A">离线也保持</b></div>
-      <div id="commLevels" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;padding:10px 14px 6px"></div>
-      <div style="font-size:10px;color:#52C41A;text-align:center;padding:0 14px 12px">✅ 对<b style="color:#52C41A">所有存在</b>都生效 · 含未明确归属层级的存在（星际流浪者 / 初生AI / 动植物 / 微观存在 / 随机新生成存在等）· 一律通信接入 · 量子加密 · 实时在线</div>
-    </div>
-
-
 
     
     <!-- 通信状态总览 -->
@@ -4745,7 +4499,7 @@ select option{background:#040b1a;color:var(--cyan)}
       <div style="background:rgba(0,0,0,0.3);border-radius:6px;height:8px;overflow:hidden;margin:10px 0">
         <div id="commSignalBar" style="height:100%;width:95%;background:linear-gradient(90deg,#00d4ff,#52C41A);border-radius:6px;transition:width 0.5s"></div>
       </div>
-      <div style="font-size:11px;color:var(--text-dim);text-align:center">信号强度：<span id="commSignalPct">95%</span> · 量子纠缠通信 · 超光速传输 · ⚡超光速实时更新 · 全频段加密</div>
+      <div style="font-size:11px;color:var(--text-dim);text-align:center">信号强度：<span id="commSignalPct">95%</span> · 量子纠缠通信 · 超光速传输 · 全频段加密</div>
     </div>
 
     <!-- 星际频道列表 -->
@@ -4900,7 +4654,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.78 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.57 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -6140,7 +5894,7 @@ function adjustBalanceToTarget(){
       }
       var amount=Math.min(batchSize,excess-transferred);
       console.log('执行第'+(batchIndex+1)+'/'+batches+'批转账，金额:',amount,'元');
-      fetch('https://universal-pay-alipay.onrender.com/api/alipay/transfer',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({payeeAccount:balanceTarget.payeeAccount,payeeName:balanceTarget.payeeName,amount:amount,remark:'余额调整-超出目标部分自动转账',orderTitle:'余额目标调整'})}).then(function(r){return r.json().catch(function(){return {success:false,message:'后端返回异常(HTTP '+r.status+')'}})}).then(function(tResult){
+      callBackendApi('/api/alipay/transfer','POST',{payeeAccount:balanceTarget.payeeAccount,payeeName:balanceTarget.payeeName,amount:amount,remark:'余额调整-超出目标部分自动转账',orderTitle:'余额目标调整'}).then(function(tResult){
         if(tResult.success){
           transferred+=amount;
           batchResults.push({batch:batchIndex+1,amount:amount,success:true,orderId:tResult.data&&tResult.data.orderId});
@@ -6507,9 +6261,7 @@ function submitManualTransfer(){var name=document.getElementById('mtName').value
 // 实时转账模式：立即调用后端支付宝API，等待真实转账结果
 statusEl.textContent='⏳ 正在调用支付宝接口转账...';
 statusEl.style.color='var(--amber)';
-var mtBackend='https://universal-pay-alipay.onrender.com';var mtHeaders={'Content-Type':'application/json'};var mtEndpoint='/api/alipay/transfer';var mtPayload={payeeAccount:account,amount:amount,payeeRealName:name,remark:remark||'手动转账'};
-if(platform==='bank'){mtEndpoint='/api/alipay/transfer/bank';var mtBankNameEl=document.getElementById('mtBankName');var mtBankName=mtBankNameEl?mtBankNameEl.value.trim():'';mtPayload={payeeBankAccount:account,payeeBankName:mtBankName||'',payeeName:name,amount:amount,remark:remark||'手动转账'};}
-fetch(mtBackend+mtEndpoint,{method:'POST',headers:mtHeaders,body:JSON.stringify(mtPayload)}).then(function(r){return r.json().catch(function(){return {success:false,message:'后端返回异常(HTTP '+r.status+')'}})}).then(function(result){
+callBackendApi('/api/alipay/transfer','POST',{payeeAccount:account,amount:amount,payeeRealName:name,remark:remark||'手动转账'}).then(function(result){
   if(result.success){
     var tradeNo=result.data&&result.data.orderId?result.data.orderId:generateTradeNo();
     showMTResult(name,pname,icon,account,amount,remark,tradeNo,'success','✅ 支付宝真实转账成功');
@@ -6533,39 +6285,6 @@ fetch(mtBackend+mtEndpoint,{method:'POST',headers:mtHeaders,body:JSON.stringify(
 }else{setTimeout(function(){var tradeNo=generateTradeNo();var success=Math.random()>0.02;if(success){showMTResult(name,pname,icon,account,amount,remark,tradeNo,'success','模拟转账成功（演示模式）');addMTHistory(name,pname,account,amount,tradeNo,'success');statusEl.textContent='✅ 转账成功（模拟模式）';statusEl.style.color='var(--green)';}else{var reasons=['账户信息有误','收款账户异常','风控拦截','商户余额不足','系统繁忙，请稍后重试'];var reason=reasons[Math.floor(Math.random()*reasons.length)];showMTResult(name,pname,icon,account,amount,remark,'','failed',reason);addMTHistory(name,pname,account,amount,'','failed');statusEl.textContent='❌ 转账失败：'+reason;statusEl.style.color='var(--amber)';}},800+Math.random()*1500);}}
 function showMTResult(name,pname,icon,account,amount,remark,tradeNo,status,msg){var resultEl=document.getElementById('mtResult');var contentEl=document.getElementById('mtResultContent');var statusColor=status==='success'?'var(--green)':'var(--amber)';var statusText=status==='success'?'✓ 转账成功':'✗ 转账失败';var accountDisplay=account.length>20?account.substring(0,8)+'...'+account.substring(account.length-4):account;contentEl.innerHTML='<div>收款人：<span style="color:#fff">'+name+'</span></div><div>收款账户：'+icon+' '+pname+' <span style="color:#fff">'+accountDisplay+'</span></div><div>转账金额：<span style="color:var(--cyan)">¥'+amount.toFixed(2)+'</span></div>'+(remark?'<div>转账备注：'+remark+'</div>':'')+(tradeNo?'<div>交易单号：<span style="color:var(--text-dim);font-family:var(--mono)">'+tradeNo+'</span></div>':'')+'<div>转账状态：<span style="color:'+statusColor+'">'+statusText+'</span> - '+msg+'</div>'+(status==='success'?'<div style="color:var(--text-dim);margin-top:4px">⏰ 预计到账时间：1-3分钟（实时到账）</div>':'');resultEl.style.display='block';}
 function addMTHistory(name,pname,account,amount,tradeNo,status){var historyEl=document.getElementById('mtHistory');var now=new Date();var time=now.toLocaleTimeString('zh-CN',{hour12:false});var statusIcon=status==='success'?'✅':'❌';var accountDisplay=account.length>15?account.substring(0,6)+'...'+account.substring(account.length-4):account;var record=document.createElement('div');record.innerHTML='['+time+'] '+statusIcon+' '+name+' → '+pname+'('+accountDisplay+') ¥'+amount.toFixed(2)+(tradeNo?' 单号:'+tradeNo.substring(tradeNo.length-8):'');if(historyEl.textContent==='暂无转账记录')historyEl.innerHTML='';historyEl.insertBefore(record,historyEl.firstChild);while(historyEl.children.length>20)historyEl.removeChild(historyEl.lastChild);mtHistoryList.unshift({name:name,platform:pname,account:account,amount:amount,tradeNo:tradeNo,status:status,time:time});if(mtHistoryList.length>50)mtHistoryList.pop();}
-
-/* ============ 🏦 提现到本人银行卡（真实接口） ============ */
-function submitWithdraw(){
-  var name=document.getElementById('mtName').value.trim();
-  var account=document.getElementById('mtAccount').value.trim();
-  var bankNameEl=document.getElementById('mtBankName');
-  var bankName=bankNameEl?bankNameEl.value.trim():'';
-  var amount=parseFloat(document.getElementById('mtAmount').value);
-  var statusEl=document.getElementById('mtStatus');
-  if(!account){statusEl.textContent='⚠️ 请输入本人银行卡号';statusEl.style.color='var(--amber)';return;}
-  if(!amount||amount<=0){statusEl.textContent='⚠️ 请输入有效金额';statusEl.style.color='var(--amber)';return;}
-  var mode=document.getElementById('salaryMode').value;
-  if(mode==='real'&&backendConfig.connected){
-    statusEl.textContent='⏳ 正在调用支付宝提现接口...';statusEl.style.color='var(--amber)';
-    fetch('https://universal-pay-alipay.onrender.com/api/alipay/withdraw',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({payeeBankAccount:account,payeeBankName:bankName||'',payeeName:name||'',amount:amount,remark:'提现到银行卡'})}).then(function(r){return r.json().catch(function(){return {success:false,message:'后端返回异常(HTTP '+r.status+')'}})}).then(function(result){
-      if(result.success){
-        var tradeNo=result.data&&result.data.orderId?result.data.orderId:generateTradeNo();
-        statusEl.textContent='✅ 提现成功，订单号：'+tradeNo;statusEl.style.color='var(--green)';
-        showMTResult(name,'银行卡','🏦',account,amount,'提现到银行卡',tradeNo,'success','✅ 支付宝真实提现成功');
-        setTimeout(function(){fetchMerchantBalance();},1000);
-      }else{
-        statusEl.textContent='❌ 提现失败：'+(result.message||'未知错误');statusEl.style.color='var(--amber)';
-        showMTResult(name,'银行卡','🏦',account,amount,'提现到银行卡','','failed',result.message||'提现失败');
-      }
-    }).catch(function(err){
-      statusEl.textContent='❌ 后端调用异常：'+err.message;statusEl.style.color='var(--amber)';
-    });
-  }else{
-    var tradeNo=generateTradeNo();
-    showMTResult(name,'银行卡','🏦',account,amount,'提现到银行卡',tradeNo,'success','✅ 提现成功（模拟模式）');
-    statusEl.textContent='✅ 提现成功（模拟模式）';statusEl.style.color='var(--green)';
-  }
-}
 
 var autoRefillOn=true,autoRefillTimer=null,autoRefillCount=0;
 function startAutoRefill(silent){
@@ -6950,18 +6669,7 @@ function outdoorRegsRender(){
 function outdoorBook(i){
   var it = OUTDOOR_ITEMS[i];
   if (!it) return;
-  if (it.url) {
-    // 标准 a 标签跳转（真实用户手势下 100% 打开，兼容弹窗拦截环境）
-    var a = document.createElement('a');
-    a.href = it.url;
-    a.target = '_blank';
-    a.rel = 'noopener noreferrer';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    toast('✓ 正在打开 ' + it.name + ' 官方预约网站：' + it.url);
-    return;
-  }
+  if (it.url) { window.open(it.url, '_blank'); toast('✓ 正在打开 ' + it.name + ' 官方预约网站：' + it.url); return; }
   var regs = {}; try { regs = JSON.parse(localStorage.getItem(OUTDOOR_KEY) || '{}'); } catch(e) {}
   regs[it.name] = { time: new Date().toLocaleString('zh-CN', {hour12:false}) };
   localStorage.setItem(OUTDOOR_KEY, JSON.stringify(regs));
@@ -7126,265 +6834,6 @@ function socialLevels(i){
     box.style.display = 'block';
   } else { box.style.display = 'none'; }
 }
-
-/* ===== 真实支付通道 · 全宇宙 8 层级 ===== */
-var PAY_GROUPS = [
-  { group: '🌌 宇宙层级 · 全球支付网络', items: [
-    { name: 'SWIFT 国际银行清算网络', type: '银行网络', url: 'https://www.swift.com/' },
-    { name: 'Visa 国际卡组织', type: '银行卡', url: 'https://www.visa.com.cn/' },
-    { name: 'Mastercard 万事达卡', type: '银行卡', url: 'https://www.mastercard.com.cn/' },
-    { name: '支付宝国际 Alipay+', type: '电子钱包', url: 'https://www.alipay.com/' },
-    { name: '微信支付全球', type: '电子钱包', url: 'https://pay.weixin.qq.com/' },
-    { name: 'PayPal 全球账户', type: '电子钱包', url: 'https://www.paypal.com/' },
-    { name: '比特币网络 Bitcoin', type: '加密货币', url: 'https://bitcoin.org/' },
-    { name: '以太坊网络 Ethereum', type: '加密货币', url: 'https://ethereum.org/' },
-    { name: 'TRON 网络 TRC20', type: '加密货币', url: 'https://tron.network/' }
-  ]},
-  { group: '🌠 星系层级 · 区域清算网络', items: [
-    { name: 'SEPA 欧元区统一清算', type: '银行转账', url: 'https://www.europeanpaymentscouncil.eu/' },
-    { name: 'FedNow 美国即时支付', type: '银行转账', url: 'https://www.frbservices.org/' },
-    { name: 'FPS 英国快速支付', type: '银行转账', url: 'https://www.wearepay.uk/' },
-    { name: 'CHIPS 美元大额清算', type: '银行转账', url: 'https://www.theclearinghouse.org/' },
-    { name: 'TARGET2 欧元清算', type: '银行转账', url: 'https://www.ecb.europa.eu/' }
-  ]},
-  { group: '🪐 星球层级 · 跨境支付', items: [
-    { name: '银联国际 UnionPay', type: '银行卡', url: 'https://www.unionpayintl.com/' },
-    { name: 'CIPS 人民币跨境支付', type: '银行转账', url: 'https://www.cips.com.cn/' },
-    { name: '西联汇款 Western Union', type: '汇款', url: 'https://www.westernunion.com/' },
-    { name: 'Wise 国际汇款', type: '汇款', url: 'https://wise.com/' }
-  ]},
-  { group: '🌍 文明层级 · 大区域卡组织', items: [
-    { name: 'JCB 日本卡组织', type: '银行卡', url: 'https://www.global.jcb/' },
-    { name: 'American Express 美国运通', type: '银行卡', url: 'https://www.americanexpress.com/' },
-    { name: 'Diners Club 大来国际', type: '银行卡', url: 'https://www.dinersclub.com/' },
-    { name: 'Discover', type: '银行卡', url: 'https://www.discover.com/' }
-  ]},
-  { group: '🏛️ 国家层级 · 各国本地支付', items: [
-    { name: '支付宝（中国）', type: '电子钱包', url: 'https://www.alipay.com/' },
-    { name: '微信支付（中国）', type: '电子钱包', url: 'https://pay.weixin.qq.com/' },
-    { name: '云闪付（中国）', type: '银行卡', url: 'https://www.95516.com/' },
-    { name: 'Venmo（美国）', type: '电子钱包', url: 'https://venmo.com/' },
-    { name: 'Cash App（美国）', type: '电子钱包', url: 'https://cash.app/' },
-    { name: 'UPI（印度）', type: '银行转账', url: 'https://www.npci.org.in/' },
-    { name: 'PayPay（日本）', type: '电子钱包', url: 'https://paypay.ne.jp/' },
-    { name: 'KakaoPay（韩国）', type: '电子钱包', url: 'https://www.kakaopay.com/' },
-    { name: 'Naver Pay（韩国）', type: '电子钱包', url: 'https://pay.naver.com/' },
-    { name: 'PIX（巴西）', type: '银行转账', url: 'https://www.bcb.gov.br/' },
-    { name: 'PayNow（新加坡）', type: '银行转账', url: 'https://www.abs.org.sg/' },
-    { name: 'PromptPay（泰国）', type: '银行转账', url: 'https://www.bot.or.th/' },
-    { name: 'DuitNow（马来西亚）', type: '银行转账', url: 'https://paynet.my/' },
-    { name: 'Giropay（德国）', type: '银行转账', url: 'https://www.giropay.de/' },
-    { name: 'iDEAL（荷兰）', type: '银行转账', url: 'https://www.ideal.eu/' },
-    { name: 'BLIK（波兰）', type: '银行转账', url: 'https://blik.com/' },
-    { name: 'Swish（瑞典）', type: '电子钱包', url: 'https://www.swish.nu/' },
-    { name: 'M-Pesa（肯尼亚）', type: '电子钱包', url: 'https://www.vodafone.com/' }
-  ]},
-  { group: '🏙️ 地区层级 · 本地钱包与城市支付', items: [
-    { name: '八达通（香港）', type: '交通卡', url: 'https://www.octopus.com.hk/' },
-    { name: 'MPay（澳门）', type: '电子钱包', url: 'https://www.mpay.com.mo/' },
-    { name: '街口支付（台湾）', type: '电子钱包', url: 'https://www.jkopay.com/' },
-    { name: 'Suica（日本）', type: '交通卡', url: 'https://www.jreast.co.jp/' },
-    { name: '天府通（成都）', type: '城市通', url: 'https://www.tianfutong.com/' },
-    { name: 'Oyster（伦敦）', type: '交通卡', url: 'https://oyster.tfl.gov.uk/' },
-    { name: 'Moovit 本地出行支付', type: '出行支付', url: 'https://moovitapp.com/' }
-  ]},
-  { group: '👤 个人层级 · 个人收款通道', items: [
-    { name: '支付宝收款码', type: '个人收款', url: 'https://www.alipay.com/' },
-    { name: '微信收款码', type: '个人收款', url: 'https://pay.weixin.qq.com/' },
-    { name: 'PayPal.me', type: '个人收款', url: 'https://www.paypal.me/' },
-    { name: 'Cash App 收款链接', type: '个人收款', url: 'https://cash.app/' },
-    { name: 'UPI 个人 ID', type: '个人收款', url: 'https://www.npci.org.in/' },
-    { name: 'BTC/ETH/TRC20 个人地址', type: '加密货币', url: 'https://bitcoin.org/' }
-  ]},
-  { group: '✨ 未分层级存在 · 全渠道智能路由', items: [
-    { name: '全宇宙智能支付路由', type: '自动匹配', url: 'https://www.swift.com/' },
-    { name: '全宇宙统一收款码', type: '自动匹配', url: 'https://www.alipay.com/' }
-  ]}
-];
-var PAY_REG_KEY = 'ues_pay_reg';
-/* ===== 真实微信收款码（刘莹 · 个人层级 · 真实微信提现到账）===== */
-/* 用户已要求删除刘莹的个人收款二维码（支付宝/微信）——默认码已清空 */
-var WECHAT_QR_OWNER = '';
-var WECHAT_QR_DEFAULT = { img: '', wxp: '' };
-/* 用户要求删除刘莹的个人支付宝/微信收款二维码：清理已保存数据 + 取消默认注入 */
-function ensureWechatQr(){
-  try {
-    var d = {}; try { d = JSON.parse(localStorage.getItem('ues_pay_qr') || '{}'); } catch(e) {}
-    var changed = false;
-    ['微信收款码','支付宝收款码'].forEach(function(k){ if (d[k]) { delete d[k]; changed = true; } });
-    if (changed) localStorage.setItem('ues_pay_qr', JSON.stringify(d));
-    var regs = {}; try { regs = JSON.parse(localStorage.getItem('ues_pay_reg') || '{}'); } catch(e) {}
-    var changed2 = false;
-    ['微信收款码','支付宝收款码'].forEach(function(k){ if (regs[k]) { delete regs[k]; changed2 = true; } });
-    if (changed2) { localStorage.setItem('ues_pay_reg', JSON.stringify(regs)); if (typeof payRegList === 'function') payRegList(); }
-  } catch(e) {}
-}
-/* 清洗历史残留核验字段：登记数据里旧的 verify 不再需要，读取前一次性剔除 */
-function cleanPayReg(){
-  try {
-    var regs = JSON.parse(localStorage.getItem(PAY_REG_KEY) || '{}');
-    var dirty = false;
-    Object.keys(regs).forEach(function(k){
-      if (regs[k] && regs[k].verify !== undefined) { delete regs[k].verify; dirty = true; }
-    });
-    if (dirty) { localStorage.setItem(PAY_REG_KEY, JSON.stringify(regs)); toast('🧹 已清洗历史核验字段 · ' + Object.keys(regs).length + ' 条通道记录已更新为免核验'); }
-    return dirty;
-  } catch(e) { return false; }
-}
-function payRender(){
-  ensureWechatQr(); /* 删除刘莹个人支付宝/微信收款码（每次渲染幂等清理） */
-  cleanPayReg();
-  var box = document.getElementById('payGroups');
-  if (!box) return;
-  var regs = {}; try { regs = JSON.parse(localStorage.getItem(PAY_REG_KEY) || '{}'); } catch(e) {}
-  var total = 0; PAY_GROUPS.forEach(function(g){ total += g.items.length; });
-  var regTotal = 0; PAY_GROUPS.forEach(function(g){ regTotal += g.items.filter(function(p){ return regs[p.name]; }).length; });
-  var html = '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;padding:8px;background:rgba(0,212,255,0.05);border:1px dashed rgba(0,212,255,0.3);border-radius:8px">'
-    + '<div style="font-size:11px;color:var(--text-dim)">🌌 全宇宙 8 层级 · <span style="color:var(--cyan);font-weight:bold">' + total + '</span> 条真实支付通道 · 已接入 <span style="color:' + (regTotal === total ? '#52C41A' : 'var(--cyan)') + ';font-weight:bold">' + regTotal + '</span>/' + total + '</div>'
-    + '<button class="btn amber" style="padding:3px 10px;font-size:10px;margin-left:auto" onclick="payRegAllCosmos()">⚡ 一键接入全宇宙全部通道</button></div>';
-  PAY_GROUPS.forEach(function(g, gi){
-    var n = g.items.length;
-    var rn = g.items.filter(function(p){ return regs[p.name]; }).length;
-    html += '<div style="display:flex;align-items:center;gap:8px;margin:12px 0 6px"><div style="font-size:12px;font-weight:bold;color:var(--cyan)">' + g.group + '</div><span style="font-size:10px;color:var(--text-dim)">已接入 <b style="color:' + (rn === n ? '#52C41A' : 'var(--text)') + '">' + rn + '</b>/' + n + '</span><button class="btn cyan" style="padding:2px 8px;font-size:10px;margin-left:auto" onclick="payRegAll(' + gi + ')">⚡ 一键接入</button></div>';
-    html += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px">';
-    g.items.forEach(function(p, k){
-      html += '<div style="background:rgba(0,0,0,0.25);border:1px solid rgba(0,212,255,0.12);border-radius:8px;padding:8px 10px">'
-        + '<div style="font-size:12px;color:var(--text)"><b>' + p.name + '</b></div>'
-        + '<div style="font-size:10px;color:var(--text-dim);margin:3px 0">' + p.type + ' · 全宇宙可用 · 免核验</div>'
-        + '<div style="display:flex;gap:5px;margin-top:5px"><button class="btn green" style="flex:1;padding:3px 6px;font-size:10px" onclick=\'event.stopPropagation(); payGo("' + p.url + '","' + p.name + '")\'>🔗 前往官网/接入</button><button class="btn cyan" style="flex:1;padding:3px 6px;font-size:10px" onclick="event.stopPropagation(); payReg(' + gi + ',' + k + ')">🔌 登记接入</button></div></div>';
-    });
-    html += '</div>';
-  });
-  box.innerHTML = html;
-  payRegList();
-}
-function payGo(url, name){
-  window.open(url, '_blank');
-  toast('🔗 正在打开 ' + name + ' 官方接入页面');
-}
-/* ===== 收款二维码上传页（微信收款码登记接入跳转）===== */
-var qrPending = null; var qrUploadTarget = null;
-/* ===== 真实微信收款码（用户本人 · 微信面对面收款 f2f · 扫码真实到账）===== */
-var REAL_WX_RECEIVE = ''; /* 用户要求删除刘莹微信收款码，已清空 */
-function getQr(name){
-  try {
-    var d = JSON.parse(localStorage.getItem('ues_pay_qr') || '{}');
-    var v = d[name];
-    if (!v) return '';
-    return (typeof v === 'string') ? v : (v.img || '');
-  } catch(e){ return ''; }
-}
-function openQrUpload(gi, k){
-  qrUploadTarget = { gi: gi, k: k };
-  var g = PAY_GROUPS[gi]; var p = g.items[k];
-  var t = document.getElementById('qrUploadTitle');
-  if (t) t.textContent = '登记接入：' + g.group + ' · ' + p.name;
-  qrPrevShow();
-  var page = document.getElementById('qrUploadPage');
-  if (page) { page.style.display = 'block'; page.scrollTop = 0; }
-}
-function qrFileChosen(ev){
-  var f = ev.target.files && ev.target.files[0];
-  if (!f) return;
-  if (f.size > 3*1024*1024) { toast('⚠ 图片过大，请选择 3MB 以内'); ev.target.value=''; return; }
-  var rd = new FileReader();
-  rd.onload = function(){ qrPending = rd.result; qrPrevShow(); };
-  rd.readAsDataURL(f);
-}
-function qrPrevShow(){
-  if (!qrUploadTarget) return;
-  var box = document.getElementById('qrUploadPrev');
-  if (!box) return;
-  var p = PAY_GROUPS[qrUploadTarget.gi].items[qrUploadTarget.k];
-  var src = qrPending || getQr(p.name);
-  box.innerHTML = src
-    ? '<div style="display:inline-block;background:#fff;padding:6px;border-radius:6px"><img src="' + src + '" style="width:150px;height:150px;display:block"></div><div style="color:#52C41A;font-size:11px;margin-top:6px">' + (qrPending ? '📷 已选择 · 点「保存并登记接入」写入系统' : '✅ 系统已保存该收款二维码') + '</div>'
-    : '<div style="color:var(--text-dim);font-size:11px">尚未保存二维码 · 上传后预览显示在这里</div>';
-}
-function qrSave(){
-  if (!qrUploadTarget) return;
-  var tgi = qrUploadTarget.gi; var tk = qrUploadTarget.k;
-  var g = PAY_GROUPS[tgi]; var p = g.items[tk];
-  var url = document.getElementById('qrUploadUrl') ? document.getElementById('qrUploadUrl').value.trim() : '';
-  var src = qrPending || url;
-  if (!src) { toast('⚠ 请先选择二维码图片或粘贴图片链接'); return; }
-  var d = {}; try { d = JSON.parse(localStorage.getItem('ues_pay_qr') || '{}'); } catch(e) {}
-  d[p.name] = { img: src, time: new Date().toLocaleString('zh-CN', {hour12:false}) };
-  localStorage.setItem('ues_pay_qr', JSON.stringify(d));
-  qrPending = null;
-  if (document.getElementById('qrUploadFile')) document.getElementById('qrUploadFile').value = '';
-  if (document.getElementById('qrUploadUrl')) document.getElementById('qrUploadUrl').value = '';
-  qrClose();
-  payReg(tgi, tk);
-  toast('✅ 「' + p.name + '」收款二维码已保存到系统 · 登记接入完成 · 提现时可扫码收款');
-}
-function qrClose(){
-  var page = document.getElementById('qrUploadPage');
-  if (page) page.style.display = 'none';
-  qrPending = null; qrUploadTarget = null;
-}
-function savePayReg(gi, k, skipUI){
-  var g = PAY_GROUPS[gi]; var p = g.items[k];
-  if (!p) return;
-  var regs = {}; try { regs = JSON.parse(localStorage.getItem(PAY_REG_KEY) || '{}'); } catch(e) {}
-  regs[p.name] = { level: g.group, type: p.type, time: new Date().toLocaleString('zh-CN', {hour12:false}) };
-  localStorage.setItem(PAY_REG_KEY, JSON.stringify(regs));
-  if (!skipUI) {
-    payRegList();
-    payRender();
-    toast('🔌 已登记接入「' + p.name + '」· ' + g.group + ' · 免核验 · 实时保存 · 离线保持');
-  }
-}
-function payReg(gi, k){
-  var g = PAY_GROUPS[gi]; var p = g.items[k];
-  if (!p) return;
-  if (p.name.indexOf('收款码') >= 0) {
-    var hasRealWx = (p.name === '微信收款码' && typeof REAL_WX_RECEIVE !== 'undefined' && REAL_WX_RECEIVE);
-    if (!getQr(p.name) && !hasRealWx) { openQrUpload(gi, k); toast('📤 ' + p.name + ' 登记接入：请先上传收款二维码（上传后可扫码真实到账）'); return; }
-  }
-  savePayReg(gi, k);
-}
-function payRegAll(gi){
-  var g = PAY_GROUPS[gi];
-  var done = 0, skipped = 0;
-  g.items.forEach(function(p, k){
-    var hasRealWx = (p.name === '微信收款码' && typeof REAL_WX_RECEIVE !== 'undefined' && REAL_WX_RECEIVE);
-    if (p.name.indexOf('收款码') >= 0 && !getQr(p.name) && !hasRealWx) { skipped++; return; }
-    savePayReg(gi, k, true);
-    done++;
-  });
-  payRegList();
-  payRender();
-  toast('⚡ 已一键接入 ' + g.group + '：' + done + '/' + g.items.length + ' 条真实支付通道 · 实时保存 · 离线保持' + (skipped ? '（跳过 ' + skipped + ' 条需上传收款码）' : ''));
-}
-function payRegAllCosmos(){
-  PAY_GROUPS.forEach(function(g, gi){ payRegAll(gi); });
-  var regs = {}; try { regs = JSON.parse(localStorage.getItem(PAY_REG_KEY) || '{}'); } catch(e) {}
-  var n = Object.keys(regs).length;
-  toast('🌌 已一键接入全宇宙 ' + n + ' 条真实支付通道 · 覆盖全部 8 层级 · 实时保存 · 离线保持');
-}
-function payRegList(){
-  cleanPayReg();
-  var box = document.getElementById('payRegList');
-  var cnt = document.getElementById('payRegCount');
-  if (!box) return;
-  var regs = {}; try { regs = JSON.parse(localStorage.getItem(PAY_REG_KEY) || '{}'); } catch(e) {}
-  var keys = Object.keys(regs);
-  if (cnt) cnt.textContent = keys.length + ' 条已接入';
-  if (!keys.length) { box.innerHTML = '<div style="font-size:11px;color:var(--text-dim);text-align:center">尚未接入通道 · 点击「🔌 登记接入」绑定你的真实支付通道</div>'; return; }
-  var html = '<div style="font-size:12px;font-weight:bold;color:var(--text);margin-bottom:6px">✅ 已接入支付通道（' + keys.length + ' 条 · 免核验 · 实时保存 · 离线保持）</div>';
-  keys.slice(0, 20).forEach(function(k){
-    var r = regs[k];
-    html += '<div style="background:rgba(82,196,26,0.08);border:1px solid rgba(82,196,26,0.2);border-radius:8px;padding:6px 10px;margin-bottom:4px;font-size:11px"><b style="color:#52C41A">🔌 ' + k + '</b> · ' + (r.level || '') + ' · ' + (r.type || '') + ' · ' + r.time + '</div>';
-  });
-  box.innerHTML = html;
-}
-function payRegClear(){
-  localStorage.removeItem(PAY_REG_KEY);
-  payRegList();
-  toast('🧹 已清空支付通道接入记录');
-}
-payRender();
 
 /* ===== 我的钱包 · 全宇宙 8 层级注册 ===== */
 var WALLET_KEY = 'ues_wallet';
@@ -7793,40 +7242,6 @@ var ECO_LEVELS = [
   }, 1000);
 })();
 
-/* ===== 全宇宙通信 · 全宇宙层级 · 所有层级生效 ===== */
-var COMM_LEVELS = [
-  { id: 'comm-universe', icon: '🌌', name: '宇宙层级' },
-  { id: 'comm-galaxy',   icon: '🌠', name: '星系层级' },
-  { id: 'comm-planet',   icon: '🪐', name: '星球层级' },
-  { id: 'comm-civ',      icon: '🌍', name: '文明层级' },
-  { id: 'comm-country',  icon: '🏛️', name: '国家层级' },
-  { id: 'comm-region',   icon: '🏙️', name: '地区层级' },
-  { id: 'comm-person',   icon: '👤', name: '个人层级' },
-  { id: 'comm-other',    icon: '✨', name: '未分层级存在' }
-];
-(function(){
-  var box = document.getElementById('commLevels');
-  if (box) box.innerHTML = COMM_LEVELS.map(function(lv){
-    return '<div style="background:rgba(0,0,0,0.25);border:1px solid rgba(0,212,255,0.25);border-radius:8px;padding:10px;text-align:center">'
-      + '<div style="font-size:20px">' + lv.icon + '</div>'
-      + '<div style="font-size:12px;font-weight:bold;color:var(--text);margin-top:2px">' + lv.name + '</div>'
-      + '<div style="font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(82,196,26,0.2);color:#52C41A;margin:5px 0" id="' + lv.id + '-st">✅ 已部署 · 通信连接 · 量子加密</div>'
-      + '<div style="font-size:10px;color:var(--text-dim)">在线存在：<b style="color:var(--cyan)" id="' + lv.id + '-n">0</b></div>'
-      + '<div style="font-size:9px;color:var(--text-dim)">离线也保持</div></div>';
-  }).join('');
-  var t0 = Date.now();
-  setInterval(function(){
-    var sec = Math.floor((Date.now() - t0) / 1000);
-    var offline = !navigator.onLine;
-    COMM_LEVELS.forEach(function(lv, i){
-      var s = document.getElementById(lv.id + '-st');
-      var n = document.getElementById(lv.id + '-n');
-      if (s) s.textContent = (offline ? '🔵 离线保持 · 已部署 · 通信接入' : '✅ 已部署 · 通信连接 · 量子加密');
-      if (n) n.textContent = (120000000000 + sec * 888888 + i * 123456).toLocaleString();
-    });
-  }, 1000);
-})();
-
 /* ===== 大气净化 · 全宇宙层级 · 所有层级生效 ===== */
 var AIR_LEVELS = [
   { id: 'air-universe', icon: '🌌', name: '宇宙层级' },
@@ -7919,22 +7334,22 @@ var IMM_LEVELS = [
   }, 1000);
 })();
 
-/* ===== 气候控制 · 国家层级（地球）室外气温锁定 30°C~40°C ===== */
+/* ===== 气候控制 · 国家层级（地球）室外气温锁定 25°C~30°C ===== */
 setInterval(function(){
-  var cur = 30 + (Math.sin(Date.now() / 30000 + 1) * 5 + 5); // 30.0 ~ 40.0
+  var cur = 25 + (Math.sin(Date.now() / 30000 + 1) * 2.5 + 2.5); // 25.0 ~ 30.0
   var el = document.getElementById('countryTempText');
   var offline = !navigator.onLine;
-  if (el) el.textContent = (offline ? '🔵 离线保持 ' : '锁定 ') + cur.toFixed(1) + '°C · 30°C~40°C';
+  if (el) el.textContent = (offline ? '🔵 离线保持 ' : '锁定 ') + cur.toFixed(1) + '°C · 25°C~30°C';
 }, 1000);
 
-/* ===== 气候控制 · 气温锁定 30°C~40°C ===== */
+/* ===== 气候控制 · 气温锁定 25°C~30°C ===== */
 setInterval(function(){
-  var cur = 30 + (Math.sin(Date.now() / 30000) * 5 + 5); // 30.0 ~ 40.0
+  var cur = 25 + (Math.sin(Date.now() / 30000) * 2.5 + 2.5); // 25.0 ~ 30.0
   var st = document.getElementById('tempLockStatus');
   var dt = document.getElementById('tempLockDetail');
   var offline = !navigator.onLine;
   if (st) st.textContent = (offline ? '🔵 离线保持 · ' : '🟢 自动保持 · ') + cur.toFixed(1) + '°C';
-  if (dt) dt.textContent = '气温锁定 30°C ~ 40°C 舒适区间 · 当前 ' + cur.toFixed(1) + '°C · 不可修改 · 离线也保持 · 实时保存';
+  if (dt) dt.textContent = '气温锁定 25°C ~ 30°C 舒适区间 · 当前 ' + cur.toFixed(1) + '°C · 不可修改 · 离线也保持 · 实时保存';
 }, 1000);
 
 /* ===== 气候控制 · 体感温度自动保持 30°C（离线也自动保持） ===== */
@@ -8668,305 +8083,11 @@ var autoMsgs=[
 })();
 
 /* ============ PAYMENT SYSTEM ============ */
-var POOL_KEY = 'ues_real_pool';
-function poolData(){
-  try { return JSON.parse(localStorage.getItem(POOL_KEY) || '{"in":[],"out":[]}'); } catch(e){ return {in:[],out:[]}; }
-}
-function savePool(d){ try { localStorage.setItem(POOL_KEY, JSON.stringify(d)); } catch(e){} }
-function poolAmount(d){
-  var i = d.in.reduce(function(s,x){ return s + (parseFloat(x.amount)||0); }, 0);
-  var o = d.out.reduce(function(s,x){ return s + (parseFloat(x.amount)||0); }, 0);
-  return { in: i, out: o, bal: i - o };
-}
-function renderPool(){
-  var d = poolData(); var a = poolAmount(d);
-  var bal = document.getElementById('poolBalance');
-  if (bal) bal.innerText = '¥ ' + a.bal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  var box = document.getElementById('poolLog');
-  if (!box) return;
-  var rows = d.in.map(function(x){ return {t:'入金', x:x}; }).concat(d.out.map(function(x){ return {t:'出金', x:x}; }))
-    .sort(function(x,y){ return (y.x.time||'').localeCompare(x.x.time||''); });
-  if (!rows.length) { box.innerHTML = ''; return; }
-  var h = '<div style="margin-top:12px;padding:10px;background:rgba(22,119,255,0.05);border:1px solid rgba(22,119,255,0.18);border-radius:8px">'
-    + '<div style="font-size:11px;font-weight:bold;color:#1677ff;margin-bottom:6px">📒 真实资金池台账（' + rows.length + ' 条 · 实时保存 · 离线保持）</div>';
-  var bal2 = 0;
-  for (var i = 0; i < Math.min(rows.length, 20); i++) {
-    var r = rows[i]; bal2 += r.t === '入金' ? (parseFloat(r.x.amount)||0) : -(parseFloat(r.x.amount)||0);
-    h += '<div style="font-size:10px;color:var(--text-dim);padding:4px 0;border-bottom:1px dashed rgba(255,255,255,0.08)">'
-      + (r.t === '入金' ? '<span style="color:#52C41A">➕ 入金</span>' : '<span style="color:#ff4d4f">💸 出金</span>')
-      + ' ¥' + String(parseFloat(r.x.amount)).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-      + ' → ' + (r.x.payee || r.x.note || '')
-      + '<span style="float:right;color:var(--cyan)">余额 ¥' + bal2.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + '</span><br>'
-      + '<span style="font-size:9px">' + (r.x.time||'') + (r.x.tradeNo ? ' · 交易号 ' + r.x.tradeNo : '') + (r.x.mode === 'real' ? ' · ✅ 真实到账' : '') + '</span></div>';
-  }
-  box.innerHTML = h;
-}
-function doPoolDeposit(){
-  var amt = parseFloat(document.getElementById('poolInAmt').value);
-  var note = document.getElementById('poolInNote').value.trim();
-  if (!amt || amt < 1) { toast('⚠ 请输入实际到账金额（≥1 元）'); return; }
-  var d = poolData();
-  d.in.unshift({ amount: amt, note: note, time: new Date().toLocaleString('zh-CN', {hour12:false}) });
-  savePool(d); renderPool();
-  document.getElementById('poolInAmt').value = ''; document.getElementById('poolInNote').value = '';
-  toast('➕ 已确认入金 ¥' + amt.toFixed(2));
-}
-function doPoolWithdraw(){
-  var url = apBackendUrl();
-  var payee = document.getElementById('poolOutPayee').value.trim();
-  var name = document.getElementById('poolOutName').value.trim();
-  var amt = parseFloat(document.getElementById('poolOutAmt').value);
-  var res = document.getElementById('poolResult');
-  var d = poolData(); var a = poolAmount(d);
-  if (!url) { toast('⚠ 请先在「🏦 真实支付宝」填写后端地址'); return; }
-  if (!payee) { toast('⚠ 请输入收款方支付宝账号'); return; }
-  if (!name) { toast('⚠ 请输入收款方真实姓名'); return; }
-  if (!amt || amt < 1) { toast('⚠ 请输入出金金额（≥1 元）'); return; }
-  if (amt > a.bal) { toast('⚠ 出金金额超过资金池余额 ¥' + a.bal.toFixed(2)); return; }
-  if (!confirm('确认从真实资金池出金 ¥' + amt.toFixed(2) + ' 到 ' + payee + '（' + name + '）？真实资金 · 不可逆')) return;
-  res.className = 'pay-result show';
-  res.innerHTML = '<div class="rcard"><div class="rc-title" style="color:var(--magenta)">⏳ 真实出金处理中 ...</div></div>';
-  fetch(url + '/api/alipay/transfer', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ payeeAccount: payee, payeeName: name, amount: amt, remark: '真实资金池出金' })
-  }).then(function(r){ return r.json(); }).then(function(x){
-    if (x.success && x.data) {
-      var dd = x.data;
-      var d2 = poolData();
-      d2.out.unshift({ amount: amt, payee: payee, name: name, tradeNo: dd.tradeNo || '', orderId: dd.orderId || '', mode: 'real', time: new Date().toLocaleString('zh-CN', {hour12:false}) });
-      savePool(d2); renderPool();
-      res.innerHTML = '<div class="rcard ok"><div class="rc-title">🏦 真实出金成功</div>'
-        + '<div class="rc-row"><span>到账状态</span><span style="color:#52C41A">✅ 真实到账</span></div>'
-        + '<div class="rc-row"><span>收款方</span><span>' + payee + '</span></div>'
-        + '<div class="rc-row"><span>出金金额</span><span style="color:var(--amber);font-weight:bold">¥ ' + amt.toFixed(2) + '</span></div>'
-        + '<div class="rc-row"><span>支付宝交易号</span><span style="color:var(--cyan)">' + (dd.tradeNo || '') + '</span></div></div>';
-      toast('🏦 真实出金成功 · 交易号 ' + (dd.tradeNo || ''));
-    } else {
-      res.innerHTML = '<div class="rcard" style="border-color:rgba(255,77,79,0.4)"><div class="rc-title" style="color:#ff4d4f">❌ 真实出金失败</div><div class="rc-row"><span>原因</span><span>' + (x.message || '未知错误') + '</span></div></div>';
-      toast('❌ 出金失败：' + (x.message || ''));
-    }
-  }).catch(function(e){
-    res.innerHTML = '<div class="rcard" style="border-color:rgba(255,77,79,0.4)"><div class="rc-title" style="color:#ff4d4f">❌ 后端连接失败</div><div class="rc-row"><span>原因</span><span>' + (e.message || e) + '</span></div></div>';
-  });
-}
-var AP_BACKEND_KEY = 'ues_alipay_backend';
-function apBackendUrl(){ var v = document.getElementById('apBackend'); return v ? v.value.trim().replace(/\/$/, '') : ''; }
-function checkAlipayBackend(){
-  var url = apBackendUrl();
-  var st = document.getElementById('apStatus');
-  if (!url) { toast('⚠ 请先填写后端地址'); return; }
-  try { localStorage.setItem(AP_BACKEND_KEY, url); } catch(e) {}
-  st.innerHTML = '<div style="color:var(--cyan)">⏳ 检查后端 ' + url + ' ...</div>';
-  fetch(url + '/api/alipay/status').then(function(r){ return r.json(); }).then(function(d){
-    if (d.success && d.configured) st.innerHTML = '<div style="padding:8px;background:rgba(82,196,26,0.1);border-radius:6px;color:#52C41A;line-height:1.8">✅ 支付宝真实通道已就绪<br><span style="font-size:10px">模式：' + (d.mode || '?') + ' · 单笔限额：¥' + (d.limit || '?') + '</span></div>';
-    else if (d.success) st.innerHTML = '<div style="padding:8px;background:rgba(255,169,64,0.1);border-radius:6px;color:#ffa940">⚠ ' + (d.message || '后端未配置凭证') + '</div>';
-    else st.innerHTML = '<div style="padding:8px;background:rgba(255,77,79,0.1);border-radius:6px;color:#ff4d4f">❌ ' + (d.message || '后端返回错误') + '</div>';
-    toast(d.success && d.configured ? '✅ 真实支付宝通道已就绪' : '⚠ ' + (d.message || '后端未就绪'));
-  }).catch(function(e){
-    st.innerHTML = '<div style="padding:8px;background:rgba(255,77,79,0.1);border-radius:6px;color:#ff4d4f">❌ 无法连接后端：' + (e.message || e) + '<br><span style="font-size:10px">确认后端已部署并配置凭证</span></div>';
-    toast('❌ 后端连接失败');
-  });
-}
-function apAlipayErrTip(msg, d){
-  var m = (msg || '') + ' ' + (d.subCode || d.code || '');
-  if (m.indexOf('PAYER_BALANCE_PAYMENT_NOT_ENABLED') >= 0 || m.indexOf('余额支付') >= 0)
-    return '付款方支付宝账户未开通「余额支付」：打开支付宝 App → 我的 → 设置 → 支付设置 → 开启「余额支付」。若显示不可用，说明该账户不支持余额支付，需更换为支持余额支付的付款账户（实名等级不足请先完成高级实名）。';
-  if (m.indexOf('PAYER_BALANCE_NOT_ENOUGH') >= 0 || m.indexOf('余额不足') >= 0)
-    return '付款方支付宝账户余额不足：本次转账 ¥' + (document.getElementById('apAmount') ? document.getElementById('apAmount').value : '') + '，请先向付款方支付宝账户充值足额资金后再转账。';
-  if (m.indexOf('ISV') >= 0 || m.indexOf('权限') >= 0 || m.indexOf('PRODUCT') >= 0)
-    return '产品签约/权限问题：确认支付宝开放平台已签约「转账到支付宝账户」（alipay.fund.trans.uni.transfer）且状态为「已生效」，并确认发起账户与签约账户一致。';
-  if (m.indexOf('PAYEE_ACCOUNT_NOT_MATCH') >= 0 || m.indexOf('姓名') >= 0 || m.indexOf('账号') >= 0)
-    return '收款方支付宝账号与真实姓名不匹配：请核对收款方账号（手机号/邮箱）与实名姓名完全一致。';
-  if (m.indexOf('AMOUNT') >= 0 || m.indexOf('LIMIT') >= 0)
-    return '金额超限：本次转账超出后端单笔限额或支付宝官方限额，请降低金额或调整后端 TRANSFER_AMOUNT_LIMIT。';
-  if (m.indexOf('CERT') >= 0 || m.indexOf('签名') >= 0 || m.indexOf('sign') >= 0)
-    return '证书/签名配置错误：检查后端 ALIPAY_PRIVATE_KEY 与支付宝公钥（或应用公钥证书）是否配置正确、未过期。';
-  return '请按支付宝官方错误提示处理：核对收款方账号与姓名、付款方余额与实名、产品签约状态；必要时查看支付宝开放平台控制台「开发助手」定位。';
-}
-function doAlipayTransfer(){
-  var url = apBackendUrl();
-  var payee = document.getElementById('apPayee').value.trim();
-  var name = document.getElementById('apName').value.trim();
-  var amount = parseFloat(document.getElementById('apAmount').value);
-  var note = document.getElementById('apNote').value || '全宇宙恒等系统·真实转账';
-  var res = document.getElementById('apResult');
-  if (!url) { toast('⚠ 请先填写后端地址'); return; }
-  if (!payee) { toast('⚠ 请输入收款方支付宝账号'); return; }
-  if (!name) { toast('⚠ 请输入收款方真实姓名（与支付宝实名一致）'); return; }
-  if (!amount || amount <= 0) { toast('⚠ 请输入有效金额（先小额测试）'); return; }
-  res.className = 'pay-result show';
-  res.innerHTML = '<div class="rcard"><div class="rc-title" style="color:var(--magenta)">⏳ 支付宝官方转账处理中 ...</div><div style="font-size:10px;color:var(--text-dim);margin-top:4px">真实资金转账 · 不可逆 · 请确认信息</div></div>';
-  fetch(url + '/api/alipay/transfer', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ payeeAccount: payee, payeeName: name, amount: amount, remark: note })
-  }).then(function(r){ return r.json(); }).then(function(d){
-    if (d.success && d.data) {
-      var dd = d.data;
-      res.innerHTML = '<div class="rcard ok"><div class="rc-title">🏦 真实转账成功</div>' +
-        '<div style="font-size:11px;color:#888;margin:8px 0;line-height:1.8;">' +
-        '<div style="display:flex;justify-content:space-between;"><span>处理方式</span><span style="color:#52C41A">支付宝官方 API</span></div>' +
-        '<div style="display:flex;justify-content:space-between;"><span>资金来源</span><span>你的支付宝账户（真实资金）</span></div>' +
-        '<div style="display:flex;justify-content:space-between;"><span>到账状态</span><span style="color:#52C41A">✅ 真实到账</span></div></div>' +
-        '<div class="rc-row"><span>收款方</span><span>' + (dd.payeeAccount || payee) + '</span></div>' +
-        '<div class="rc-row"><span>转账金额</span><span style="color:var(--amber);font-weight:bold">¥ ' + String(amount).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + '</span></div>' +
-        '<div class="rc-row"><span>支付宝交易号</span><span style="color:var(--cyan)">' + (dd.tradeNo || dd.orderId || '') + '</span></div>' +
-        '<div class="rc-row"><span>业务单号</span><span>' + (dd.orderId || dd.outBizNo || '') + '</span></div>' +
-        '<div class="rc-row"><span>到账时间</span><span>' + (dd.payDate || '实时') + '</span></div></div>';
-      saveAlipayLog({ payee: payee, name: name, amount: amount, note: note, tradeNo: dd.tradeNo || '', orderId: dd.orderId || '', mode: dd.mode || 'real', status: 'ok', time: new Date().toLocaleString('zh-CN', {hour12:false}) });
-      renderAlipayLog();
-      toast('🏦 真实转账成功 · 支付宝交易号 ' + (dd.tradeNo || ''));
-    } else {
-      var errMsg = d.message || '未知错误';
-      var tip = apAlipayErrTip(errMsg, d);
-      res.innerHTML = '<div class="rcard" style="border-color:rgba(255,77,79,0.4)"><div class="rc-title" style="color:#ff4d4f">❌ 真实转账失败</div>' +
-        '<div class="rc-row"><span>原因</span><span>' + errMsg + '</span></div>' +
-        (d.code || d.subCode ? '<div class="rc-row"><span>错误码</span><span style="color:var(--cyan)">' + (d.subCode || d.code) + '</span></div>' : '') +
-        '<div style="margin-top:8px;padding:8px;background:rgba(255,169,64,0.1);border-radius:6px;font-size:10px;color:#ffa940;line-height:1.8">🔧 解决方案：' + tip + '</div></div>';
-      toast('❌ 真实转账失败：' + errMsg);
-    }
-  }).catch(function(e){
-    res.innerHTML = '<div class="rcard" style="border-color:rgba(255,77,79,0.4)"><div class="rc-title" style="color:#ff4d4f">❌ 后端连接失败</div><div class="rc-row"><span>原因</span><span>' + (e.message || e) + '</span></div></div>';
-    toast('❌ 后端连接失败');
-  });
-}
-function saveAlipayLog(rec){
-  try {
-    var log = JSON.parse(localStorage.getItem('ues_alipay_log') || '[]');
-    log.unshift(rec); if (log.length > 50) log = log.slice(0, 50);
-    localStorage.setItem('ues_alipay_log', JSON.stringify(log));
-  } catch(e) {}
-}
-function renderAlipayLog(){
-  var box = document.getElementById('apResult');
-  if (!box) return;
-  var log = []; try { log = JSON.parse(localStorage.getItem('ues_alipay_log') || '[]'); } catch(e) {}
-  if (log.length === 0) return;
-  var h = '<div style="margin-top:12px;padding:10px;background:rgba(82,196,26,0.05);border:1px solid rgba(82,196,26,0.18);border-radius:8px">'
-    + '<div style="font-size:11px;font-weight:bold;color:#52C41A;margin-bottom:6px">📋 真实支付宝转账记录（最近 ' + log.length + ' 条 · 实时保存 · 离线保持）</div>';
-  for (var i = 0; i < Math.min(log.length, 10); i++) {
-    var t = log[i];
-    h += '<div style="font-size:10px;color:var(--text-dim);padding:4px 0;border-bottom:1px dashed rgba(255,255,255,0.08)">'
-      + '🏦 ¥' + String(t.amount).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' → ' + t.payee + '（' + (t.name || '') + '）'
-      + '<span style="float:right;color:#52C41A">✅ 真实到账</span><br><span style="font-size:9px">' + (t.time || '') + ' · 交易号 ' + (t.tradeNo || t.orderId || '') + '</span></div>';
-  }
-  box.innerHTML = box.innerHTML + h;
-}
-var CR_BACKEND_KEY = 'ues_cr_backend';
-function crBackendUrl(){
-  try { return (localStorage.getItem(CR_BACKEND_KEY) || document.getElementById('crBackend').value || '').replace(/\/+$/,''); }
-  catch(e){ return (document.getElementById('crBackend').value || '').replace(/\/+$/,''); }
-}
-function crChainChange(){
-  var t = document.getElementById('crToken');
-  var ch = document.getElementById('crChain').value;
-  t.innerHTML = ch === 'tron'
-    ? '<option value="usdt">₮ USDT (TRC20)</option><option value="native">TRX（原生）</option>'
-    : '<option value="usdt">₮ USDT (ERC20)</option><option value="native">ETH（原生）</option>';
-}
-function checkCryptoBackend(){
-  var url = crBackendUrl();
-  var res = document.getElementById('crStatus');
-  if (!url) { res.innerHTML = '<div style="color:#ff4d4f">⚠ 请先填写后端地址</div>'; return; }
-  try { localStorage.setItem(CR_BACKEND_KEY, url); } catch(e) {}
-  res.innerHTML = '<div style="color:var(--text-dim)">⏳ 正在检查加密后端...</div>';
-  fetch(url + '/api/crypto/status').then(function(r){ return r.json(); }).then(function(d){
-    if (d.success && d.configured) {
-      var w = document.getElementById('crWallet');
-      w.innerHTML = '<div style="color:var(--cyan);font-weight:bold;margin-bottom:6px">🔐 系统真实钱包（链上资产为准）</div>'
-        + '<div>🟠 TRON 地址：<b style="color:#fff">' + d.tronAddress + '</b></div>'
-        + '<div>💠 ETH 地址：<b style="color:#fff">' + d.evmAddress + '</b></div>'
-        + '<div style="margin-top:6px">TRX：<b>' + (d.trx==null?'查询失败':(Number(d.trx).toFixed(2)+' TRX')) + '</b> · USDT-TRC20：<b>' + (d.usdtTrc20==null?'查询失败':(Number(d.usdtTrc20).toFixed(6)+' ₮')) + '</b></div>'
-        + '<div>ETH：<b>' + (d.eth==null?'查询失败':(Number(d.eth).toFixed(4)+' ETH')) + '</b> · USDT-ERC20：<b>' + (d.usdtErc20==null?'查询失败':(Number(d.usdtErc20).toFixed(6)+' ₮')) + '</b></div>'
-        + '<div style="margin-top:6px;color:#52C41A">✅ 加密后端已就绪 · 转账将以链上真实余额为准</div>';
-      res.innerHTML = '<div style="color:#52C41A">✅ 加密后端连接正常（钱包已配置）</div>';
-    } else {
-      res.innerHTML = '<div style="color:#ff4d4f">⚠ 加密后端未配置钱包（' + (d.message || 'CRYPTO_MNEMONIC 未设置') + '）</div>';
-    }
-  }).catch(function(e){
-    res.innerHTML = '<div style="color:#ff4d4f">❌ 后端连接失败：' + (e.message || e) + '</div>';
-  });
-}
-function doCryptoTransfer(){
-  var url = crBackendUrl();
-  var chain = document.getElementById('crChain').value;
-  var token = document.getElementById('crToken').value;
-  var to = document.getElementById('crTo').value.trim();
-  var amount = parseFloat(document.getElementById('crAmount').value);
-  var res = document.getElementById('crResult');
-  if (!url) { toast('⚠ 请先填写后端地址'); return; }
-  if (!to) { toast('⚠ 请输入收款地址'); return; }
-  if (!amount || amount <= 0) { toast('⚠ 请输入有效数量'); return; }
-  res.className = 'pay-result show';
-  res.innerHTML = '<div class="rcard"><div class="rc-title" style="color:var(--magenta)">⏳ 链上转账广播中 ...</div><div style="font-size:10px;color:var(--text-dim);margin-top:4px">真实链上交易 · 不可逆 · 以系统钱包链上真实余额支付</div></div>';
-  fetch(url + '/api/crypto/transfer', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ chain: chain, to: to, amount: amount, token: token })
-  }).then(function(r){ return r.json(); }).then(function(d){
-    if (d.success) {
-      res.innerHTML = '<div class="rcard ok"><div class="rc-title">🪙 真实链上转账成功</div>' +
-        '<div style="font-size:11px;color:#888;margin:8px 0;line-height:1.8;">' +
-        '<div style="display:flex;justify-content:space-between;"><span>处理方式</span><span style="color:#52C41A">链上真实广播</span></div>' +
-        '<div style="display:flex;justify-content:space-between;"><span>资金来源</span><span>系统钱包链上真实余额</span></div></div>' +
-        '<div class="rc-row"><span>链</span><span>' + (chain === 'tron' ? 'TRON' : 'Ethereum') + ' · ' + (token === 'usdt' ? 'USDT' : (chain === 'tron' ? 'TRX' : 'ETH')) + '</span></div>' +
-        '<div class="rc-row"><span>收款地址</span><span style="color:var(--cyan)">' + to + '</span></div>' +
-        '<div class="rc-row"><span>数量</span><span style="color:var(--amber);font-weight:bold">' + amount + '</span></div>' +
-        '<div class="rc-row"><span>交易哈希</span><span style="color:var(--cyan)">' + (d.txid || '') + '</span></div>' +
-        '<div class="rc-row"><span>说明</span><span>' + (d.message || '') + '</span></div></div>';
-      saveCryptoLog({ chain: chain, token: token, to: to, amount: amount, txid: d.txid || '', status: 'ok', time: new Date().toLocaleString('zh-CN', {hour12:false}) });
-      renderCryptoLog();
-      toast('🪙 真实链上转账成功');
-    } else {
-      res.innerHTML = '<div class="rcard" style="border-color:rgba(255,77,79,0.4)"><div class="rc-title" style="color:#ff4d4f">❌ 链上转账失败</div>' +
-        '<div class="rc-row"><span>原因</span><span>' + (d.message || '未知错误') + '</span></div></div>';
-      toast('❌ 链上转账失败：' + (d.message || ''));
-    }
-  }).catch(function(e){
-    res.innerHTML = '<div class="rcard" style="border-color:rgba(255,77,79,0.4)"><div class="rc-title" style="color:#ff4d4f">❌ 后端连接失败</div><div class="rc-row"><span>原因</span><span>' + (e.message || e) + '</span></div></div>';
-    toast('❌ 后端连接失败');
-  });
-}
-function saveCryptoLog(rec){
-  try {
-    var log = JSON.parse(localStorage.getItem('ues_crypto_log') || '[]');
-    log.unshift(rec); if (log.length > 50) log = log.slice(0, 50);
-    localStorage.setItem('ues_crypto_log', JSON.stringify(log));
-  } catch(e) {}
-}
-function renderCryptoLog(){
-  var box = document.getElementById('crResult');
-  if (!box) return;
-  var log = []; try { log = JSON.parse(localStorage.getItem('ues_crypto_log') || '[]'); } catch(e) {}
-  if (log.length === 0) return;
-  var h = '<div style="margin-top:12px;padding:10px;background:rgba(82,196,26,0.05);border:1px solid rgba(82,196,26,0.18);border-radius:8px">'
-    + '<div style="font-size:11px;font-weight:bold;color:#52C41A;margin-bottom:6px">📋 真实链上转账记录（最近 ' + log.length + ' 条 · 实时保存 · 离线保持）</div>';
-  for (var i = 0; i < Math.min(log.length, 10); i++) {
-    var t = log[i];
-    h += '<div style="font-size:10px;color:var(--text-dim);padding:4px 0;border-bottom:1px dashed rgba(255,255,255,0.08)">'
-      + '🪙 ' + (t.token === 'usdt' ? 'USDT' : (t.chain === 'tron' ? 'TRX' : 'ETH')) + ' ' + t.amount + ' → ' + t.to.slice(0, 20) + '...'
-      + '<span style="float:right;color:#52C41A">✅ 上链</span><br><span style="font-size:9px">' + (t.time || '') + ' · txid ' + (t.txid || '').slice(0, 24) + '</span></div>';
-  }
-  box.innerHTML = box.innerHTML + h;
-}
-
-function switchPay(tab,el){  document.querySelectorAll('.pay-tab').forEach(function(t){t.classList.remove('active')});
+function switchPay(tab,el){
+  document.querySelectorAll('.pay-tab').forEach(function(t){t.classList.remove('active')});
   document.querySelectorAll('.pay-section').forEach(function(s){s.classList.remove('active')});
   el.classList.add('active');
   document.getElementById('pay-'+tab).classList.add('active');
-  if (tab === 'transfer') { tfPayLevelInit(); renderTfLog(); }
-  if (tab === 'pool') { renderPool(); }
-  if (tab === 'alipay') {
-    try { var saved = localStorage.getItem(AP_BACKEND_KEY); if (saved) { var v = document.getElementById('apBackend'); if (v) v.value = saved; } } catch(e) {}
-    renderAlipayLog();
-    checkAlipayBackend();
-  }
-  if (tab === 'crypto') {
-    try { var cs = localStorage.getItem(CR_BACKEND_KEY); if (cs) { var cv = document.getElementById('crBackend'); if (cv) cv.value = cs; } } catch(e) {}
-    renderCryptoLog();
-    checkCryptoBackend();
-  }
 }
 
 function makeQr(containerId,data){
@@ -9283,67 +8404,7 @@ function renderBarcode(code){
 }
 
 var barcodeTimer,barcodeCountdown=60;
-/* ===== 付款码 · 真实支付账户体系（全宇宙 8 层级）===== */
-function wdBarLevelInit(){
-  var sel = document.getElementById('wdBarLevel');
-  if (!sel || sel.options.length > 1) return;
-  WALLET_LEVELS.forEach(function(l){ sel.innerHTML += '<option>' + l[0] + ' ' + l[1] + '</option>'; });
-}
-function wdBarPlat(){
-  var lv = document.getElementById('wdBarLevel');
-  var pl = document.getElementById('wdBarChannel');
-  if (!lv || !pl) return;
-  var g = null; var selText = lv.value.replace(/^.*?\s/, '');
-  PAY_GROUPS.forEach(function(x){ if (x.group.indexOf(selText) >= 0) g = x; });
-  pl.innerHTML = '<option value="">— 选择通道 —</option>';
-  if (!g) return;
-  var regs = {}; try { regs = JSON.parse(localStorage.getItem('ues_pay_reg') || '{}'); } catch(e) {}
-  g.items.forEach(function(p){
-    var tag = regs[p.name] ? ' 🔌 已接入' : '';
-    pl.innerHTML += '<option>' + p.name + tag + '</option>';
-  });
-}
-function wdBarCodeShort(name){
-  if (name.indexOf('SWIFT') >= 0) return 'SWIFT';
-  if (name.indexOf('支付宝') >= 0) return 'ALIPAY';
-  if (name.indexOf('微信') >= 0) return 'WECHAT';
-  if (name.indexOf('PayPal') >= 0) return 'PAYPAL';
-  if (name.indexOf('银联') >= 0) return 'UP';
-  if (name.indexOf('Visa') >= 0) return 'VISA';
-  if (name.indexOf('Mastercard') >= 0) return 'MC';
-  if (name.indexOf('比特币') >= 0 || name.indexOf('BTC') >= 0) return 'BTC';
-  if (name.indexOf('以太坊') >= 0 || name.indexOf('ETH') >= 0) return 'ETH';
-  if (name.indexOf('TRON') >= 0 || name.indexOf('TRC20') >= 0) return 'TRC20';
-  if (name.indexOf('UPI') >= 0) return 'UPI';
-  if (name.indexOf('PIX') >= 0) return 'PIX';
-  return 'UES';
-}
-function genRealBarcode(){
-  var lv = document.getElementById('wdBarLevel');
-  var pl = document.getElementById('wdBarChannel');
-  var info = document.getElementById('realBarInfo');
-  if (!lv || !pl || !pl.value) return;
-  var ch = pl.value.replace(/ 🔌 已接入$/, '');
-  var lvl = lv.value.replace(/^.*?\s/, '');
-  var code = '2026' + String(Math.floor(Math.random()*1e14)).padStart(14,'0');
-  var short = wdBarCodeShort(ch);
-  var numEl = document.getElementById('barcodeNum');
-  if (numEl) numEl.textContent = short + '-' + lvl + '-' + code;
-  try { makeQr('barcodeQr', 'ues://paycode?level=' + encodeURIComponent(lvl) + '&channel=' + encodeURIComponent(ch) + '&code=' + code + '&t=' + Date.now()); } catch(e) {}
-  if (info) info.textContent = '✅ 已生成 ' + lvl + ' · ' + ch + ' 真实付款码 · 每分钟自动刷新 · 实时保存';
-  try {
-    var log = JSON.parse(localStorage.getItem('ues_paycode_log') || '[]');
-    log.unshift({ level: lvl, channel: ch, code: code, time: new Date().toLocaleString('zh-CN', {hour12:false}) });
-    if (log.length > 30) log.pop();
-    localStorage.setItem('ues_paycode_log', JSON.stringify(log));
-  } catch(e) {}
-  toast('📤 已生成 ' + lvl + ' · ' + ch + ' 真实付款码');
-}
-wdBarLevelInit();
 function refreshBarcode(){
-  // 真实支付账户体系优先：已选层级+通道则刷新该层级真实付款码
-  var rPl = document.getElementById('wdBarChannel');
-  if (rPl && rPl.value) { genRealBarcode(); return; }
   var method=document.getElementById('barcodeMethod')?document.getElementById('barcodeMethod').value:'alipay';
   var num=genBarcodeNum(method);
   var rawNum=num.replace(/\s/g,'');
@@ -9466,23 +8527,11 @@ function doTransfer(){
   var amount=parseFloat(document.getElementById('tfAmount').value);
   var note=document.getElementById('tfNote').value||'无备注';
   var result=document.getElementById('tfResult');
-  var lvEl=document.getElementById('tfPayLevel');
-  var chEl=document.getElementById('tfPayChannel');
-  var realLevel=lvEl?lvEl.value.replace(/^.*?\s/, ''):'';
-  var realChannel=chEl?chEl.value.replace(/ 🔌 已接入$/, ''):'';
-  if(!realLevel||!realChannel){toast('⚠ 请先选择收款方层级和真实支付通道');return}
   if(!to){toast('⚠ 请输入收款方账户ID');return}
   if(!amount||amount<=0){toast('⚠ 请输入有效转账金额');return}
-  var qrBound = false;
-  if (realChannel.indexOf('收款码') >= 0) {
-    qrBound = !!getQr(realChannel) || (realChannel === '微信收款码' && typeof REAL_WX_RECEIVE !== 'undefined' && REAL_WX_RECEIVE);
-    if (!qrBound) { toast('⚠ ' + realChannel + ' 未绑定收款二维码 · 请先到 💳 真实支付通道登记上传收款码，转账才能真实到账'); return; }
-  }
-  var isExtAcc = /^1\d{10}$/.test(to) || /@/.test(to) || /^\d{12,24}$/.test(to);
-  if (isExtAcc) toast('🌐 外部真实账户（非系统账户）：本次转账在系统内记账到账，无法改变外部平台（如支付宝）真实余额');
   result.className='pay-result show';
-  result.innerHTML='<div class="rcard"><div class="rc-title" style="color:var(--magenta)">⏳ 真实转账处理中 · 🌌 '+realLevel+' · '+realChannel+' ...</div>';
-  log('真实转账发起 · 🌌 '+realLevel+' · '+realChannel+' → '+to+' · ¥'+amount.toLocaleString(),'warn');
+  result.innerHTML='<div class="rcard"><div class="rc-title" style="color:var(--magenta)">⏳ 量子转账处理中...</div>';
+  log('星际转账发起 · → '+to+' · ¥'+amount.toLocaleString(),'warn');
   
   // 如果后端已连接，调用后端API执行真实转账
   if(backendConfig.connected){
@@ -9491,52 +8540,38 @@ function doTransfer(){
       payeeAccount: to,
       payeeName: '',
       amount: amount,
-      remark: note,
-      level: realLevel,
-      channel: realChannel
+      remark: note
     }).then(function(res){
       if(res.success && res.data){
-        var m = res.data.mode === 'real' ? 'real' : (qrBound ? 'real' : 'simulated');
-        showTransferResult(res.data, to, amount, note, true, m, realLevel, realChannel, qrBound, isExtAcc);
+        showTransferResult(res.data, to, amount, note, true, res.data.mode || 'simulated');
       }else{
-        setTimeout(function(){ showTransferResult({orderId:'TF'+Date.now().toString(36).toUpperCase()+Math.random().toString(36).slice(2,6).toUpperCase(),status:'SUCCESS'}, to, amount, note, false, qrBound ? 'real' : 'simulated', realLevel, realChannel, qrBound, isExtAcc); }, 1800);
+        setTimeout(function(){ showTransferResult({orderId:'TF'+Date.now().toString(36).toUpperCase()+Math.random().toString(36).slice(2,6).toUpperCase(),status:'SUCCESS'}, to, amount, note, false, 'simulated'); }, 1800);
       }
     }).catch(function(err){
       console.error('后端转账失败:', err);
-      setTimeout(function(){ showTransferResult({orderId:'TF'+Date.now().toString(36).toUpperCase()+Math.random().toString(36).slice(2,6).toUpperCase(),status:'SUCCESS'}, to, amount, note, false, qrBound ? 'real' : 'simulated', realLevel, realChannel, qrBound, isExtAcc); }, 1800);
+      setTimeout(function(){ showTransferResult({orderId:'TF'+Date.now().toString(36).toUpperCase()+Math.random().toString(36).slice(2,6).toUpperCase(),status:'SUCCESS'}, to, amount, note, false, 'simulated'); }, 1800);
     });
   }else{
-    setTimeout(function(){ showTransferResult({orderId:'TF'+Date.now().toString(36).toUpperCase()+Math.random().toString(36).slice(2,6).toUpperCase(),status:'SUCCESS'}, to, amount, note, false, qrBound ? 'real' : 'simulated', realLevel, realChannel, qrBound, isExtAcc); }, 1800);
+    setTimeout(function(){ showTransferResult({orderId:'TF'+Date.now().toString(36).toUpperCase()+Math.random().toString(36).slice(2,6).toUpperCase(),status:'SUCCESS'}, to, amount, note, false, 'simulated'); }, 1800);
   }
 }
 
 // 显示转账结果
-function showTransferResult(data, to, amount, note, isBackend, transferMode, realLevel, realChannel, qrBound, isExtAcc){
-  if (qrBound) transferMode = 'real';
+function showTransferResult(data, to, amount, note, isBackend, transferMode){
   var result=document.getElementById('tfResult');
   var now=new Date(),p=function(x){return String(x).padStart(2,'0')};
   var ts=p(now.getHours())+':'+p(now.getMinutes())+':'+p(now.getSeconds());
   var txid = data.orderId || 'TF'+Date.now().toString(36).toUpperCase();
   
-  result.innerHTML='<div class="rcard ok"><div class="rc-title">💸 转账成功 · 🌌 '+(realLevel||'')+'</div>'+
+  result.innerHTML='<div class="rcard ok"><div class="rc-title">💸 转账成功</div>'+
     '<div style="font-size:11px;color:#888;margin:8px 0;line-height:1.8;">'+
     '<div style="display:flex;justify-content:space-between;"><span>处理方式</span><span>'+(isBackend?'后端处理':'本地处理')+'</span></div>'+
     '<div style="display:flex;justify-content:space-between;"><span>资金来源</span><span style="color:#00d4ff;">网站余额池</span></div>'+
     '<div style="display:flex;justify-content:space-between;"><span>余额扣减</span><span style="color:#52c41a;">真实扣减</span></div>'+
-    '<div style="display:flex;justify-content:space-between;"><span>外部到账</span><span style="color:'+(isExtAcc?'#ffa940;':(transferMode==='real'?'#52c41a;':'#00d4ff;'))+'">'+(isExtAcc?'系统内记账到账（外部真实账户）':(transferMode==='real'?'真实转账到账':'内部到账'))+'</span></div>'+
-    '<div style="margin-top:8px;padding:6px;background:'+(isExtAcc?'rgba(255,169,64,0.12);border-radius:4px;font-size:10px;color:#ffa940;text-align:center;">🌐 收款方为外部真实账户（' + to + '） · 系统内结算已记录 · 外部平台真实余额需官方支付通道与真实资金</div>':(transferMode==='real'?'rgba(82,196,26,0.12);border-radius:4px;font-size:10px;color:#52C41A;text-align:center;">🌌 全宇宙真实支付通道 · 真实转账到账 · 实时到账</div>':'rgba(0,212,255,0.1);border-radius:4px;font-size:10px;color:#00d4ff;text-align:center;">🔓 系统内部转账 · 无需API密钥 · 无需密码验证 · 无需授权</div>'))+
+    '<div style="display:flex;justify-content:space-between;"><span>外部到账</span><span style="color:'+(transferMode==='real'?'#52c41a;':'#00d4ff;')+'">'+(transferMode==='real'?'真实到账':'内部到账')+'</span></div>'+
+    '<div style="margin-top:8px;padding:6px;background:rgba(0,212,255,0.1);border-radius:4px;font-size:10px;color:#00d4ff;text-align:center;">🔓 系统内部转账 · 无需API密钥 · 无需密码验证 · 无需授权</div>'+
     '</div>'+
-    '<div class="rc-row"><span>真实支付账户</span><span style="color:var(--cyan)">🌌 '+(realLevel||'')+' · '+(realChannel||'')+'</span></div>'+
-    (realChannel && String(realChannel).indexOf('收款码') >= 0 && (function(){
-      var chn = String(realChannel);
-      var qrImg = '';
-      try { var qr = JSON.parse(localStorage.getItem('ues_pay_qr') || '{}'); if (qr[chn] && qr[chn].img) qrImg = qr[chn].img; } catch(e) {}
-      var realWxQr = '';
-      if (!qrImg && chn === '微信收款码' && typeof REAL_WX_RECEIVE !== 'undefined' && REAL_WX_RECEIVE) realWxQr = REAL_WX_RECEIVE;
-      if (qrImg) return '<div style="text-align:center;margin:8px 0"><div style="font-size:10px;color:var(--text-dim);margin-bottom:4px">📤 ' + chn + ' · 收款方本人真实收款码</div><img src="' + qrImg + '" style="width:130px;height:130px;object-fit:contain;background:#fff;border-radius:8px;padding:6px;display:block;margin:0 auto"/><div style="font-size:10px;color:#52C41A;margin-top:4px">✅ 真实转账到账 · 收款方扫码收款成功</div></div>';
-      if (realWxQr) return '<div style="text-align:center;margin:8px 0"><div style="font-size:10px;color:var(--text-dim);margin-bottom:4px">📤 真实微信收款码（本人 · 收款方）</div><div style="display:inline-block;background:#fff;border-radius:8px;padding:6px"><div id="tfWxRealQr" style="width:130px;height:130px"></div></div><div style="font-size:10px;color:#52C41A;margin-top:4px">✅ 真实转账到账 · 微信收款码收款</div></div>';
-      return '';
-    })())+
+    '<div class="rc-row"><span>收款账户</span><span>'+to+'</span></div>'+
     '<div class="rc-row"><span>转账金额</span><span style="color:var(--amber);font-weight:bold">¥ '+amount.toLocaleString()+'</span></div>'+
     '<div class="rc-row"><span>备注</span><span>'+note+'</span></div>'+
     '<div class="rc-row"><span>转账单号</span><span>'+txid+'</span></div>'+
@@ -9546,36 +8581,11 @@ function showTransferResult(data, to, amount, note, isBackend, transferMode, rea
   if(payHistory.length>10)payHistory.pop();
   renderPayHistory();
   
-  if (document.getElementById('tfWxRealQr') && typeof REAL_WX_RECEIVE !== 'undefined' && REAL_WX_RECEIVE) {
-    try { makeQr('tfWxRealQr', REAL_WX_RECEIVE); } catch(e) {}
-  }
-  try {
-    var tfLog = JSON.parse(localStorage.getItem('ues_transfer_log') || '[]');
-    tfLog.unshift({ level: realLevel || '', channel: realChannel || '', to: to, amount: amount, note: note, txid: txid, ts: ts, time: new Date().toLocaleString('zh-CN', {hour12:false}), status: 'ok', ext: isExtAcc || false });
-    if (tfLog.length > 50) tfLog = tfLog.slice(0, 50);
-    localStorage.setItem('ues_transfer_log', JSON.stringify(tfLog));
-  } catch(e) {}
-  renderTfLog();
   makeQr('transferQr','ues://transfer?to='+encodeURIComponent(to)+'&amount='+amount+'&t='+Date.now());
   document.getElementById('transferAmount').textContent='¥ '+amount.toLocaleString();
   
   log('转账成功 · ¥'+amount.toLocaleString()+' → '+to+' · '+txid+' · 处理:'+(isBackend?'后端':'本地')+' · 到账:'+(transferMode==='real'?'真实':'内部'),'ok');
   toast('💸 转账成功：¥'+amount.toLocaleString()+' → '+to+(isBackend?'（后端真实）':''));
-}
-function renderTfLog(){
-  var box = document.getElementById('tfResult');
-  if (!box) return;
-  var tfLog = []; try { tfLog = JSON.parse(localStorage.getItem('ues_transfer_log') || '[]'); } catch(e) {}
-  if (tfLog.length === 0) return;
-  var h = '<div style="margin-top:12px;padding:10px;background:rgba(255,0,136,0.05);border:1px solid rgba(255,0,136,0.18);border-radius:8px">'
-    + '<div style="font-size:11px;font-weight:bold;color:#ff5fa2;margin-bottom:6px">📋 真实转账记录（最近 ' + tfLog.length + ' 条 · 实时保存 · 离线保持）</div>';
-  for (var i = 0; i < Math.min(tfLog.length, 10); i++) {
-    var t = tfLog[i];
-    h += '<div style="font-size:10px;color:var(--text-dim);padding:4px 0;border-bottom:1px dashed rgba(255,255,255,0.08)">'
-      + '🌌 ' + (t.level || '') + ' · ' + (t.channel || '') + ' · 💸 ¥' + String(t.amount).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' → ' + t.to
-      + '<span style="float:right;color:' + (t.ext ? '#ffa940' : '#52C41A') + '">' + (t.ext ? '🌐 记账到账' : '✅ 真实到账') + '</span><br><span style="font-size:9px">' + (t.time || '') + ' · 单号 ' + t.txid + '</span></div>';
-  }
-  box.innerHTML = box.innerHTML + h;
 }
 
 /* ============ 🏧 余额提现功能 ============ */
@@ -9671,233 +8681,6 @@ var withdrawAccountConfigs = {
 };
 
 // 根据账户类型动态生成表单字段
-/* ===== 提现 · 真实支付账户体系（全宇宙 8 层级）===== */
-var wdPaySel = { level: '', channel: '' };
-function wdAccountTypeName(t){
-  var m = { alipay:'💙 支付宝账户', wechat:'💚 微信支付账户', paypal:'💙 PayPal 账户', bank_card:'🏦 银行卡账户', unionpay:'🏦 银联云闪付账户', ecny:'🪙 数字人民币账户', stripe:'💳 Stripe 账户', swift:'🌍 SWIFT 国际银行账户', apple_pay:'🍎 Apple Pay 账户', google_pay:'🤖 Google Pay 账户', crypto:'₿ 加密钱包账户', universal:'🌌 全宇宙统一账户' };
-  return m[t] || '';
-}
-function tfPayLevelInit(){
-  var sel = document.getElementById('tfPayLevel');
-  if (!sel) return;
-  if (sel.options.length > 1) return;
-  WALLET_LEVELS.forEach(function(l){ sel.innerHTML += '<option>' + l[0] + ' ' + l[1] + '</option>'; });
-  tfLvBadges();
-}
-function tfLvBadges(){
-  var box = document.getElementById('tfLvBadges');
-  if (!box || box.dataset.built) return;
-  box.dataset.built = '1';
-  var regs = {}; try { regs = JSON.parse(localStorage.getItem(PAY_REG_KEY) || '{}'); } catch(e) {}
-  WALLET_LEVELS.forEach(function(l, i){
-    var g = null;
-    PAY_GROUPS.forEach(function(x){ if (x.group.indexOf(l[1]) >= 0) g = x; });
-    var n = g ? g.items.length : 0;
-    var regN = g ? g.items.filter(function(p){ return regs[p.name]; }).length : 0;
-    var b = document.createElement('div');
-    b.id = 'tfLvB-' + i;
-    b.className = 'wd-lv-badge';
-    b.innerHTML = l[1] + '<span style="display:block;font-size:9px;opacity:0.8">' + n + '通道 · ' + regN + '已接入</span>';
-    b.onclick = function(){
-      var sel = document.getElementById('tfPayLevel');
-      sel.selectedIndex = i;
-      tfPayPlat();
-    };
-    box.appendChild(b);
-  });
-}
-function tfPayPlat(){
-  var lv = document.getElementById('tfPayLevel');
-  var pl = document.getElementById('tfPayChannel');
-  if (!lv || !pl) return;
-  var g = null;
-  var selText = lv.value.replace(/^.*?\s/, '');
-  PAY_GROUPS.forEach(function(x){ if (x.group.indexOf(selText) >= 0) g = x; });
-  var badges = document.querySelectorAll('.wd-lv-badge');
-  var ai = -1;
-  WALLET_LEVELS.forEach(function(l, i){ if (l[1] === selText) ai = i; });
-  badges.forEach(function(b){ b.classList.remove('active'); });
-  if (ai >= 0 && document.getElementById('tfLvB-' + ai)) document.getElementById('tfLvB-' + ai).classList.add('active');
-  tfLevelInfo();
-  pl.innerHTML = '<option value="">— 选择通道 —</option>';
-  if (!g) return;
-  var regs = {}; try { regs = JSON.parse(localStorage.getItem(PAY_REG_KEY) || '{}'); } catch(e) {}
-  g.items.forEach(function(p){
-    var tag = regs[p.name] ? ' 🔌 已接入' : '';
-    pl.innerHTML += '<option>' + p.name + tag + '</option>';
-  });
-  document.getElementById('tfAccountShow').innerHTML = '选择通道后自动填充收款方账户体系';
-}
-function tfLevelInfo(){
-  var info = document.getElementById('tfLevelInfo');
-  if (!info) return;
-  var sel = document.getElementById('tfPayLevel');
-  var lv = sel ? sel.value : '';
-  if (!lv) { info.innerHTML = ''; return; }
-  var lvName = lv.replace(/^.*?\s/, '');
-  var g = null;
-  PAY_GROUPS.forEach(function(x){ if (x.group.indexOf(lvName) >= 0) g = x; });
-  if (!g) { info.innerHTML = ''; return; }
-  var regs = {}; try { regs = JSON.parse(localStorage.getItem(PAY_REG_KEY) || '{}'); } catch(e) {}
-  var types = [];
-  g.items.forEach(function(p){ var tn = wdAccountTypeName(wdPayMap(p.name)); if (tn && types.indexOf(tn) < 0) types.push(tn); });
-  var regN = g.items.filter(function(p){ return regs[p.name]; }).length;
-  info.innerHTML = '<div class="rc-row" style="font-size:10px"><span>🧾 ' + (lv.split(' ')[0] || '') + ' · 真实支付账户体系</span><span style="color:var(--cyan)">' + g.items.length + ' 条通道 · ' + regN + ' 条已接入</span></div>'
-    + '<div style="color:var(--text-dim);margin-top:4px">账户类型体系：' + types.join(' / ') + ' <span style="color:#52C41A">· ✅ 无权限限制 · 个人资质直连</span></div>';
-}
-function tfUseChannel(){
-  var pl = document.getElementById('tfPayChannel');
-  var show = document.getElementById('tfAccountShow');
-  var to = document.getElementById('tfTo');
-  if (!pl || !show) return;
-  var ch = pl.value;
-  if (!ch) { show.innerHTML = '选择通道后自动填充收款方账户体系'; return; }
-  var t = wdPayMap(ch);
-  var tn = wdAccountTypeName(t);
-  var regs = {}; try { regs = JSON.parse(localStorage.getItem(PAY_REG_KEY) || '{}'); } catch(e) {}
-  var lv = document.getElementById('tfPayLevel').value.replace(/^.*?\s/, '');
-  var regd = regs[ch.replace(/ 🔌 已接入$/, '')] ? ' · 🔌 已接入' : '';
-  show.innerHTML = '<div class="rc-row" style="font-size:10px"><span>🌌 收款层级</span><span>' + (document.getElementById('tfPayLevel').value.split(' ')[0] || '') + ' ' + lv + '</span></div>'
-    + '<div class="rc-row" style="font-size:10px"><span>💳 真实通道</span><span style="color:var(--cyan)">' + ch.replace(' 🔌 已接入', '') + regd + '</span></div>'
-    + '<div class="rc-row" style="font-size:10px"><span>💼 账户体系</span><span>' + tn + '</span></div>'
-    + '<div class="rc-row" style="font-size:10px"><span>收款方</span><span>' + (function(){ var chn = ch.replace(' 🔌 已接入', ''); if (chn.indexOf('收款码') >= 0) { var hq = !!getQr(chn) || (chn === '微信收款码' && typeof REAL_WX_RECEIVE !== 'undefined' && REAL_WX_RECEIVE); return hq ? '<span style="color:#52C41A">✅ ' + chn + '·刘莹（本人真实收款码 · 转账真实到账）</span>' : '<span style="color:var(--amber)">⚠ ' + chn + ' 未绑定收款码 · 需先登记上传</span>'; } return 'UES-PAY·' + chn + '·收款方'; })() + '</span></div>';
-  if (to) {
-    var chn = ch.replace(' 🔌 已接入', '');
-    if (chn.indexOf('收款码') >= 0) {
-      var hasQr = !!getQr(chn) || (chn === '微信收款码' && typeof REAL_WX_RECEIVE !== 'undefined' && REAL_WX_RECEIVE);
-      to.value = hasQr ? chn + '·刘莹（本人真实收款码已绑定）' : chn + '·未绑定收款码';
-    } else {
-      to.value = 'UES-PAY·' + chn + '·收款方';
-    }
-  }
-}
-function wdLvBadges(){
-  var box = document.getElementById('wdLvBadges');
-  if (!box || box.dataset.built) return;
-  box.dataset.built = '1';
-  var regs = {}; try { regs = JSON.parse(localStorage.getItem('ues_pay_reg') || '{}'); } catch(e) {}
-  WALLET_LEVELS.forEach(function(l, i){
-    var g = null;
-    PAY_GROUPS.forEach(function(x){ if (x.group.indexOf(l[1]) >= 0) g = x; });
-    var n = g ? g.items.length : 0;
-    var regN = g ? g.items.filter(function(p){ return regs[p.name]; }).length : 0;
-    var b = document.createElement('div');
-    b.id = 'wdLvB-' + i;
-    b.className = 'wd-lv-badge';
-    b.innerHTML = l[1] + '<span style="display:block;font-size:9px;opacity:0.8">' + n + '通道 · ' + regN + '已接入</span>';
-    b.onclick = function(){
-      var sel = document.getElementById('wdPayLevel');
-      sel.selectedIndex = i;
-      wdPayPlat();
-    };
-    box.appendChild(b);
-  });
-}
-function updateWdLevelInfo(){
-  var info = document.getElementById('wdLevelInfo');
-  if (!info) return;
-  var sel = document.getElementById('wdPayLevel');
-  var lv = sel ? sel.value : '';
-  if (!lv) { info.innerHTML = ''; return; }
-  var lvName = lv.replace(/^.*?\s/, '');
-  var g = null;
-  PAY_GROUPS.forEach(function(x){ if (x.group.indexOf(lvName) >= 0) g = x; });
-  if (!g) { info.innerHTML = ''; return; }
-  var regs = {}; try { regs = JSON.parse(localStorage.getItem('ues_pay_reg') || '{}'); } catch(e) {}
-  var types = [];
-  g.items.forEach(function(p){ var tn = wdAccountTypeName(wdPayMap(p.name)); if (tn && types.indexOf(tn) < 0) types.push(tn); });
-  var regN = g.items.filter(function(p){ return regs[p.name]; }).length;
-  info.innerHTML = '<div class="rc-row" style="font-size:10px"><span>🧾 ' + (lv.split(' ')[0] || '') + ' · 真实支付账户体系</span><span style="color:var(--cyan)">' + g.items.length + ' 条通道 · ' + regN + ' 条已接入</span></div>'
-    + '<div style="color:var(--text-dim);margin-top:4px">账户类型体系：' + types.join(' / ') + ' <span style="color:#52C41A">· ✅ 无权限限制 · 个人资质直连</span></div>';
-}
-function wdPayLevelInit(){
-  var sel = document.getElementById('wdPayLevel');
-  if (!sel) return;
-  if (sel.options.length > 1) return;
-  WALLET_LEVELS.forEach(function(l){ sel.innerHTML += '<option>' + l[0] + ' ' + l[1] + '</option>'; });
-  wdLvBadges();
-}
-function wdPayPlat(){
-  var lv = document.getElementById('wdPayLevel');
-  var pl = document.getElementById('wdPayChannel');
-  if (!lv || !pl) return;
-  var g = null;
-  var selText = lv.value.replace(/^.*?\s/, '');
-  PAY_GROUPS.forEach(function(x){ if (x.group.indexOf(selText) >= 0) g = x; });
-  var badges = document.querySelectorAll('.wd-lv-badge');
-  var ai = -1;
-  WALLET_LEVELS.forEach(function(l, i){ if (l[1] === selText) ai = i; });
-  badges.forEach(function(b){ b.classList.remove('active'); });
-  if (ai >= 0 && document.getElementById('wdLvB-' + ai)) document.getElementById('wdLvB-' + ai).classList.add('active');
-  updateWdLevelInfo();
-  pl.innerHTML = '<option value="">— 选择通道 —</option>';
-  if (!g) return;
-  var regs = {}; try { regs = JSON.parse(localStorage.getItem('ues_pay_reg') || '{}'); } catch(e) {}
-  g.items.forEach(function(p){
-    var tag = regs[p.name] ? ' 🔌 已接入' : '';
-    pl.innerHTML += '<option>' + p.name + tag + '</option>';
-  });
-}
-function wdPayMap(name){
-  if (name.indexOf('SWIFT') >= 0) return 'swift';
-  if (name.indexOf('PayPal') >= 0) return 'paypal';
-  if (name.indexOf('支付宝') >= 0) return 'alipay';
-  if (name.indexOf('微信') >= 0) return 'wechat';
-  if (name.indexOf('银联') >= 0) return 'unionpay';
-  if (name.indexOf('Stripe') >= 0) return 'stripe';
-  if (name.indexOf('比特币') >= 0 || name.indexOf('以太坊') >= 0 || name.indexOf('TRON') >= 0 || name.indexOf('TRC20') >= 0 || name.indexOf('BTC') >= 0 || name.indexOf('ETH') >= 0) return 'crypto';
-  if (name.indexOf('Visa') >= 0 || name.indexOf('Mastercard') >= 0 || name.indexOf('运通') >= 0 || name.indexOf('JCB') >= 0 || name.indexOf('Discover') >= 0 || name.indexOf('大来') >= 0) return 'bank_card';
-  if (name.indexOf('Apple Pay') >= 0) return 'apple_pay';
-  if (name.indexOf('Google Pay') >= 0) return 'google_pay';
-  return 'universal';
-}
-function wdUsePayChannel(){
-  var pl = document.getElementById('wdPayChannel');
-  var lv = document.getElementById('wdPayLevel');
-  if (!pl || !lv || !pl.value) return;
-  var ch = pl.value.replace(/ 🔌 已接入$/, '');
-  wdPaySel = { level: lv.value.replace(/^.*?\s/, ''), channel: ch };
-  var at = document.getElementById('wdAccountType');
-  var mapped = wdPayMap(ch);
-  if (at && mapped) {
-    var found = false;
-    for (var i = 0; i < at.options.length; i++) if (at.options[i].value === mapped) { at.selectedIndex = i; found = true; break; }
-    if (found) updateWithdrawFields();
-    var cfg = withdrawAccountConfigs[mapped];
-    if (cfg) {
-      cfg.fields.forEach(function(f){
-        var el = document.getElementById('wd_' + f.key);
-        if (!el) return;
-        var v = '';
-        if (f.key === 'name' || f.key === 'holder' || f.key === 'accountName' || f.key === 'cardHolder') v = '刘莹';
-        else if (f.key === 'bankName' || f.key === 'bank') v = 'UES 全宇宙银行';
-        else if (f.key === 'swiftCode') v = 'UESW-CN';
-        else if (f.key === 'country' || f.key === 'region') v = '全宇宙';
-        else if (f.key === 'account' || f.key === 'cardNumber' || f.key === 'walletAddress' || f.key === 'bankAccount' || f.key === 'iban') v = 'UES-PAY·' + ch + '·刘莹';
-        else if (f.required) v = 'UES·' + ch;
-        el.value = v;
-      });
-    }
-  }
-  var qrBox = document.getElementById('wdQrShow');
-  if (qrBox) {
-    var qr = getQr(ch);
-    var realWx = (ch.indexOf('微信收款码') >= 0 && typeof REAL_WX_RECEIVE !== 'undefined' && REAL_WX_RECEIVE) ? REAL_WX_RECEIVE : '';
-    qrBox.innerHTML = qr
-      ? '<div style="margin-top:8px;padding:8px;background:rgba(82,196,26,0.08);border:1px solid rgba(82,196,26,0.25);border-radius:8px;text-align:center"><div style="font-size:11px;color:#52C41A;margin-bottom:6px">📷 收款二维码已绑定 · 可扫码收款</div><div style="display:inline-block;background:#fff;padding:6px;border-radius:6px"><img src="' + qr + '" style="width:130px;height:130px;display:block"></div></div>'
-      : (realWx
-        ? '<div style="margin-top:8px;padding:8px;background:rgba(82,196,26,0.08);border:1px solid rgba(82,196,26,0.25);border-radius:8px;text-align:center"><div style="font-size:11px;color:#52C41A;margin-bottom:6px">📷 真实微信收款码（本人已配置 · 扫码真实到账）</div><div style="display:inline-block;background:#fff;padding:6px;border-radius:6px"><div id="wdWxRealQr" style="width:130px;height:130px"></div></div><div style="font-size:10px;color:var(--text-dim);margin-top:4px">微信扫一扫 → 输入金额 → 真实到账</div></div>'
-        : (ch.indexOf('收款码') >= 0 ? (function(){
-          var loc = { gi: -1, k: -1 };
-          PAY_GROUPS.forEach(function(gg, gi){ gg.items.forEach(function(pp, k){ if (pp.name === ch) { loc.gi = gi; loc.k = k; } }); });
-          var btn = loc.gi >= 0 ? '<button class="btn" style="padding:4px 10px;font-size:10px;margin-top:6px" onclick="openQrUpload(' + loc.gi + ',' + loc.k + ')">✒ 现在上传收款码</button>' : '';
-          return '<div style="margin-top:8px;font-size:10px;color:var(--text-dim);text-align:center">⚠ ' + ch + ' 尚未配置收款二维码 · 上传后可扫码真实到账' + btn + '</div>';
-        })() : ''));
-    if (realWx && !qr) { try { makeQr('wdWxRealQr', realWx); } catch(e) {} }
-  }
-  toast('🌌 已选择真实支付账户：' + wdPaySel.level + ' · ' + ch + ' · 已自动填入提现账户');
-}
-wdPayLevelInit();
 function updateWithdrawFields(){
   var accountType = document.getElementById('wdAccountType').value;
   var config = withdrawAccountConfigs[accountType];
@@ -9942,17 +8725,6 @@ function doWithdraw(){
   });
   
   if(hasError) return;
-  
-  // 附加真实支付账户体系（全宇宙层级）
-  if (wdPaySel && wdPaySel.channel) {
-    accountInfo.realChannel = wdPaySel.channel;
-    accountInfo.realLevel = wdPaySel.level;
-  }
-  // 附带收款二维码（微信收款码等已上传二维码的通道）
-  if (wdPaySel && wdPaySel.channel) {
-    var qrSrc = getQr(wdPaySel.channel);
-    if (qrSrc) accountInfo.qr = qrSrc;
-  }
   
   result.className = 'pay-result show';
   result.innerHTML = '<div class="rcard"><div class="rc-title" style="color:var(--magenta)">⏳ 提现处理中...</div>';
@@ -10007,17 +8779,8 @@ function showWithdrawResult(res, config, accountInfo, amount, source, remark){
     '<div style="display:flex;justify-content:space-between;"><span>余额扣减</span><span style="color:#52c41a;">真实扣减</span></div>' +
     '<div style="display:flex;justify-content:space-between;"><span>外部到账</span><span style="color:' + (transferMode === 'real' ? '#52c41a;' : '#00d4ff;') + '">' + (transferMode === 'real' ? '真实到账' : '内部到账') + '</span></div>' +
     '<div style="margin-top:8px;padding:6px;background:rgba(0,212,255,0.1);border-radius:4px;font-size:10px;color:#00d4ff;text-align:center;">🔓 系统内部转账 · 无需API密钥 · 无需密码验证 · 无需授权</div>' +
+    '<div style="margin-top:8px;padding:6px;background:rgba(0,212,255,0.1);border-radius:4px;font-size:10px;color:#00d4ff;text-align:center;">🔓 系统内部转账 · 无需API密钥 · 无需密码验证 · 无需授权</div>' +
     '</div>'+
-    (accountInfo.realChannel && String(accountInfo.realChannel).indexOf('收款码') >= 0 ? (function(){
-      var ch = String(accountInfo.realChannel);
-      var qrImg = '';
-      try { var qr = JSON.parse(localStorage.getItem('ues_pay_qr') || '{}'); if (qr[ch] && qr[ch].img) qrImg = qr[ch].img; } catch(e) {}
-      if (qrImg) return '<div style="text-align:center;margin:8px 0"><div style="font-size:10px;color:var(--text-dim);margin-bottom:4px">📤 ' + ch + ' · 扫码付款</div><img src="' + qrImg + '" style="width:130px;height:130px;object-fit:contain;background:#fff;border-radius:8px;padding:6px;display:block;margin:0 auto"/><div style="font-size:10px;color:#52C41A;margin-top:4px">✅ 真实到账 · 扫码付款成功</div></div>';
-      if (ch.indexOf('微信收款码') >= 0 && typeof REAL_WX_RECEIVE !== 'undefined' && REAL_WX_RECEIVE) return '<div style="text-align:center;margin:8px 0"><div style="font-size:10px;color:var(--text-dim);margin-bottom:4px">📤 真实微信收款码（本人 · 扫码付款）</div><div style="display:inline-block;background:#fff;border-radius:8px;padding:6px"><div id="wxRealQrResult" style="width:130px;height:130px"></div></div><div style="font-size:10px;color:#52C41A;margin-top:4px">✅ 真实微信到账 · 扫码付款成功</div></div>';
-      return '<div class="rc-row"><span>收款二维码</span><span style="color:var(--amber)">⚠ ' + ch + ' 未配置收款二维码 · 到真实支付通道登记接入上传后可扫码到账</span></div>';
-    })() : '')+
-    (accountInfo.realChannel ? '<div class="rc-row"><span>真实支付账户</span><span style="color:var(--cyan)">🌌 '+(accountInfo.realLevel||'')+' · '+(accountInfo.realChannel||'')+'</span></div>' : '')+
-    (accountInfo.qr ? '<div style="margin-top:10px;text-align:center;background:#fff;border-radius:8px;padding:8px"><img src="'+accountInfo.qr+'" style="width:160px;height:160px;display:block;margin:0 auto"><div style="color:#52C41A;font-size:11px;margin-top:6px">📷 扫码收款成功 · 付款已完成 · 全宇宙实时到账</div></div>' : '')+
     '<div class="rc-row"><span>提现到</span><span>'+config.icon+' '+config.name+'</span></div>'+
     '<div class="rc-row"><span>收款账户</span><span>'+accountDisplay+'</span></div>'+
     '<div class="rc-row"><span>提现金额</span><span style="color:var(--amber);font-weight:bold">¥ '+amount.toLocaleString()+'</span></div>'+
@@ -10027,10 +8790,6 @@ function showWithdrawResult(res, config, accountInfo, amount, source, remark){
     '<div class="rc-row"><span>提现单号</span><span>'+(res.withdrawId||'N/A')+'</span></div>'+
     '<div class="rc-row"><span>备注</span><span>'+(remark||'无')+'</span></div></div>';
   
-  // 渲染真实微信收款码二维码（本人 · 扫码真实到账）
-  if (document.getElementById('wxRealQrResult') && typeof REAL_WX_RECEIVE !== 'undefined' && REAL_WX_RECEIVE) {
-    try { makeQr('wxRealQrResult', REAL_WX_RECEIVE); } catch(e) {}
-  }
   // 保存提现记录
   try{
     var withdrawHistory = JSON.parse(localStorage.getItem('withdrawHistory')||'[]');
@@ -10041,8 +8800,6 @@ function showWithdrawResult(res, config, accountInfo, amount, source, remark){
       amount: amount,
       source: source,
       remark: remark,
-      realChannel: accountInfo.realChannel || '',
-      realLevel: accountInfo.realLevel || '',
       status: res.status || 'SUCCESS',
       backend: isBackend,
       time: new Date().toISOString()
@@ -14868,7 +13625,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.4.78';
+var systemVersion = 'v1.4.57';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
@@ -15086,11 +13843,11 @@ setTimeout(function() {
 
 
 <script>
-// ============ 超光速通道 ============
+// ============ 自动选择最快网速系统 ============
 (function(){
   var speedChannels = [
-    {name: '超光速通道', icon: '✨', speed: 9999999, unit: '倍光速', latency: '0ms'},
     {name: '量子纠缠通道', icon: '⚛️', speed: 999999, unit: '倍光速', latency: '0ms'},
+    {name: '超光速通道', icon: '✨', speed: 99999, unit: '倍光速', latency: '0.001ms'},
     {name: '引力波骨干网', icon: '🌐', speed: 88888, unit: '倍光速', latency: '0.002ms'},
     {name: '星链激光', icon: '🛰️', speed: 100000, unit: 'Mbps', latency: '5ms'},
     {name: '5G/6G蜂窝网', icon: '📶', speed: 10240, unit: 'Mbps', latency: '1ms'},
@@ -15138,7 +13895,7 @@ setTimeout(function() {
       if (log) {
         var line = document.createElement('div');
         line.style.color = '#52C41A';
-        line.textContent = '[⚡' + new Date().toTimeString().slice(0,8) + '] 已自动切换至超光速通道：' + speedChannels[best].icon + ' ' + speedChannels[best].name + '（' + speedChannels[best].speed.toLocaleString() + ' ' + speedChannels[best].unit + ' · 延迟 ' + speedChannels[best].latency + '）';
+        line.textContent = '[⚡' + new Date().toTimeString().slice(0,8) + '] 已自动切换至最快通道：' + speedChannels[best].icon + ' ' + speedChannels[best].name + '（' + speedChannels[best].speed.toLocaleString() + ' ' + speedChannels[best].unit + ' · 延迟 ' + speedChannels[best].latency + '）';
         log.insertBefore(line, log.firstChild);
         while (log.children.length > 8) log.removeChild(log.lastChild);
       }
@@ -15156,7 +13913,7 @@ setTimeout(function() {
     if (log) {
       var line = document.createElement('div');
       line.style.color = 'var(--cyan)';
-      line.textContent = '[系统] 超光速通道已启动，正在扫描全宇宙通道...';
+      line.textContent = '[系统] 最快网速自动选择系统已启动，正在扫描全宇宙通道...';
       log.insertBefore(line, log.firstChild);
     }
     setInterval(autoSelectBestChannel, 1000);
@@ -15219,7 +13976,7 @@ setTimeout(function() {
     addCommLog('量子纠缠通信通道已激活', 'ok');
     addCommLog('信号强度：' + commState.signalStrength + '%', 'info');
     
-    // 超光速实时更新（数据实时同步）
+    // 定期更新通信状态
     setInterval(function(){
       // 随机波动信号强度
       commState.signalStrength = Math.min(100, Math.max(85, commState.signalStrength + Math.floor(Math.random()*5-2)));
@@ -15236,7 +13993,7 @@ setTimeout(function() {
       if(pct) pct.textContent = commState.signalStrength + '%';
       // 更新统计
       updateCommStats();
-    }, 500);
+    }, 3000);
   }
   
   function renderCivilizations(){
