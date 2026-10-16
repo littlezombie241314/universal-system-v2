@@ -1058,79 +1058,80 @@ select option{background:#040b1a;color:var(--cyan)}
       </div>
     </div>
 
-    <!-- 💳 我的钱包 API 接口面板（全宇宙层级·支付场景统一接入真实后端） -->
+    <!-- 💳 全宇宙我的钱包 · 自研支付 API 面板（所有支付场景统一接入 /wallet/api/v1/*） -->
     <div class="panel wide">
-      <div class="panel-hdr"><div class="panel-title"><span class="ico">💳</span>我的钱包 · API 接口面板</div><div style="display:flex;gap:6px;align-items:center"><span class="panel-badge" style="background:rgba(0,212,255,0.15);color:#00d4ff">🌌 全宇宙级别</span><span class="panel-badge" id="walletApiStatusBadge" style="background:rgba(0,212,255,0.15);color:#00d4ff">真实通道检测中</span></div></div>
-      <div style="padding:0 14px 6px;font-size:12px;color:var(--text-dim)">我的钱包为<b style="color:#00d4ff">全宇宙金融总账户</b>的唯一支付网关 · 每个层级（宇宙/星系/星球/文明/国家/地区/个人）的所有支付场景统一接入以下<b style="color:#52C41A">真实 API</b> · 真实到账 · 不模拟</div>
+      <div class="panel-hdr"><div class="panel-title"><span class="ico">💳</span>全宇宙我的钱包 · 自研支付 API 面板</div><div style="display:flex;gap:6px;align-items:center"><span class="panel-badge" style="background:rgba(0,212,255,0.15);color:#00d4ff">🌌 全宇宙级别</span><span class="panel-badge" id="walletApiStatusBadge" style="background:rgba(0,212,255,0.15);color:#00d4ff">真实通道检测中</span></div></div>
+      <div style="padding:0 14px 6px;font-size:12px;color:var(--text-dim)">全宇宙系统自己的支付接口层 · 每个层级（宇宙/星系/星球/文明/国家/地区/个人）的所有支付场景统一调用<b style="color:#00d4ff">我的钱包 API（/wallet/api/v1/*）</b> · 资金结算内部路由<b style="color:#52C41A">真实支付宝通道</b> · 真实到账 · 不模拟</div>
       <div id="walletApiStatus" style="margin:6px 14px 10px;padding:10px;background:rgba(0,212,255,0.06);border:1px solid rgba(0,212,255,0.2);border-radius:8px;font-size:12px;color:var(--text-dim)">⏳ 正在检测我的钱包网关...</div>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;padding:0 14px 12px">
         <div style="background:rgba(4,18,34,.6);border:1px solid var(--border);border-radius:8px;padding:10px;">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;"><span style="font-size:9px;font-weight:bold;padding:1px 6px;border-radius:3px;font-family:monospace;background:rgba(0,212,255,0.15);color:#00d4ff">GET</span><span style="font-size:10px;color:#52C41A;font-weight:bold">✅ 已开通</span></div>
-          <div style="font-size:13px;font-weight:bold;color:var(--text)">网关状态</div>
-          <div style="font-size:9px;color:var(--text-dim);font-family:monospace;word-break:break-all;margin:3px 0;">/api/alipay/status</div>
-          <div style="font-size:10px;color:var(--text-dim);min-height:28px;">检测我的钱包支付宝真实通道（应用/生产网关/单笔限额）</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;"><span style="font-size:9px;font-weight:bold;padding:1px 6px;border-radius:3px;font-family:monospace;background:rgba(0,212,255,0.15);color:#00d4ff">POST</span><span style="font-size:10px;color:#52C41A;font-weight:bold">✅ 已开通</span></div>
+          <div style="font-size:13px;font-weight:bold;color:var(--text)">钱包网关</div>
+          <div style="font-size:9px;color:var(--text-dim);font-family:monospace;word-break:break-all;margin:3px 0;">/wallet/api/v1/status</div>
+          <div style="font-size:10px;color:var(--text-dim);min-height:28px;">检测全宇宙我的钱包网关（API版本/真实余额/渠道清单/证书）</div>
           <button onclick="walletApiCall('status')" style="width:100%;padding:5px;margin-top:6px;background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.3);border-radius:4px;color:#00d4ff;cursor:pointer;font-size:11px;">🔍 一键检测</button>
         </div>
         <div style="background:rgba(4,18,34,.6);border:1px solid var(--border);border-radius:8px;padding:10px;">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;"><span style="font-size:9px;font-weight:bold;padding:1px 6px;border-radius:3px;font-family:monospace;background:rgba(0,212,255,0.15);color:#00d4ff">GET</span><span style="font-size:10px;color:#52C41A;font-weight:bold">✅ 已开通</span></div>
-          <div style="font-size:13px;font-weight:bold;color:var(--text)">真实余额</div>
-          <div style="font-size:9px;color:var(--text-dim);font-family:monospace;word-break:break-all;margin:3px 0;">/api/alipay/balance?uid=PID</div>
-          <div style="font-size:10px;color:var(--text-dim);min-height:28px;">查询企业支付宝账户真实余额（元，账户类型 ACCTRANS_ACCOUNT）</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;"><span style="font-size:9px;font-weight:bold;padding:1px 6px;border-radius:3px;font-family:monospace;background:rgba(0,212,255,0.15);color:#00d4ff">POST</span><span style="font-size:10px;color:#52C41A;font-weight:bold">✅ 已开通</span></div>
+          <div style="font-size:13px;font-weight:bold;color:var(--text)">钱包余额</div>
+          <div style="font-size:9px;color:var(--text-dim);font-family:monospace;word-break:break-all;margin:3px 0;">/wallet/api/v1/balance</div>
+          <div style="font-size:10px;color:var(--text-dim);min-height:28px;">查询全宇宙我的钱包真实余额（元，内部路由支付宝余额账户）</div>
           <button onclick="walletApiCall('balance')" style="width:100%;padding:5px;margin-top:6px;background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.3);border-radius:4px;color:#00d4ff;cursor:pointer;font-size:11px;">🔍 一键查询</button>
         </div>
         <div style="background:rgba(4,18,34,.6);border:1px solid var(--border);border-radius:8px;padding:10px;">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;"><span style="font-size:9px;font-weight:bold;padding:1px 6px;border-radius:3px;font-family:monospace;background:rgba(82,196,26,0.15);color:#52C41A">POST</span><span style="font-size:10px;color:#52C41A;font-weight:bold">✅ 已开通</span></div>
-          <div style="font-size:13px;font-weight:bold;color:var(--text)">转账到支付宝账户</div>
-          <div style="font-size:9px;color:var(--text-dim);font-family:monospace;word-break:break-all;margin:3px 0;">/api/alipay/transfer</div>
-          <div style="font-size:10px;color:var(--text-dim);min-height:28px;">真实转账至个人/企业支付宝账户（单笔&lt;500元 · 需余额充足）</div>
+          <div style="font-size:13px;font-weight:bold;color:var(--text)">全宇宙转账</div>
+          <div style="font-size:9px;color:var(--text-dim);font-family:monospace;word-break:break-all;margin:3px 0;">/wallet/api/v1/transfer</div>
+          <div style="font-size:10px;color:var(--text-dim);min-height:28px;">真实转账至个人/企业支付宝账户（payeeType 路由 · 单笔&lt;500元）</div>
           <button onclick="walletApiCall('transfer')" style="width:100%;padding:5px;margin-top:6px;background:rgba(82,196,26,0.15);border:1px solid rgba(82,196,26,0.4);border-radius:4px;color:#52C41A;cursor:pointer;font-size:11px;">➡️ 前往真实转账</button>
         </div>
         <div style="background:rgba(4,18,34,.6);border:1px solid var(--border);border-radius:8px;padding:10px;">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;"><span style="font-size:9px;font-weight:bold;padding:1px 6px;border-radius:3px;font-family:monospace;background:rgba(0,212,255,0.15);color:#00d4ff">GET</span><span style="font-size:10px;color:#52C41A;font-weight:bold">✅ 已开通</span></div>
-          <div style="font-size:13px;font-weight:bold;color:var(--text)">转账单据查询</div>
-          <div style="font-size:9px;color:var(--text-dim);font-family:monospace;word-break:break-all;margin:3px 0;">/api/alipay/transfer/query?outBizNo=</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;"><span style="font-size:9px;font-weight:bold;padding:1px 6px;border-radius:3px;font-family:monospace;background:rgba(0,212,255,0.15);color:#00d4ff">POST</span><span style="font-size:10px;color:#52C41A;font-weight:bold">✅ 已开通</span></div>
+          <div style="font-size:13px;font-weight:bold;color:var(--text)">单据核验</div>
+          <div style="font-size:9px;color:var(--text-dim);font-family:monospace;word-break:break-all;margin:3px 0;">/wallet/api/v1/transfer/query</div>
           <div style="font-size:10px;color:var(--text-dim);min-height:28px;">按交易单号核验真实转账单据状态（SUCCESS）</div>
           <div style="display:flex;gap:4px;margin-top:6px;"><input id="walletApiQueryNo" placeholder="交易单号 out_biz_no" style="flex:1;min-width:0;background:rgba(0,0,0,.3);border:1px solid var(--border);color:var(--cyan);padding:4px 6px;font-size:10px;border-radius:4px;"><button onclick="walletApiCall('query')" style="padding:4px 8px;background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.3);border-radius:4px;color:#00d4ff;cursor:pointer;font-size:10px;">查询</button></div>
         </div>
         <div style="background:rgba(4,18,34,.6);border:1px solid var(--border);border-radius:8px;padding:10px;">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;"><span style="font-size:9px;font-weight:bold;padding:1px 6px;border-radius:3px;font-family:monospace;background:rgba(255,184,0,0.15);color:#ffb800">POST</span><span style="font-size:10px;color:#ffb800;font-weight:bold">⏳ 需开通功能包</span></div>
-          <div style="font-size:13px;font-weight:bold;color:var(--text)">转账到银行卡</div>
-          <div style="font-size:9px;color:var(--text-dim);font-family:monospace;word-break:break-all;margin:3px 0;">/api/alipay/transfer/bank</div>
-          <div style="font-size:10px;color:var(--text-dim);min-height:28px;">真实转账至任意银行卡（identity_type=BANK_CARD 需开通「单笔转账到银行卡」功能包）</div>
-          <button onclick="walletApiCall('bank')" style="width:100%;padding:5px;margin-top:6px;background:rgba(255,184,0,0.1);border:1px solid rgba(255,184,0,0.3);border-radius:4px;color:#ffb800;cursor:pointer;font-size:11px;">⏳ 查看开通说明</button>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;"><span style="font-size:9px;font-weight:bold;padding:1px 6px;border-radius:3px;font-family:monospace;background:rgba(82,196,26,0.15);color:#52C41A">POST</span><span style="font-size:10px;color:#52C41A;font-weight:bold">✅ 已开通</span></div>
+          <div style="font-size:13px;font-weight:bold;color:var(--text)">批量代发</div>
+          <div style="font-size:9px;color:var(--text-dim);font-family:monospace;word-break:break-all;margin:3px 0;">/wallet/api/v1/transfer/batch</div>
+          <div style="font-size:10px;color:var(--text-dim);min-height:28px;">批量代发到支付宝账户（工资/拨付 · 逐笔真实 · 单批≤500笔）</div>
+          <button onclick="walletApiCall('batch')" style="width:100%;padding:5px;margin-top:6px;background:rgba(82,196,26,0.15);border:1px solid rgba(82,196,26,0.4);border-radius:4px;color:#52C41A;cursor:pointer;font-size:11px;">📄 查看调用说明</button>
         </div>
         <div style="background:rgba(4,18,34,.6);border:1px solid var(--border);border-radius:8px;padding:10px;">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;"><span style="font-size:9px;font-weight:bold;padding:1px 6px;border-radius:3px;font-family:monospace;background:rgba(255,184,0,0.15);color:#ffb800">POST</span><span style="font-size:10px;color:#ffb800;font-weight:bold">⏳ 需开通功能包</span></div>
-          <div style="font-size:13px;font-weight:bold;color:var(--text)">提现到银行卡</div>
-          <div style="font-size:9px;color:var(--text-dim);font-family:monospace;word-break:break-all;margin:3px 0;">/api/alipay/withdraw</div>
-          <div style="font-size:10px;color:var(--text-dim);min-height:28px;">提现到本人绑定银行卡（同需「单笔转账到银行卡」功能包）</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;"><span style="font-size:9px;font-weight:bold;padding:1px 6px;border-radius:3px;font-family:monospace;background:rgba(255,184,0,0.15);color:#ffb800">POST</span><span style="font-size:10px;color:#ffb800;font-weight:bold">⏳ 渠道待开通</span></div>
+          <div style="font-size:13px;font-weight:bold;color:var(--text)">提现</div>
+          <div style="font-size:9px;color:var(--text-dim);font-family:monospace;word-break:break-all;margin:3px 0;">/wallet/api/v1/withdraw</div>
+          <div style="font-size:10px;color:var(--text-dim);min-height:28px;">提现到本人银行卡（需开通「单笔转账到银行卡」功能包）</div>
           <button onclick="walletApiCall('withdraw')" style="width:100%;padding:5px;margin-top:6px;background:rgba(255,184,0,0.1);border:1px solid rgba(255,184,0,0.3);border-radius:4px;color:#ffb800;cursor:pointer;font-size:11px;">⏳ 查看开通说明</button>
         </div>
         <div style="background:rgba(4,18,34,.6);border:1px solid var(--border);border-radius:8px;padding:10px;">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;"><span style="font-size:9px;font-weight:bold;padding:1px 6px;border-radius:3px;font-family:monospace;background:rgba(82,196,26,0.15);color:#52C41A">POST</span><span style="font-size:10px;color:#52C41A;font-weight:bold">✅ 已开通</span></div>
-          <div style="font-size:13px;font-weight:bold;color:var(--text)">批量转账</div>
-          <div style="font-size:9px;color:var(--text-dim);font-family:monospace;word-break:break-all;margin:3px 0;">/api/alipay/transfer/batch</div>
-          <div style="font-size:10px;color:var(--text-dim);min-height:28px;">批量转账到支付宝账户（transfers[] 明细 · 逐笔串行 · 单批≤500笔）</div>
-          <button onclick="walletApiCall('batch')" style="width:100%;padding:5px;margin-top:6px;background:rgba(82,196,26,0.15);border:1px solid rgba(82,196,26,0.4);border-radius:4px;color:#52C41A;cursor:pointer;font-size:11px;">📄 查看调用说明</button>
+          <div style="font-size:13px;font-weight:bold;color:var(--text)">充值入账</div>
+          <div style="font-size:9px;color:var(--text-dim);font-family:monospace;word-break:break-all;margin:3px 0;">/wallet/api/v1/recharge</div>
+          <div style="font-size:10px;color:var(--text-dim);min-height:28px;">记录充值订单并同步真实余额（真实资金向企业支付宝充值）</div>
+          <div style="display:flex;gap:4px;margin-top:6px;"><input id="walletApiRechargeAmt" placeholder="充值金额(元)" type="number" style="flex:1;min-width:0;background:rgba(0,0,0,.3);border:1px solid var(--border);color:var(--cyan);padding:4px 6px;font-size:10px;border-radius:4px;"><button onclick="walletApiCall('recharge')" style="padding:4px 8px;background:rgba(82,196,26,0.15);border:1px solid rgba(82,196,26,0.4);border-radius:4px;color:#52C41A;cursor:pointer;font-size:10px;">入账</button></div>
         </div>
       </div>
-      <div id="walletApiResult" style="margin:0 14px 12px;padding:8px;background:rgba(4,18,34,.6);border:1px solid var(--border);border-radius:6px;font-size:11px;color:var(--text-dim);min-height:24px;">💡 点击上方 API 按钮可真实调用我的钱包网关（查询类直接调用 · 资金类引导至手动转账面板）</div>
+      <div id="walletApiResult" style="margin:0 14px 12px;padding:8px;background:rgba(4,18,34,.6);border:1px solid var(--border);border-radius:6px;font-size:11px;color:var(--text-dim);min-height:24px;">💡 点击上方按钮真实调用全宇宙我的钱包 API（/wallet/api/v1/*）· 查询/入账类直接调用 · 转账引导手动转账面板 · 未开通渠道如实提示</div>
       <div style="padding:0 14px 14px">
-        <div style="font-size:12px;font-weight:bold;color:var(--text);margin-bottom:6px">🌌 全宇宙层级 × 支付场景 · 自动接入映射</div>
+        <div style="font-size:12px;font-weight:bold;color:var(--text);margin-bottom:6px">🌌 全宇宙支付场景 · 自动接入我的钱包 API</div>
         <div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:11px;color:var(--text-dim);min-width:640px">
-          <tr style="background:rgba(0,212,255,0.06)"><th style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;text-align:left;color:var(--cyan)">层级</th><th style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;text-align:left;color:var(--cyan)">支付场景</th><th style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;text-align:left;color:var(--cyan)">接入 API</th><th style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;text-align:left;color:var(--cyan)">真实状态</th></tr>
-          <tr><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">宇宙层</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">全宇宙统一工资代发</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;font-family:monospace">POST /transfer/batch</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#52C41A">✅ 已接入（逐笔&lt;500元）</td></tr>
-          <tr><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">星系层</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">恒星系分红 / 收益发放</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;font-family:monospace">POST /transfer</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#52C41A">✅ 已接入</td></tr>
-          <tr><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">星球层</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">星球商户结算</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;font-family:monospace">POST /transfer</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#52C41A">✅ 已接入</td></tr>
-          <tr><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">文明层</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">文明间转账 / 捐赠</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;font-family:monospace">POST /transfer</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#52C41A">✅ 已接入</td></tr>
-          <tr><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">国家层</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">国库拨付 / 补贴发放</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;font-family:monospace">POST /transfer/batch</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#52C41A">✅ 已接入（逐笔&lt;500元）</td></tr>
-          <tr><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">地区层</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">地区补贴发放</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;font-family:monospace">POST /transfer</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#52C41A">✅ 已接入</td></tr>
-          <tr><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">个人层</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">个人转账 / 收款</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;font-family:monospace">POST /transfer</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#52C41A">✅ 已接入（0.1/1元实测到账）</td></tr>
-          <tr><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">全层级</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">余额实时监控</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;font-family:monospace">GET /balance</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#52C41A">✅ 已接入</td></tr>
-          <tr><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">全层级</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">转账单据核验</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;font-family:monospace">GET /transfer/query</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#52C41A">✅ 已接入</td></tr>
-          <tr><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">全层级</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">提现 / 转任意银行卡</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;font-family:monospace">POST /transfer/bank · /withdraw</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#ffb800">⏳ 需开通功能包</td></tr>
+          <tr style="background:rgba(0,212,255,0.06)"><th style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;text-align:left;color:var(--cyan)">支付场景</th><th style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;text-align:left;color:var(--cyan)">调用我的钱包 API</th><th style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;text-align:left;color:var(--cyan)">真实状态</th></tr>
+          <tr><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">全宇宙工资代发</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;font-family:monospace">POST /wallet/api/v1/transfer/batch</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#52C41A">✅ 已接入（逐笔&lt;500元）</td></tr>
+          <tr><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">分红 / 收益发放</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;font-family:monospace">POST /wallet/api/v1/transfer</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#52C41A">✅ 已接入</td></tr>
+          <tr><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">商户结算</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;font-family:monospace">POST /wallet/api/v1/transfer</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#52C41A">✅ 已接入</td></tr>
+          <tr><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">文明间转账 / 捐赠</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;font-family:monospace">POST /wallet/api/v1/transfer</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#52C41A">✅ 已接入</td></tr>
+          <tr><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">国库拨付 / 补贴</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;font-family:monospace">POST /wallet/api/v1/transfer/batch</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#52C41A">✅ 已接入（逐笔&lt;500元）</td></tr>
+          <tr><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">地区补贴发放</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;font-family:monospace">POST /wallet/api/v1/transfer</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#52C41A">✅ 已接入</td></tr>
+          <tr><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">个人转账 / 收款</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;font-family:monospace">POST /wallet/api/v1/transfer</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#52C41A">✅ 已接入（0.1元实测到账）</td></tr>
+          <tr><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">余额实时监控</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;font-family:monospace">POST /wallet/api/v1/balance</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#52C41A">✅ 已接入</td></tr>
+          <tr><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">转账单据核验</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;font-family:monospace">POST /wallet/api/v1/transfer/query</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#52C41A">✅ 已接入</td></tr>
+          <tr><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">充值入账</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;font-family:monospace">POST /wallet/api/v1/recharge</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#52C41A">✅ 已接入（真实资金向企业支付宝充值）</td></tr>
+          <tr><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;">提现 / 转银行卡</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;font-family:monospace">POST /wallet/api/v1/withdraw · transfer(bank)</td><td style="border:1px solid rgba(255,255,255,0.08);padding:5px 8px;color:#ffb800">⏳ 需开通功能包</td></tr>
         </table></div>
-        <div style="font-size:10px;color:var(--text-dim);margin-top:6px;line-height:1.6">⚠️ 真实边界：所有层级每笔真实到账受企业支付宝真实余额（当前 0.00 元，需充值）与单笔限额（&lt;500 元）约束 · 未开通功能包的渠道如实提示，不假装成功</div>
+        <div style="font-size:10px;color:var(--text-dim);margin-top:6px;line-height:1.6">⚠️ 真实边界：所有场景每笔真实到账受全宇宙我的钱包真实余额（当前 20.00 元，可充值）与单笔限额（&lt;500 元）约束 · 未开通渠道如实提示，不假装成功</div>
       </div>
     </div>
 
@@ -1353,7 +1354,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.84 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.85 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -4754,7 +4755,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.84 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.85 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -5853,7 +5854,7 @@ function loadSyncQueue(){try{var raw=localStorage.getItem('syncQueue');if(!raw)r
 // 添加请求到同步队列（本地优先，立即返回成功）
 function addToSyncQueue(type,payload){var item={id:'sync_'+Date.now()+'_'+Math.random().toString(36).substr(2,9),type:type,payload:payload,retries:0,createdAt:Date.now(),status:'pending'};syncQueue.pending.push(item);saveSyncQueue();updateSyncStatus();console.log('已加入同步队列:',type,item.id);return item;}
 // 处理同步队列（后台静默同步）
-function processSyncQueue(){if(syncQueue.processing||syncQueue.pending.length===0)return;syncQueue.processing=true;var item=syncQueue.pending[0];console.log('开始同步:',item.type,item.id);var apiPath='';switch(item.type){case'salary_distribute':apiPath='/api/salary/distribute';break;case'alipay_transfer':apiPath='/api/alipay/transfer';break;case'wechat_transfer':apiPath='/api/wechat/transfer';break;case'bank_transfer':apiPath='/api/bank/transfer';break;default:apiPath='/api/'+item.type;}
+function processSyncQueue(){if(syncQueue.processing||syncQueue.pending.length===0)return;syncQueue.processing=true;var item=syncQueue.pending[0];console.log('开始同步:',item.type,item.id);var apiPath='';switch(item.type){case'salary_distribute':apiPath='/api/salary/distribute';break;case'alipay_transfer':apiPath='/wallet/api/v1/transfer';break;case'wechat_transfer':apiPath='/api/wechat/transfer';break;case'bank_transfer':apiPath='/api/bank/transfer';break;default:apiPath='/api/'+item.type;}
 callBackendApi(apiPath,'POST',item.payload).then(function(result){if(result.success){item.status='synced';syncQueue.pending.shift();syncQueue.lastSync=Date.now();console.log('同步成功:',item.id);}else{item.retries++;if(item.retries>=syncQueue.maxRetries){item.status='failed';syncQueue.pending.shift();console.log('同步失败，已放弃:',item.id,result.message);}else{item.status='pending';console.log('同步失败，将重试:',item.id,result.message);}}saveSyncQueue();updateSyncStatus();syncQueue.processing=false;if(syncQueue.pending.length>0)setTimeout(processSyncQueue,1000);}).catch(function(err){item.retries++;if(item.retries>=syncQueue.maxRetries){item.status='failed';syncQueue.pending.shift();console.log('同步异常，已放弃:',item.id,err.message);}else{item.status='pending';console.log('同步异常，将重试:',item.id,err.message);}saveSyncQueue();updateSyncStatus();syncQueue.processing=false;});}
 // 启动后台同步定时器
 function startSyncEngine(){loadSyncQueue();if(syncQueue.timer)clearInterval(syncQueue.timer);syncQueue.timer=setInterval(function(){if(backendConfig.connected&&syncQueue.pending.length>0){processSyncQueue();}},syncQueue.syncInterval);console.log('后台同步引擎已启动，同步间隔:',syncQueue.syncInterval,'ms');}
@@ -5994,7 +5995,7 @@ function adjustBalanceToTarget(){
       }
       var amount=Math.min(batchSize,excess-transferred);
       console.log('执行第'+(batchIndex+1)+'/'+batches+'批转账，金额:',amount,'元');
-      callBackendApi('/api/alipay/transfer','POST',{payeeAccount:balanceTarget.payeeAccount,payeeName:balanceTarget.payeeName,amount:amount,remark:'余额调整-超出目标部分自动转账',orderTitle:'余额目标调整'}).then(function(tResult){
+      callBackendApi('/wallet/api/v1/transfer','POST',{payeeType:'alipay_personal',payeeAccount:balanceTarget.payeeAccount,payeeName:balanceTarget.payeeName,amount:amount,remark:'余额调整-超出目标部分自动转账',orderTitle:'余额目标调整'}).then(function(tResult){
         if(tResult.success){
           transferred+=amount;
           batchResults.push({batch:batchIndex+1,amount:amount,success:true,orderId:tResult.data&&tResult.data.orderId});
@@ -6361,7 +6362,7 @@ function submitManualTransfer(){var name=document.getElementById('mtName').value
 // 实时转账模式：立即调用后端支付宝API，等待真实转账结果
 statusEl.textContent='⏳ 正在调用支付宝接口转账...';
 statusEl.style.color='var(--amber)';
-callBackendApi('/api/alipay/transfer','POST',{payeeAccount:account,amount:amount,payeeRealName:name,remark:remark||'手动转账'}).then(function(result){
+callBackendApi('/wallet/api/v1/transfer','POST',{payeeType:'alipay_personal',payeeAccount:account,payeeName:name,amount:amount,remark:remark||'手动转账'}).then(function(result){
   if(result.success){
     var tradeNo=result.data&&result.data.orderId?result.data.orderId:generateTradeNo();
     showMTResult(name,pname,icon,account,amount,remark,tradeNo,'success','✅ 支付宝真实转账成功');
@@ -13727,7 +13728,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.4.84';
+var systemVersion = 'v1.4.85';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
@@ -15001,15 +15002,15 @@ function getBackendBase(){
   if(backendConfig && backendConfig.apiUrl) return backendConfig.apiUrl;
   return 'https://universal-pay-alipay.onrender.com';
 }
-/* ============ 💳 我的钱包 API 接口面板（全宇宙层级·支付场景统一接入真实后端）============ */
+/* ============ 💳 全宇宙我的钱包 · 自研支付 API 接口面板（所有支付场景统一接入 /wallet/api/v1/*）============ */
 var WALLET_APIS = [
-  {key:'status',   name:'网关状态',     method:'GET',  path:'/api/alipay/status', status:'✅ 已开通'},
-  {key:'balance',  name:'真实余额',     method:'GET',  path:'/api/alipay/balance?uid=2088941781434485&accountType=ACCTRANS_ACCOUNT', status:'✅ 已开通'},
-  {key:'transfer', name:'转账到支付宝账户', method:'POST', path:'/api/alipay/transfer', status:'✅ 已开通'},
-  {key:'query',    name:'转账单据查询', method:'GET',  path:'/api/alipay/transfer/query', status:'✅ 已开通'},
-  {key:'bank',     name:'转账到银行卡', method:'POST', path:'/api/alipay/transfer/bank', status:'⏳ 需开通功能包'},
-  {key:'withdraw', name:'提现到银行卡', method:'POST', path:'/api/alipay/withdraw', status:'⏳ 需开通功能包'},
-  {key:'batch',    name:'批量转账',     method:'POST', path:'/api/alipay/transfer/batch', status:'✅ 已开通'}
+  {key:'status',   name:'钱包网关',   method:'POST', path:'/wallet/api/v1/status',          status:'✅ 已开通'},
+  {key:'balance',  name:'钱包余额',   method:'POST', path:'/wallet/api/v1/balance',         status:'✅ 已开通'},
+  {key:'transfer', name:'全宇宙转账', method:'POST', path:'/wallet/api/v1/transfer',        status:'✅ 已开通'},
+  {key:'query',    name:'单据核验',   method:'POST', path:'/wallet/api/v1/transfer/query',  status:'✅ 已开通'},
+  {key:'batch',    name:'批量代发',   method:'POST', path:'/wallet/api/v1/transfer/batch',  status:'✅ 已开通'},
+  {key:'withdraw', name:'提现',       method:'POST', path:'/wallet/api/v1/withdraw',        status:'⏳ 渠道待开通'},
+  {key:'recharge', name:'充值入账',   method:'POST', path:'/wallet/api/v1/recharge',        status:'✅ 已开通'}
 ];
 function walletApiCall(key){
   var api=null;
@@ -15018,6 +15019,7 @@ function walletApiCall(key){
   var out=document.getElementById('walletApiResult');
   var base=getBackendBase();
   if(!out) return;
+  var body={};
   // 资金操作类：不直接发起真实资金操作，引导至手动转账面板或展示调用说明
   if(api.key==='transfer'){
     var form=document.getElementById('manualTransferForm');
@@ -15029,61 +15031,64 @@ function walletApiCall(key){
     out.innerHTML='<span style="color:#52C41A">✅ 已为你打开「手动转账」面板 → 选择个人/企业支付宝账户，填写收款账号+姓名+金额（单笔&lt;500元）即可发起真实转账（'+api.status+'）</span>';
     return;
   }
-  if(api.key==='bank'||api.key==='withdraw'||api.key==='batch'){
-    out.innerHTML='<span style="color:#ffb800">📄 '+api.name+'（'+api.method+' '+api.path+'）：'+api.status+'。'+
-      (api.key==='bank'||api.key==='withdraw'
-        ? '后端接口已备好（含银行代码映射），需先在支付宝开放平台开通「单笔转账到银行卡」功能包（联系支付宝业务经理），开通后即可真实到账。'
-        : '入参 transfers=[{payeeAccount,payeeName,amount,remark}...]，逐笔串行真实转账，单批≤500笔；单笔&lt;500元且余额充足。')+'</span>';
-    return;
-  }
   if(api.key==='query'){
     var qno=document.getElementById('walletApiQueryNo');
     var no=qno?qno.value.trim():'';
-    if(!no){ out.innerHTML='<span style="color:#FAAD14">⚠ 请输入要核验的交易单号（out_biz_no，如 UESMV9BKMHR29NP19）</span>'; return; }
-    out.innerHTML='<span style="color:#9BBBF4">⏳ 正在核验单据 '+no+' ...</span>';
-    fetchWithRetry(base+api.path+'?outBizNo='+encodeURIComponent(no),{method:'GET',headers:{'Content-Type':'application/json'}})
-      .then(function(r){return r.json();})
-      .then(function(res){
-        if(res&&res.success&&res.data){ var d=res.data||{}; out.innerHTML='<span style="color:#52C41A">✅ 单据核验成功：</span><span style="font-family:monospace">status='+(d.status||d.Status||'')+' · orderId='+(d.order_id||d.orderId||'')+' · payDate='+(d.pay_date||d.payDate||'')+'</span>'; }
-        else { out.innerHTML='<span style="color:#EA6668">✗ 单据核验失败：</span><span>'+(res&&(res.message||res.subMsg)||'未知错误')+'</span>'; }
-      })
-      .catch(function(err){ out.innerHTML='<span style="color:#EA6668">✗ 后端调用异常：'+err.message+'</span>'; });
+    if(!no){ out.innerHTML='<span style="color:#FAAD14">⚠ 请输入要核验的交易单号（out_biz_no，如 UESMVAW7LIFA4YF4A）</span>'; return; }
+    body.outBizNo=no;
+  }
+  if(api.key==='recharge'){
+    var rno=document.getElementById('walletApiRechargeAmt');
+    var amt=rno?parseFloat(rno.value):0;
+    if(!amt||amt<=0){ out.innerHTML='<span style="color:#FAAD14">⚠ 请输入充值金额（真实资金请向企业支付宝账户 15291571201@163.com 充值）</span>'; return; }
+    body.amount=amt; body.channel='alipay';
+  }
+  if(api.key==='withdraw'){
+    out.innerHTML='<span style="color:#ffb800">📄 '+api.name+'（POST /wallet/api/v1/withdraw）：⏳ 提现到银行卡渠道未开通 —— 需在支付宝开通「单笔转账到银行卡」功能包，开通后钱包 API 即可真实提现到任意银行卡。</span>';
     return;
   }
-  // 查询类：真实调用后端
+  if(api.key==='batch'){
+    out.innerHTML='<span style="color:#52C41A">📄 批量代发（POST /wallet/api/v1/transfer/batch）：入参 transfers=[{payeeType,payeeAccount,payeeName,amount,remark}...]，逐笔真实转账到支付宝账户，单批≤500笔；单笔&lt;500元且余额充足。全宇宙工资发放、国库拨付等场景均走此接口。</span>';
+    return;
+  }
+  // 查询/状态类：真实调用钱包 API（POST JSON）
   out.innerHTML='<span style="color:#9BBBF4">⏳ 正在真实调用 '+api.method+' '+api.path+' ...</span>';
-  fetchWithRetry(base+api.path,{method:api.method,headers:{'Content-Type':'application/json'}})
+  fetchWithRetry(base+api.path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})
     .then(function(r){return r.json();})
     .then(function(res){
-      if(res&&res.success){
+      if(res&&res.success&&res.code==='0'){
+        var d=res.data||{};
         var brief='';
-        if(api.key==='status'){ brief='应用 '+res.appId+' · 模式 '+res.mode+' · 证书 '+(res.certMode?'已启用':'未启用')+' · 单笔限额 '+res.limit+' 元'; }
-        else if(api.key==='balance'){ brief='企业支付宝真实余额：¥ '+Number(res.data.available_amount).toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2})+' 元（冻结 '+Number(res.data.freeze_amount||0).toLocaleString()+' 元）'; }
-        out.innerHTML='<span style="color:#52C41A">✅ '+api.name+' 真实调用成功：</span>'+brief;
+        if(api.key==='status'){ var on=0;for(var c in (d.channels||{})){if(d.channels[c].status==='enabled')on++;} brief='全宇宙我的钱包 v'+d.apiVersion+' · 网关 '+d.gateway+' · 应用 '+d.appId+' · 模式 '+d.mode+' · 真实余额 ¥'+Number(d.balance&&d.balance.available_amount).toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2})+' · 已开通渠道 '+on+'/'+Object.keys(d.channels||{}).length; }
+        else if(api.key==='balance'){ brief='全宇宙我的钱包真实余额：¥ '+Number(d.available_amount).toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2})+' 元（冻结 '+Number(d.freeze_amount||0).toLocaleString()+' 元）· real='+d.real; }
+        else if(api.key==='query'){ brief='outBizNo='+d.outBizNo+' · status='+d.status+' · orderId='+d.orderId+' · payDate='+d.payDate+' · amount='+d.transAmount; }
+        else if(api.key==='recharge'){ brief='充值订单 '+d.orderNo+' 已记录 · 金额 ¥'+d.amount+' · 状态 '+d.status+' · 当前真实余额 ¥'+Number(d.realBalance||0).toLocaleString(); }
+        out.innerHTML='<span style="color:#52C41A">✅ '+api.name+' 调用成功：</span>'+brief;
       } else {
-        out.innerHTML='<span style="color:#EA6668">✗ '+api.name+' 调用失败：</span><span>'+(res&&(res.message||res.subMsg)||'未知错误')+'</span>';
+        out.innerHTML='<span style="color:#EA6668">✗ '+api.name+' 调用失败：</span><span>'+(res&&(res.msg||res.message)||'未知错误')+'</span>';
       }
     })
     .catch(function(err){ out.innerHTML='<span style="color:#EA6668">✗ '+api.name+' 后端调用异常：'+err.message+'</span>'; });
 }
 function detectWalletApiGateway(){
   var base=getBackendBase();
-  fetchWithRetry(base+'/api/alipay/status',{method:'GET',headers:{'Content-Type':'application/json'}})
+  fetchWithRetry(base+'/wallet/api/v1/status',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'})
     .then(function(r){return r.json();})
     .then(function(res){
       var st=document.getElementById('walletApiStatus');
       var badge=document.getElementById('walletApiStatusBadge');
-      if(res&&res.success&&res.configured){
-        if(st) st.innerHTML='✅ 我的钱包网关已就绪：应用 <span style="font-family:monospace">'+res.appId+'</span> · 模式 '+res.mode+' · 证书 '+(res.certMode?'已启用':'未启用')+' · 单笔限额 '+res.limit+' 元 · 端点 <span style="font-family:monospace">'+base+'</span>';
+      if(res&&res.success&&res.code==='0'){
+        var d=res.data||{};
+        if(st) st.innerHTML='✅ 全宇宙我的钱包网关已就绪：API v'+d.apiVersion+' · 应用 <span style="font-family:monospace">'+d.appId+'</span> · 模式 '+d.mode+' · 证书 '+(d.certMode?'已启用':'未启用')+' · 真实余额 ¥'+Number(d.balance&&d.balance.available_amount).toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2})+' · 端点 <span style="font-family:monospace">'+base+'</span>';
         if(badge){ badge.textContent='真实通道已就绪'; badge.style.background='rgba(82,196,26,0.2)'; badge.style.color='#52C41A'; }
       } else {
-        if(st) st.innerHTML='⚠️ 网关检测：'+((res&&res.message)||'未配置');
+        if(st) st.innerHTML='⚠️ 网关检测：'+((res&&(res.msg||res.message))||'未配置');
         if(badge){ badge.textContent='通道异常'; badge.style.background='rgba(234,102,104,0.2)'; badge.style.color='#EA6668'; }
       }
     })
     .catch(function(err){
       var st=document.getElementById('walletApiStatus');
-      if(st) st.innerHTML='⚠️ 网关检测失败：'+err.message+'（后端可能休眠中，可点「网关状态」一键重试）';
+      if(st) st.innerHTML='⚠️ 网关检测失败：'+err.message+'（后端可能休眠中，可点「钱包网关」一键重试）';
       var badge=document.getElementById('walletApiStatusBadge');
       if(badge){ badge.textContent='通道异常'; badge.style.background='rgba(234,102,104,0.2)'; badge.style.color='#EA6668'; }
     });
@@ -15108,6 +15113,7 @@ function manualTransferTypeChange(){
 }
 function formatAlipayError(msg){
   var m = msg || '';
+  if(/CHANNEL_DISABLED|渠道未开通/.test(m)) return m;
   if(/agreement-not-exist|未签约/.test(m)) return m + '（支付宝产品未签约，请到开放平台完成签约）';
   if(/EXCEED_LIMIT_PERSONAL_SM_AMOUNT/.test(m)) return m + '（超出单笔转个人限额，请降低金额分批转）';
   if(/BALANCE_IS_NOT_ENOUGH/.test(m)) return m + '（企业支付宝余额不足，请先充值再转）';
@@ -15137,14 +15143,14 @@ function executeManualTransfer(){
   if(accountType === 'alipay_personal' || accountType === 'alipay_company'){
     if(!name){ result.innerHTML = '<span style="color:#FAAD14">⚠ 支付宝转账必须填写收款人姓名（须与账号实名一致）</span>'; return; }
     if(amount >= 500){ result.innerHTML = '<span style="color:#ffd24a">⚠ 单笔转个人限额 &lt;500 元，请降低金额分批转（当前实测边界）</span>'; return; }
-    result.innerHTML = '<span style="color:#9BBBF4">⏳ 正在调用支付宝真实转账接口...</span>';
-    fetchWithRetry(getBackendBase() + '/api/alipay/transfer', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({payeeAccount: account, payeeName: name, amount: amount, remark: '手动转账·'+typeName})}).then(function(r){ return r.json(); }).then(function(res){
-      if(res && res.success){
+    result.innerHTML = '<span style="color:#9BBBF4">⏳ 正在调用全宇宙我的钱包 API（真实转账）...</span>';
+    fetchWithRetry(getBackendBase() + '/wallet/api/v1/transfer', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({payeeType: accountType, payeeAccount: account, payeeName: name, amount: amount, remark: '手动转账·'+typeName})}).then(function(r){ return r.json(); }).then(function(res){
+      if(res && res.success && res.code === '0'){
         var d = res.data || {};
         var tradeNo = d.orderId || d.tradeNo || d.outBizNo || '';
         result.innerHTML = '<div style="background:rgba(82,196,26,0.1);border:1px solid rgba(82,196,26,0.3);border-radius:6px;padding:8px">' +
           '<div style="display:flex;align-items:center;gap:6px;margin-bottom:6px"><span style="background:#52C41A;color:#fff;padding:1px 6px;border-radius:3px;font-size:9px;font-weight:bold">真实模式</span><span style="color:#52C41A;font-weight:bold;font-size:12px">✅ 真实转账成功 · 已到账</span></div>' +
-          '<div style="font-size:10px;color:var(--text-dim)">去向：'+typeName+'</div>' +
+          '<div style="font-size:10px;color:var(--text-dim)">去向：'+typeName+'（全宇宙我的钱包）</div>' +
           '<div style="font-size:10px;color:var(--text-dim)">收款人：'+name+'</div>' +
           '<div style="font-size:10px;color:var(--text-dim)">收款账户：'+account+'</div>' +
           '<div style="font-size:10px;color:var(--text-dim)">转账金额：¥'+amount.toFixed(2)+'</div>' +
@@ -15153,7 +15159,7 @@ function executeManualTransfer(){
           '<div style="font-size:10px;color:#52C41A;margin-top:4px">真实资金已转出 · 对方支付宝账户可查收</div></div>';
         recordTransfer(accountType,typeName,account,name,amount,tradeNo,'success','');
       } else {
-        var msg = (res && res.message) || '未知错误';
+        var msg = (res && (res.msg || res.message)) || '未知错误';
         result.innerHTML = '<div style="background:rgba(234,102,104,0.08);border:1px solid rgba(234,102,104,0.3);border-radius:6px;padding:8px"><span style="color:#EA6668">✗ 真实转账失败：</span><span style="color:var(--text)">'+formatAlipayError(msg)+'</span></div>';
         recordTransfer(accountType,typeName,account,name,amount,'','failed',msg);
       }
@@ -15163,9 +15169,9 @@ function executeManualTransfer(){
     });
   } else if(accountType === 'bank'){
     if(!name){ result.innerHTML = '<span style="color:#FAAD14">⚠ 请填写银行卡收款人姓名</span>'; return; }
-    result.innerHTML = '<span style="color:#9BBBF4">⏳ 调用转账到银行卡接口（需功能包）...</span>';
-    fetchWithRetry(getBackendBase() + '/api/alipay/transfer/bank', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({payeeBankAccount: account, payeeBankName: '', payeeName: name, amount: amount, remark: '手动转账·银行卡'})}).then(function(r){ return r.json(); }).then(function(res){
-      var msg = (res && res.message) || '未知错误';
+    result.innerHTML = '<span style="color:#9BBBF4">⏳ 调用全宇宙我的钱包 API（银行卡渠道）...</span>';
+    fetchWithRetry(getBackendBase() + '/wallet/api/v1/transfer', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({payeeType:'bank', payeeAccount: account, payeeName: name, amount: amount, remark: '手动转账·银行卡'})}).then(function(r){ return r.json(); }).then(function(res){
+      var msg = (res && (res.msg || res.message)) || '未知错误';
       result.innerHTML = '<div style="background:rgba(255,184,0,0.08);border:1px solid rgba(255,184,0,0.3);border-radius:6px;padding:8px"><span style="color:#ffb800">⏳ 银行卡去向：</span><span style="color:var(--text)">'+formatAlipayError(msg)+'</span><div style="font-size:10px;color:var(--text-dim);margin-top:4px">下一步：联系支付宝业务开通「单笔转账到银行卡」功能包，开通后即可真实到账任意银行卡。</div></div>';
       recordTransfer(accountType,typeName,account,name,amount,'','failed',msg);
     }).catch(function(err){
@@ -15173,8 +15179,16 @@ function executeManualTransfer(){
       recordTransfer(accountType,typeName,account,name,amount,'','failed',err.message);
     });
   } else {
-    result.innerHTML = '<div style="background:rgba(255,184,0,0.08);border:1px solid rgba(255,184,0,0.3);border-radius:6px;padding:8px"><span style="color:#ffb800">⚠ '+typeName+' 真实链路未接入，无法真实到账</span><div style="font-size:10px;color:var(--text-dim);margin-top:4px">请选择已打通的「个人/企业支付宝账户」去向发起真实转账。</div></div>';
-    recordTransfer(accountType,typeName,account,name,amount,'','failed','渠道未接入');
+    // 其余渠道统一走我的钱包 API（后端如实返回渠道状态）
+    result.innerHTML = '<span style="color:#9BBBF4">⏳ 调用全宇宙我的钱包 API（'+typeName+'渠道）...</span>';
+    fetchWithRetry(getBackendBase() + '/wallet/api/v1/transfer', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({payeeType: accountType, payeeAccount: account, payeeName: name||'', amount: amount, remark: '手动转账·'+typeName})}).then(function(r){ return r.json(); }).then(function(res){
+      var msg = (res && (res.msg || res.message)) || '未知错误';
+      result.innerHTML = '<div style="background:rgba(255,184,0,0.08);border:1px solid rgba(255,184,0,0.3);border-radius:6px;padding:8px"><span style="color:#ffb800">⚠ '+typeName+' 渠道：</span><span style="color:var(--text)">'+formatAlipayError(msg)+'</span><div style="font-size:10px;color:var(--text-dim);margin-top:4px">请选择已打通的「个人/企业支付宝账户」去向发起真实转账。</div></div>';
+      recordTransfer(accountType,typeName,account,name,amount,'','failed',msg);
+    }).catch(function(err){
+      result.innerHTML = '<span style="color:#EA6668">✗ 后端调用异常：'+err.message+'</span>';
+      recordTransfer(accountType,typeName,account,name,amount,'','failed',err.message);
+    });
   }
 }
 
