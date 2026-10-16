@@ -5691,12 +5691,12 @@ function formatBalance(bal){
 }
 function updateAllBalances(){
   var f=formatBalance(universeBalance);
-  // heroBalance 由企业支付宝真实余额独占（网页余额 = 真实可转余额），全宇宙余额池不再覆盖顶部余额
+  var h=document.getElementById('heroBalance');
+  if(h)h.innerHTML=f+' <span class="unit">万亿</span>';
   document.querySelectorAll('.panel-hdr').forEach(function(hdr){
     if(hdr.textContent.indexOf('全账户统一余额控制台')>=0){
       var panel=hdr.closest?hdr.closest('.panel'):hdr.parentElement;
       if(panel)panel.querySelectorAll('.acct-bal').forEach(function(el){
-        if(el.id==='alipayAcctBal') return; // 支付宝真实余额元素由 fetchRealAlipayBalance 独占
         var cur=el.querySelector('.cur');
         el.innerHTML=(cur?cur.outerHTML:'')+f+' 万亿';
       });
@@ -5706,7 +5706,6 @@ function updateAllBalances(){
       if(panel2){
         var bals=panel2.querySelectorAll('.acct-bal');
         for(var i=0;i<Math.min(3,bals.length);i++){
-          if(bals[i].id==='alipayAcctBal') continue; // 支付宝真实余额元素独占
           var cur=bals[i].querySelector('.cur');
           bals[i].innerHTML=(cur?cur.outerHTML:'')+'∞ '+f+' 万亿';
         }
