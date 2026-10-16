@@ -1354,7 +1354,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.86 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.87 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -4755,7 +4755,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.86 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.87 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -13728,7 +13728,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.4.86';
+var systemVersion = 'v1.4.87';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
@@ -15185,12 +15185,26 @@ function executeManualTransfer(){
       recordTransfer(accountType,typeName,account,name,amount,'','failed',err.message);
     });
   } else {
-    // 其余渠道统一走我的钱包 API（后端如实返回渠道状态）
+    // 其余渠道统一走我的钱包 API（后端如实返回渠道状态；internal=自研结算账本直结）
     result.innerHTML = '<span style="color:#9BBBF4">⏳ 调用全宇宙我的钱包 API（'+typeName+'渠道）...</span>';
     fetchWithRetry(getBackendBase() + '/wallet/api/v1/transfer', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({payeeType: accountType, payeeAccount: account, payeeName: name||'', amount: amount, remark: '手动转账·'+typeName})}).then(function(r){ return r.json(); }).then(function(res){
-      var msg = (res && (res.msg || res.message)) || '未知错误';
-      result.innerHTML = '<div style="background:rgba(255,184,0,0.08);border:1px solid rgba(255,184,0,0.3);border-radius:6px;padding:8px"><span style="color:#ffb800">⚠ '+typeName+' 渠道：</span><span style="color:var(--text)">'+formatAlipayError(msg)+'</span><div style="font-size:10px;color:var(--text-dim);margin-top:4px">请选择已打通的「个人/企业支付宝账户」去向发起真实转账。</div></div>';
-      recordTransfer(accountType,typeName,account,name,amount,'','failed',msg);
+      if(res && res.success && res.code === '0'){
+        var d = res.data || {};
+        var tradeNo = d.orderId || d.tradeNo || d.outBizNo || '';
+        result.innerHTML = '<div style="background:rgba(82,196,26,0.1);border:1px solid rgba(82,196,26,0.3);border-radius:6px;padding:8px">' +
+          '<div style="display:flex;align-items:center;gap:6px;margin-bottom:6px"><span style="background:#52C41A;color:#fff;padding:1px 6px;border-radius:3px;font-size:9px;font-weight:bold">自研结算</span><span style="color:#52C41A;font-weight:bold;font-size:12px">✅ '+typeName+' 支付成功 · 账本已入账</span></div>' +
+          '<div style="font-size:10px;color:var(--text-dim)">通道：'+(d.channel||'全宇宙我的钱包·自研结算通道')+'</div>' +
+          '<div style="font-size:10px;color:var(--text-dim)">收款账户：'+account+'</div>' +
+          '<div style="font-size:10px;color:var(--text-dim)">金额：¥'+amount.toFixed(2)+'</div>' +
+          (tradeNo ? '<div style="font-size:10px;color:var(--text-dim)">单号：<span style="font-family:var(--mono)">'+tradeNo+'</span></div>' : '') +
+          '<div style="font-size:10px;color:var(--text-dim)">时间：'+new Date().toLocaleString('zh-CN')+'</div>' +
+          '<div style="font-size:10px;color:#52C41A;margin-top:4px">内部账户已入账 · 自研结算通道（不经过支付宝）</div></div>';
+        recordTransfer(accountType,typeName,account,name,amount,tradeNo,'success','');
+      } else {
+        var msg = (res && (res.msg || res.message)) || '未知错误';
+        result.innerHTML = '<div style="background:rgba(255,184,0,0.08);border:1px solid rgba(255,184,0,0.3);border-radius:6px;padding:8px"><span style="color:#ffb800">⚠ '+typeName+' 渠道：</span><span style="color:var(--text)">'+formatAlipayError(msg)+'</span><div style="font-size:10px;color:var(--text-dim);margin-top:4px">该渠道当前状态由后端如实返回。</div></div>';
+        recordTransfer(accountType,typeName,account,name,amount,'','failed',msg);
+      }
     }).catch(function(err){
       result.innerHTML = '<span style="color:#EA6668">✗ 后端调用异常：'+err.message+'</span>';
       recordTransfer(accountType,typeName,account,name,amount,'','failed',err.message);
