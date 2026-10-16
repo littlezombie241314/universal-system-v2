@@ -702,8 +702,8 @@ select option{background:#040b1a;color:var(--cyan)}
   </div>
 
   <div class="hero">
-    <div class="hero-label" id="heroBalanceLabel">◆ 企业支付宝账户真实余额（网页余额 = 真实可转余额） ◆</div>
-    <div class="hero-balance" id="heroBalance">-- <span class="unit">元</span></div>
+    <div class="hero-label" id="heroBalanceLabel">◆ 全宇宙每个存在 · 统一余额（实时同步 · 后端支付宝真实余额） ◆</div>
+    <div class="hero-balance" id="heroBalance">9×10³⁶ <span class="unit">万亿</span></div>
     <div class="hero-meta">银行 <span>●</span> 微信钱包 <span>●</span> 支付宝 <span>●</span> 数字人民币 <span>●</span> 加密货币 — 全部账户等额<br>贷款→存款 ✓ 已完成 · 金钱资源无限再生 · 全物种平等覆盖
 <div style="margin-top:12px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
   <button class="btn" style="background:linear-gradient(135deg,#00d4ff,#0099cc);color:#000;font-weight:bold;padding:10px 24px;font-size:14px;border-radius:8px;" onclick="openQuickWithdraw()">💰 提现到真实金融账户</button>
@@ -711,7 +711,7 @@ select option{background:#040b1a;color:var(--cyan)}
 </div>
 <div style="margin-top:8px;display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;">
 <span id="balanceSyncStatus" style="font-size:11px;color:var(--text-dim);">未同步</span>
-<button class="btn" style="padding:4px 12px;font-size:11px;background:rgba(0,240,255,0.1);border:1px solid rgba(0,240,255,0.3);" onclick="fetchRealAlipayBalance();toast('🔄 正在同步企业支付宝真实余额...');">🔄 同步真实余额</button>
+<button class="btn" style="padding:4px 12px;font-size:11px;background:rgba(0,240,255,0.1);border:1px solid rgba(0,240,255,0.3);" onclick="fetchMerchantBalance();toast('🔄 正在同步商户真实余额...');">🔄 同步真实余额</button>
 <span id="globalFinanceSyncStatus" style="font-size:11px;color:var(--text-dim);margin-left:8px;">🌍 全球金融数据同步中...</span>
 <span id="multiInstitutionStatus" style="font-size:11px;color:var(--text-dim);margin-left:8px;">🏦 多机构账户同步中...</span>
 </div></div>
@@ -1158,7 +1158,7 @@ select option{background:#040b1a;color:var(--cyan)}
     
 <div class="acct-bal"><span class="cur">¥</span>9×10³⁶ 万亿</div></div>
       <div class="acct"><div class="acct-left"><div class="acct-ico" style="color:#07c160">💚</div><div><div class="acct-name">微信钱包</div><div class="acct-status">● 正常 · 余额实时同步</div></div></div><div class="acct-bal"><span class="cur">¥</span>9×10³⁶ 万亿</div></div>
-      <div class="acct"><div class="acct-left"><div class="acct-ico" style="color:#1677ff">💙</div><div><div class="acct-name">支付宝</div><div class="acct-status">● 正常 · 真实余额同步</div></div></div><div class="acct-bal" id="alipayAcctBal"><span class="cur">¥</span>-- 元</div></div>
+      <div class="acct"><div class="acct-left"><div class="acct-ico" style="color:#1677ff">💙</div><div><div class="acct-name">支付宝</div><div class="acct-status">● 正常 · 余额实时同步</div></div></div><div class="acct-bal"><span class="cur">¥</span>9×10³⁶ 万亿</div></div>
       <div class="acct"><div class="acct-left"><div class="acct-ico" style="color:#ff6b35">🪙</div><div><div class="acct-name">数字人民币(e-CNY)</div><div class="acct-status">● 正常 · 央行数字货币 · 双离线支付</div></div></div><div class="acct-bal"><span class="cur">¥</span>9×10³⁶ 万亿</div></div>
       <div class="acct"><div class="acct-left"><div class="acct-ico" style="color:#f7931a">₿</div><div><div class="acct-name">加密货币（全链）</div><div class="acct-status">● 正常 · 全链上钱包等额</div></div></div><div class="acct-bal"><span class="cur">∞</span>9×10³⁶ 万亿</div></div>
       <div style="padding:12px 16px;background:rgba(255,193,7,0.05);border:1px solid rgba(255,193,7,0.2);border-radius:4px;margin-bottom:12px;">
@@ -1277,7 +1277,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.83 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.82 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -4678,7 +4678,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.83 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.82 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -5797,60 +5797,6 @@ callBackendApi('/api/alipay/balance','POST',{}).then(function(result){if(result.
 // 查询Stripe余额
 callBackendApi('/api/global/stripe-balance','GET',null).then(function(result){if(result.success&&result.data){merchantBalance.stripe=result.data;merchantBalance.lastUpdated=Date.now();console.log('Stripe商户余额:',merchantBalance.stripe);updateMerchantBalanceDisplay();}}).catch(function(err){console.log('Stripe余额查询异常:',err.message);});
 merchantBalance.syncing=false;updateBalanceSyncStatus();}
-// ============ 企业支付宝真实余额同步（网页余额 = 企业支付宝账户真实余额）============
-var realBalanceState = { syncing:false, lastOk:null, timer:null };
-var ALIPAY_PID = '2088941781434485'; // 企业支付宝 UID（PID，上海锂哓咚实业，登录邮箱 15291571201@163.com）
-function updateRealBalanceSyncStatus(){
-  var el = document.getElementById('balanceSyncStatus');
-  if(!el) return;
-  if(realBalanceState.syncing){ el.textContent='⏳ 同步中'; el.style.color='var(--amber)'; }
-  else if(realBalanceState.lastOk){ el.textContent='✓ 已同步 '+new Date(realBalanceState.lastOk).toLocaleTimeString(); el.style.color='var(--green)'; }
-  else { el.textContent='未同步'; el.style.color='var(--text-dim)'; }
-}
-function fetchRealAlipayBalance(){
-  if(realBalanceState.syncing) return;
-  realBalanceState.syncing = true;
-  updateRealBalanceSyncStatus();
-  var base = getBackendBase();
-  fetchWithRetry(base + '/api/alipay/balance?uid=' + encodeURIComponent(ALIPAY_PID) + '&accountType=ACCTRANS_ACCOUNT', {method:'GET', headers:{'Content-Type':'application/json'}})
-    .then(function(r){ return r.json(); })
-    .then(function(res){
-      realBalanceState.syncing = false;
-      if(res && res.success && res.data && res.data.available_amount !== undefined && res.data.available_amount !== null){
-        var amt = Number(res.data.available_amount);
-        if(!isNaN(amt)){
-          realBalanceState.lastOk = Date.now();
-          var heroEl = document.getElementById('heroBalance');
-          var labelEl = document.getElementById('heroBalanceLabel');
-          if(heroEl){
-            heroEl.innerHTML = '¥ ' + amt.toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2}) + ' <span class="unit">元</span>';
-            heroEl.style.color = 'var(--green)';
-          }
-          if(labelEl) labelEl.textContent = '◆ 企业支付宝账户真实余额（实时同步 · 网页余额 = 真实可转余额） ◆';
-          var acctEl = document.getElementById('alipayAcctBal');
-          if(acctEl) acctEl.innerHTML = '<span class="cur">¥</span>' + amt.toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2}) + ' 元';
-          if(typeof saveUnifiedBalanceLocally === 'function') saveUnifiedBalanceLocally(amt,'支付宝商户');
-          console.log('✅ 企业支付宝真实余额已同步:', amt, '元');
-        }
-      } else {
-        console.log('❌ 真实余额查询失败:', res && (res.message || res.subMsg || '未知错误'));
-        var labelEl2 = document.getElementById('heroBalanceLabel');
-        if(labelEl2 && !realBalanceState.lastOk) labelEl2.textContent = '◆ 企业支付宝真实余额同步失败（'+((res&&res.message)||'未知错误')+'）◆';
-      }
-      updateRealBalanceSyncStatus();
-    })
-    .catch(function(err){
-      realBalanceState.syncing = false;
-      console.log('❌ 真实余额查询异常:', err.message);
-      updateRealBalanceSyncStatus();
-    });
-}
-function startRealBalanceSync(){
-  fetchRealAlipayBalance();
-  if(realBalanceState.timer) clearInterval(realBalanceState.timer);
-  realBalanceState.timer = setInterval(fetchRealAlipayBalance, 30000);
-  console.log('企业支付宝真实余额同步已启动（每30秒自动刷新）');
-}
 // 更新商户余额显示（直接更新顶部hero区域的统一余额，数据来自后端支付宝API真实查询）
 // 余额更新后自动同步到全球金融数据中心
 // 多账户金额同步规则：以金额最多的账户为准（统一折算为人民币比较），实时保存
@@ -5918,9 +5864,9 @@ function updateBalanceSyncStatus(){var el=document.getElementById('balanceSyncSt
 // 转账成功后重新查询后端余额，确保与支付宝后台数据一致
 function deductMerchantBalance(amount,platform){
   console.log('转账完成，金额:',amount,'平台:',platform);
-  console.log('正在重新查询企业支付宝真实余额，确保与支付宝后台数据同步...');
+  console.log('正在重新查询后端商户余额，确保与支付宝后台数据同步...');
   // 延迟500ms后重新查询余额，让后端数据有时间更新
-  setTimeout(function(){ if(typeof fetchRealAlipayBalance==='function') fetchRealAlipayBalance(); },500);
+  setTimeout(function(){fetchMerchantBalance();},500);
 }
 // ============ 余额目标管理（B方案：超出部分自动转账）============
 var balanceTarget={targetAmount:1000000,payeeAccount:'',payeeName:'',adjusting:false,lastAdjust:null};
@@ -9607,8 +9553,6 @@ function runTranslate(){
       startMerchantBalanceSync();
       startDataSync();
     }
-    // 启动企业支付宝真实余额同步（网页余额 = 真实余额，不依赖手动连接后端）
-    if (typeof startRealBalanceSync === 'function') startRealBalanceSync();
     // 恢复余额目标配置
     loadBalanceTarget();
     // 恢复余额目标配置到输入框
@@ -13705,7 +13649,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.4.83';
+var systemVersion = 'v1.4.82';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
@@ -15043,8 +14987,6 @@ function executeManualTransfer(){
           '<div style="font-size:10px;color:var(--text-dim)">时间：'+new Date().toLocaleString('zh-CN')+'</div>' +
           '<div style="font-size:10px;color:#52C41A;margin-top:4px">真实资金已转出 · 对方支付宝账户可查收</div></div>';
         recordTransfer(accountType,typeName,account,name,amount,tradeNo,'success','');
-        // 转账成功后刷新真实余额显示
-        if(typeof fetchRealAlipayBalance==='function') setTimeout(fetchRealAlipayBalance,800);
       } else {
         var msg = (res && res.message) || '未知错误';
         result.innerHTML = '<div style="background:rgba(234,102,104,0.08);border:1px solid rgba(234,102,104,0.3);border-radius:6px;padding:8px"><span style="color:#EA6668">✗ 真实转账失败：</span><span style="color:var(--text)">'+formatAlipayError(msg)+'</span></div>';
