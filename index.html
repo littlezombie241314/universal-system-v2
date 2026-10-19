@@ -16176,10 +16176,10 @@ var _scanStream = null;
 var _scanCanvas = null, _scanCtx = null;
 function _doRealTransfer(account, name, amount){
   // 调真实后端转账接口
-  return fetch('https://universal-pay-alipay.onrender.com/api/alipay/transfer', {
+  return fetch('https://universal-pay-alipay.onrender.com/api/wallet/scan-pay', {
     method:'POST',
     headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({payeeAccount: account, payeeName: name || '', amount: String(amount), remark:'扫码支付'})
+    body: JSON.stringify({code: code, amount: amount, channel:'cosmic-wallet'})
   }).then(function(r){return r.json();}).catch(function(e){return {success:false, msg:String(e)};});
 }
 function scanPay(){
@@ -16263,7 +16263,7 @@ function scanPay(){
       setTimeout(function(){
         box.style.borderColor = '#52C41A';
         box.innerHTML = '<div style="font-size:36px">✅</div><div style="font-size:11px;color:#52C41A">识别成功 · 付款 ¥0.01</div>';
-        if (typeof quickMsg === 'function') quickMsg('✅ 扫码成功 · 已向对方付款 ¥0.01 · 实时到账（相机未授权，已用模拟识别）');
+        if (typeof quickMsg === 'function') quickMsg('✅ 扫码成功 · 已通过全宇宙自研通道付款 ¥0.01 · 实时到账（相机未授权，已用模拟识别）');
         setTimeout(function(){
           box.style.borderColor = '#00d4ff';
           box.innerHTML = '<div style="font-size:36px">📷</div><div style="font-size:11px;color:var(--cyan)">点击扫一扫 · 对准收款码</div>';
@@ -16275,7 +16275,7 @@ function scanPay(){
     setTimeout(function(){
       box.style.borderColor = '#52C41A';
       box.innerHTML = '<div style="font-size:36px">✅</div><div style="font-size:11px;color:#52C41A">识别成功 · 付款 ¥0.01</div>';
-      if (typeof quickMsg === 'function') quickMsg('✅ 扫码成功 · 已向对方付款 ¥0.01 · 实时到账');
+      if (typeof quickMsg === 'function') quickMsg('✅ 扫码成功 · 已通过全宇宙自研通道付款 ¥0.01 · 实时到账');
       setTimeout(function(){
         box.style.borderColor = '#00d4ff';
         box.innerHTML = '<div style="font-size:36px">📷</div><div style="font-size:11px;color:var(--cyan)">点击扫一扫 · 对准收款码</div>';
