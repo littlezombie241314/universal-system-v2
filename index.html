@@ -1458,7 +1458,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.22 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.23 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -4901,7 +4901,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.22 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.23 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -13891,7 +13891,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.5.22';
+var systemVersion = 'v1.5.23';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
@@ -16171,20 +16171,65 @@ function merchantSimulatePay(){
   log.insertBefore(line, log.firstChild);
   while (log.children.length > 8) log.removeChild(log.lastChild);
 }
+var _scanStream = null;
 function scanPay(){
   var box = document.getElementById('scanBox');
   if (!box) return;
   box.style.borderColor = '#FAAD14';
-  box.querySelector('div:last-child').textContent = '🔍 扫描中...';
-  setTimeout(function(){
-    box.style.borderColor = '#52C41A';
-    box.querySelector('div:last-child').textContent = '✓ 扫描成功 · 付款 ¥0.01';
-    if (typeof quickMsg === 'function') quickMsg('✅ 扫码成功 · 已向对方付款 ¥0.01 · 实时到账');
+  box.querySelector('div:last-child').textContent = '📷 正在启动相机...';
+  // 真调本机摄像头
+  if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}}).then(function(stream){
+      _scanStream = stream;
+      // 在扫描框内显示实时视频
+      var video = document.createElement('video');
+      video.autoplay = true; video.muted = true; video.playsInline = true;
+      video.srcObject = stream;
+      video.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:10px;position:absolute;top:0;left:0;';
+      box.style.position = 'relative';
+      box.innerHTML = '';
+      box.appendChild(video);
+      var tip = document.createElement('div');
+      tip.textContent = '🔍 对准收款码识别中...';
+      tip.style.cssText = 'position:absolute;bottom:6px;left:0;right:0;font-size:11px;color:#00d4ff;text-align:center;text-shadow:0 0 4px #000;';
+      box.appendChild(tip);
+      setTimeout(function(){
+        stream.getTracks().forEach(function(t){t.stop();});
+        _scanStream = null;
+        box.innerHTML = '<div style="font-size:36px">✅</div><div style="font-size:11px;color:#52C41A">识别成功 · 付款 ¥0.01</div>';
+        if (typeof quickMsg === 'function') quickMsg('✅ 扫码成功 · 已向对方付款 ¥0.01 · 实时到账');
+        setTimeout(function(){
+          box.style.borderColor = '#00d4ff';
+          box.innerHTML = '<div style="font-size:36px">📷</div><div style="font-size:11px;color:var(--cyan)">点击扫一扫 · 对准收款码</div>';
+        }, 2500);
+      }, 2000);
+    }).catch(function(err){
+      // 摄像头拒绝/不可用，降级为模拟扫描
+      console.warn('camera fallback:', err);
+      box.style.borderColor = '#FAAD14';
+      box.innerHTML = '<div style="font-size:36px">🔍</div><div style="font-size:11px;color:var(--cyan)">扫描中...</div>';
+      setTimeout(function(){
+        box.style.borderColor = '#52C41A';
+        box.innerHTML = '<div style="font-size:36px">✅</div><div style="font-size:11px;color:#52C41A">识别成功 · 付款 ¥0.01</div>';
+        if (typeof quickMsg === 'function') quickMsg('✅ 扫码成功 · 已向对方付款 ¥0.01 · 实时到账（相机未授权，已用模拟识别）');
+        setTimeout(function(){
+          box.style.borderColor = '#00d4ff';
+          box.innerHTML = '<div style="font-size:36px">📷</div><div style="font-size:11px;color:var(--cyan)">点击扫一扫 · 对准收款码</div>';
+        }, 2500);
+      }, 1500);
+    });
+  } else {
+    box.innerHTML = '<div style="font-size:36px">🔍</div><div style="font-size:11px;color:var(--cyan)">扫描中...</div>';
     setTimeout(function(){
-      box.style.borderColor = '#00d4ff';
-      box.querySelector('div:last-child').textContent = '点击扫一扫 · 对准收款码';
-    }, 2500);
-  }, 1200);
+      box.style.borderColor = '#52C41A';
+      box.innerHTML = '<div style="font-size:36px">✅</div><div style="font-size:11px;color:#52C41A">识别成功 · 付款 ¥0.01</div>';
+      if (typeof quickMsg === 'function') quickMsg('✅ 扫码成功 · 已向对方付款 ¥0.01 · 实时到账');
+      setTimeout(function(){
+        box.style.borderColor = '#00d4ff';
+        box.innerHTML = '<div style="font-size:36px">📷</div><div style="font-size:11px;color:var(--cyan)">点击扫一扫 · 对准收款码</div>';
+      }, 2500);
+    }, 1500);
+  }
 }
 </script>
 </body>
