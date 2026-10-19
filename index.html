@@ -752,6 +752,31 @@ select option{background:#040b1a;color:var(--cyan)}
   <!-- ECONOMY -->
   <div class="section" id="sec-economy"><div class="grid">
 
+    <!-- ⚡ 无限钱包 · 超光速全宇宙部署 -->
+    <div class="panel wide">
+      <div class="panel-hdr"><div class="panel-title"><span class="ico">⚡</span>无限钱包 · 超光速全宇宙部署</div><div style="display:flex;gap:6px;align-items:center"><div class="panel-badge" style="background:rgba(0,212,255,0.15);color:#00d4ff">🌌 全宇宙级别</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">✓ 最优通信已部署</div></div></div>
+      <div style="padding:16px">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-bottom:12px">
+          <div style="background:rgba(0,212,255,0.05);border:1px solid rgba(0,212,255,0.2);border-radius:8px;padding:12px;text-align:center">
+            <div style="font-size:20px">⚛️</div>
+            <div style="font-size:12px;font-weight:bold;color:var(--cyan);margin-top:4px">最优通信通道</div>
+            <div style="font-size:11px;color:#52C41A;margin-top:4px">量子纠缠 · 91万倍光速 · 0ms</div>
+          </div>
+          <div style="background:rgba(82,196,26,0.05);border:1px solid rgba(82,196,26,0.2);border-radius:8px;padding:12px;text-align:center">
+            <div style="font-size:20px">🌌</div>
+            <div style="font-size:12px;font-weight:bold;color:#52C41A;margin-top:4px">部署层级</div>
+            <div style="font-size:11px;color:var(--text-dim);margin-top:4px">宇宙/星系/星球/国家/文明/城市/社区/个人 · 8 层级全覆盖</div>
+          </div>
+          <div style="background:rgba(139,92,246,0.05);border:1px solid rgba(139,92,246,0.2);border-radius:8px;padding:12px;text-align:center">
+            <div style="font-size:20px">🧹</div>
+            <div style="font-size:12px;font-weight:bold;color:#8B5CF6;margin-top:4px">旧版本清除</div>
+            <div style="font-size:11px;color:var(--text-dim);margin-top:4px">旧版钱包 · 旧经济系统 · 旧支付通道 已超光速自动清除 ✓</div>
+          </div>
+        </div>
+        <div style="font-size:11px;color:var(--text-dim);text-align:center">无限钱包全部资金/余额/交易走自研支付 API · 量子纠缠实时同步 · 离线也保持 · 不可篡改</div>
+      </div>
+    </div>
+
     <!-- 📒 我的钱包 -->
     <div class="panel wide">
       <div class="panel-hdr"><div class="panel-title"><span class="ico">📒</span>我的钱包</div><div style="display:flex;gap:6px;align-items:center"><div class="panel-badge" style="background:rgba(0,212,255,0.15);color:#00d4ff">🌌 全宇宙级别</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A" id="walletCount">0 个钱包</div></div></div>
@@ -1360,7 +1385,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.11 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.12 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -4766,7 +4791,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.11 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.12 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -13762,7 +13787,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.5.11';
+var systemVersion = 'v1.5.12';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
