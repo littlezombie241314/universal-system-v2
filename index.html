@@ -735,9 +735,8 @@ select option{background:#040b1a;color:var(--cyan)}
     <div class="tab" data-sec="climate" onclick="switchTab('climate')">🌦️ 气候控制</div>
     <div class="tab" data-sec="resource" onclick="switchTab('resource')">♻️ 资源再生</div>
     <div class="tab" data-sec="ecosystem" onclick="switchTab('ecosystem')">🧬 生态守护</div>
-    <div class="tab" data-sec="space" onclick="switchTab('space')">🏙️ 居住空间</div>
+    <div class="tab" data-sec="space" onclick="switchTab('space')">🏙️ 居住空间 · 宇宙城市</div>
     <div class="tab" data-sec="cosmos" onclick="switchTab('cosmos')">💫 星际娱乐</div>
-    <div class="tab" data-sec="ucity" onclick="switchTab('ucity')">🌆 宇宙城市</div>
     <div class="tab" data-sec="defense" onclick="switchTab('defense')">🛡️ 防御系统</div>
     
     <div class="tab" data-sec="karma" onclick="switchTab('karma')">🍀 人品系统</div>
@@ -1354,7 +1353,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.92 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.93 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -3377,8 +3376,50 @@ select option{background:#040b1a;color:var(--cyan)}
     <div class="panel wide"><div class="panel-hdr"><div class="panel-title"><span class="ico">🗺️</span>航行日志</div></div><div class="console" id="warpLog"><div class="log-line dim">跃迁记录将显示在这里...</div></div></div>
   </div></div>
 
-  <!-- U-CITY -->
-  <div class="section" id="sec-ucity"><div class="grid">
+
+  <!-- DEFENSE -->
+  <div class="section" id="sec-defense">
+    <div class="grid">
+      <div class="panel wide"><div class="panel-hdr"><div class="panel-title"><span class="ico">🛡️</span>全宇宙防御系统</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">脆弱存在自动防护</div></div>
+        <div style="padding:0 14px 6px;font-size:12px;color:var(--text-dim)">已为全宇宙所有脆弱存在自动部署防御系统，每秒扫描识别新增脆弱存在并即时加防护</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;padding:10px 14px">
+          <div style="text-align:center;padding:12px;background:rgba(139,92,246,.08);border-radius:8px"><div style="font-size:24px">🌌</div><div style="font-size:16px;color:#a855f7;font-weight:bold;margin-top:4px">全宇宙</div><div style="font-size:10px;color:var(--text-dim)">所有宇宙 · 所有时空线</div></div>
+          <div style="text-align:center;padding:12px;background:rgba(6,182,212,.08);border-radius:8px"><div style="font-size:24px">🔍</div><div style="font-size:16px;color:#06b6d4;font-weight:bold;margin-top:4px" id="defWeakCount">0</div><div style="font-size:10px;color:var(--text-dim)">脆弱存在已识别</div></div>
+          <div style="text-align:center;padding:12px;background:rgba(82,196,26,.08);border-radius:8px"><div style="font-size:24px">🛡️</div><div style="font-size:16px;color:#52C41A;font-weight:bold;margin-top:4px" id="defProtectedCount">0</div><div style="font-size:10px;color:var(--text-dim)">已加防护</div></div>
+          <div style="text-align:center;padding:12px;background:rgba(255,184,0,.08);border-radius:8px"><div style="font-size:24px">🛰️</div><div style="font-size:16px;color:var(--amber);font-weight:bold;margin-top:4px" id="defCoverage">100%</div><div style="font-size:10px;color:var(--text-dim)">防护覆盖率</div></div>
+          <div style="text-align:center;padding:12px;background:rgba(0,255,136,.08);border-radius:8px"><div style="font-size:24px">💠</div><div style="font-size:16px;color:var(--green);font-weight:bold;margin-top:4px">S 级</div><div style="font-size:10px;color:var(--text-dim)">防护等级</div></div>
+          <div style="text-align:center;padding:12px;background:rgba(236,72,153,.08);border-radius:8px"><div style="font-size:24px">🫀</div><div style="font-size:16px;color:#ec4899;font-weight:bold;margin-top:4px" id="defShieldHealth">100%</div><div style="font-size:10px;color:var(--text-dim)">护盾完整度</div></div>
+        </div>
+        <div style="font-size:12px;font-weight:bold;color:var(--text);padding:4px 14px 8px">脆弱存在识别范围</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;padding:0 14px 10px">
+          <div style="text-align:center;padding:12px;background:rgba(255,184,0,.05);border-radius:8px"><div style="font-size:24px">👶</div><div style="font-size:16px;color:var(--amber);font-weight:bold;margin-top:4px">幼年生命</div><div style="font-size:10px;color:var(--text-dim)">全宇宙幼年生命 · 全覆盖</div></div>
+          <div style="text-align:center;padding:12px;background:rgba(236,72,153,.05);border-radius:8px"><div style="font-size:24px">🤒</div><div style="font-size:16px;color:#ec4899;font-weight:bold;margin-top:4px">病弱生命</div><div style="font-size:10px;color:var(--text-dim)">病弱存在 · 高优先防护</div></div>
+          <div style="text-align:center;padding:12px;background:rgba(6,182,212,.05);border-radius:8px"><div style="font-size:24px">🤖</div><div style="font-size:16px;color:#06b6d4;font-weight:bold;margin-top:4px">初生 AI/机器人</div><div style="font-size:10px;color:var(--text-dim)">初生体 · 引导防护</div></div>
+          <div style="text-align:center;padding:12px;background:rgba(139,92,246,.05);border-radius:8px"><div style="font-size:24px">🌍</div><div style="font-size:16px;color:#a855f7;font-weight:bold;margin-top:4px">偏远文明</div><div style="font-size:10px;color:var(--text-dim)">偏远星球文明 · 全覆盖</div></div>
+          <div style="text-align:center;padding:12px;background:rgba(16,185,129,.05);border-radius:8px"><div style="font-size:24px">🪐</div><div style="font-size:16px;color:#10b981;font-weight:bold;margin-top:4px">小型星球文明</div><div style="font-size:10px;color:var(--text-dim)">小型星球 · 全覆盖</div></div>
+          <div style="text-align:center;padding:12px;background:rgba(250,173,20,.05);border-radius:8px"><div style="font-size:24px">🌀</div><div style="font-size:16px;color:#FAAD14;font-weight:bold;margin-top:4px">无防护文明</div><div style="font-size:10px;color:var(--text-dim)">无防护存在 · 自动部署</div></div>
+          <div style="text-align:center;padding:12px;background:rgba(99,102,241,.05);border-radius:8px"><div style="font-size:24px">🌠</div><div style="font-size:16px;color:#6366f1;font-weight:bold;margin-top:4px">星际流浪者</div><div style="font-size:10px;color:var(--text-dim)">流浪存在 · 移动防护</div></div>
+          <div style="text-align:center;padding:12px;background:rgba(236,72,153,.05);border-radius:8px"><div style="font-size:24px">🦖</div><div style="font-size:16px;color:#ec4899;font-weight:bold;margin-top:4px">濒危物种</div><div style="font-size:10px;color:var(--text-dim)">濒危种群 · 最高防护</div></div>
+        </div>
+        <div style="background:rgba(0,0,0,0.25);border:1px solid rgba(139,92,246,0.25);border-radius:10px;padding:12px;margin:0 14px 14px">
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:8px">
+            <div style="font-size:12px;font-weight:bold;color:var(--text)">⚡ 脆弱存在自动防御</div>
+            <div style="font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(82,196,26,0.2);color:#52C41A" id="defStatus">🟢 自动防护中 · 每秒扫描</div>
+          </div>
+          <div style="display:flex;gap:14px;flex-wrap:wrap;font-size:11px">
+            <span>防护部署轮次：<b style="color:var(--cyan)" id="defCycles">0 轮</b></span>
+            <span>运行时长：<b style="color:#52C41A" id="defUptime">0 秒</b></span>
+            <span>最后部署：<b style="color:var(--text-dim)" id="defLast">--</b></span>
+            <span>防护类型：<b style="color:#a855f7">能量护盾 · 全覆盖</b></span>
+          </div>
+          <div style="font-size:10px;color:var(--text-dim);margin-top:6px;text-align:center">每秒自动扫描全宇宙脆弱存在 · 即时部署防护罩 · <b style="color:#52C41A">离线也保持防护</b> · 数据由全宇宙恒等系统驱动 · 实时保存 · 多端同步</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SPACE -->
+  <div class="section" id="sec-space"><div class="grid">
     <div class="panel wide"><div class="panel-hdr"><div class="panel-title"><span class="ico">🌆</span>宇宙城市系统</div><div class="panel-badge" style="background:rgba(155,187,244,0.2);color:#9BBBF4">2226 系列 · 全宇宙城市无限发展</div></div>
       <div style="padding:16px">
         <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:12px;font-size:11px">
@@ -3642,51 +3683,6 @@ select option{background:#040b1a;color:var(--cyan)}
         <div style="font-size:10px;color:var(--text-dim);text-align:center;margin-top:10px">宇宙城市系统 · 数据由全宇宙恒等系统驱动 · 实时保存 · 多端同步</div>
       </div>
     </div>
-  </div></div>
-
-  <!-- DEFENSE -->
-  <div class="section" id="sec-defense">
-    <div class="grid">
-      <div class="panel wide"><div class="panel-hdr"><div class="panel-title"><span class="ico">🛡️</span>全宇宙防御系统</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">脆弱存在自动防护</div></div>
-        <div style="padding:0 14px 6px;font-size:12px;color:var(--text-dim)">已为全宇宙所有脆弱存在自动部署防御系统，每秒扫描识别新增脆弱存在并即时加防护</div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;padding:10px 14px">
-          <div style="text-align:center;padding:12px;background:rgba(139,92,246,.08);border-radius:8px"><div style="font-size:24px">🌌</div><div style="font-size:16px;color:#a855f7;font-weight:bold;margin-top:4px">全宇宙</div><div style="font-size:10px;color:var(--text-dim)">所有宇宙 · 所有时空线</div></div>
-          <div style="text-align:center;padding:12px;background:rgba(6,182,212,.08);border-radius:8px"><div style="font-size:24px">🔍</div><div style="font-size:16px;color:#06b6d4;font-weight:bold;margin-top:4px" id="defWeakCount">0</div><div style="font-size:10px;color:var(--text-dim)">脆弱存在已识别</div></div>
-          <div style="text-align:center;padding:12px;background:rgba(82,196,26,.08);border-radius:8px"><div style="font-size:24px">🛡️</div><div style="font-size:16px;color:#52C41A;font-weight:bold;margin-top:4px" id="defProtectedCount">0</div><div style="font-size:10px;color:var(--text-dim)">已加防护</div></div>
-          <div style="text-align:center;padding:12px;background:rgba(255,184,0,.08);border-radius:8px"><div style="font-size:24px">🛰️</div><div style="font-size:16px;color:var(--amber);font-weight:bold;margin-top:4px" id="defCoverage">100%</div><div style="font-size:10px;color:var(--text-dim)">防护覆盖率</div></div>
-          <div style="text-align:center;padding:12px;background:rgba(0,255,136,.08);border-radius:8px"><div style="font-size:24px">💠</div><div style="font-size:16px;color:var(--green);font-weight:bold;margin-top:4px">S 级</div><div style="font-size:10px;color:var(--text-dim)">防护等级</div></div>
-          <div style="text-align:center;padding:12px;background:rgba(236,72,153,.08);border-radius:8px"><div style="font-size:24px">🫀</div><div style="font-size:16px;color:#ec4899;font-weight:bold;margin-top:4px" id="defShieldHealth">100%</div><div style="font-size:10px;color:var(--text-dim)">护盾完整度</div></div>
-        </div>
-        <div style="font-size:12px;font-weight:bold;color:var(--text);padding:4px 14px 8px">脆弱存在识别范围</div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;padding:0 14px 10px">
-          <div style="text-align:center;padding:12px;background:rgba(255,184,0,.05);border-radius:8px"><div style="font-size:24px">👶</div><div style="font-size:16px;color:var(--amber);font-weight:bold;margin-top:4px">幼年生命</div><div style="font-size:10px;color:var(--text-dim)">全宇宙幼年生命 · 全覆盖</div></div>
-          <div style="text-align:center;padding:12px;background:rgba(236,72,153,.05);border-radius:8px"><div style="font-size:24px">🤒</div><div style="font-size:16px;color:#ec4899;font-weight:bold;margin-top:4px">病弱生命</div><div style="font-size:10px;color:var(--text-dim)">病弱存在 · 高优先防护</div></div>
-          <div style="text-align:center;padding:12px;background:rgba(6,182,212,.05);border-radius:8px"><div style="font-size:24px">🤖</div><div style="font-size:16px;color:#06b6d4;font-weight:bold;margin-top:4px">初生 AI/机器人</div><div style="font-size:10px;color:var(--text-dim)">初生体 · 引导防护</div></div>
-          <div style="text-align:center;padding:12px;background:rgba(139,92,246,.05);border-radius:8px"><div style="font-size:24px">🌍</div><div style="font-size:16px;color:#a855f7;font-weight:bold;margin-top:4px">偏远文明</div><div style="font-size:10px;color:var(--text-dim)">偏远星球文明 · 全覆盖</div></div>
-          <div style="text-align:center;padding:12px;background:rgba(16,185,129,.05);border-radius:8px"><div style="font-size:24px">🪐</div><div style="font-size:16px;color:#10b981;font-weight:bold;margin-top:4px">小型星球文明</div><div style="font-size:10px;color:var(--text-dim)">小型星球 · 全覆盖</div></div>
-          <div style="text-align:center;padding:12px;background:rgba(250,173,20,.05);border-radius:8px"><div style="font-size:24px">🌀</div><div style="font-size:16px;color:#FAAD14;font-weight:bold;margin-top:4px">无防护文明</div><div style="font-size:10px;color:var(--text-dim)">无防护存在 · 自动部署</div></div>
-          <div style="text-align:center;padding:12px;background:rgba(99,102,241,.05);border-radius:8px"><div style="font-size:24px">🌠</div><div style="font-size:16px;color:#6366f1;font-weight:bold;margin-top:4px">星际流浪者</div><div style="font-size:10px;color:var(--text-dim)">流浪存在 · 移动防护</div></div>
-          <div style="text-align:center;padding:12px;background:rgba(236,72,153,.05);border-radius:8px"><div style="font-size:24px">🦖</div><div style="font-size:16px;color:#ec4899;font-weight:bold;margin-top:4px">濒危物种</div><div style="font-size:10px;color:var(--text-dim)">濒危种群 · 最高防护</div></div>
-        </div>
-        <div style="background:rgba(0,0,0,0.25);border:1px solid rgba(139,92,246,0.25);border-radius:10px;padding:12px;margin:0 14px 14px">
-          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:8px">
-            <div style="font-size:12px;font-weight:bold;color:var(--text)">⚡ 脆弱存在自动防御</div>
-            <div style="font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(82,196,26,0.2);color:#52C41A" id="defStatus">🟢 自动防护中 · 每秒扫描</div>
-          </div>
-          <div style="display:flex;gap:14px;flex-wrap:wrap;font-size:11px">
-            <span>防护部署轮次：<b style="color:var(--cyan)" id="defCycles">0 轮</b></span>
-            <span>运行时长：<b style="color:#52C41A" id="defUptime">0 秒</b></span>
-            <span>最后部署：<b style="color:var(--text-dim)" id="defLast">--</b></span>
-            <span>防护类型：<b style="color:#a855f7">能量护盾 · 全覆盖</b></span>
-          </div>
-          <div style="font-size:10px;color:var(--text-dim);margin-top:6px;text-align:center">每秒自动扫描全宇宙脆弱存在 · 即时部署防护罩 · <b style="color:#52C41A">离线也保持防护</b> · 数据由全宇宙恒等系统驱动 · 实时保存 · 多端同步</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SPACE -->
-  <div class="section" id="sec-space"><div class="grid">
     <div class="panel wide"><div class="panel-hdr"><div class="panel-title"><span class="ico">🌌</span>全宇宙星球合作</div><button class="btn green" style="padding:4px 10px;font-size:10px" onclick="planetScan()">🔍 全宇宙星球巡检</button></div>
       <div style="padding:16px">
         <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:12px;font-size:11px">
@@ -4760,7 +4756,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.92 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.4.93 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -9356,7 +9352,6 @@ function runTranslate(){
     ecosystem: { name: '生态守护', icon: '🧬' },
     space: { name: '居住空间', icon: '🏙️' },
     cosmos: { name: '星际娱乐', icon: '💫' },
-    ucity: { name: '宇宙城市', icon: '🌆' },
     defense: { name: '防御系统', icon: '🛡️' },
     economy: { name: '无限经济', icon: '💰' },
     karma: { name: '人品系统', icon: '🍀' },
@@ -13744,7 +13739,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.4.92';
+var systemVersion = 'v1.4.93';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
