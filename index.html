@@ -770,10 +770,10 @@ select option{background:#040b1a;color:var(--cyan)}
           <div style="background:rgba(139,92,246,0.05);border:1px solid rgba(139,92,246,0.2);border-radius:8px;padding:12px;text-align:center">
             <div style="font-size:20px">🧹</div>
             <div style="font-size:12px;font-weight:bold;color:#8B5CF6;margin-top:4px">旧版本清除</div>
-            <div style="font-size:11px;color:var(--text-dim);margin-top:4px">旧版钱包 · 旧经济系统 · 旧支付通道 已超光速自动清除 ✓</div>
+            <div style="font-size:11px;color:var(--text-dim);margin-top:4px">旧版钱包 · 旧经济系统 · 旧支付通道 · 旧版 API 接口 · 旧版本缓存 已超光速自动清除 ✓</div>
           </div>
         </div>
-        <div style="font-size:11px;color:var(--text-dim);text-align:center">无限钱包全部资金/余额/交易走自研支付 API · 量子纠缠实时同步 · 离线也保持 · 不可篡改</div>
+        <div style="font-size:11px;color:var(--text-dim);text-align:center">无限钱包全部资金/余额/交易走自研支付 API · 量子纠缠实时同步 · 离线也保持 · 不可篡改 · 每次启动自动清除旧版 API 与旧缓存</div>
       </div>
     </div>
 
@@ -1385,7 +1385,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.13 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.14 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -4828,7 +4828,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.13 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.14 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -13824,7 +13824,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.5.13';
+var systemVersion = 'v1.5.14';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
