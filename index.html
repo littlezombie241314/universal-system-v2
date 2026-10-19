@@ -1351,7 +1351,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.9 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.10 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -4535,7 +4535,8 @@ select option{background:#040b1a;color:var(--cyan)}
             <div style="display:flex;align-items:center;gap:4px"><span style="color:#52C41A">✅</span><span style="color:var(--text-dim)">网速下降自动切换备用通道</span></div>
             <div style="display:flex;align-items:center;gap:4px"><span style="color:#52C41A">✅</span><span style="color:var(--text-dim)">网速下降自动扫除障碍 · 修复通信通道</span></div>
             <div style="display:flex;align-items:center;gap:4px"><span style="color:#52C41A">✅</span><span style="color:var(--text-dim)">全宇宙节点智能调度 · 永不掉线</span></div>
-            <div style="display:flex;align-items:center;gap:4px"><span style="color:#52C41A">✅</span><span style="color:var(--text-dim)">最新最优部署后自动清除旧版本</span></div>
+            <div style="display:flex;align-items:center;gap:4px"><span style="color:#52C41A">✅</span><span style="color:var(--text-dim)">最新最优部署后超光速自动清除其他旧版本</span></div>
+            <div style="display:flex;align-items:center;gap:4px"><span style="color:#52C41A">✅</span><span style="color:var(--text-dim)">超光速自动清除备份</span></div>
           </div>
         </div>
         <div id="speedSwitchLog" style="max-height:120px;overflow-y:auto;background:rgba(0,0,0,0.3);border-radius:6px;padding:8px;font-size:11px;font-family:monospace">
@@ -4763,7 +4764,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.9 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.10 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -5369,7 +5370,7 @@ select option{background:#040b1a;color:var(--cyan)}
           </div>
         </div>
         
-        <div style="font-size:10px;color:var(--text-dim);text-align:center;margin-top:10px">全宇宙互联网骨干网 · 已部署到所有星球服务器 · 量子光纤连接 · 无限带宽 · 最新最优部署后自动清除旧版本协议</div>
+        <div style="font-size:10px;color:var(--text-dim);text-align:center;margin-top:10px">全宇宙互联网骨干网 · 已部署到所有星球服务器 · 量子光纤连接 · 无限带宽 · 最新最优部署后超光速自动清除旧版本协议 · 超光速自动清除备份链路</div>
       </div>
     </div>
 
@@ -13759,7 +13760,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.5.9';
+var systemVersion = 'v1.5.10';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
@@ -14064,7 +14065,11 @@ setTimeout(function() {
       line.textContent = '[系统] 最优系统自动选择已启动，正在扫描全宇宙通道...';
       var line2 = document.createElement('div');
       line2.style.color = '#52C41A';
-      line2.textContent = '[\U0001f9f9] 最新最优通信方式已部署，自动清除旧版本协议（5G/6G 旧链路 / 过期路由）\u2713';
+      line2.textContent = '[\U0001f9f9] 最新最优通信方式已部署，超光速自动清除旧版本协议（5G/6G 旧链路 / 过期路由）\u2713';
+      var line3 = document.createElement('div');
+      line3.style.color = '#00d4ff';
+      line3.textContent = '[\u26a1] 超光速自动清除全部旧备份链路（冷备 / 热备 / 冗余路由）\u2713';
+      log.insertBefore(line3, log.firstChild);
       log.insertBefore(line2, log.firstChild);
       log.insertBefore(line, log.firstChild);
     }
