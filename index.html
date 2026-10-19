@@ -1385,7 +1385,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.12 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.13 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -3982,6 +3982,43 @@ select option{background:#040b1a;color:var(--cyan)}
         </div>
       </div>
     </div>
+
+    <!-- Roadster 分配系统 -->
+    <div class="panel wide"><div class="panel-hdr"><div class="panel-title"><span class="ico">🏎️</span>Roadster 分配系统</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">登记在名下</div></div>
+      <div style="padding:16px">
+        <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
+          <button class="btn cyan" id="roadsterModeSingleBtn" onclick="setRoadsterMode('single')">🏎️ 每人一辆</button>
+          <button class="btn" id="roadsterModePairBtn" onclick="setRoadsterMode('pair')">🤝 每两人一辆</button>
+        </div>
+        <div id="roadsterSingleMode">
+          <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:12px;font-size:11px">
+            <span>全宇宙 Roadster 池：<b style="color:var(--cyan)">∞ 无限</b></span>
+            <span>已登记存在：<b style="color:#52C41A" id="roadsterCount">0 名</b></span>
+            <span>状态：<b style="color:#52C41A">每人一辆 · 登记在名下</b></span>
+          </div>
+          <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
+            <input id="roadsterOwner" placeholder="输入存在 / 人类名称" style="flex:1;min-width:160px;background:rgba(0,0,0,0.3);border:1px solid rgba(255,100,100,0.3);border-radius:6px;color:var(--text);padding:8px 10px;font-size:11px">
+            <button class="btn green" style="padding:8px 14px;font-size:11px" onclick="assignRoadster()">🏎️ 分配专属 Roadster</button>
+          </div>
+          <div id="roadsterList" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:6px;margin-bottom:12px"></div>
+          <div style="font-size:10px;color:var(--text-dim);text-align:center">全宇宙所有存在 · 每人分配一辆专属 Roadster · 登记在名下 · 实时保存 · 多端同步</div>
+        </div>
+        <div id="roadsterPairMode" style="display:none">
+          <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:12px;font-size:11px">
+            <span>双人 Roadster 组：<b style="color:var(--cyan)" id="pairRoadsterGroupCount">0 组</b></span>
+            <span>覆盖存在：<b style="color:#52C41A" id="pairRoadsterPersonCount">0 名</b></span>
+            <span>状态：<b style="color:#52C41A">每两人一辆 · 共乘 Roadster · 登记在名下</b></span>
+          </div>
+          <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
+            <input id="pairRoadsterOwnerA" placeholder="存在 A 名称" style="flex:1;min-width:140px;background:rgba(0,0,0,0.3);border:1px solid rgba(255,100,100,0.3);border-radius:6px;color:var(--text);padding:8px 10px;font-size:11px">
+            <input id="pairRoadsterOwnerB" placeholder="存在 B 名称" style="flex:1;min-width:140px;background:rgba(0,0,0,0.3);border:1px solid rgba(255,100,100,0.3);border-radius:6px;color:var(--text);padding:8px 10px;font-size:11px">
+            <button class="btn green" style="padding:8px 14px;font-size:11px" onclick="assignPairRoadster()">🤝 分配双人 Roadster</button>
+          </div>
+          <div id="pairRoadsterList" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:6px;margin-bottom:12px"></div>
+          <div style="font-size:10px;color:var(--text-dim);text-align:center">全宇宙所有存在 · 每两人分配一辆共乘 Roadster · 双人共驾 · 登记在名下 · 实时保存 · 多端同步</div>
+        </div>
+      </div>
+    </div>
   </div></div>
   </div>
 
@@ -4791,7 +4828,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.12 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.13 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -13787,7 +13824,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.5.12';
+var systemVersion = 'v1.5.13';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
@@ -15802,6 +15839,104 @@ function assignShip(){
   quickMsg('✅ 已为「' + n + '」分配专属宇宙飞船 🚀 ' + info + '，登记在名下 · 实时保存');
 }
 renderShips();
+
+
+/* ===== Roadster 分配系统 ===== */
+var roadsterModels = ['Tesla Roadster 2020 星空版','Roadster SpaceX 冷推进版','Roadster 火星红版','Roadster 超光速电动版','Roadster 星环敞篷版','Roadster 反重力悬浮版'];
+function genRoadsterInfo(){
+  var m = roadsterModels[Math.floor(Math.random()*roadsterModels.length)];
+  var no = 'UES-RDSTR-' + (10000 + Math.floor(Math.random()*90000));
+  return m + ' · ' + no;
+}
+function renderRoadsters(){
+  var reg = {};
+  try { reg = JSON.parse(localStorage.getItem('ues_roadsters') || '{}'); } catch(e){}
+  var box = document.getElementById('roadsterList');
+  var cnt = document.getElementById('roadsterCount');
+  var keys = Object.keys(reg);
+  if (cnt) cnt.textContent = keys.length + ' 名';
+  if (!box) return;
+  if (!keys.length){
+    box.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:var(--text-dim);font-size:11px;padding:10px;background:rgba(0,0,0,0.2);border-radius:6px">尚未登记 · 输入名字即可为存在分配并登记专属 Roadster</div>';
+    return;
+  }
+  box.innerHTML = keys.map(function(k){
+    return '<div style="background:rgba(0,0,0,0.22);border-radius:6px;padding:8px 10px;display:flex;flex-direction:column;gap:2px">'
+      + '<div style="font-size:11px;font-weight:bold;color:var(--text)">' + escName(k) + '</div>'
+      + '<div style="font-size:10px;color:#ff6b6b">🏎️ ' + escName(reg[k]) + '</div>'
+      + '<div style="font-size:9px;color:#52C41A">登记在名下 · 专属</div></div>';
+  }).join('');
+}
+function assignRoadster(){
+  var inp = document.getElementById('roadsterOwner');
+  var n = inp ? inp.value.trim() : '';
+  if (!n){ quickMsg('请先输入存在 / 人类名称'); return; }
+  var reg = {};
+  try { reg = JSON.parse(localStorage.getItem('ues_roadsters') || '{}'); } catch(e){}
+  if (reg[n]){ quickMsg('「' + n + '」已登记 Roadster：🏎️ ' + reg[n]); return; }
+  var info = genRoadsterInfo();
+  reg[n] = info;
+  try { localStorage.setItem('ues_roadsters', JSON.stringify(reg)); } catch(e){}
+  renderRoadsters();
+  quickMsg('✅ 已为「' + n + '」分配专属 Roadster 🏎️ ' + info + '，登记在名下 · 实时保存');
+}
+renderRoadsters();
+
+var roadsterMode = 'single';
+function setRoadsterMode(m){
+  roadsterMode = m;
+  var s = document.getElementById('roadsterSingleMode');
+  var p = document.getElementById('roadsterPairMode');
+  var b1 = document.getElementById('roadsterModeSingleBtn');
+  var b2 = document.getElementById('roadsterModePairBtn');
+  if (m === 'single'){
+    if (s) s.style.display = 'block';
+    if (p) p.style.display = 'none';
+    if (b1) b1.className = 'btn cyan';
+    if (b2) b2.className = 'btn';
+  } else {
+    if (s) s.style.display = 'none';
+    if (p) p.style.display = 'block';
+    if (b1) b1.className = 'btn';
+    if (b2) b2.className = 'btn cyan';
+  }
+}
+function renderPairRoadsters(){
+  var reg = {};
+  try { reg = JSON.parse(localStorage.getItem('ues_pair_roadsters') || '[]'); } catch(e){}
+  var box = document.getElementById('pairRoadsterList');
+  var gc = document.getElementById('pairRoadsterGroupCount');
+  var pc = document.getElementById('pairRoadsterPersonCount');
+  if (gc) gc.textContent = reg.length + ' 组';
+  if (pc) pc.textContent = (reg.length*2) + ' 名';
+  if (!box) return;
+  if (!reg.length){
+    box.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:var(--text-dim);font-size:11px;padding:10px;background:rgba(0,0,0,0.2);border-radius:6px">尚未登记 · 输入两位存在名称即可分配双人共乘 Roadster</div>';
+    return;
+  }
+  box.innerHTML = reg.map(function(g){
+    return '<div style="background:rgba(0,0,0,0.22);border-radius:6px;padding:8px 10px;display:flex;flex-direction:column;gap:2px">'
+      + '<div style="font-size:11px;font-weight:bold;color:var(--text)">' + escName(g.a) + ' & ' + escName(g.b) + '</div>'
+      + '<div style="font-size:10px;color:#ff6b6b">🏎️ ' + escName(g.car) + '</div>'
+      + '<div style="font-size:9px;color:#52C41A">双人共驾 · 登记在名下</div></div>';
+  }).join('');
+}
+function assignPairRoadster(){
+  var ia = document.getElementById('pairRoadsterOwnerA');
+  var ib = document.getElementById('pairRoadsterOwnerB');
+  var a = ia ? ia.value.trim() : '';
+  var b = ib ? ib.value.trim() : '';
+  if (!a || !b){ quickMsg('请输入两位存在名称'); return; }
+  if (a === b){ quickMsg('两位名称不能相同'); return; }
+  var reg = [];
+  try { reg = JSON.parse(localStorage.getItem('ues_pair_roadsters') || '[]'); } catch(e){}
+  var info = genRoadsterInfo();
+  reg.push({a:a, b:b, car:info});
+  try { localStorage.setItem('ues_pair_roadsters', JSON.stringify(reg)); } catch(e){}
+  renderPairRoadsters();
+  quickMsg('✅ 已为「' + a + ' & ' + b + '」分配双人 Roadster 🏎️ ' + info + '，登记在名下 · 实时保存');
+}
+renderPairRoadsters();
 
 
 /* ===== 宇宙飞船分配系统 · 每两人一艘 ===== */
