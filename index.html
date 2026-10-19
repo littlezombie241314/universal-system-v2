@@ -481,6 +481,7 @@ select option{background:#040b1a;color:var(--cyan)}
     <meta name="application-name" content="全宇宙恒等系统">
     <link rel="manifest" href="manifest.json">
 <script src="assets/qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
 </head>
 <body>
 
@@ -1458,7 +1459,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.23 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.24 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -4901,7 +4902,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.23 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.24 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -13891,7 +13892,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.5.23';
+var systemVersion = 'v1.5.24';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
@@ -16172,11 +16173,20 @@ function merchantSimulatePay(){
   while (log.children.length > 8) log.removeChild(log.lastChild);
 }
 var _scanStream = null;
+var _scanCanvas = null, _scanCtx = null;
+function _doRealTransfer(account, name, amount){
+  // 调真实后端转账接口
+  return fetch('https://universal-pay-alipay.onrender.com/api/alipay/transfer', {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({payeeAccount: account, payeeName: name || '', amount: String(amount), remark:'扫码支付'})
+  }).then(function(r){return r.json();}).catch(function(e){return {success:false, msg:String(e)};});
+}
 function scanPay(){
   var box = document.getElementById('scanBox');
   if (!box) return;
   box.style.borderColor = '#FAAD14';
-  box.querySelector('div:last-child').textContent = '📷 正在启动相机...';
+  box.innerHTML = '<div style="font-size:36px">📷</div><div style="font-size:11px;color:var(--cyan)">正在启动相机...</div>';
   // 真调本机摄像头
   if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
     navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}}).then(function(stream){
@@ -16193,16 +16203,58 @@ function scanPay(){
       tip.textContent = '🔍 对准收款码识别中...';
       tip.style.cssText = 'position:absolute;bottom:6px;left:0;right:0;font-size:11px;color:#00d4ff;text-align:center;text-shadow:0 0 4px #000;';
       box.appendChild(tip);
-      setTimeout(function(){
-        stream.getTracks().forEach(function(t){t.stop();});
-        _scanStream = null;
-        box.innerHTML = '<div style="font-size:36px">✅</div><div style="font-size:11px;color:#52C41A">识别成功 · 付款 ¥0.01</div>';
-        if (typeof quickMsg === 'function') quickMsg('✅ 扫码成功 · 已向对方付款 ¥0.01 · 实时到账');
-        setTimeout(function(){
-          box.style.borderColor = '#00d4ff';
-          box.innerHTML = '<div style="font-size:36px">📷</div><div style="font-size:11px;color:var(--cyan)">点击扫一扫 · 对准收款码</div>';
-        }, 2500);
-      }, 2000);
+      // 真解码循环
+      var amt = parseFloat((document.getElementById('merchantAmount')||{}).value) || 0.01;
+      _scanCanvas = document.createElement('canvas');
+      _scanCtx = _scanCanvas.getContext('2d', {willReadFrequently:true});
+      var decoded = false, frames = 0;
+      function tick(){
+        if (decoded) return;
+        if (video.videoWidth === 0) { requestAnimationFrame(tick); return; }
+        _scanCanvas.width = video.videoWidth; _scanCanvas.height = video.videoHeight;
+        _scanCtx.drawImage(video, 0, 0);
+        try {
+          var img = _scanCtx.getImageData(0, 0, _scanCanvas.width, _scanCanvas.height);
+          var code = jsQR(img.data, img.width, img.height, {inversionAttempts:'attemptBoth'});
+          if (code && code.data) {
+            decoded = true;
+            var data = code.data;
+            stream.getTracks().forEach(function(t){t.stop();});
+            _scanStream = null;
+            box.innerHTML = '<div style="font-size:14px;color:#FAAD14;padding:10px;text-align:center">🔍 已识别：' + data.slice(0,30) + '...<br>💸 正在真实付款...</div>';
+            var account = data, name = '';
+            try { var j = JSON.parse(data); account = j.account || j.payeeAccount || data; name = j.name || j.payeeName || ''; } catch(e){}
+            _doRealTransfer(account, name, amt).then(function(res){
+              if (res && res.success) {
+                box.innerHTML = '<div style="font-size:36px">✅</div><div style="font-size:11px;color:#52C41A">真实付款成功 · ¥' + amt + '</div>';
+                if (typeof quickMsg === 'function') quickMsg('✅ 真实扫码支付成功 · 已付款 ¥' + amt + ' 到 ' + account + ' · 实时到账');
+              } else {
+                box.innerHTML = '<div style="font-size:36px">⚠️</div><div style="font-size:10px;color:#FAAD1A;padding:6px;text-align:center">已识别码，但真实转账未受理：' + ((res&&res.msg)||(res&&res.subMsg)||'接口未上线') + '</div>';
+                if (typeof quickMsg === 'function') quickMsg('⚠️ 扫码已识别，但付款接口暂未受理（应用审核/签约中）');
+              }
+              setTimeout(function(){
+                box.style.borderColor = '#00d4ff';
+                box.innerHTML = '<div style="font-size:36px">📷</div><div style="font-size:11px;color:var(--cyan)">点击扫一扫 · 对准收款码</div>';
+              }, 3500);
+            });
+            return;
+          }
+        } catch(e){}
+        frames++;
+        if (frames > 180) { // 30秒超时
+          decoded = true;
+          stream.getTracks().forEach(function(t){t.stop();});
+          box.style.borderColor = '#FAAD14';
+          box.innerHTML = '<div style="font-size:36px">⏱️</div><div style="font-size:11px;color:#FAAD14">超时未识别，重试</div>';
+          setTimeout(function(){
+            box.style.borderColor = '#00d4ff';
+            box.innerHTML = '<div style="font-size:36px">📷</div><div style="font-size:11px;color:var(--cyan)">点击扫一扫 · 对准收款码</div>';
+          }, 1500);
+          return;
+        }
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
     }).catch(function(err){
       // 摄像头拒绝/不可用，降级为模拟扫描
       console.warn('camera fallback:', err);
