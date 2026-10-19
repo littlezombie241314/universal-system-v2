@@ -732,7 +732,7 @@ select option{background:#040b1a;color:var(--cyan)}
     <div class="tab" data-sec="communication" onclick="switchTab('communication')">📡 全宇宙通信</div>
     <div class="tab" data-sec="internet" onclick="switchTab('internet')">🌐 全宇宙互联网</div>
     <div class="tab" data-sec="immortality" onclick="switchTab('immortality')">⏳ 长生不老</div>
-    <div class="tab" data-sec="climate" onclick="switchTab('climate')">🌦️ 气候控制</div>
+    <div class="tab" data-sec="climate" onclick="switchTab('climate')">🌡️ 气候控制</div>
     <div class="tab" data-sec="resource" onclick="switchTab('resource')">♻️ 资源再生</div>
     <div class="tab" data-sec="ecosystem" onclick="switchTab('ecosystem')">🌳 生态守护</div>
     <div class="tab" data-sec="space" onclick="switchTab('space')">🏙️ 全宇宙居住空间</div>
@@ -1351,7 +1351,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.1 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.2 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -4744,7 +4744,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.1 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.2 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -9335,7 +9335,7 @@ function runTranslate(){
   const MODULES = {
     atmosphere: { name: '大气净化', icon: '🍃' },
     immortality: { name: '长生不老', icon: '⏳' },
-    climate: { name: '气候控制', icon: '🌦️' },
+    climate: { name: '气候控制', icon: '🌡️' },
     resource: { name: '资源再生', icon: '♻️' },
     ecosystem: { name: '生态守护', icon: '🌳' },
     space: { name: '全宇宙居住空间', icon: '🏙️' },
@@ -13726,7 +13726,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.5.1';
+var systemVersion = 'v1.5.2';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
