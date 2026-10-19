@@ -1385,7 +1385,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.15 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.16 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -4600,6 +4600,7 @@ select option{background:#040b1a;color:var(--cyan)}
             <div style="display:flex;align-items:center;gap:4px"><span style="color:#52C41A">✅</span><span style="color:var(--text-dim)">全宇宙节点智能调度 · 永不掉线</span></div>
             <div style="display:flex;align-items:center;gap:4px"><span style="color:#52C41A">✅</span><span style="color:var(--text-dim)">最新最优部署后超光速自动清除其他旧版本</span></div>
             <div style="display:flex;align-items:center;gap:4px"><span style="color:#52C41A">✅</span><span style="color:var(--text-dim)">超光速自动清除备份</span></div>
+            <div style="display:flex;align-items:center;gap:4px"><span style="color:#52C41A">✅</span><span style="color:var(--text-dim)">选定最优后自动删除所有旧通道</span></div>
           </div>
         </div>
         <div id="speedSwitchLog" style="max-height:120px;overflow-y:auto;background:rgba(0,0,0,0.3);border-radius:6px;padding:8px;font-size:11px;font-family:monospace">
@@ -4827,7 +4828,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.15 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.16 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -13823,7 +13824,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.5.15';
+var systemVersion = 'v1.5.16';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
@@ -14132,6 +14133,10 @@ setTimeout(function() {
       var line3 = document.createElement('div');
       line3.style.color = '#00d4ff';
       line3.textContent = '[\u26a1] 超光速自动清除全部旧备份链路（冷备 / 热备 / 冗余路由）\u2713';
+      var line4 = document.createElement('div');
+      line4.style.color = '#ff6b6b';
+      line4.textContent = '[\U0001f5d1] 已自动删除所有旧通道（星链激光 / 5G/6G / WiFi7 / 旧骨干网），仅保留最优量子纠缠通道 \u2713';
+      log.insertBefore(line4, log.firstChild);
       log.insertBefore(line3, log.firstChild);
       log.insertBefore(line2, log.firstChild);
       log.insertBefore(line, log.firstChild);
