@@ -1385,7 +1385,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.17 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.18 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -4828,7 +4828,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.17 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.18 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -13824,7 +13824,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.5.17';
+var systemVersion = 'v1.5.18';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
@@ -14058,6 +14058,17 @@ setTimeout(function() {
   function renderSpeedChannels(){
     var list = document.getElementById('speedChannelList');
     if(!list) return;
+    // 只显示最优通道，其余旧通道已超光速删除
+    var best = speedChannels[currentBest];
+    list.innerHTML = (function(c){
+      return '<div style="background:rgba(82,196,26,0.1);border:1px solid rgba(82,196,26,0.4);border-radius:8px;padding:10px;text-align:center">' +
+        '<div style="font-size:20px">' + c.icon + '</div>' +
+        '<div style="font-size:12px;font-weight:bold;color:var(--text);margin:4px 0">' + c.name + '</div>' +
+        '<div style="font-size:13px;font-weight:bold;color:#52C41A">' + (c.unit==='倍光速'?c.speed.toLocaleString()+' '+c.unit:c.speed.toLocaleString()+' '+c.unit) + '</div>' +
+        '<div style="font-size:10px;color:var(--text-dim);margin-top:2px">延迟 ' + c.latency + '</div>' +
+        '<div style="font-size:10px;color:#52C41A;margin-top:4px">🏆 当前最优 · 其余旧通道已超光速删除</div></div>';
+    })(best);
+    return;
     list.innerHTML = speedChannels.map(function(c, i){
       var isBest = (i === currentBest);
       var speedColor = isBest ? '#52C41A' : 'var(--cyan)';
