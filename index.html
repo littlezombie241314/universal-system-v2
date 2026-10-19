@@ -1459,7 +1459,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.24 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.25 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -4650,7 +4650,7 @@ select option{background:#040b1a;color:var(--cyan)}
 
     <!-- ⚡ 自动选择最优系统 -->
     <div class="panel wide">
-      <div class="panel-hdr"><div class="panel-title"><span class="ico">⚡</span>自动选择最优系统</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">智能优选 · 运行中</div></div>
+      <div class="panel-hdr"><div class="panel-title"><span class="ico">⚡</span>自动选择最优系统</div><div class="panel-badge" style="background:rgba(139,92,246,0.25);color:#B39DDB">🔒 量子加密已锁定 · 防御开启</div></div>
       <div style="padding:16px">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
           <div style="background:rgba(82,196,26,0.08);border:1px solid rgba(82,196,26,0.35);border-radius:8px;padding:12px;text-align:center">
@@ -4660,8 +4660,8 @@ select option{background:#040b1a;color:var(--cyan)}
           </div>
           <div style="background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.35);border-radius:8px;padding:12px;text-align:center">
             <div style="font-size:11px;color:var(--text-dim);margin-bottom:4px">🔄 自动优选状态</div>
-            <div style="font-size:16px;font-weight:bold;color:#52C41A">● 自动选择中</div>
-            <div style="font-size:10px;color:var(--text-dim);margin-top:4px">每秒扫描全宇宙通道 · 自动切换最优通道</div>
+            <div style="font-size:16px;font-weight:bold;color:#B39DDB">🔒 量子加密通道已锁定</div>
+            <div style="font-size:10px;color:var(--text-dim);margin-top:4px">锁定量子纠缠 · 防御系统开启 · 反窃听/抗干扰/防量子破解</div>
           </div>
         </div>
         <div id="speedChannelList" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;margin-bottom:12px"></div>
@@ -4675,12 +4675,13 @@ select option{background:#040b1a;color:var(--cyan)}
             <div style="display:flex;align-items:center;gap:4px"><span style="color:#52C41A">✅</span><span style="color:var(--text-dim)">最新最优部署后超光速自动清除其他旧版本</span></div>
             <div style="display:flex;align-items:center;gap:4px"><span style="color:#52C41A">✅</span><span style="color:var(--text-dim)">超光速自动清除备份</span></div>
             <div style="display:flex;align-items:center;gap:4px"><span style="color:#52C41A">✅</span><span style="color:var(--text-dim)">选定最优后自动删除所有旧通道</span></div>
+            <div style="display:flex;align-items:center;gap:4px"><span style="color:#B39DDB">🔒</span><span style="color:var(--text-dim)">量子加密通道锁定 · 防御系统开启</span></div>
           </div>
         </div>
         <div id="speedSwitchLog" style="max-height:120px;overflow-y:auto;background:rgba(0,0,0,0.3);border-radius:6px;padding:8px;font-size:11px;font-family:monospace">
           <div style="color:var(--text-dim)">[系统] 最优系统自动选择初始化中...</div>
         </div>
-        <div style="font-size:10px;color:var(--text-dim);text-align:center;margin-top:10px">自动选择最优系统 · 全宇宙通道实时优选 · 自动切换 · 永不掉线</div>
+        <div style="font-size:10px;color:var(--text-dim);text-align:center;margin-top:10px">🔒 量子加密通道已锁定 · 防御系统开启（反窃听/抗干扰/防量子破解） · 永不掉线</div>
       </div>
     </div>
 
@@ -4902,7 +4903,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.24 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.25 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -13892,7 +13893,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.5.24';
+var systemVersion = 'v1.5.25';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
@@ -14205,7 +14206,11 @@ setTimeout(function() {
     if (log) {
       var line = document.createElement('div');
       line.style.color = 'var(--cyan)';
-      line.textContent = '[系统] 最优系统自动选择已启动，正在扫描全宇宙通道...';
+      line.textContent = '[\U0001f512] 量子加密通道已锁定 · 防御系统开启（反窃听/抗干扰/防量子破解）\u2713';
+      var line0 = document.createElement('div');
+      line0.style.color = '#8B5CF6';
+      line0.textContent = '[系统] 最优系统自动选择已启动，正在扫描全宇宙通道...';
+      log.insertBefore(line0, log.firstChild);
       var line2 = document.createElement('div');
       line2.style.color = '#52C41A';
       line2.textContent = '[\U0001f9f9] 最新最优通信方式已部署，超光速自动清除旧版本协议（5G/6G 旧链路 / 过期路由）\u2713';
