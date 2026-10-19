@@ -1351,7 +1351,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.3 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.4 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -2370,7 +2370,24 @@ select option{background:#040b1a;color:var(--cyan)}
           <div style="font-size:12px;font-weight:bold;color:#FAAD14">🔒 天气已锁定 · 晴天无云 · 不可修改</div>
           <div style="font-size:10px;color:var(--text-dim);margin-top:4px">全宇宙天气暂时锁定为晴天无云，多云 / 小雨 / 雪天切换已关闭</div>
         </div>
-        
+
+        <!-- 全宇宙 0 自然灾害实时锁定 -->
+        <div style="background:rgba(82,196,26,0.08);border:1px solid rgba(82,196,26,0.35);border-radius:8px;padding:12px;margin-bottom:12px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:6px">
+            <div style="font-size:13px;font-weight:bold;color:#52C41A">🌪️ 全宇宙自然灾害 · 实时锁定</div>
+            <span style="font-size:11px;color:#52C41A;background:rgba(82,196,26,0.15);padding:2px 10px;border-radius:10px">🟢 全层级 0 · 不可修改</span>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:6px;font-size:11px">
+            <div style="color:var(--text-dim)">🌌 宇宙层级：<b style="color:#52C41A">0 灾害</b></div>
+            <div style="color:var(--text-dim)">🌠 星系层级：<b style="color:#52C41A">0 灾害</b></div>
+            <div style="color:var(--text-dim)">🪐 星球层级：<b style="color:#52C41A">0 灾害</b></div>
+            <div style="color:var(--text-dim)">🌍 国家层级（地球）：<b style="color:#52C41A">0 灾害</b></div>
+            <div style="color:var(--text-dim)">🌱 文明层级：<b style="color:#52C41A">0 灾害</b></div>
+            <div style="color:var(--text-dim)">🏙️ 城市层级：<b style="color:#52C41A">0 灾害</b></div>
+          </div>
+          <div style="font-size:10px;color:var(--text-dim);margin-top:6px">地震 / 海啸 / 台风 / 洪水 / 火山 / 干旱 · 全宇宙实时保持 0 · 离线也保持 · 不可修改</div>
+        </div>
+
         <!-- 层级控制列表 -->
         <div style="display:grid;gap:8px">
           
@@ -4744,7 +4761,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.3 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.4 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -13726,7 +13743,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.5.3';
+var systemVersion = 'v1.5.4';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
