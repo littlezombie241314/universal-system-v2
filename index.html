@@ -12822,7 +12822,14 @@ function updateTerminalSync() {
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function() {
       setTimeout(function() {
-        initGlobalCloudDeployment();
+        (function(){
+            var n=new Date();
+            function p(x){return String(x).padStart(2,'0');}
+            var iso=n.getFullYear()+'-'+p(n.getMonth()+1)+'-'+p(n.getDate())+'T'+p(n.getHours())+':'+p(n.getMinutes())+':'+p(n.getSeconds())+'+08:00';
+            var a=document.getElementById('deployTimestamp'); if(a) a.textContent=iso;
+            var b=document.getElementById('commDeployTimestamp'); if(b) b.textContent=iso;
+          })();
+          initGlobalCloudDeployment();
         initGlobalFinancialDeployment();
         verifySystemIntegrity();
         // 每30秒重新验证系统完整性
@@ -12833,7 +12840,14 @@ function updateTerminalSync() {
     });
   } else {
     setTimeout(function() {
-      initGlobalCloudDeployment();
+      (function(){
+            var n=new Date();
+            function p(x){return String(x).padStart(2,'0');}
+            var iso=n.getFullYear()+'-'+p(n.getMonth()+1)+'-'+p(n.getDate())+'T'+p(n.getHours())+':'+p(n.getMinutes())+':'+p(n.getSeconds())+'+08:00';
+            var a=document.getElementById('deployTimestamp'); if(a) a.textContent=iso;
+            var b=document.getElementById('commDeployTimestamp'); if(b) b.textContent=iso;
+          })();
+          initGlobalCloudDeployment();
       initGlobalFinancialDeployment();
       verifySystemIntegrity();
       setInterval(verifySystemIntegrity, 30000);
