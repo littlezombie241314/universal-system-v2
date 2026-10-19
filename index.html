@@ -1351,7 +1351,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.6 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.7 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -4533,6 +4533,7 @@ select option{background:#040b1a;color:var(--cyan)}
             <div style="display:flex;align-items:center;gap:4px"><span style="color:#52C41A">✅</span><span style="color:var(--text-dim)">每秒扫描全部通信通道</span></div>
             <div style="display:flex;align-items:center;gap:4px"><span style="color:#52C41A">✅</span><span style="color:var(--text-dim)">自动选择最优通道</span></div>
             <div style="display:flex;align-items:center;gap:4px"><span style="color:#52C41A">✅</span><span style="color:var(--text-dim)">网速下降自动切换备用通道</span></div>
+            <div style="display:flex;align-items:center;gap:4px"><span style="color:#52C41A">✅</span><span style="color:var(--text-dim)">网速下降自动扫除障碍 · 修复通信通道</span></div>
             <div style="display:flex;align-items:center;gap:4px"><span style="color:#52C41A">✅</span><span style="color:var(--text-dim)">全宇宙节点智能调度 · 永不掉线</span></div>
           </div>
         </div>
@@ -4761,7 +4762,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.6 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.7 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -13743,7 +13744,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.5.6';
+var systemVersion = 'v1.5.7';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
@@ -14000,6 +14001,20 @@ setTimeout(function() {
         c.speed = Math.max(1000, Math.floor(c.speed * (0.9 + Math.random() * 0.2)));
       }
     });
+    // 障碍检测：随机通道网速下降时自动扫除障碍 · 修复通信通道
+    if (Math.random() < 0.12) {
+      var blocked = speedChannels[Math.floor(Math.random()*speedChannels.length)];
+      blocked.speed = Math.floor(blocked.speed * (0.45 + Math.random()*0.25));
+      var clog = document.getElementById('speedSwitchLog');
+      if (clog) {
+        var cline = document.createElement('div');
+        cline.style.color = '#FAAD14';
+        cline.textContent = '[\U0001f527' + new Date().toTimeString().slice(0,8) + '] 检测到 ' + blocked.icon + ' ' + blocked.name + ' 通道网速下降，自动扫除障碍 · 修复通信通道 \u2713';
+        clog.insertBefore(cline, clog.firstChild);
+        while (clog.children.length > 8) clog.removeChild(clog.lastChild);
+      }
+      (function(b){ setTimeout(function(){ b.speed = b.unit==='\u500d\u5149\u901f' ? Math.max(800000, b.speed*2) : Math.max(10000, b.speed*2); renderSpeedChannels(); }, 600); })(blocked);
+    }
     // 归一化评分：倍光速通道远优于 Mbps 通道，同类型按速度/延迟排序
     var best = 0, bestScore = 0;
     speedChannels.forEach(function(c, i){
