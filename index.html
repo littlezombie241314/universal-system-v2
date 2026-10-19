@@ -728,7 +728,7 @@ select option{background:#040b1a;color:var(--cyan)}
 
   <div class="tabs" id="tabs">
     <div class="tab active" data-sec="atmosphere" onclick="switchTab('atmosphere')">🍃 大气净化</div>
-    <div class="tab" data-sec="economy" onclick="switchTab('economy')">👝 无限经济</div>
+    <div class="tab" data-sec="economy" onclick="switchTab('economy')">👝 无限钱包</div>
     <div class="tab" data-sec="communication" onclick="switchTab('communication')">📡 全宇宙通信</div>
     <div class="tab" data-sec="internet" onclick="switchTab('internet')">🌐 全宇宙互联网</div>
     <div class="tab" data-sec="immortality" onclick="switchTab('immortality')">⏳ 长生不老</div>
@@ -1132,7 +1132,7 @@ select option{background:#040b1a;color:var(--cyan)}
       </div>
     </div>
 
-    <div class="panel wide"><div class="panel-hdr"><div class="panel-title"><span class="ico">💰</span>全宇宙层级 · 无限经济全覆盖</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">所有层级生效</div></div>
+    <div class="panel wide"><div class="panel-hdr"><div class="panel-title"><span class="ico">💰</span>全宇宙层级 · 无限钱包全覆盖</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">所有层级生效</div></div>
       <div style="padding:0 14px 6px;font-size:12px;color:var(--text-dim)">无限经济为<b style="color:#52C41A">全宇宙级别</b> · 在<b style="color:#52C41A">所有层级</b>都起作用 · 每层级资金无限 · 每秒收益 · 自动投资 · <b style="color:#52C41A">离线也保持</b></div>
       <div id="ecoLevels" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;padding:10px 14px 6px"></div>
       <div style="font-size:10px;color:#52C41A;text-align:center;padding:0 14px 12px">✅ 对<b style="color:#52C41A">所有存在</b>都生效 · 含未明确归属层级的存在（星际流浪者 / 初生AI / 动植物 / 微观存在 / 随机新生成存在等）· 一律资金无限 · 每秒收益 · 自动投资</div>
@@ -1351,7 +1351,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.0 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.1 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -3955,7 +3955,7 @@ select option{background:#040b1a;color:var(--cyan)}
           <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;max-width:800px;margin:0 auto;">
             <div onclick="document.querySelector('.tab[data-sec=\'economy\']').click()" style="padding:16px 24px;background:rgba(0,240,255,.1);border:1px solid var(--cyan);border-radius:12px;cursor:pointer;transition:all .2s;" onmouseover="this.style.background='rgba(0,240,255,.2)'" onmouseout="this.style.background='rgba(0,240,255,.1)'">
               <div style="font-size:32px;margin-bottom:8px;">💰</div>
-              <div style="font-size:14px;color:var(--cyan);font-weight:bold;">无限经济</div>
+              <div style="font-size:14px;color:var(--cyan);font-weight:bold;">无限钱包</div>
               <div style="font-size:11px;color:var(--text-dim);margin-top:4px;">金融系统</div>
             </div>
             <div onclick="document.querySelector('.tab[data-sec=\'atmosphere\']').click()" style="padding:16px 24px;background:rgba(74,255,138,.1);border:1px solid #4aff8a;border-radius:12px;cursor:pointer;transition:all .2s;" onmouseover="this.style.background='rgba(74,255,138,.2)'" onmouseout="this.style.background='rgba(74,255,138,.1)'">
@@ -4744,7 +4744,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.0 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.1 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -9341,7 +9341,7 @@ function runTranslate(){
     space: { name: '全宇宙居住空间', icon: '🏙️' },
     cosmos: { name: '星际娱乐', icon: '💫' },
     defense: { name: '防御系统', icon: '🛡️' },
-    economy: { name: '无限经济', icon: '👝' },
+    economy: { name: '无限钱包', icon: '👝' },
     karma: { name: '人品系统', icon: '🍀' },
     marriage: { name: '连理婚姻', icon: '💞' },
     education: { name: '全知教育', icon: '📚' },
@@ -13726,7 +13726,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.5.0';
+var systemVersion = 'v1.5.1';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
