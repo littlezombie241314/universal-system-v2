@@ -1,8 +1,8 @@
 /* 全宇宙恒等系统 · Service Worker
- * 版本: v1.5.39
+ * 版本: v1.5.40
  * 作用: 让系统在云 / ARM 工控板 / Android / iOS / 鸿蒙 上离线可启动、可安装、可运行
  */
-const VERSION = 'ues-v1.5.39';
+const VERSION = 'ues-v1.5.40';
 const CORE_CACHE = `${VERSION}-core`;
 
 const CORE_ASSETS = [
