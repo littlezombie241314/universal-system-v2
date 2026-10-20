@@ -1459,7 +1459,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.33 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.34 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -4903,7 +4903,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.33 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.34 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -13894,7 +13894,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.5.33';
+var systemVersion = 'v1.5.34';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
@@ -16169,11 +16169,23 @@ function scanPay(){
           }
         } catch(e){}
         frames++;
-        if (frames > 180) { // 30秒超时
+        // jsQR 未加载
+        if (typeof jsQR === 'undefined') {
+          decoded = true;
+          stream.getTracks().forEach(function(t){t.stop();});
+          box.innerHTML = '<div style="font-size:12px;color:#FAAD14;padding:10px;text-align:center">⚠️ 扫码库加载失败<br>请刷新页面重试</div>';
+          return;
+        }
+        // 每2秒提示一次对准
+        if (frames % 120 === 0) {
+          var tip = box.querySelector('div:last-child');
+          if (tip) tip.textContent = '🔍 请对准二维码·保持10-20cm距离·光线充足';
+        }
+        if (frames > 1800) { // 30秒真实超时（60fps×30s）
           decoded = true;
           stream.getTracks().forEach(function(t){t.stop();});
           box.style.borderColor = '#FAAD14';
-          box.innerHTML = '<div style="font-size:36px">⏱️</div><div style="font-size:11px;color:#FAAD14">超时未识别，重试</div>';
+          box.innerHTML = '<div style="font-size:36px">⏱️</div><div style="font-size:11px;color:#FAAD14">30秒未识别，请重试</div>';
           setTimeout(function(){
             box.style.borderColor = '#00d4ff';
             box.innerHTML = '<div style="font-size:36px">📷</div><div style="font-size:11px;color:var(--cyan)">点击扫一扫 · 对准收款码</div>';
