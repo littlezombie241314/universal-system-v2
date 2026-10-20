@@ -1459,7 +1459,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.32 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.33 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -4903,7 +4903,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.32 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.33 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -9538,18 +9538,16 @@ function runTranslate(){
       const data = await response.json();
       const current = data.current || {};
       
-      // 气候控制模块锁定：室外 45~50°C，体感 60°C，晴天无云
-      var lockedTemp = 45 + Math.random()*5;       // 45~50°C
-      var lockedApparent = 60;                       // 体感 60°C
+      // 显示真实天气数据
       return {
         city: city.name,
-        temperature: +lockedTemp.toFixed(1),
-        apparent_temperature: lockedApparent,
-        humidity: 20 + Math.random()*15,             // 干燥晴天
-        precipitation: 0,
-        weather_code: 0,                              // 晴
-        wind_speed: (Math.random()*3).toFixed(1),
-        weather_description: '晴 · 无云'
+        temperature: current.temperature_2m,
+        apparent_temperature: current.apparent_temperature,
+        humidity: current.relative_humidity_2m,
+        precipitation: current.precipitation,
+        weather_code: current.weather_code,
+        wind_speed: current.wind_speed_10m,
+        weather_description: getWeatherDescription(current.weather_code)
       };
     } catch (error) {
       console.error('获取天气数据失败:', error);
@@ -13896,7 +13894,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.5.32';
+var systemVersion = 'v1.5.33';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
