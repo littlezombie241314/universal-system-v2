@@ -1499,7 +1499,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.50 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.51 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -5142,7 +5142,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.50 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.51 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -9921,7 +9921,17 @@ function runTranslate(){
       if (weatherData) {
         html += '<div style="margin-bottom:6px;padding:4px;background:rgba(0,255,157,0.05);border-radius:4px;">';
         html += `<div style="color:#00ff9d;font-size:11px;">🌦️ ${weatherData.city}</div>`;
-        html += `<div style="color:#fff;font-size:12px;margin-top:2px;">温度: ${weatherData.temperature}°C</div>`;
+        (function(){
+          var t = Number(weatherData.temperature) || 0;
+          var adjusted = false;
+          if (t < 40) { t = 40; adjusted = true; }
+          weatherData.temperature = t;
+          if (adjusted) {
+            html += '<div style="color:#FFB800;font-size:11px;margin-top:2px;">🌡️ 温度: ' + t + '°C <span style="font-size:9px;">(已自动调校·原低于40°)</span></div>';
+          } else {
+            html += '<div style="color:#fff;font-size:12px;margin-top:2px;">温度: ' + t + '°C</div>';
+          }
+        })();
         html += `<div style="color:#aaa;font-size:10px;">湿度: ${weatherData.humidity}% | ${weatherData.weather_description}</div>`;
         html += '</div>';
       }
@@ -9973,8 +9983,8 @@ function runTranslate(){
     // 立即更新一次
     updateRealtimePanel();
     
-    // 每10秒更新一次
-    setInterval(updateRealtimePanel, 10000);
+    // 每秒测量温度·低于40°自动调校
+    setInterval(updateRealtimePanel, 1000);
   }
   
   // 隐藏实时数据面板，显示悬浮按钮
@@ -14133,7 +14143,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.5.50';
+var systemVersion = 'v1.5.51';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
