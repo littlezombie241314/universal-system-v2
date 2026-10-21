@@ -734,6 +734,7 @@ select option{background:#040b1a;color:var(--cyan)}
     <div class="tab" data-sec="internet" onclick="switchTab('internet')">🌐 全宇宙互联网</div>
     <div class="tab" data-sec="immortality" onclick="switchTab('immortality')">⏳ 长生不老</div>
     <div class="tab" data-sec="climate" onclick="switchTab('climate')">☀️ 气候控制</div>
+    <div class="tab" data-sec="planet" onclick="switchTab('planet')">🪐 星球运行</div>
     <div class="tab" data-sec="resource" onclick="switchTab('resource')">♻️ 资源再生</div>
     <div class="tab" data-sec="ecosystem" onclick="switchTab('ecosystem')">🌳 生态守护</div>
     <div class="tab" data-sec="space" onclick="switchTab('space')">🏙️ 全宇宙居住空间</div>
@@ -1499,7 +1500,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.52 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.53 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -3266,6 +3267,81 @@ select option{background:#040b1a;color:var(--cyan)}
 </div>
 
   <!-- KARMA -->
+  <!-- 🪐 星球运行模块 -->
+  <div class="section" id="sec-planet"><div class="grid">
+    <div class="panel wide">
+      <div class="panel-hdr"><div class="panel-title"><span class="ico">🪐</span>星球运行 · 太阳系八大行星实时轨道</div><div class="panel-badge" style="background:rgba(250,204,21,0.2);color:#FACC15">实时运行中</div></div>
+      <div style="padding:16px">
+        <div style="position:relative;width:100%;max-width:520px;height:520px;margin:0 auto;background:radial-gradient(circle at center,#0a0a2e 0%,#000 100%);border-radius:50%;overflow:hidden;border:1px solid rgba(250,204,21,0.3)">
+          <div style="position:absolute;inset:0;background-image:radial-gradient(2px 2px at 20% 30%,#fff,transparent),radial-gradient(1px 1px at 60% 70%,#fff,transparent),radial-gradient(1.5px 1.5px at 80% 20%,#fff,transparent),radial-gradient(1px 1px at 40% 80%,#fff,transparent),radial-gradient(1px 1px at 90% 60%,#fff,transparent),radial-gradient(1px 1px at 15% 75%,#fff,transparent),radial-gradient(1.5px 1.5px at 70% 90%,#fff,transparent)"></div>
+          <div style="position:absolute;left:50%;top:50%;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;background:radial-gradient(circle,#FACC15 0%,#F97316 60%,#DC2626 100%);box-shadow:0 0 40px #FACC15,0 0 80px rgba(250,204,21,0.5)"></div>
+          <!-- 水星 -->
+          <div style="position:absolute;left:50%;top:50%;width:90px;height:90px;margin:-45px 0 0 -45px;border:1px dashed rgba(160,160,160,0.2);border-radius:50%"></div>
+          <div style="position:absolute;left:50%;top:50%;width:90px;height:90px;margin:-45px 0 0 -45px;animation:orbitMercury 4s linear infinite">
+            <div style="position:absolute;left:50%;top:-5px;width:10px;height:10px;margin-left:-5px;border-radius:50%;background:#9CA3AF"></div>
+          </div>
+          <!-- 金星 -->
+          <div style="position:absolute;left:50%;top:50%;width:130px;height:130px;margin:-65px 0 0 -65px;border:1px dashed rgba(251,191,36,0.2);border-radius:50%"></div>
+          <div style="position:absolute;left:50%;top:50%;width:130px;height:130px;margin:-65px 0 0 -65px;animation:orbitVenus 7s linear infinite">
+            <div style="position:absolute;left:50%;top:-7px;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:#FBBF24"></div>
+          </div>
+          <!-- 地球 -->
+          <div style="position:absolute;left:50%;top:50%;width:180px;height:180px;margin:-90px 0 0 -90px;border:1px dashed rgba(96,165,250,0.3);border-radius:50%"></div>
+          <div style="position:absolute;left:50%;top:50%;width:180px;height:180px;margin:-90px 0 0 -90px;animation:orbitEarth 12s linear infinite">
+            <div style="position:absolute;left:50%;top:-9px;width:18px;height:18px;margin-left:-9px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#60A5FA,#1E40AF);box-shadow:0 0 10px rgba(96,165,250,0.8)"></div>
+          </div>
+          <!-- 火星 -->
+          <div style="position:absolute;left:50%;top:50%;width:230px;height:230px;margin:-115px 0 0 -115px;border:1px dashed rgba(248,113,113,0.2);border-radius:50%"></div>
+          <div style="position:absolute;left:50%;top:50%;width:230px;height:230px;margin:-115px 0 0 -115px;animation:orbitMars 18s linear infinite">
+            <div style="position:absolute;left:50%;top:-8px;width:16px;height:16px;margin-left:-8px;border-radius:50%;background:#EF4444"></div>
+          </div>
+          <!-- 木星 -->
+          <div style="position:absolute;left:50%;top:50%;width:310px;height:310px;margin:-155px 0 0 -155px;border:1px dashed rgba(217,119,6,0.25);border-radius:50%"></div>
+          <div style="position:absolute;left:50%;top:50%;width:310px;height:310px;margin:-155px 0 0 -155px;animation:orbitJupiter 30s linear infinite">
+            <div style="position:absolute;left:50%;top:-18px;width:36px;height:36px;margin-left:-18px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#D97706,#92400E)"></div>
+          </div>
+          <!-- 土星 -->
+          <div style="position:absolute;left:50%;top:50%;width:380px;height:380px;margin:-190px 0 0 -190px;border:1px dashed rgba(234,179,8,0.25);border-radius:50%"></div>
+          <div style="position:absolute;left:50%;top:50%;width:380px;height:380px;margin:-190px 0 0 -190px;animation:orbitSaturn 45s linear infinite">
+            <div style="position:absolute;left:50%;top:-15px;width:30px;height:30px;margin-left:-15px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#FDE047,#A16207);box-shadow:0 0 0 5px rgba(253,224,71,0.3)"></div>
+          </div>
+          <!-- 天王星 -->
+          <div style="position:absolute;left:50%;top:50%;width:440px;height:440px;margin:-220px 0 0 -220px;border:1px dashed rgba(34,211,238,0.2);border-radius:50%"></div>
+          <div style="position:absolute;left:50%;top:50%;width:440px;height:440px;margin:-220px 0 0 -220px;animation:orbitUranus 60s linear infinite">
+            <div style="position:absolute;left:50%;top:-12px;width:24px;height:24px;margin-left:-12px;border-radius:50%;background:#22D3EE"></div>
+          </div>
+          <!-- 海王星 -->
+          <div style="position:absolute;left:50%;top:50%;width:490px;height:490px;margin:-245px 0 0 -245px;border:1px dashed rgba(59,130,246,0.25);border-radius:50%"></div>
+          <div style="position:absolute;left:50%;top:50%;width:490px;height:490px;margin:-245px 0 0 -245px;animation:orbitNeptune 80s linear infinite">
+            <div style="position:absolute;left:50%;top:-12px;width:24px;height:24px;margin-left:-12px;border-radius:50%;background:#3B82F6"></div>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:center;gap:14px;margin-top:14px;font-size:10px;flex-wrap:wrap">
+          <span style="color:#FACC15">☀️太阳</span>
+          <span style="color:#9CA3AF">水星 4s/圈</span>
+          <span style="color:#FBBF24">金星 7s/圈</span>
+          <span style="color:#60A5FA">🌍地球 12s/圈</span>
+          <span style="color:#EF4444">火星 18s/圈</span>
+          <span style="color:#D97706">木星 30s/圈</span>
+          <span style="color:#FDE047">土星 45s/圈</span>
+          <span style="color:#22D3EE">天王星 60s/圈</span>
+          <span style="color:#3B82F6">海王星 80s/圈</span>
+        </div>
+        <div style="text-align:center;margin-top:10px;font-size:10px;color:var(--text-dim)">全太阳系八大行星实时轨道 · 每帧刷新 · 全宇宙恒等系统驱动</div>
+      </div>
+    </div>
+    <style>
+      @keyframes orbitMercury { from{transform:rotate(0)} to{transform:rotate(360deg)} }
+      @keyframes orbitVenus { from{transform:rotate(0)} to{transform:rotate(360deg)} }
+      @keyframes orbitEarth { from{transform:rotate(0)} to{transform:rotate(360deg)} }
+      @keyframes orbitMars { from{transform:rotate(0)} to{transform:rotate(360deg)} }
+      @keyframes orbitJupiter { from{transform:rotate(0)} to{transform:rotate(360deg)} }
+      @keyframes orbitSaturn { from{transform:rotate(0)} to{transform:rotate(360deg)} }
+      @keyframes orbitUranus { from{transform:rotate(0)} to{transform:rotate(360deg)} }
+      @keyframes orbitNeptune { from{transform:rotate(0)} to{transform:rotate(360deg)} }
+    </style>
+  </div>
+
   <div class="section" id="sec-karma"><div class="grid">
 
 <!-- 人品系统模块 · 全局最优通信方式 -->
@@ -5178,7 +5254,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.52 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.53 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -14179,7 +14255,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.5.52';
+var systemVersion = 'v1.5.53';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
