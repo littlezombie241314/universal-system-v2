@@ -1499,7 +1499,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.48 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.49 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -3300,7 +3300,7 @@ select option{background:#040b1a;color:var(--cyan)}
     <div class="panel wide"><div class="panel-hdr"><div class="panel-title"><span class="ico">✨</span>全宇宙存在人品状态</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">最高尚人品</div></div>
       <div style="padding:16px;text-align:center">
         <div style="font-size:14px;color:var(--text-dim);margin-bottom:8px">全宇宙所有存在的人品等级</div>
-        <div style="font-size:32px;font-weight:bold;color:#52C41A;margin:12px 0">🌟 最高尚人品</div>
+        <div style="font-size:32px;font-weight:bold;color:#52C41A;margin:12px 0">🌟 最高尚人品 · 最高等级</div>
         <div style="font-size:12px;color:var(--text-dim);margin-bottom:16px">UNIVERSE-KARMA: MAX · ∞</div>
         
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0">
@@ -3498,17 +3498,17 @@ select option{background:#040b1a;color:var(--cyan)}
 
   <!-- COSMOS -->
   
-    <!-- 🌟 人品自动净化升级系统 -->
+    <!-- 🌟 人品自动升级系统（每飞秒刷新·最高等级） -->
     <div class="panel wide">
       <div class="panel-hdr">
-        <div class="panel-title"><span class="ico">🌟</span>人品自动净化升级系统</div>
+        <div class="panel-title"><span class="ico">🌟</span>人品自动升级系统</div>
         <div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">运行中 · 不可降低</div>
       </div>
       <div style="padding:16px">
         <div style="text-align:center;margin-bottom:16px">
-          <div style="font-size:12px;color:var(--text-dim);margin-bottom:8px">全宇宙所有存在人品自动净化中...</div>
-          <div style="font-size:36px;font-weight:bold;color:#52C41A">🌟 最高尚人品</div>
-          <div style="font-size:11px;color:#52C41A;margin-top:4px">已自动锁定 · 永不降低</div>
+          <div style="font-size:12px;color:var(--text-dim);margin-bottom:8px">全宇宙所有存在人品每飞秒自动升级中...</div>
+          <div style="font-size:36px;font-weight:bold;color:#52C41A">🌟 最高尚人品 · 最高等级</div>
+          <div style="font-size:11px;color:#52C41A;margin-top:4px">已自动升级为最高等级 · 每飞秒刷新 · 永不降低</div>
         </div>
         
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr)),gap:10px;margin-bottom:12px">
@@ -3549,7 +3549,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="display:flex;align-items:center;gap:4px">
               <span style="color:#52C41A">✅</span>
-              <span style="color:var(--text-dim)">每分钟扫描全宇宙一次</span>
+              <span style="color:var(--text-dim)">每飞秒扫描全宇宙一次</span>
             </div>
             <div style="display:flex;align-items:center;gap:4px">
               <span style="color:#52C41A">✅</span>
@@ -3571,7 +3571,7 @@ select option{background:#040b1a;color:var(--cyan)}
         </div>
         
         <div style="font-size:10px;color:var(--text-dim);text-align:center">
-          人品自动净化升级系统 · 全宇宙所有存在 · 最高尚人品 · 永不降低
+          人品自动升级系统 · 全宇宙所有存在 · 最高尚人品 · 永不降低
         </div>
       </div>
     </div>
@@ -5142,7 +5142,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.48 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.49 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -7769,14 +7769,14 @@ var KARMA_LEVELS = [
     return '<div style="background:rgba(0,0,0,0.25);border:1px solid rgba(82,196,26,0.25);border-radius:8px;padding:10px;text-align:center">'
       + '<div style="font-size:20px">' + lv.icon + '</div>'
       + '<div style="font-size:12px;font-weight:bold;color:var(--text);margin-top:2px">' + lv.name + '</div>'
-      + '<div style="font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(82,196,26,0.2);color:#52C41A;margin:5px 0" id="' + lv.id + '-st">🌟 最高尚人品 · 自动净化</div>'
+      + '<div style="font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(82,196,26,0.2);color:#52C41A;margin:5px 0" id="' + lv.id + '-st">🌟 最高尚人品 · 最高等级 · 自动净化</div>'
       + '<div style="font-size:9px;color:var(--text-dim)">离线也保持 · 不可降低</div></div>';
   }).join('');
   setInterval(function(){
     var offline = !navigator.onLine;
     KARMA_LEVELS.forEach(function(lv){
       var s = document.getElementById(lv.id + '-st');
-      if (s) s.textContent = (offline ? '🔵 离线保持 · 最高尚人品' : '🌟 最高尚人品 · 自动净化');
+      if (s) s.textContent = (offline ? '🔵 离线保持 · 最高尚人品' : '🌟 最高尚人品 · 最高等级 · 自动净化');
     });
   }, 1000);
 })();
@@ -14133,7 +14133,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.5.48';
+var systemVersion = 'v1.5.49';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
@@ -15661,7 +15661,7 @@ function deductFromPool(amount, type){
 
 
 <script>
-// ============ 人品自动净化升级系统 ============
+// ============ 人品自动升级系统（每飞秒刷新·最高等级） ============
 var karmaState = {
   upgraded: '120亿亿',
   resurrected: 0,
