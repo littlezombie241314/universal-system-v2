@@ -2591,9 +2591,9 @@ select option{background:#040b1a;color:var(--cyan)}
           <button class="btn cyan" onclick="toast('☀️ 已开启自动追踪最优光照角度')">🤖 自动最优</button>
         </div>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-top:12px;font-size:11px">
-          <div style="background:rgba(0,0,0,0.2);padding:8px;border-radius:6px">清晨 🌅<br><b style="color:#FACC15">50°</b></div>
+          <div style="background:rgba(0,0,0,0.2);padding:8px;border-radius:6px">清晨 🌅<br><b style="color:#FACC15">60°</b></div>
           <div style="background:rgba(0,0,0,0.2);padding:8px;border-radius:6px">正午 ☀️<br><b style="color:#FACC15">80°</b></div>
-          <div style="background:rgba(0,0,0,0.2);padding:8px;border-radius:6px">傍晚 🌇<br><b style="color:#FACC15">50°</b></div>
+          <div style="background:rgba(0,0,0,0.2);padding:8px;border-radius:6px">傍晚 🌇<br><b style="color:#FACC15">60°</b></div>
           <div style="background:rgba(0,0,0,0.2);padding:8px;border-radius:6px">夜间 🌙<br><b style="color:#FACC15">0°</b></div>
         </div>
 
@@ -8055,11 +8055,11 @@ setInterval(function(){
 (function(){
   function getTargetAngle(hour, minute){
     var t = hour + minute/60;
-    if(t >= 6 && t < 9) return 50;            // 清晨 50°
-    if(t >= 9 && t < 11) return Math.round(50 + (t-9)/2 * 30);  // 上午平滑升到 80
+    if(t >= 6 && t < 9) return 60;            // 清晨 60°
+    if(t >= 9 && t < 11) return Math.round(60 + (t-9)/2 * 20);  // 上午平滑升到 80
     if(t >= 11 && t < 14) return 80;          // 正午 80°
-    if(t >= 14 && t < 17) return Math.round(80 - (t-14)/3 * 30); // 下午平滑降到 50
-    if(t >= 17 && t < 19) return 50;          // 傍晚 50°
+    if(t >= 14 && t < 17) return Math.round(80 - (t-14)/3 * 20); // 下午平滑降到 60
+    if(t >= 17 && t < 19) return 60;          // 傍晚 60°
     return 0;                                  // 夜间 0°
   }
   setInterval(function(){
