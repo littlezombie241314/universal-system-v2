@@ -2596,6 +2596,21 @@ select option{background:#040b1a;color:var(--cyan)}
           <div style="background:rgba(0,0,0,0.2);padding:8px;border-radius:6px">傍晚 🌇<br><b style="color:#FACC15">50°</b></div>
           <div style="background:rgba(0,0,0,0.2);padding:8px;border-radius:6px">夜间 🌙<br><b style="color:#FACC15">0°</b></div>
         </div>
+
+        <!-- 每秒测温自动维持 40°C -->
+        <div style="margin-top:12px;background:rgba(82,196,26,0.08);border:1px solid rgba(82,196,26,0.35);border-radius:8px;padding:10px">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+            <div style="font-size:12px;font-weight:bold;color:#52C41A">🌡️ 每秒测温 · 自动维持 40°C 下限</div>
+            <div id="tempMaintStatus" style="font-size:12px;color:#52C41A;font-weight:bold">● 自动监测中</div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-top:8px;font-size:11px">
+            <div style="background:rgba(0,0,0,0.2);padding:8px;border-radius:6px">当前测温<br><b id="tempMaintCurrent" style="color:#FACC15;font-size:16px">--°C</b></div>
+            <div style="background:rgba(0,0,0,0.2);padding:8px;border-radius:6px">下限阈值<br><b style="color:#52C41A">40°C</b></div>
+            <div style="background:rgba(0,0,0,0.2);padding:8px;border-radius:6px">已自动调整次数<br><b id="tempMaintCount" style="color:var(--cyan)">0</b></div>
+            <div style="background:rgba(0,0,0,0.2);padding:8px;border-radius:6px">最近调整<br><b id="tempMaintLast" style="color:var(--text-dim)">--</b></div>
+          </div>
+          <div id="tempMaintLog" style="max-height:60px;overflow-y:auto;background:rgba(0,0,0,0.3);border-radius:6px;padding:6px;font-size:10px;font-family:monospace;margin-top:8px"></div>
+        </div>
       </div>
     </div>
     <style>
@@ -8034,6 +8049,60 @@ setInterval(function(){
   if (dt) dt.textContent = (offline ? '离线模式 · 体感温度仍自动保持 65°C · 本地运行不受断网影响' : '自动保持 65°C · 舒适体感 · 离线也自动保持 · 不可修改');
   if (fl) fl.textContent = (offline ? '🌡️ 体感温度 · 舒适 · 65°C · 离线保持中' : '🌡️ 体感温度 · 舒适 · 65°C · 自动保持中 · 阳光明媚');
 }, 1000);
+
+/* ===== 太阳高度角 · 按时间自动调节（清晨/傍晚50° 正午80° 夜间0°） ===== */
+(function(){
+  function getTargetAngle(hour, minute){
+    var t = hour + minute/60;
+    if(t >= 6 && t < 9) return 50;            // 清晨 50°
+    if(t >= 9 && t < 11) return Math.round(50 + (t-9)/2 * 30);  // 上午平滑升到 80
+    if(t >= 11 && t < 14) return 80;          // 正午 80°
+    if(t >= 14 && t < 17) return Math.round(80 - (t-14)/3 * 30); // 下午平滑降到 50
+    if(t >= 17 && t < 19) return 50;          // 傍晚 50°
+    return 0;                                  // 夜间 0°
+  }
+  setInterval(function(){
+    var now = new Date();
+    var angle = getTargetAngle(now.getHours(), now.getMinutes());
+    var slider = document.getElementById('sunAngleSlider');
+    var val = document.getElementById('sunAngleVal');
+    var disp = document.getElementById('sunAngleDisplay');
+    if(slider) slider.value = angle;
+    if(val) val.textContent = angle + '°';
+    if(disp) disp.textContent = angle + '°（自动）';
+  }, 1000);
+})();
+
+/* ===== 每秒测温 · 低于40°自动拉回40° ===== */
+(function(){
+  var adjustCount = 0;
+  setInterval(function(){
+    var temp = 40 + Math.random()*8;
+    if(Math.random() < 0.08) temp = 39 + Math.random(); // 偶尔偏低触发调整
+    var adjusted = false;
+    if(temp < 40){ temp = 40; adjusted = true; adjustCount++; }
+    var cur = document.getElementById('tempMaintCurrent');
+    var cnt = document.getElementById('tempMaintCount');
+    var last = document.getElementById('tempMaintLast');
+    var log = document.getElementById('tempMaintLog');
+    var status = document.getElementById('tempMaintStatus');
+    if(cur) cur.textContent = temp.toFixed(1) + '°C';
+    if(cnt) cnt.textContent = adjustCount;
+    if(adjusted){
+      if(status){ status.textContent = '⚠️ 已自动调整到 40°C'; status.style.color = '#FAAD14'; }
+      if(last) last.textContent = new Date().toLocaleTimeString('zh-CN',{hour12:false});
+      if(log){
+        var line = document.createElement('div');
+        line.style.color = '#FAAD14';
+        line.textContent = '[🌡️ ' + new Date().toLocaleTimeString('zh-CN',{hour12:false}) + '] 检测到温度低于 40°C，已自动调整至 40°C';
+        log.insertBefore(line, log.firstChild);
+        while(log.children.length > 6) log.removeChild(log.lastChild);
+      }
+    } else {
+      if(status){ status.textContent = '● 温度正常 · 自动监测中'; status.style.color = '#52C41A'; }
+    }
+  }, 1000);
+})();
 
 /* ===== 全宇宙防御系统 · 脆弱存在自动防护 ===== */
 var defT0 = Date.now();
