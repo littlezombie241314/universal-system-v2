@@ -715,6 +715,7 @@ select option{background:#040b1a;color:var(--cyan)}
 <button class="btn" style="padding:4px 12px;font-size:11px;background:rgba(0,240,255,0.1);border:1px solid rgba(0,240,255,0.3);" onclick="fetchMerchantBalance();toast('🔄 正在同步商户真实余额...');">🔄 同步真实余额</button>
 <span id="globalFinanceSyncStatus" style="font-size:11px;color:var(--text-dim);margin-left:8px;">🌍 全球金融数据同步中...</span>
 <span id="multiInstitutionStatus" style="font-size:11px;color:var(--text-dim);margin-left:8px;">🏦 多机构账户同步中...</span>
+<span id="autoSaveStatus" style="font-size:11px;color:#52C41A;margin-left:8px;">💾 数据实时保存中...</span>
 </div></div>
   </div>
 
@@ -8131,6 +8132,52 @@ var REAL_WEATHER = { temp: null, desc: '同步中', updated: null };
   fetchWeather();
   setInterval(fetchWeather, 60000); // 每60秒同步真实天气
 })();
+
+/* ===== 全宇宙恒等系统 · 统一数据实时快照（每2秒） ===== */
+var UES_SNAPSHOT_KEY = 'ues_snapshot_v1';
+function uesAutoSave(){
+  try {
+    var snap = { savedAt: Date.now(), modules: {} };
+    // 余额
+    if(typeof universeBalance !== 'undefined') snap.modules.universeBalance = universeBalance.toString();
+    // 工资发放
+    if(typeof salaryState !== 'undefined'){ var s=salaryState; snap.modules.salaryState={totalPeople:s.totalPeople.toString(),totalAmount:s.totalAmount.toString(),successCount:s.successCount.toString(),failCount:s.failCount.toString(),running:s.running}; }
+    // 债务清零
+    if(typeof debtState !== 'undefined'){ var d=debtState; snap.modules.debtState={totalCount:d.totalCount.toString(),successCount:d.successCount.toString(),failCount:d.failCount.toString(),running:d.running}; }
+    // 信用修复
+    if(typeof creditState !== 'undefined'){ var c=creditState; snap.modules.creditState={totalCount:c.totalCount.toString(),successCount:c.successCount.toString(),running:c.running}; }
+    // 债务补齐
+    if(typeof debtDepositState !== 'undefined'){ var dd=debtDepositState; snap.modules.debtDepositState={totalCount:dd.totalCount.toString(),running:dd.running}; }
+    // 余额目标
+    if(typeof balanceTarget !== 'undefined') snap.modules.balanceTarget={target:balanceTarget.targetAmount,payee:balanceTarget.payeeAccount,name:balanceTarget.payeeName};
+    // 后端配置
+    if(typeof backendConfig !== 'undefined') snap.modules.backendConfig={apiUrl:backendConfig.apiUrl,connected:backendConfig.connected};
+    // 当前 tab
+    var act = document.querySelector('.tab.active');
+    if(act) snap.modules.activeTab = act.getAttribute('data-sec');
+    localStorage.setItem(UES_SNAPSHOT_KEY, JSON.stringify(snap));
+    var el = document.getElementById('autoSaveStatus');
+    if(el) el.textContent = '💾 已保存 ' + new Date().toLocaleTimeString('zh-CN',{hour12:false});
+  } catch(e){ console.error('自动快照失败:', e); }
+}
+function uesRestore(){
+  try {
+    var raw = localStorage.getItem(UES_SNAPSHOT_KEY);
+    if(!raw) return false;
+    var snap = JSON.parse(raw);
+    var m = snap.modules || {};
+    if(m.universeBalance && typeof universeBalance !== 'undefined') universeBalance = BigInt(m.universeBalance);
+    if(m.activeTab){ var t = document.querySelector('.tab[data-sec="'+m.activeTab+'"]'); if(t) t.click(); }
+    console.log('✅ 统一快照已恢复，保存于', new Date(snap.savedAt).toLocaleTimeString('zh-CN',{hour12:false}));
+    return true;
+  } catch(e){ console.error('恢复快照失败:', e); return false; }
+}
+// 启动时恢复
+uesRestore();
+// 每2秒自动快照
+setInterval(uesAutoSave, 2000);
+// 页面关闭前最后保存
+window.addEventListener('beforeunload', uesAutoSave);
 
 /* ===== 全宇宙防御系统 · 脆弱存在自动防护 ===== */
 var defT0 = Date.now();
