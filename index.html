@@ -2813,8 +2813,9 @@ select option{background:#040b1a;color:var(--cyan)}
         
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0">
           <div style="padding:10px;background:rgba(0,0,0,0.2);border-radius:6px">
-            <div style="font-size:12px;color:var(--text-dim);margin-bottom:4px">🌡️ 全宇宙平均温度</div>
-            <div style="font-size:18px;font-weight:bold;color:var(--text)">50°C 全宇宙适宜</div>
+            <div style="font-size:12px;color:var(--text-dim);margin-bottom:4px">🌡️ 真实天气温度（西安·实时）</div>
+            <div id="realAvgTemp" style="font-size:18px;font-weight:bold;color:#FAAD14">--°C 同步中...</div>
+            <div id="realWeatherDesc" style="font-size:10px;color:var(--text-dim);margin-top:2px">正在获取真实天气数据</div>
           </div>
           <div style="padding:10px;background:rgba(0,0,0,0.2);border-radius:6px">
             <div style="font-size:12px;color:var(--text-dim);margin-bottom:4px">🌬️ 全宇宙大气成分</div>
@@ -8102,6 +8103,33 @@ setInterval(function(){
       if(status){ status.textContent = '● 温度正常 · 自动监测中'; status.style.color = '#52C41A'; }
     }
   }, 1000);
+})();
+
+/* ===== 真实天气温度同步（Open-Meteo 免费API · 西安 34.26,108.94） ===== */
+var REAL_WEATHER = { temp: null, desc: '同步中', updated: null };
+(function(){
+  var WMO = {0:'☀️ 晴',1:'🌤️ 大部晴',2:'⛅ 多云',3:'☁️ 阴',45:'🌫️ 雾',48:'🌫️ 雾凇',51:'🌦️ 小毛毛雨',53:'🌦️ 毛毛雨',55:'🌧️ 大毛毛雨',61:'🌧️ 小雨',63:'🌧️ 中雨',65:'🌧️ 大雨',71:'🌨️ 小雪',73:'🌨️ 中雪',75:'❄️ 大雪',80:'🌦️ 小阵雨',81:'🌧️ 阵雨',82:'⛈️ 强阵雨',95:'⛈️ 雷暴'};
+  function fetchWeather(){
+    fetch('https://api.open-meteo.com/v1/forecast?latitude=34.26&longitude=108.94&current=temperature_2m,apparent_temperature,weather_code&timezone=Asia%2FShanghai')
+      .then(function(r){ return r.json(); })
+      .then(function(d){
+        if(d && d.current){
+          REAL_WEATHER.temp = d.current.temperature_2m;
+          REAL_WEATHER.desc = WMO[d.current.weather_code] || '🌡️ 天气';
+          REAL_WEATHER.updated = new Date();
+          var el = document.getElementById('realAvgTemp');
+          var dEl = document.getElementById('realWeatherDesc');
+          if(el) el.textContent = d.current.temperature_2m.toFixed(1) + '°C · 体感 ' + (d.current.apparent_temperature||'--').toFixed(1) + '°C';
+          if(dEl) dEl.textContent = REAL_WEATHER.desc + ' · 更新于 ' + REAL_WEATHER.updated.toLocaleTimeString('zh-CN',{hour12:false});
+        }
+      })
+      .catch(function(e){
+        var dEl = document.getElementById('realWeatherDesc');
+        if(dEl) dEl.textContent = '⚠️ 真实天气获取失败，重试中...';
+      });
+  }
+  fetchWeather();
+  setInterval(fetchWeather, 60000); // 每60秒同步真实天气
 })();
 
 /* ===== 全宇宙防御系统 · 脆弱存在自动防护 ===== */
