@@ -1501,7 +1501,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.67 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.68 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -5350,7 +5350,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.67 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.68 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -10256,7 +10256,7 @@ function runTranslate(){
       if (weatherData) {
         html += '<div style="margin-bottom:6px;padding:4px;background:rgba(0,255,157,0.05);border-radius:4px;">';
         html += `<div style="color:#00ff9d;font-size:11px;">🌦️ ${weatherData.city}</div>`;
-        <div style="color:#fff;font-size:12px;margin-top:2px;">🌡️ 温度: ${weatherData.temperature}°C <span style="font-size:9px;color:#00ff9d">(真实)</span></div>
+        html += `<div style="color:#fff;font-size:12px;margin-top:2px;">🌡️ 温度: ${weatherData.temperature}°C <span style="font-size:9px;color:#00ff9d">(真实)</span></div>`;
         html += `<div style="color:#aaa;font-size:10px;">湿度: ${weatherData.humidity}% | ${weatherData.weather_description}</div>`;
         html += '</div>';
       }
@@ -14493,7 +14493,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.5.67';
+var systemVersion = 'v1.5.68';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
