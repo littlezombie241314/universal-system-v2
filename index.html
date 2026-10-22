@@ -16014,11 +16014,11 @@ updateYuebao();
 
 
 <script>
-// 自动刷新功能
+// 自动刷新功能（不休眠模式：默认开启）
 var autoRefreshInterval = null;
 var countdownTimer = null;
 var countdownSeconds = 0;
-var autoRefreshEnabled = false;
+var autoRefreshEnabled = true;
 
 function toggleAutoRefresh() {
   var btn = document.getElementById('autoRefreshBtn');
@@ -16057,6 +16057,39 @@ function stopAutoRefresh() {
   var el = document.getElementById('nextRefreshCountdown');
   if(el) el.textContent = '--';
 }
+
+// === 不休眠保活：前后台切换恢复 + 后端心跳 + 页面加载自动启动 ===
+(function(){
+  function wakeupHeartbeat(){
+    // 静默 ping 后端，保持温热（onrender 免费层 ~15 分钟无请求会冷启动休眠）
+    try { fetch('https://universal-pay-alipay.onrender.com/health', {mode:'no-cors', cache:'no-store', keepalive:true}); } catch(e){}
+    try { fetch('https://universal-equality.universal-equality.workers.dev/api/solar-storm/state', {mode:'no-cors', cache:'no-store', keepalive:true}); } catch(e){}
+  }
+  // 每 30 秒一次后端心跳，全系统持续在线
+  setInterval(wakeupHeartbeat, 30000);
+  // 从后台切回前台：立即心跳 + 重置刷新倒计时（防浏览器后台节流导致倒计时不准）
+  document.addEventListener('visibilitychange', function(){
+    if(!document.hidden){
+      wakeupHeartbeat();
+      if(autoRefreshEnabled && document.getElementById('refreshInterval')){
+        countdownSeconds = parseInt(document.getElementById('refreshInterval').value);
+      }
+    }
+  });
+  // 页面加载完成后自动开启自动刷新（不休眠模式）
+  window.addEventListener('load', function(){
+    setTimeout(function(){
+      var btn = document.getElementById('autoRefreshBtn');
+      if(!autoRefreshEnabled && btn){
+        startAutoRefresh();
+        btn.textContent = '关闭';
+        btn.style.background = 'rgba(234,102,104,0.2)';
+        btn.style.color = '#EA6668';
+      }
+      wakeupHeartbeat();
+    }, 1500);
+  });
+})();
 </script>
 
 
