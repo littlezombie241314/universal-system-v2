@@ -1500,7 +1500,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.65 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.66 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -4443,6 +4443,7 @@ select option{background:#040b1a;color:var(--cyan)}
   <div style="font-size:24px">♾️</div>
   <div style="font-size:16px;font-weight:bold;color:#00FF88;margin:6px 0;text-shadow:0 0 12px rgba(0,255,136,0.5)">全系统永不停机 · 7×24 小时不间断运行</div>
   <div style="font-size:11px;color:var(--text-dim);margin-top:6px">全宇宙恒等系统所有模块已锁定不休眠状态 · 不关机 · 不重启 · 不缓存清理 · 实时在线 · 离线也持续运行</div>
+  <div id="autoSaveDot" style="font-size:11px;color:#00FF88;margin-top:8px">💾 数据实时保存中…</div>
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-top:12px">
     <div style="background:rgba(0,0,0,0.25);padding:8px;border-radius:6px"><div style="font-size:10px;color:var(--text-dim)">运行状态</div><div style="font-size:13px;color:#00FF88;font-weight:bold">✅ 永不休眠</div></div>
     <div style="background:rgba(0,0,0,0.25);padding:8px;border-radius:6px"><div style="font-size:10px;color:var(--text-dim)">在线率</div><div style="font-size:13px;color:#00FF88;font-weight:bold">99.99999%</div></div>
@@ -5332,7 +5333,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.65 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.66 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -10175,6 +10176,31 @@ function runTranslate(){
     
     // 每秒测量温度·低于40°自动调校
     setInterval(updateRealtimePanel, 1000);
+
+    // 💾 全系统数据实时保存（localStorage + 每500ms快照）
+    (function(){
+      var SAVE_KEY='ues_state_snapshot';
+      function snapshot(){
+        try{
+          var state={
+            ts: Date.now(),
+            version: (typeof systemVersion!=='undefined')?systemVersion:'',
+            activeTab: (document.querySelector('#tabs .tab.active')||{}).getAttribute?document.querySelector('#tabs .tab.active').getAttribute('data-sec'):'',
+            scrollY: window.scrollY,
+            inputs: {}
+          };
+          document.querySelectorAll('input[type=range],input[type=text],select').forEach(function(el){
+            if(el.id) state.inputs[el.id]=el.value;
+          });
+          localStorage.setItem(SAVE_KEY, JSON.stringify(state));
+          var el=document.getElementById('autoSaveDot');
+          if(el) el.innerText='💾 已实时保存 · '+new Date().toLocaleTimeString();
+        }catch(e){}
+      }
+      setInterval(snapshot, 500);
+      window.addEventListener('beforeunload', snapshot);
+      window.addEventListener('visibilitychange', function(){ if(document.visibilityState==='hidden') snapshot(); });
+    })();
   }
   
   // 隐藏实时数据面板，显示悬浮按钮
@@ -14333,7 +14359,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.5.65';
+var systemVersion = 'v1.5.66';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
