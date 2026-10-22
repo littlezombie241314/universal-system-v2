@@ -489,7 +489,7 @@ select option{background:#040b1a;color:var(--cyan)}
 <div id="autoRefreshPanel" style="position:fixed;top:10px;right:10px;z-index:9999;background:rgba(0,0,0,0.8);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:12px;min-width:200px">
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
     <div style="font-size:13px;font-weight:bold;color:#fff">🔄 自动刷新</div>
-    <button onclick="toggleAutoRefresh()" style="background:rgba(234,102,104,0.2);color:#EA6668;border:none;border-radius:6px;padding:4px 10px;font-size:11px;cursor:pointer" id="autoRefreshBtn">关闭</button>
+    <button onclick="toggleAutoRefresh()" style="background:rgba(82,196,26,0.2);color:#52C41A;border:none;border-radius:6px;padding:4px 10px;font-size:11px;cursor:pointer" id="autoRefreshBtn">开启</button>
   </div>
   <div style="font-size:11px;color:#999;margin-bottom:8px">
     间隔: <select id="refreshInterval" style="background:rgba(255,255,255,0.1);color:#fff;border:none;border-radius:4px;padding:2px 6px;font-size:11px">
@@ -1501,7 +1501,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.76 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.77 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -5361,7 +5361,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.76 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.77 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -14502,7 +14502,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.5.76';
+var systemVersion = 'v1.5.77';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
@@ -16161,7 +16161,7 @@ updateYuebao();
 var autoRefreshInterval = null;
 var countdownTimer = null;
 var countdownSeconds = 0;
-var autoRefreshEnabled = true;
+var autoRefreshEnabled = false;
 
 function toggleAutoRefresh() {
   var btn = document.getElementById('autoRefreshBtn');
