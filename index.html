@@ -16080,20 +16080,22 @@ function stopAutoRefresh() {
   (function bootstrap(){
     var btn = document.getElementById('autoRefreshBtn');
     if(!btn){ setTimeout(bootstrap, 200); return; }
-    if(!autoRefreshEnabled){
+    if(!countdownTimer){
       startAutoRefresh();
-      btn.textContent = '关闭';
-      btn.style.background = 'rgba(234,102,104,0.2)';
-      btn.style.color = '#EA6668';
     }
+    btn.textContent = '关闭';
+    btn.style.background = 'rgba(234,102,104,0.2)';
+    btn.style.color = '#EA6668';
     wakeupHeartbeat();
   })();
   // 兜底：若 load 尚未触发，再补一次
   window.addEventListener('load', function(){
     setTimeout(function(){
       var btn2 = document.getElementById('autoRefreshBtn');
-      if(btn2 && !autoRefreshEnabled){
+      if(btn2 && !countdownTimer){
         startAutoRefresh();
+      }
+      if(btn2){
         btn2.textContent = '关闭';
         btn2.style.background = 'rgba(234,102,104,0.2)';
         btn2.style.color = '#EA6668';
