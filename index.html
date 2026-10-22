@@ -1501,7 +1501,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.68 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.69 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -5350,7 +5350,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.68 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.69 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -10311,9 +10311,9 @@ function runTranslate(){
     // 每秒测量温度·低于40°自动调校
     setInterval(updateRealtimePanel, 1000);
 
-    // 💾 全系统数据实时保存（localStorage + 每500ms快照）
+    // 💾 全系统数据实时持久化（localStorage 即时事件 + 周期快照 + 启动恢复）
     (function(){
-      var SAVE_KEY='ues_state_snapshot';
+      var SAVE_KEY='ues_state_snapshot_v2';
       function snapshot(){
         try{
           var state={
@@ -10328,10 +10328,35 @@ function runTranslate(){
           });
           localStorage.setItem(SAVE_KEY, JSON.stringify(state));
           var el=document.getElementById('autoSaveDot');
-          if(el) el.innerText='💾 已实时保存 · '+new Date().toLocaleTimeString();
+          if(el) el.innerText='💾 已持久化 · '+new Date().toLocaleTimeString();
         }catch(e){}
       }
-      setInterval(snapshot, 500);
+      // 启动时恢复
+      try{
+        var raw=localStorage.getItem(SAVE_KEY);
+        if(raw){
+          var st=JSON.parse(raw);
+          if(st.inputs){
+            Object.keys(st.inputs).forEach(function(id){
+              var el=document.getElementById(id);
+              if(el) el.value=st.inputs[id];
+            });
+          }
+          if(st.activeTab){
+            var tab=document.querySelector('#tabs .tab[data-sec="'+st.activeTab+'"]');
+            if(tab && typeof switchTab==='function') switchTab(st.activeTab);
+          }
+          if(typeof st.scrollY==='number'){ window.scrollTo(0, st.scrollY); }
+        }
+      }catch(e){}
+      // 即时事件保存
+      document.addEventListener('input', function(e){
+        if(e.target && (e.target.type==='range' || e.target.tagName==='SELECT' || e.target.type==='text')) snapshot();
+      }, true);
+      document.addEventListener('change', snapshot, true);
+      window.addEventListener('scroll', function(){ clearTimeout(window.__scrollSaveT); window.__scrollSaveT=setTimeout(snapshot, 200); });
+      // 周期快照
+      setInterval(snapshot, 1000);
       window.addEventListener('beforeunload', snapshot);
       window.addEventListener('visibilitychange', function(){ if(document.visibilityState==='hidden') snapshot(); });
     })();
@@ -14493,7 +14518,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.5.68';
+var systemVersion = 'v1.5.69';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
