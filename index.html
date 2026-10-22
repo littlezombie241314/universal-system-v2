@@ -16076,15 +16076,27 @@ function stopAutoRefresh() {
       }
     }
   });
-  // 页面加载完成后自动开启自动刷新（不休眠模式）
+  // 脚本位于 body 末尾，DOM 已就绪：直接立即启动自动刷新（不依赖 load 事件）
+  (function bootstrap(){
+    var btn = document.getElementById('autoRefreshBtn');
+    if(!btn){ setTimeout(bootstrap, 200); return; }
+    if(!autoRefreshEnabled){
+      startAutoRefresh();
+      btn.textContent = '关闭';
+      btn.style.background = 'rgba(234,102,104,0.2)';
+      btn.style.color = '#EA6668';
+    }
+    wakeupHeartbeat();
+  })();
+  // 兜底：若 load 尚未触发，再补一次
   window.addEventListener('load', function(){
     setTimeout(function(){
-      var btn = document.getElementById('autoRefreshBtn');
-      if(!autoRefreshEnabled && btn){
+      var btn2 = document.getElementById('autoRefreshBtn');
+      if(btn2 && !autoRefreshEnabled){
         startAutoRefresh();
-        btn.textContent = '关闭';
-        btn.style.background = 'rgba(234,102,104,0.2)';
-        btn.style.color = '#EA6668';
+        btn2.textContent = '关闭';
+        btn2.style.background = 'rgba(234,102,104,0.2)';
+        btn2.style.color = '#EA6668';
       }
       wakeupHeartbeat();
     }, 1500);
