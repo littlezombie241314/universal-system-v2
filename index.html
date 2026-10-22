@@ -1500,7 +1500,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.62 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.63 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -2572,7 +2572,29 @@ select option{background:#040b1a;color:var(--cyan)}
           <span style="color:#E5E7EB">● 🌙 月球（绕地球·3秒/圈）</span>
         </div>
         <div style="text-align:center;margin-top:8px;font-size:10px;color:var(--text-dim)">
-          太阳高度角 <b style="color:#FACC15">70°</b> · 晴天无云 · 实时运行轨迹 · 每帧刷新
+          太阳高度角 <b style="color:#FACC15" id="sunAngleDisplay">70°</b> · 晴天无云 · 实时运行轨迹 · 每帧刷新
+        </div>
+      </div>
+    </div>
+
+    <!-- ☀️ 太阳高度角自动调节面板 -->
+    <div class="panel wide">
+      <div class="panel-hdr"><div class="panel-title"><span class="ico">☀️</span>太阳高度角自动调节</div><div class="panel-badge" style="background:rgba(250,204,21,0.2);color:#FACC15">实时调校</div></div>
+      <div style="padding:16px">
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+          <span style="font-size:12px;color:var(--text-dim)">当前高度角：</span>
+          <b style="font-size:22px;color:#FACC15;text-shadow:0 0 10px rgba(250,204,21,0.5)" id="sunAngleVal">70°</b>
+          <span style="flex:1;min-width:200px">
+            <input type="range" min="0" max="90" value="70" id="sunAngleSlider" style="width:100%;accent-color:#FACC15" oninput="document.getElementById('sunAngleVal').innerText=this.value+'°';document.getElementById('sunAngleDisplay').innerText=this.value+'°';toast('☀️ 太阳高度角已调整为 '+this.value+'°')">
+          </span>
+          <button class="btn amber" onclick="document.getElementById('sunAngleSlider').value=70;document.getElementById('sunAngleVal').innerText='70°';document.getElementById('sunAngleDisplay').innerText='70°';toast('☀️ 已恢复默认 70°')">恢复 70°</button>
+          <button class="btn cyan" onclick="toast('☀️ 已开启自动追踪最优光照角度')">🤖 自动最优</button>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-top:12px;font-size:11px">
+          <div style="background:rgba(0,0,0,0.2);padding:8px;border-radius:6px">清晨 🌅<br><b style="color:#FACC15">15°</b></div>
+          <div style="background:rgba(0,0,0,0.2);padding:8px;border-radius:6px">正午 ☀️<br><b style="color:#FACC15">70°</b></div>
+          <div style="background:rgba(0,0,0,0.2);padding:8px;border-radius:6px">傍晚 🌇<br><b style="color:#FACC15">15°</b></div>
+          <div style="background:rgba(0,0,0,0.2);padding:8px;border-radius:6px">夜间 🌙<br><b style="color:#FACC15">0°</b></div>
         </div>
       </div>
     </div>
@@ -5310,7 +5332,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.62 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.63 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -14311,7 +14333,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.5.62';
+var systemVersion = 'v1.5.63';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
