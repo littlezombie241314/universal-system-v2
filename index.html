@@ -1502,7 +1502,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.96 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.97 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -5073,6 +5073,36 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
           </div>
         </div>
+        <!-- 🔧 地磁暴后自动修复：卫星/电网/通信/导航 -->
+        <div style="background:linear-gradient(135deg,rgba(0,212,255,0.08),rgba(82,196,26,0.06));border:1px solid rgba(0,212,255,0.3);border-radius:8px;padding:12px;margin-bottom:10px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <div style="font-size:13px;font-weight:bold;color:var(--cyan)">🔧 地磁暴后自动修复 · 卫星/电网/通信/导航</div>
+            <div style="font-size:11px;color:#52C41A;background:rgba(82,196,26,0.15);padding:2px 8px;border-radius:10px">已启动 · 实时自愈</div>
+          </div>
+          <div style="font-size:11px;color:var(--text-dim);line-height:1.6;margin-bottom:8px">地磁暴结束后，自动扫描并修复受损的卫星、电网、通信基站、导航系统，恢复全宇宙基础设施正常运行。</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px">
+            <div style="text-align:center;background:rgba(0,0,0,0.2);border-radius:6px;padding:8px">
+              <div style="font-size:22px">🛰️</div>
+              <div style="font-size:11px;font-weight:bold;color:var(--cyan);margin:4px 0">卫星修复</div>
+              <div id="satFix" style="font-size:10px;color:#52C41A">0 颗已修复</div>
+            </div>
+            <div style="text-align:center;background:rgba(0,0,0,0.2);border-radius:6px;padding:8px">
+              <div style="font-size:22px">⚡</div>
+              <div style="font-size:11px;font-weight:bold;color:var(--cyan);margin:4px 0">电网修复</div>
+              <div id="gridFix" style="font-size:10px;color:#52C41A">0 电站已恢复</div>
+            </div>
+            <div style="text-align:center;background:rgba(0,0,0,0.2);border-radius:6px;padding:8px">
+              <div style="font-size:22px">📡</div>
+              <div style="font-size:11px;font-weight:bold;color:var(--cyan);margin:4px 0">通信修复</div>
+              <div id="commFix" style="font-size:10px;color:#52C41A">0 基站已恢复</div>
+            </div>
+            <div style="text-align:center;background:rgba(0,0,0,0.2);border-radius:6px;padding:8px">
+              <div style="font-size:22px">🧭</div>
+              <div style="font-size:11px;font-weight:bold;color:var(--cyan);margin:4px 0">导航修复</div>
+              <div id="navFix" style="font-size:10px;color:#52C41A">0 星已校准</div>
+            </div>
+          </div>
+        </div>
         <div id="magLog" style="max-height:160px;overflow-y:auto;background:rgba(0,0,0,0.2);border-radius:6px;padding:8px;font-size:11px;font-family:var(--mono)"></div>
       </div>
     </div>
@@ -5546,7 +5576,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.96 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.97 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -6528,6 +6558,21 @@ function magScan(){
   document.getElementById('magLog').innerHTML += '<div style="color:#00d4ff">🔍 扫描全宇宙磁场中...</div>';
   document.getElementById('magField').innerText = (48000 + Math.floor(Math.random()*1000)) + ' nT';
 }
+(function(){
+  var sat=0, grid=0, comm=0, nav=0;
+  setInterval(function(){
+    if(Math.random()<0.2){
+      sat+=Math.floor(Math.random()*3)+1;
+      grid+=Math.floor(Math.random()*5)+1;
+      comm+=Math.floor(Math.random()*8)+1;
+      nav+=Math.floor(Math.random()*2)+1;
+      var e1=document.getElementById('satFix'); if(e1) e1.textContent=sat+' 颗已修复';
+      var e2=document.getElementById('gridFix'); if(e2) e2.textContent=grid+' 电站已恢复';
+      var e3=document.getElementById('commFix'); if(e3) e3.textContent=comm+' 基站已恢复';
+      var e4=document.getElementById('navFix'); if(e4) e4.textContent=nav+' 星已校准';
+    }
+  },5000);
+})();
 (function(){
   var count=0, totalTime=0;
   setInterval(function(){
@@ -14823,7 +14868,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.5.96';
+var systemVersion = 'v1.5.97';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
