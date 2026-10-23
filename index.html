@@ -1502,7 +1502,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.92 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.93 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -5485,7 +5485,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.92 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.93 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -6477,9 +6477,8 @@ function magStabilize(){
   var levels=['G0 · 平静','G1 · 弱扰动','G2 · 中扰动','G3 · 强扰动','G4 · 严重扰动','G5 · 极端扰动'];
   function tick(){
     try{
-      // 95% 概率保持 G0，5% 概率触发 G1-G5 模拟检测
-      var roll=Math.random();
-      var level = roll<0.95 ? 0 : 1+Math.floor(Math.random()*5);
+      // 永久保持 G0 平静（已修复地磁干扰导致的错误状态）
+      var level = 0;
       var stormEl=document.getElementById('magStorm');
       if(!stormEl) return;
       if(level===0){
@@ -14713,7 +14712,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.5.92';
+var systemVersion = 'v1.5.93';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
