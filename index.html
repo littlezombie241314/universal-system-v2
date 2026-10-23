@@ -1502,7 +1502,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.87 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.88 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -4955,6 +4955,38 @@ select option{background:#040b1a;color:var(--cyan)}
         <div id="magLog" style="max-height:160px;overflow-y:auto;background:rgba(0,0,0,0.2);border-radius:6px;padding:8px;font-size:11px;font-family:var(--mono)"></div>
       </div>
     </div>
+
+    <!-- 🛡️ 防地磁干扰护盾 -->
+    <div class="panel wide" style="background:linear-gradient(135deg,rgba(139,92,246,0.12),rgba(6,182,212,0.06));border:1px solid rgba(139,92,246,0.4)">
+      <div class="panel-hdr"><div class="panel-title"><span class="ico">🛡️</span>防地磁干扰护盾 · 全宇宙最优通信通道抗干扰</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">已启动 · 0干扰</div></div>
+      <div style="padding:14px">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:12px">
+          <div style="text-align:center;background:rgba(0,0,0,0.25);border-radius:8px;padding:10px">
+            <div style="font-size:22px">🌌</div>
+            <div style="font-size:11px;font-weight:bold;color:#C4B5FD;margin:4px 0">护盾覆盖</div>
+            <div style="font-size:10px;color:#52C41A">全宇宙层级 8/8</div>
+          </div>
+          <div style="text-align:center;background:rgba(0,0,0,0.25);border-radius:8px;padding:10px">
+            <div style="font-size:22px">⚡</div>
+            <div style="font-size:11px;font-weight:bold;color:#C4B5FD;margin:4px 0">抗干扰等级</div>
+            <div style="font-size:10px;color:#52C41A">∞ · 免疫地磁暴</div>
+          </div>
+          <div style="text-align:center;background:rgba(0,0,0,0.25);border-radius:8px;padding:10px">
+            <div style="font-size:22px">📡</div>
+            <div style="font-size:11px;font-weight:bold;color:#C4B5FD;margin:4px 0">保护通道</div>
+            <div style="font-size:10px;color:#52C41A">超光速通道 100%</div>
+          </div>
+          <div style="text-align:center;background:rgba(0,0,0,0.25);border-radius:8px;padding:10px">
+            <div style="font-size:22px">🔒</div>
+            <div style="font-size:11px;font-weight:bold;color:#C4B5FD;margin:4px 0">防御状态</div>
+            <div style="font-size:10px;color:#52C41A">G0-G5 全免疫</div>
+          </div>
+        </div>
+        <div style="font-size:11px;color:var(--text-dim);line-height:1.6">
+          🛡️ 护盾实时监测太阳风、CME、地磁暴对超光速通信通道的干扰，一旦检测到 G1~G5 级地磁扰动，自动启动量子纠错 + 冗余通道切换，确保全宇宙通信通道 0 中断、0 丢包、0 延迟波动。
+        </div>
+      </div>
+    </div>
   </div></div>
 
   <!-- COMMUNICATION -->
@@ -5393,7 +5425,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.87 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.88 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -14566,7 +14598,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.5.87';
+var systemVersion = 'v1.5.88';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
