@@ -1502,7 +1502,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.95 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.96 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -5051,6 +5051,28 @@ select option{background:#040b1a;color:var(--cyan)}
           <button class="btn" style="background:linear-gradient(135deg,#00d4ff,#0ea5e9);color:#fff" onclick="magScan()">🔍 立即扫描全宇宙磁场</button>
           <button class="btn" style="background:linear-gradient(135deg,#14b8a6,#0d9488);color:#fff" onclick="magStabilize()">🛡️ 启动磁场稳定护盾</button>
         </div>
+        <!-- 🌪️ 自动消除地磁暴 -->
+        <div style="background:linear-gradient(135deg,rgba(234,102,104,0.1),rgba(82,196,26,0.08));border:1px solid rgba(82,196,26,0.3);border-radius:8px;padding:12px;margin-bottom:10px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <div style="font-size:13px;font-weight:bold;color:#52C41A">🌪️ 自动消除地磁暴 · 全宇宙天气保护</div>
+            <div style="font-size:11px;color:#52C41A;background:rgba(82,196,26,0.15);padding:2px 8px;border-radius:10px">已启动 · 实时消除</div>
+          </div>
+          <div style="font-size:11px;color:var(--text-dim);line-height:1.6;margin-bottom:8px">一旦检测到 G1~G5 级地磁暴，自动启动地磁中和场，瞬间消除地磁扰动，恢复 G0 平静。保护全宇宙通信/气候/医疗/复活所有模块不受影响。</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px">
+            <div style="text-align:center;background:rgba(0,0,0,0.2);border-radius:6px;padding:6px">
+              <div id="magNeutralizeCount" style="font-size:16px;font-weight:bold;color:#52C41A">0</div>
+              <div style="font-size:10px;color:var(--text-dim)">已消除地磁暴</div>
+            </div>
+            <div style="text-align:center;background:rgba(0,0,0,0.2);border-radius:6px;padding:6px">
+              <div id="magNeutralizeTime" style="font-size:16px;font-weight:bold;color:var(--cyan)">0.00s</div>
+              <div style="font-size:10px;color:var(--text-dim)">平均消除耗时</div>
+            </div>
+            <div style="text-align:center;background:rgba(0,0,0,0.2);border-radius:6px;padding:6px">
+              <div style="font-size:16px;font-weight:bold;color:#52C41A">100%</div>
+              <div style="font-size:10px;color:var(--text-dim)">消除成功率</div>
+            </div>
+          </div>
+        </div>
         <div id="magLog" style="max-height:160px;overflow-y:auto;background:rgba(0,0,0,0.2);border-radius:6px;padding:8px;font-size:11px;font-family:var(--mono)"></div>
       </div>
     </div>
@@ -5524,7 +5546,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.95 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.96 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -6506,6 +6528,23 @@ function magScan(){
   document.getElementById('magLog').innerHTML += '<div style="color:#00d4ff">🔍 扫描全宇宙磁场中...</div>';
   document.getElementById('magField').innerText = (48000 + Math.floor(Math.random()*1000)) + ' nT';
 }
+(function(){
+  var count=0, totalTime=0;
+  setInterval(function(){
+    // 10% 概率触发一次自动消除
+    if(Math.random()<0.1){
+      count++;
+      var t=(Math.random()*0.5+0.01).toFixed(2);
+      totalTime+=parseFloat(t);
+      var c=document.getElementById('magNeutralizeCount');
+      var tm=document.getElementById('magNeutralizeTime');
+      if(c) c.textContent=count;
+      if(tm) tm.textContent=(totalTime/count).toFixed(2)+'s';
+      var log=document.getElementById('magLog');
+      if(log) log.innerHTML='<div style="color:#52C41A">🌪️ 自动消除地磁暴完成 · 耗时 '+t+'s · 恢复 G0 平静</div>'+log.innerHTML;
+    }
+  },10000);
+})();
 function magStabilize(){
   document.getElementById('magLog').innerHTML += '<div style="color:#52C41A">🛡️ 磁场稳定护盾已启动</div>';
   document.getElementById('magStorm').innerText = 'G0 · 平静';
@@ -14784,7 +14823,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.5.95';
+var systemVersion = 'v1.5.96';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
