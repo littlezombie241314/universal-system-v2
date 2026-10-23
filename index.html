@@ -1502,7 +1502,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.89 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.90 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -5425,7 +5425,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.89 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.90 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -6432,9 +6432,12 @@ function magStabilize(){
         if(log){
           log.innerHTML = '<div style="color:#FAAD14">⚠️ 检测到 '+levels[level]+' 地磁扰动 · 启动量子纠错...</div>'+log.innerHTML;
           setTimeout(function(){
-            log.innerHTML = '<div style="color:#00d4ff">📡 通道修复完成 · 冗余通道切换成功 · 0中断/0丢包/0延迟波动</div>'+log.innerHTML;
-            stormEl.innerText='G0 · 平静';
-            stormEl.style.color='#52C41A';
+            log.innerHTML = '<div style="color:#00d4ff">📡 当前通信通道修复完成 · 冗余通道切换成功 · 0中断/0丢包/0延迟波动</div>'+log.innerHTML;
+            setTimeout(function(){
+              log.innerHTML = '<div style="color:#52C41A">✅ 修复完成 · 切回最优超光速通道 · 0延迟恢复</div>'+log.innerHTML;
+              stormEl.innerText='G0 · 平静 · 最优通道';
+              stormEl.style.color='#52C41A';
+            }, 0);
           }, 0);
         }
       }
@@ -14650,7 +14653,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.5.89';
+var systemVersion = 'v1.5.90';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
