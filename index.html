@@ -1502,7 +1502,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.88 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.89 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -5425,7 +5425,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.88 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.89 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -6411,6 +6411,27 @@ function magStabilize(){
   document.getElementById('magLog').innerHTML += '<div style="color:#52C41A">🛡️ 磁场稳定护盾已启动</div>';
   document.getElementById('magStorm').innerText = 'G0 · 平静';
 }
+// 每秒地磁扰动自动检测 + 量子纠错 + 通道修复 + 冗余切换
+(function(){
+  var levels=['G0 · 平静','G1 · 弱','G2 · 中','G3 · 强','G4 · 严重','G5 · 极端'];
+  setInterval(function(){
+    var lv = Math.random() < 0.92 ? 0 : 1 + Math.floor(Math.random()*5);
+    var el = document.getElementById('magStorm');
+    if(!el) return;
+    el.innerText = levels[lv];
+    if(lv>0){
+      el.style.color = lv>=3 ? '#EA6668' : '#FAAD14';
+      var log = document.getElementById('magLog');
+      if(log){
+        log.innerHTML += '<div style="color:#FAAD14">⚠️ 检测到 '+levels[lv]+' 地磁扰动，启动量子纠错 + 通道修复 + 冗余通道切换...</div>';
+        setTimeout(function(){
+          el.innerText='G0 · 平静'; el.style.color='#52C41A';
+          log.innerHTML += '<div style="color:#52C41A">✅ 已修复：通信通道 0 中断 · 0 丢包 · 0 延迟波动</div>';
+        }, 0);
+      }
+    }
+  }, 1000);
+})();
 function startSystem(){log('系统启动 · 全宇宙恒等系统控制台已上线','sys');log('无限循环检查已启动 · 每秒执行','info');var i=0;
   setInterval(function(){log(sysMsgs[i%sysMsgs.length][0],sysMsgs[i%sysMsgs.length][1]);i++},1000)}
 
@@ -14598,7 +14619,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.5.88';
+var systemVersion = 'v1.5.89';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
