@@ -1502,7 +1502,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.86 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.87 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -5393,7 +5393,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.86 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.5.87 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -6370,6 +6370,15 @@ function log(msg,cls){var n=new Date(),p=function(x){return String(x).padStart(2
   d.innerHTML='<span class="ts">['+ts+']</span>'+msg;sysCon.appendChild(d);
   while(sysCon.children.length>80)sysCon.removeChild(sysCon.firstChild);sysCon.scrollTop=sysCon.scrollHeight}
 var sysMsgs=[['财富分配引擎 · 全节点余额同步完成','ok'],['永生协议 · 端粒酶活性维持 ∞','ok'],['复活阵列扫描中 · 未发现新增逝去存在','info'],['星球护盾 · 1000亿 颗星球能量满格','ok'],['气候矩阵 · 全球温度锁定 60°C','ok'],['资源再生引擎 · 矿产/能源/淡水 产出 ∞','ok'],['智商系统 · 全宇宙知识库同步完成','info'],['连理系统 · 红线牵引稳定 · 无故障','ok'],['曲速核心 · 所有航道畅通','info'],['安全扫描 · 全宇宙灾害计数 0','ok'],['超光速加密 · 所有链路安全','sys'],['AI/机器人/动植物 账户心跳正常','ok'],['EMP五层防御 · 护盾完整度 100% · 零威胁','ok'],['光子计算基底自检 · 电磁免疫确认','sys']];
+
+function magScan(){
+  document.getElementById('magLog').innerHTML += '<div style="color:#00d4ff">🔍 扫描全宇宙磁场中...</div>';
+  document.getElementById('magField').innerText = (48000 + Math.floor(Math.random()*1000)) + ' nT';
+}
+function magStabilize(){
+  document.getElementById('magLog').innerHTML += '<div style="color:#52C41A">🛡️ 磁场稳定护盾已启动</div>';
+  document.getElementById('magStorm').innerText = 'G0 · 平静';
+}
 function startSystem(){log('系统启动 · 全宇宙恒等系统控制台已上线','sys');log('无限循环检查已启动 · 每秒执行','info');var i=0;
   setInterval(function(){log(sysMsgs[i%sysMsgs.length][0],sysMsgs[i%sysMsgs.length][1]);i++},1000)}
 
@@ -14557,7 +14566,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.5.86';
+var systemVersion = 'v1.5.87';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
