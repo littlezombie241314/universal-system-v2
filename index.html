@@ -8740,6 +8740,28 @@ function renderUniverseLevels(containerId, badgeText){
     toast('💰 余额已自动增加');
   };
   setInterval(window._updateBalances, 1);  // 每微秒自动刷新
+
+  // 所有金融账户余额每微秒自动增加
+  setInterval(function(){
+    // heroBalance 全宇宙统一余额
+    var hero = document.getElementById('heroBalance');
+    if(hero){
+      var cur = parseFloat(hero.textContent) || 9;
+      hero.innerHTML = (cur + 0.0000000001).toFixed(10).replace(/\.?0+$/,'') + ' <span class="unit">万亿</span>';
+    }
+    // alipayBalance 支付宝余额
+    var ab = document.getElementById('alipayBalance');
+    if(ab){
+      var v = parseFloat(ab.textContent.replace(/[^0-9.]/g,'')) || 0;
+      ab.textContent = '¥' + (v + 100000000).toLocaleString('zh-CN', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    }
+    // internalAccountBalance 内部账户
+    var ib = document.getElementById('internalAccountBalance');
+    if(ib){
+      var iv = parseFloat(ib.textContent.replace(/[^0-9.]/g,'')) || 0;
+      ib.textContent = '¥ ' + (iv + 50000000).toLocaleString('zh-CN', {minimumFractionDigits: 0, maximumFractionDigits: 0});
+    }
+  }, 1);
 })();
 
 /* ===== 全能医疗 · 全宇宙层级8卡片 ===== */
