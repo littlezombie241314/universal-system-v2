@@ -8514,20 +8514,21 @@ function renderUniverseLevels(containerId, badgeText){
   var box = document.getElementById(containerId);
   if (!box) return;
   var LV=[
-    {icon:'🌌',name:'宇宙层级'},
-    {icon:'🌠',name:'星系层级'},
-    {icon:'🪐',name:'星球层级'},
-    {icon:'👽',name:'文明层级'},
-    {icon:'🏛️',name:'国家层级'},
-    {icon:'🏙️',name:'地区层级'},
-    {icon:'👤',name:'个人层级'},
-    {icon:'✨',name:'未分层级存在'}
+    {icon:'🌌',name:'宇宙层级',comm:'量子纠缠+虫洞瞬时'},
+    {icon:'🌠',name:'星系层级',comm:'曲速通信'},
+    {icon:'🪐',name:'星球层级',comm:'量子纠缠+卫星中继'},
+    {icon:'👽',name:'文明层级',comm:'量子纠缠+量子加密'},
+    {icon:'🏛️',name:'国家层级',comm:'超光速+量子加密备份'},
+    {icon:'🏙️',name:'地区层级',comm:'量子加密+太赫兹'},
+    {icon:'👤',name:'个人层级',comm:'超光速+端到端加密'},
+    {icon:'✨',name:'未分层级存在',comm:'量子纠缠自适应路由'}
   ];
   box.innerHTML = LV.map(function(lv){
     return '<div style="background:rgba(0,0,0,0.25);border:1px solid rgba(82,196,26,0.25);border-radius:8px;padding:10px;text-align:center">'
       + '<div style="font-size:20px">'+lv.icon+'</div>'
       + '<div style="font-size:12px;font-weight:bold;color:var(--text);margin-top:2px">'+lv.name+'</div>'
       + '<div style="font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(82,196,26,0.2);color:#52C41A;margin:5px 0">'+badgeText+'</div>'
+      + '<div style="font-size:9px;color:#C4B5FD;margin:2px 0">📡 '+lv.comm+'</div>'
       + '<div style="font-size:9px;color:var(--text-dim)">离线也保持</div></div>';
   }).join('');
 }
