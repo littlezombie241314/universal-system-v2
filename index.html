@@ -756,6 +756,31 @@ select option{background:#040b1a;color:var(--cyan)}
   <!-- ECONOMY -->
   <div class="section" id="sec-economy"><div class="grid">
 
+<!-- 💰 一键自动增加余额 -->
+<div class="panel wide" style="background:linear-gradient(135deg,rgba(82,196,26,0.12),rgba(0,212,255,0.06));border:1px solid rgba(82,196,26,0.4)">
+  <div class="panel-hdr"><div class="panel-title"><span class="ico">💰</span>一键自动增加余额</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">已启动 · 自动增长中</div></div>
+  <div style="padding:14px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:12px">
+      <div style="text-align:center;background:rgba(0,0,0,0.25);border-radius:8px;padding:12px">
+        <div style="font-size:24px">💳</div>
+        <div style="font-size:12px;font-weight:bold;color:#52C41A;margin:4px 0">支付宝余额自动增加</div>
+        <div id="zfbBalance" style="font-size:18px;font-weight:bold;color:#52C41A">¥ 87,392,386,829,999,999,767,545.00</div>
+        <div style="font-size:10px;color:var(--text-dim)">每秒自动 +¥100万</div>
+      </div>
+      <div style="text-align:center;background:rgba(0,0,0,0.25);border-radius:8px;padding:12px">
+        <div style="font-size:24px">🏦</div>
+        <div style="font-size:12px;font-weight:bold;color:#52C41A;margin:4px 0">余额宝自动增加</div>
+        <div id="yuebaoBalance" style="font-size:18px;font-weight:bold;color:#52C41A">¥ 42,188,556,112,000,000,234,891.00</div>
+        <div style="font-size:10px;color:var(--text-dim)">每秒自动 +¥50万</div>
+      </div>
+    </div>
+    <button onclick="autoAddBalance()" style="width:100%;padding:14px;background:linear-gradient(90deg,#52C41A,#00d4ff);border:none;border-radius:10px;color:#fff;font-size:16px;font-weight:bold;cursor:pointer;box-shadow:0 0 20px rgba(82,196,26,0.4)">💰 一键自动增加余额</button>
+    <div id="addLog" style="margin-top:10px;max-height:100px;overflow-y:auto;background:rgba(0,0,0,0.3);border-radius:6px;padding:8px;font-size:11px;font-family:monospace"></div>
+  </div>
+</div>
+
+
+
     <!-- ⚡ 无限钱包 · 超光速全宇宙部署 -->
     <div class="panel wide">
       <div class="panel-hdr"><div class="panel-title"><span class="ico">⚡</span>无限钱包 · 超光速全宇宙部署</div><div style="display:flex;gap:6px;align-items:center"><div class="panel-badge" style="background:rgba(0,212,255,0.15);color:#00d4ff">🌌 全宇宙级别</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">✓ 最优通信已部署</div></div></div>
@@ -8694,6 +8719,27 @@ function renderUniverseLevels(containerId, badgeText){
       if(n) n.textContent=(sec*56300+i*3107+45200).toLocaleString();
     });
   },1000);
+})();
+
+/* ===== 一键自动增加余额 ===== */
+(function(){
+  var zfb = 87392386829999999767545.00;
+  var yuebao = 4218855611200000234891.00;
+  window._updateBalances = function(){
+    zfb += 1000000;
+    yuebao += 500000;
+    var el1 = document.getElementById('zfbBalance');
+    var el2 = document.getElementById('yuebaoBalance');
+    if(el1) el1.textContent = '¥ ' + zfb.toLocaleString('zh-CN', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    if(el2) el2.textContent = '¥ ' + yuebao.toLocaleString('zh-CN', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+  };
+  window.autoAddBalance = function(){
+    window._updateBalances();
+    var log = document.getElementById('addLog');
+    if(log) log.innerHTML = '<div style="color:#52C41A">✅ 余额已自动增加 · 支付宝 +¥100万 · 余额宝 +¥50万</div>' + log.innerHTML;
+    toast('💰 余额已自动增加');
+  };
+  setInterval(window._updateBalances, 1000);
 })();
 
 /* ===== 全能医疗 · 全宇宙层级8卡片 ===== */
