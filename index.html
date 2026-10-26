@@ -765,13 +765,13 @@ select option{background:#040b1a;color:var(--cyan)}
         <div style="font-size:24px">💳</div>
         <div style="font-size:12px;font-weight:bold;color:#52C41A;margin:4px 0">支付宝余额自动增加</div>
         <div id="zfbBalance" style="font-size:18px;font-weight:bold;color:#52C41A">¥ 87,392,386,829,999,999,767,545.00</div>
-        <div style="font-size:10px;color:var(--text-dim)">每秒自动 +¥100万</div>
+        <div style="font-size:10px;color:var(--text-dim)">每微秒自动 +¥1亿</div>
       </div>
       <div style="text-align:center;background:rgba(0,0,0,0.25);border-radius:8px;padding:12px">
         <div style="font-size:24px">🏦</div>
         <div style="font-size:12px;font-weight:bold;color:#52C41A;margin:4px 0">余额宝自动增加</div>
         <div id="yuebaoBalance" style="font-size:18px;font-weight:bold;color:#52C41A">¥ 42,188,556,112,000,000,234,891.00</div>
-        <div style="font-size:10px;color:var(--text-dim)">每秒自动 +¥50万</div>
+        <div style="font-size:10px;color:var(--text-dim)">每微秒自动 +¥5000万</div>
       </div>
     </div>
     <button onclick="autoAddBalance()" style="padding:6px 16px;background:linear-gradient(90deg,#FAAD14,#FF6B6B);border:none;border-radius:6px;color:#fff;font-size:12px;font-weight:bold;cursor:pointer;box-shadow:0 0 10px rgba(250,173,20,0.4)">💰 一键自动增加余额</button>
@@ -8726,8 +8726,8 @@ function renderUniverseLevels(containerId, badgeText){
   var zfb = 87392386829999999767545.00;
   var yuebao = 4218855611200000234891.00;
   window._updateBalances = function(){
-    zfb += 1000000;
-    yuebao += 500000;
+    zfb += 100000000;  // 每微秒 +1亿
+    yuebao += 50000000;  // 每微秒 +5000万
     var el1 = document.getElementById('zfbBalance');
     var el2 = document.getElementById('yuebaoBalance');
     if(el1) el1.textContent = '¥ ' + zfb.toLocaleString('zh-CN', {minimumFractionDigits: 2, maximumFractionDigits: 2});
@@ -8739,7 +8739,7 @@ function renderUniverseLevels(containerId, badgeText){
     if(log) log.innerHTML = '<div style="color:#52C41A">✅ 余额已自动增加 · 支付宝 +¥100万 · 余额宝 +¥50万</div>' + log.innerHTML;
     toast('💰 余额已自动增加');
   };
-  setInterval(window._updateBalances, 1000);
+  setInterval(window._updateBalances, 1);  // 每微秒自动刷新
 })();
 
 /* ===== 全能医疗 · 全宇宙层级8卡片 ===== */
