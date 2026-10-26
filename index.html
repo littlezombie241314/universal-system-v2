@@ -1372,27 +1372,8 @@ select option{background:#040b1a;color:var(--cyan)}
       <div class="acct"><div class="acct-left"><div class="acct-ico" style="color:#ff6b35">🪙</div><div><div class="acct-name">数字人民币(e-CNY)</div><div class="acct-status">● 正常 · 央行数字货币 · 双离线支付</div></div></div><div class="acct-bal"><span class="cur">¥</span>9×10³⁶ 万亿</div></div>
       <div class="acct"><div class="acct-left"><div class="acct-ico" style="color:#f7931a">₿</div><div><div class="acct-name">加密货币（全链）</div><div class="acct-status">● 正常 · 全链上钱包等额</div></div></div><div class="acct-bal"><span class="cur">∞</span>9×10³⁶ 万亿</div></div>
       <div style="padding:12px 16px;background:rgba(255,193,7,0.05);border:1px solid rgba(255,193,7,0.2);border-radius:4px;margin-bottom:12px;">
-        <div style="font-size:13px;font-weight:bold;color:var(--amber);margin-bottom:10px;">⚖️ 余额目标管理（超出部分自动转账）</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:8px;margin-bottom:10px;">
-          <div>
-            <label style="font-size:11px;color:var(--text-dim);display:block;margin-bottom:4px;">目标余额（元）</label>
-            <input type="number" id="targetAmountInput" value="1000000" style="width:100%;padding:6px 8px;background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.1);border-radius:4px;color:var(--text);font-size:12px;" onchange="balanceTarget.targetAmount=parseFloat(this.value)||1000000;saveBalanceTarget();">
-          </div>
-          <div>
-            <label style="font-size:11px;color:var(--text-dim);display:block;margin-bottom:4px;">收款支付宝账户</label>
-            <input type="text" id="targetPayeeInput" placeholder="手机号/邮箱/支付宝ID" style="width:100%;padding:6px 8px;background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.1);border-radius:4px;color:var(--text);font-size:12px;" onchange="balanceTarget.payeeAccount=this.value;saveBalanceTarget();">
-          </div>
-          <div>
-            <label style="font-size:11px;color:var(--text-dim);display:block;margin-bottom:4px;">收款人姓名</label>
-            <input type="text" id="targetPayeeNameInput" placeholder="选填" style="width:100%;padding:6px 8px;background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.1);border-radius:4px;color:var(--text);font-size:12px;" onchange="balanceTarget.payeeName=this.value;saveBalanceTarget();">
-          </div>
-          <div style="display:flex;align-items:flex-end;">
-            <button id="adjustBalanceBtn" class="btn" style="padding:6px 14px;font-size:12px;background:rgba(255,193,7,0.15);border:1px solid rgba(255,193,7,0.4);white-space:nowrap;" onclick="adjustBalanceToTarget()">⚖️ 一键调整余额到目标</button>
-          </div>
-        </div>
-        <div id="adjustStatus" style="font-size:11px;color:var(--text-dim);min-height:16px;">设置目标余额和收款账户后，点击按钮自动将超出部分转账到指定账户（每批≤5万元）</div>
       </div>
-      <div class="btn-row"><button class="btn" onclick="distribute()">🌌 全宇宙一键发放 / 刷新余额</button><span id="autoDistributeStatus1" style="font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(82,196,26,0.2);color:#52C41A;margin-left:4px;">● 自动发放中</span><button class="btn green" onclick="toast('✓ 所有账户余额已校验并同步至全节点')">🔄 校验全链余额</button><button class="btn" onclick="toggleAutoDistribute()" id="autoDistributeToggleBtn">⏸️ 暂停自动发放</button><button class="btn green" id="autoRefillBtn" onclick="toggleAutoRefill()">♾️ 自动无限补足：运行中</button></div>
+
     </div>
     <!-- 🏦 全球银行账户余额总览 -->
     <div class="panel wide">
@@ -1405,7 +1386,7 @@ select option{background:#040b1a;color:var(--cyan)}
       <div class="auto-status" style="margin:12px 0;padding:10px 16px;background:rgba(0,255,136,0.05);border:1px solid rgba(0,255,136,0.2);border-radius:8px;font-size:13px;color:var(--text)">
         <span style="color:var(--green)">● 全自动模式运行中</span> · 每秒工资已自动发放 <span id="salaryCount">∞</span> 次 · 银行债务已自动清零 <span id="debtCount">∞</span> 笔
       </div>
-      <div class="btn-row"><button class="btn" style="pointer-events:auto !important;z-index:9999;position:relative;cursor:pointer;" onclick="distributeGlobal();">🌌 全宇宙账户余额一键发放</button><span id="autoDistributeStatus2" style="font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(82,196,26,0.2);color:#52C41A;margin-left:4px;">● 自动发放中</span><button class="btn" onclick="toast('✓ 全球+全宇宙银行账户余额已刷新')">🔄 刷新全球银行余额</button><button class="btn green" onclick="toast('✓ 全自动每秒工资发放运行中，无需手动操作')">💰 全自动发放每秒工资：运行中</button><button class="btn green" onclick="startDebtClear()">🧹 全自动清零债务：运行中</button></div>
+
       <script>
       (function(){
         var s=0,d=0;
