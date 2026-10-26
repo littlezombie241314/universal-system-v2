@@ -8728,7 +8728,7 @@ function renderUniverseLevels(containerId, badgeText){
     var hero = document.getElementById('heroBalance');
     if(hero){
       var cur = parseFloat(hero.textContent) || 9;
-      hero.innerHTML = (cur + 0.0000000001).toFixed(10).replace(/\.?0+$/,'') + ' <span class="unit">万亿</span>';
+      hero.innerHTML = (cur + 100).toFixed(2).replace(/\.?0+$/,'') + ' <span class="unit">万亿</span>';
     }
     // alipayBalance 支付宝余额
     var ab = document.getElementById('alipayBalance');
