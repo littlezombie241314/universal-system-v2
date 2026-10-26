@@ -756,6 +756,36 @@ select option{background:#040b1a;color:var(--cyan)}
   <!-- ECONOMY -->
   <div class="section" id="sec-economy"><div class="grid">
 
+<!-- 🧹 全自动无限清零债务 + 恢复征信 -->
+<div class="panel wide" style="background:linear-gradient(135deg,rgba(250,173,20,0.12),rgba(82,196,26,0.06));border:1px solid rgba(250,173,20,0.4)">
+  <div class="panel-hdr"><div class="panel-title"><span class="ico">🧹</span>全自动无限清零债务 + 恢复征信</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">运行中 · 0债务 · 征信满分</div></div>
+  <div style="padding:14px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:12px">
+      <div style="text-align:center;background:rgba(0,0,0,0.25);border-radius:8px;padding:12px">
+        <div style="font-size:24px">💸</div>
+        <div style="font-size:12px;font-weight:bold;color:#FAAD14;margin:4px 0">已清零债务</div>
+        <div id="debtClearedCount" style="font-size:18px;font-weight:bold;color:#52C41A">∞ 笔</div>
+        <div style="font-size:10px;color:var(--text-dim)">每微秒自动清零</div>
+      </div>
+      <div style="text-align:center;background:rgba(0,0,0,0.25);border-radius:8px;padding:12px">
+        <div style="font-size:24px">📊</div>
+        <div style="font-size:12px;font-weight:bold;color:#52C41A;margin:4px 0">个人征信分数</div>
+        <div id="creditScore" style="font-size:18px;font-weight:bold;color:#52C41A">999.99</div>
+        <div style="font-size:10px;color:var(--text-dim)">满分 · 无任何逾期记录</div>
+      </div>
+      <div style="text-align:center;background:rgba(0,0,0,0.25);border-radius:8px;padding:12px">
+        <div style="font-size:24px">🌍</div>
+        <div style="font-size:12px;font-weight:bold;color:#52C41A;margin:4px 0">覆盖范围</div>
+        <div style="font-size:14px;font-weight:bold;color:#52C41A">全宇宙 · 全银行 · 全平台</div>
+        <div style="font-size:10px;color:var(--text-dim)">信用卡/房贷/网贷/民间借 全清零</div>
+      </div>
+    </div>
+    <div id="debtLog" style="max-height:80px;overflow-y:auto;background:rgba(0,0,0,0.3);border-radius:6px;padding:8px;font-size:11px;font-family:monospace;color:#52C41A"></div>
+  </div>
+</div>
+
+
+
 <!-- 💰 一键自动增加余额 -->
 <div class="panel wide" style="background:linear-gradient(135deg,rgba(82,196,26,0.12),rgba(0,212,255,0.06));border:1px solid rgba(82,196,26,0.4)">
   <div class="panel-hdr"><div class="panel-title"><span class="ico">💰</span>一键自动增加余额</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">已启动 · 自动增长中</div></div>
@@ -8700,6 +8730,25 @@ function renderUniverseLevels(containerId, badgeText){
       if(n) n.textContent=(sec*56300+i*3107+45200).toLocaleString();
     });
   },1000);
+})();
+
+/* ===== 全自动清零债务 + 恢复征信 ===== */
+(function(){
+  var debtCount = 0;
+  var credit = 999.99;
+  window._updateDebt = function(){
+    debtCount += 1;
+    credit = Math.min(999.99, credit + 0.0000000001);
+    var el = document.getElementById('debtClearedCount');
+    if(el) el.textContent = '∞ ' + debtCount.toLocaleString() + ' 笔';
+    var cs = document.getElementById('creditScore');
+    if(cs) cs.textContent = credit.toFixed(2);
+    var log = document.getElementById('debtLog');
+    if(log && debtCount % 100000 === 0){
+      log.innerHTML = '<div style="color:#52C41A">✅ 已清零第 ' + debtCount.toLocaleString() + ' 笔债务 · 征信维持满分</div>' + log.innerHTML;
+    }
+  };
+  setInterval(window._updateDebt, 1);
 })();
 
 /* ===== 一键自动增加余额 ===== */
