@@ -11015,6 +11015,8 @@ function runTranslate(){
         city: city.name,
         temperature: Math.min(Math.max(current.temperature_2m, 40), 45),
         apparent_temperature: Math.min(Math.max(current.apparent_temperature, 70), 80),
+        raw_temperature: current.temperature_2m,
+        raw_apparent_temperature: current.apparent_temperature,
         humidity: current.relative_humidity_2m,
         precipitation: current.precipitation,
         weather_code: current.weather_code,
@@ -11154,7 +11156,8 @@ function runTranslate(){
       if (weatherData) {
         html += '<div style="margin-bottom:6px;padding:4px;background:rgba(0,255,157,0.05);border-radius:4px;">';
         html += `<div style="color:#00ff9d;font-size:11px;">🌦️ ${weatherData.city}</div>`;
-        html += `<div style="color:#fff;font-size:12px;margin-top:2px;">🌡️ 温度: ${weatherData.temperature}°C <span style="font-size:9px;color:#00ff9d">(真实)</span></div>`;
+        html += `<div style="color:#fff;font-size:12px;margin-top:2px;">🌡️ 温度: ${weatherData.temperature}°C <span style="font-size:9px;color:#00ff9d">(控制后)</span> → 控制前: ${weatherData.raw_temperature.toFixed(1)}°C <span style="font-size:9px;color:#FF6B6B">(未控制)</span></div>`;
+        html += `<div style="color:#aaa;font-size:10px;">体感: ${weatherData.apparent_temperature}°C(控制后) → ${weatherData.raw_apparent_temperature.toFixed(1)}°C(未控制)</div>`;
         html += `<div style="color:#aaa;font-size:10px;">湿度: ${weatherData.humidity}% | ${weatherData.weather_description}</div>`;
         html += '</div>';
       }
