@@ -2718,6 +2718,46 @@ select option{background:#040b1a;color:var(--cyan)}
         </div>
       </div>
     </div>
+    <!-- 📡 实时太阳高度角显示系统 -->
+    <div class="panel wide" style="background:linear-gradient(135deg,rgba(250,204,21,0.10),rgba(0,212,255,0.05));border:1px solid rgba(250,204,21,0.4)">
+      <div class="panel-hdr"><div class="panel-title"><span class="ico">📡</span>实时太阳高度角显示系统</div><div class="panel-badge" style="background:rgba(250,204,21,0.2);color:#FACC15">● 实时运行中</div></div>
+      <div style="padding:16px">
+        <div style="display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;margin-bottom:12px">
+          <div style="text-align:center">
+            <div style="font-size:48px;color:#FACC15;text-shadow:0 0 30px rgba(250,204,21,0.6);font-weight:bold;font-family:var(--mono)" id="sunAngleLive">70°</div>
+            <div style="font-size:11px;color:var(--text-dim)">当前实时高度角</div>
+          </div>
+          <div style="width:1px;height:64px;background:rgba(255,255,255,0.15)"></div>
+          <div style="text-align:center">
+            <div style="font-size:28px;color:var(--cyan);font-family:var(--mono)" id="sunAngleClock">--:--:--</div>
+            <div style="font-size:11px;color:var(--text-dim)">实时时钟</div>
+          </div>
+          <div style="width:1px;height:64px;background:rgba(255,255,255,0.15)"></div>
+          <div style="text-align:center">
+            <div style="font-size:24px;color:#FACC15" id="sunAnglePhase">☀️ 正午</div>
+            <div style="font-size:11px;color:var(--text-dim)">当前时段</div>
+          </div>
+        </div>
+        <div style="background:rgba(0,0,0,0.3);border-radius:8px;padding:10px;margin-bottom:12px">
+          <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-dim);margin-bottom:4px">
+            <span>0°</span><span>太阳轨迹（东升 → 天顶 → 西落）</span><span>90°</span>
+          </div>
+          <div style="position:relative;height:12px;background:linear-gradient(90deg,rgba(250,204,21,0.15),rgba(250,204,21,0.5),rgba(250,204,21,0.15));border-radius:6px;overflow:hidden">
+            <div id="sunTrajectoryDot" style="position:absolute;top:50%;left:77.7%;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;background:radial-gradient(circle,#fff,#FACC15 60%,#F97316);box-shadow:0 0 12px #FACC15;transition:left .5s"></div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;font-size:11px">
+          <div style="background:rgba(0,0,0,0.2);padding:8px;border-radius:6px;text-align:center">🌅 清晨<br><b style="color:#FACC15">70°</b></div>
+          <div style="background:rgba(0,0,0,0.2);padding:8px;border-radius:6px;text-align:center">🌤️ 上午<br><b style="color:#FACC15" id="sunAngleMorning">70°→80°</b></div>
+          <div style="background:rgba(0,0,0,0.2);padding:8px;border-radius:6px;text-align:center">☀️ 正午<br><b style="color:#FACC15">80°</b></div>
+          <div style="background:rgba(0,0,0,0.2);padding:8px;border-radius:6px;text-align:center">🌇 下午<br><b style="color:#FACC15" id="sunAngleAfternoon">80°→70°</b></div>
+          <div style="background:rgba(0,0,0,0.2);padding:8px;border-radius:6px;text-align:center">🌆 傍晚<br><b style="color:#FACC15">70°</b></div>
+          <div style="background:rgba(0,0,0,0.2);padding:8px;border-radius:6px;text-align:center">🌃 夜间<br><b style="color:#FACC15">70°</b></div>
+        </div>
+        <div style="margin-top:10px;font-size:10px;color:var(--text-dim);text-align:center">☀️ 太阳永不落山 · 全宇宙最优光照 · 实时追踪 · 每帧刷新</div>
+      </div>
+    </div>
+
     <style>
       @keyframes earthOrbit { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
       @keyframes moonOrbit { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
@@ -8862,6 +8902,42 @@ setInterval(function(){
     if(slider) slider.value = angle;
     if(val) val.textContent = angle + '°';
     if(disp) disp.textContent = angle + '°（自动）';
+  }, 1000);
+})();
+
+/* ===== 实时太阳高度角显示系统 ===== */
+(function(){
+  function getPhase(hour, minute){
+    var t = hour + minute/60;
+    if(t >= 6 && t < 9) return {phase:'🌅 清晨', desc:'清晨'};
+    if(t >= 9 && t < 11) return {phase:'🌤️ 上午', desc:'上午'};
+    if(t >= 11 && t < 14) return {phase:'☀️ 正午', desc:'正午'};
+    if(t >= 14 && t < 17) return {phase:'🌇 下午', desc:'下午'};
+    if(t >= 17 && t < 19) return {phase:'🌆 傍晚', desc:'傍晚'};
+    return {phase:'🌃 夜间', desc:'夜间'};
+  }
+  function getAngle(hour, minute){
+    var t = hour + minute/60;
+    if(t >= 6 && t < 9) return 70;
+    if(t >= 9 && t < 11) return Math.round(70 + (t-9)/2 * 10);
+    if(t >= 11 && t < 14) return 80;
+    if(t >= 14 && t < 17) return Math.round(80 - (t-14)/3 * 10);
+    if(t >= 17 && t < 19) return 70;
+    return 70;
+  }
+  setInterval(function(){
+    var now = new Date();
+    var h = now.getHours(), m = now.getMinutes(), s = now.getSeconds();
+    var angle = getAngle(h, m);
+    var ph = getPhase(h, m);
+    var el = document.getElementById('sunAngleLive');
+    var clk = document.getElementById('sunAngleClock');
+    var phEl = document.getElementById('sunAnglePhase');
+    var dot = document.getElementById('sunTrajectoryDot');
+    if(el) el.textContent = angle + '°';
+    if(clk) clk.textContent = ('0'+h).slice(-2) + ':' + ('0'+m).slice(-2) + ':' + ('0'+s).slice(-2);
+    if(phEl) phEl.textContent = ph.phase;
+    if(dot) dot.style.left = (angle/90*100).toFixed(1) + '%';
   }, 1000);
 })();
 
