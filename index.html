@@ -8936,7 +8936,8 @@ setInterval(function(){
       + '<div style="font-size:12px;font-weight:bold;color:var(--text);margin-top:2px">'+lv.name+'</div>'
       + '<div style="font-size:10px;color:var(--text-dim);margin:4px 0">🛰️ 卫星 <span class="commSats" style="color:#00d4ff;font-weight:bold">--</span></div>'
       + '<div style="font-size:10px;color:var(--text-dim);margin-bottom:4px">📡 设备 <span class="commDevs" style="color:#00d4ff;font-weight:bold">--</span></div>'
-      + '<div style="font-size:9px;padding:2px 8px;border-radius:10px;background:rgba(82,196,26,0.2);color:#52C41A">● 在线 · 量子纠缠</div></div>';
+      + '<div style="font-size:10px;color:var(--text-dim);margin-bottom:2px">状态 <span class="commStatus" style="color:#52C41A;font-weight:bold">🟢 正常</span></div>'
+      + '<div style="font-size:9px;padding:2px 8px;border-radius:10px;background:rgba(82,196,26,0.2);color:#52C41A">0故障 · 0延迟 · 量子纠缠</div></div>';
   }).join('');
   var states = LV.map(function(lv){ return {sats: lv.sats, devs: lv.devs}; });
   function tick(){
@@ -8947,8 +8948,10 @@ setInterval(function(){
       st.devs += 2 + Math.floor(Math.random()*8);
       var s = card.querySelector('.commSats');
       var d = card.querySelector('.commDevs');
+      var stt = card.querySelector('.commStatus');
       if(s) s.textContent = st.sats.toLocaleString();
       if(d) d.textContent = st.devs.toLocaleString();
+      if(stt) stt.textContent = (Math.random()>0.95) ? '🟢 最优' : '🟢 正常';
     });
   }
   tick();
