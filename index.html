@@ -3542,6 +3542,11 @@ select option{background:#040b1a;color:var(--cyan)}
 
   <div class="section" id="sec-karma"><div class="grid">
 
+<!-- 💰 全宇宙层级 · 无限工资全覆盖 -->
+<div class="panel wide"><div class="panel-hdr"><div class="panel-title"><span class="ico">💰</span>全宇宙层级 · 无限工资全覆盖</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">所有层级生效</div></div>
+  <div id="karmaSalaryLevels" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;padding:10px 14px 6px"></div>
+</div>
+
 <!-- 人品系统模块 · 全局最优通信方式 -->
     <div class="panel wide" style="margin-top:12px;border:1px solid rgba(139,92,246,0.5);background:linear-gradient(135deg,rgba(139,92,246,0.12),rgba(250,204,21,0.06))">
       <div class="panel-hdr"><div class="panel-title"><span class="ico">⚛️</span>人品系统模块 · 全局最优通信方式</div><div class="panel-badge" style="background:rgba(139,92,246,0.25);color:#B39DDB">已锁定</div></div>
@@ -8959,6 +8964,42 @@ setInterval(function(){
   }
   tick();
   setInterval(tick, 2000);
+})();
+
+/* ===== 全宇宙层级 · 无限工资 8卡片实时状态 ===== */
+(function(){
+  var box = document.getElementById('karmaSalaryLevels');
+  if (!box) return;
+  var LV=[
+    {icon:'🌌',name:'宇宙层级',wage:99999999},
+    {icon:'🌠',name:'星系层级',wage:88888888},
+    {icon:'🪐',name:'星球层级',wage:77777777},
+    {icon:'👽',name:'文明层级',wage:66666666},
+    {icon:'🏛️',name:'国家层级',wage:55555555},
+    {icon:'🏙️',name:'地区层级',wage:44444444},
+    {icon:'👤',name:'个人层级',wage:33333333},
+    {icon:'✨',name:'未分层级存在',wage:22222222}
+  ];
+  box.innerHTML = LV.map(function(lv, i){
+    return '<div style="background:rgba(0,0,0,0.25);border:1px solid rgba(82,196,26,0.25);border-radius:8px;padding:10px;text-align:center" data-ksalary="'+i+'">'
+      + '<div style="font-size:20px">'+lv.icon+'</div>'
+      + '<div style="font-size:12px;font-weight:bold;color:var(--text);margin-top:2px">'+lv.name+'</div>'
+      + '<div style="font-size:10px;color:#52C41A;margin:4px 0">无限工资 · 无工作也无限</div>'
+      + '<div style="font-size:14px;font-weight:bold;color:#00d4ff;margin-bottom:4px">∞ <span class="kSalaryWage" style="font-size:11px">--</span> 亿/秒</div>'
+      + '<div style="font-size:9px;padding:2px 8px;border-radius:10px;background:rgba(82,196,26,0.2);color:#52C41A">● 每秒到账 · 无工作也发放</div></div>';
+  }).join('');
+  var wages = LV.map(function(lv){ return lv.wage; });
+  function tick(){
+    wages.forEach(function(w, i){
+      var card = box.querySelector('[data-ksalary="'+i+'"]');
+      if(!card) return;
+      wages[i] += 1000 + Math.floor(Math.random()*9000);
+      var el = card.querySelector('.kSalaryWage');
+      if(el) el.textContent = wages[i].toLocaleString();
+    });
+  }
+  tick();
+  setInterval(tick, 1000);
 })();
 
 /* ===== 全宇宙层级 · 通信卫星与设备 8卡片实时状态 ===== */
