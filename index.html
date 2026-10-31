@@ -5361,6 +5361,11 @@ select option{background:#040b1a;color:var(--cyan)}
   <!-- COMMUNICATION -->
   <div class="section" id="sec-communication">
 
+<!-- 🛰️ 全宇宙层级 · 通信卫星与设备全覆盖 -->
+<div class="panel wide"><div class="panel-hdr"><div class="panel-title"><span class="ico">🛰️</span>全宇宙层级 · 通信卫星与设备</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">所有层级生效</div></div>
+  <div id="commLevels" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;padding:10px 14px 6px"></div>
+</div>
+
 <!-- 📡 全部通信方式 -->
 <div class="panel wide" style="background:linear-gradient(135deg,rgba(0,212,255,0.08),rgba(139,92,246,0.05));border:1px solid rgba(0,212,255,0.3)">
   <div class="panel-hdr"><div class="panel-title"><span class="ico">📡</span>全部通信方式 · 全宇宙可用</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">🟢 已激活全部</div></div>
@@ -8909,6 +8914,45 @@ setInterval(function(){
     if(val) val.textContent = angle + '°';
     if(disp) disp.textContent = angle + '°（自动）';
   }, 1000);
+})();
+
+/* ===== 全宇宙层级 · 通信卫星与设备 8卡片实时状态 ===== */
+(function(){
+  var box = document.getElementById('commLevels');
+  if (!box) return;
+  var LV=[
+    {icon:'🌌',name:'宇宙层级',sats:99999999,devs:88888888},
+    {icon:'🌠',name:'星系层级',sats:77777777,devs:66666666},
+    {icon:'🪐',name:'星球层级',sats:55555555,devs:44444444},
+    {icon:'👽',name:'文明层级',sats:33333333,devs:22222222},
+    {icon:'🏛️',name:'国家层级',sats:11111111,devs:9999999},
+    {icon:'🏙️',name:'地区层级',sats:8888888,devs:7777777},
+    {icon:'👤',name:'个人层级',sats:6666666,devs:5555555},
+    {icon:'✨',name:'未分层级存在',sats:4444444,devs:3333333}
+  ];
+  box.innerHTML = LV.map(function(lv, i){
+    return '<div style="background:rgba(0,0,0,0.25);border:1px solid rgba(0,212,255,0.25);border-radius:8px;padding:10px;text-align:center" data-comm="'+i+'">'
+      + '<div style="font-size:20px">'+lv.icon+'</div>'
+      + '<div style="font-size:12px;font-weight:bold;color:var(--text);margin-top:2px">'+lv.name+'</div>'
+      + '<div style="font-size:10px;color:var(--text-dim);margin:4px 0">🛰️ 卫星 <span class="commSats" style="color:#00d4ff;font-weight:bold">--</span></div>'
+      + '<div style="font-size:10px;color:var(--text-dim);margin-bottom:4px">📡 设备 <span class="commDevs" style="color:#00d4ff;font-weight:bold">--</span></div>'
+      + '<div style="font-size:9px;padding:2px 8px;border-radius:10px;background:rgba(82,196,26,0.2);color:#52C41A">● 在线 · 量子纠缠</div></div>';
+  }).join('');
+  var states = LV.map(function(lv){ return {sats: lv.sats, devs: lv.devs}; });
+  function tick(){
+    states.forEach(function(st, i){
+      var card = box.querySelector('[data-comm="'+i+'"]');
+      if(!card) return;
+      st.sats += 1 + Math.floor(Math.random()*5);
+      st.devs += 2 + Math.floor(Math.random()*8);
+      var s = card.querySelector('.commSats');
+      var d = card.querySelector('.commDevs');
+      if(s) s.textContent = st.sats.toLocaleString();
+      if(d) d.textContent = st.devs.toLocaleString();
+    });
+  }
+  tick();
+  setInterval(tick, 2000);
 })();
 
 /* ===== 全宇宙层级 · 天气全覆盖 8卡片实时温度 ===== */
