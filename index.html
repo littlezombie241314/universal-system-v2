@@ -8966,21 +8966,22 @@ setInterval(function(){
   var box = document.getElementById('commLevels');
   if (!box) return;
   var LV=[
-    {icon:'🌌',name:'宇宙层级',sats:99999999,devs:88888888},
-    {icon:'🌠',name:'星系层级',sats:77777777,devs:66666666},
-    {icon:'🪐',name:'星球层级',sats:55555555,devs:44444444},
-    {icon:'👽',name:'文明层级',sats:33333333,devs:22222222},
-    {icon:'🏛️',name:'国家层级',sats:11111111,devs:9999999},
-    {icon:'🏙️',name:'地区层级',sats:8888888,devs:7777777},
-    {icon:'👤',name:'个人层级',sats:6666666,devs:5555555},
-    {icon:'✨',name:'未分层级存在',sats:4444444,devs:3333333}
+    {icon:'🌌',name:'宇宙层级',satName:'寰宇量子一号',devName:'星海智网终端',sats:99999999,devs:88888888},
+    {icon:'🌠',name:'星系层级',satName:'星河中继二号',devName:'星系云脑终端',sats:77777777,devs:66666666},
+    {icon:'🪐',name:'星球层级',satName:'行星通信三号',devName:'星球枢纽终端',sats:55555555,devs:44444444},
+    {icon:'👽',name:'文明层级',satName:'文明之光四号',devName:'文明使者终端',sats:33333333,devs:22222222},
+    {icon:'🏛️',name:'国家层级',satName:'九州天网五号',devName:'国域信枢终端',sats:11111111,devs:9999999},
+    {icon:'🏙️',name:'地区层级',satName:'城域量子六号',devName:'地区节点终端',sats:8888888,devs:7777777},
+    {icon:'👤',name:'个人层级',satName:'个人通联七号',devName:'随身智联终端',sats:6666666,devs:5555555},
+    {icon:'✨',name:'未分层级存在',satName:'永恒信道八号',devName:'全息存在终端',sats:4444444,devs:3333333}
   ];
   box.innerHTML = LV.map(function(lv, i){
     return '<div style="background:rgba(0,0,0,0.25);border:1px solid rgba(0,212,255,0.25);border-radius:8px;padding:10px;text-align:center" data-comm="'+i+'">'
       + '<div style="font-size:20px">'+lv.icon+'</div>'
       + '<div style="font-size:12px;font-weight:bold;color:var(--text);margin-top:2px">'+lv.name+'</div>'
-      + '<div style="font-size:10px;color:var(--text-dim);margin:4px 0">🛰️ 卫星 <span class="commSats" style="color:#00d4ff;font-weight:bold">--</span></div>'
-      + '<div style="font-size:10px;color:var(--text-dim);margin-bottom:4px">📡 设备 <span class="commDevs" style="color:#00d4ff;font-weight:bold">--</span></div>'
+      + '<div style="font-size:10px;color:#C4B5FD;margin:3px 0">🛰️ 卫星 <span class="commSatName">'+lv.satName+'</span></div>'
+      + '<div style="font-size:10px;color:#C4B5FD;margin-bottom:2px">📡 设备 <span class="commDevName">'+lv.devName+'</span></div>'
+      + '<div style="font-size:10px;color:var(--text-dim);margin:4px 0">卫星 <span class="commSats" style="color:#00d4ff;font-weight:bold">--</span> · 设备 <span class="commDevs" style="color:#00d4ff;font-weight:bold">--</span></div>'
       + '<div style="font-size:10px;color:var(--text-dim);margin-bottom:2px">状态 <span class="commStatus" style="color:#52C41A;font-weight:bold">🟢 正常</span></div>'
       + '<div style="font-size:9px;padding:2px 8px;border-radius:10px;background:rgba(82,196,26,0.2);color:#52C41A">0故障 · 0延迟 · 量子纠缠</div></div>';
   }).join('');
