@@ -1565,7 +1565,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.37 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.38 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -5921,7 +5921,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.37 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.38 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -11701,6 +11701,7 @@ function saveSolarStormState() {
 
 // 太阳风暴后端API地址（仅用于资源可达性检查，业务数据由宇宙恒等系统驱动）
 var SOLAR_STORM_BACKEND_URL = 'https://universal-equality.universal-equality.workers.dev/api/solar-storm';
+var SOLAR_STORM_MIRROR_URL = 'https://universal-system-final.surge.sh/solar-storm-state.json'; // 国内可达镜像（解决 workers.dev DNS 污染）
 var solarStormBackendSyncStatus = 'idle'; // idle, syncing, synced, error
 
 // 保存太阳风暴状态（宇宙恒等系统数据驱动：持久化即同步；仅做后端可达性探测）
@@ -11723,17 +11724,14 @@ function saveSolarStormToBackend() {
     console.log('太阳风暴模块：状态已由宇宙恒等系统持久化');
     
     // 仅做资源可达性检查（不触发任何模拟/操作），后端不可达不影响系统
-    fetch(SOLAR_STORM_BACKEND_URL + '/state', {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
-    })
-    .then(function(res) { return res.status; })
-    .then(function(status) {
-      console.log('太阳风暴模块：后端资源可达性检查 HTTP', status);
-    })
-    .catch(function(err) {
-      console.log('太阳风暴模块：后端资源不可达（系统数据驱动，不受影响）');
-    });
+    // 优先检查国内可达的 Surge 镜像（解决 workers.dev DNS 污染），镜像失败再探测 Worker
+    fetch(SOLAR_STORM_MIRROR_URL, { method: 'GET', cache: 'no-store' })
+      .then(function(res){ if(res.ok) { console.log('太阳风暴模块：镜像资源可达性检查 HTTP', res.status); return; } throw new Error('mirror ' + res.status); })
+      .catch(function(){
+        return fetch(SOLAR_STORM_BACKEND_URL + '/state', { method: 'GET', headers: { 'Content-Type': 'application/json' } })
+          .then(function(res) { console.log('太阳风暴模块：Worker资源可达性检查 HTTP', res.status); })
+          .catch(function(err) { console.log('太阳风暴模块：后端资源不可达（系统数据驱动，不受影响）'); });
+      });
 
   } catch(e) {
     solarStormBackendSyncStatus = 'error';
@@ -11762,13 +11760,13 @@ function loadSolarStormFromBackend() {
     } catch(e) {}
     
     // 仅做后端资源可达性检查（不触发任何模拟/操作）
-    fetch(SOLAR_STORM_BACKEND_URL + '/state')
-      .then(function(res) { return res.status; })
-      .then(function(status) {
-        console.log('太阳风暴模块：后端资源可达性检查 HTTP', status);
-      })
-      .catch(function(err) {
-        console.log('太阳风暴模块：后端资源不可达（系统数据驱动，不受影响）');
+    // 优先检查国内可达的 Surge 镜像（解决 workers.dev DNS 污染），镜像失败再探测 Worker
+    fetch(SOLAR_STORM_MIRROR_URL, { method: 'GET', cache: 'no-store' })
+      .then(function(res){ if(res.ok) { console.log('太阳风暴模块：镜像资源可达性检查 HTTP', res.status); return; } throw new Error('mirror ' + res.status); })
+      .catch(function(){
+        return fetch(SOLAR_STORM_BACKEND_URL + '/state')
+          .then(function(res) { console.log('太阳风暴模块：Worker资源可达性检查 HTTP', res.status); })
+          .catch(function(err) { console.log('太阳风暴模块：后端资源不可达（系统数据驱动，不受影响）'); });
       });
   } catch(e) {
     console.error('从宇宙恒等系统加载失败:', e);
@@ -15576,7 +15574,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.6.37';
+var systemVersion = 'v1.6.38';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
@@ -17280,6 +17278,7 @@ function stopAutoRefresh() {
   function wakeupHeartbeat(){
     // 静默 ping 后端，保持温热（onrender 免费层 ~15 分钟无请求会冷启动休眠）
     try { fetch('https://universal-pay-alipay.onrender.com/health', {mode:'no-cors', cache:'no-store', keepalive:true}); } catch(e){}
+    try { fetch(SOLAR_STORM_MIRROR_URL, {mode:'no-cors', cache:'no-store', keepalive:true}); } catch(e){}
     try { fetch('https://universal-equality.universal-equality.workers.dev/api/solar-storm/state', {mode:'no-cors', cache:'no-store', keepalive:true}); } catch(e){}
   }
   // 每 30 秒一次后端心跳，全系统持续在线

@@ -1,0 +1,12 @@
+{
+  "success": true,
+  "mirror": true,
+  "service": "universal-equality-solar-storm-mirror",
+  "data": {
+    "level": "G0",
+    "status": "monitoring",
+    "source": "surge-mirror",
+    "note": "太阳风暴状态镜像（Surge 静态可达路径，国内直连可用）；实时业务数据由宇宙恒等系统驱动"
+  },
+  "ts": 0
+}
