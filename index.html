@@ -1565,7 +1565,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.40 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.41 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -3937,6 +3937,10 @@ select option{background:#040b1a;color:var(--cyan)}
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;padding:14px" id="outdoorLevels"></div>
       </div>
       <div class="panel wide">
+        <div class="panel-hdr"><div class="panel-title"><span class="ico">🛸</span>全宇宙层级 · 星际交通分配</div><div class="panel-badge" style="background:rgba(0,212,255,0.2);color:#00d4ff">飞行器/宇宙飞船/旅游交通工具</div></div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;padding:14px" id="spaceTravelLevels"></div>
+      </div>
+      <div class="panel wide">
         <div class="panel-hdr"><div class="panel-title"><span class="ico">🎫</span>我的星际娱乐预约</div><div class="panel-badge">实时保存</div></div>
         <div style="padding:14px" id="outdoorRegs"></div>
       </div>
@@ -6041,7 +6045,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.40 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.41 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -8150,6 +8154,50 @@ function outdoorLevelsRender(){
   });
   box.innerHTML = html;
 }
+/* ===== 全宇宙层级 · 星际交通分配 8卡片实时状态（飞行器/宇宙飞船/旅游交通工具） ===== */
+(function(){
+  var box = document.getElementById('spaceTravelLevels');
+  if (!box) return;
+  var LV=[
+    {icon:'🌌',name:'宇宙层级',craft:'寰宇光速舰',ship:'宇宙母舰·永恒号',trav:'星际观光飞船',fly:99999999,shipN:88888888,travN:77777777},
+    {icon:'🌠',name:'星系层级',craft:'星河穿梭机',ship:'星系旗舰·星云号',trav:'星域游览舱',fly:77777777,shipN:66666666,travN:55555555},
+    {icon:'🪐',name:'星球层级',craft:'星球巡航机',ship:'行星航舰·曙光号',trav:'环星旅行舱',fly:66666666,shipN:55555555,travN:44444444},
+    {icon:'👽',name:'文明层级',craft:'文明传送艇',ship:'文明星舰·启示号',trav:'文明观星船',fly:55555555,shipN:44444444,travN:33333333},
+    {icon:'🏛️',name:'国家层级',craft:'国家行政机',ship:'国家舰·护航号',trav:'国家星际游轮',fly:44444444,shipN:33333333,travN:22222222},
+    {icon:'🏙️',name:'地区层级',craft:'地区通勤机',ship:'地区舰·枢纽号',trav:'地区星际快线',fly:33333333,shipN:22222222,travN:11111111},
+    {icon:'👤',name:'个人层级',craft:'个人飞艇',ship:'个人舰·自由号',trav:'个人星际专车',fly:22222222,shipN:11111111,travN:9999999},
+    {icon:'✨',name:'未分层级存在',craft:'全域漫游机',ship:'全域舰·弥散号',trav:'全域星际环游舱',fly:11111111,shipN:9999999,travN:8888888}
+  ];
+  box.innerHTML = LV.map(function(lv, i){
+    return '<div style="background:rgba(0,0,0,0.25);border:1px solid rgba(0,212,255,0.25);border-radius:8px;padding:10px;text-align:center" data-spTravel="'+i+'">'
+      + '<div style="font-size:20px">'+lv.icon+'</div>'
+      + '<div style="font-size:12px;font-weight:bold;color:var(--text);margin-top:2px">'+lv.name+'</div>'
+      + '<div style="font-size:9px;color:#00d4ff;margin:4px 0 2px">🛸 '+lv.craft+'</div>'
+      + '<div style="font-size:11px;font-weight:bold;color:#00d4ff"><span class="spFlyN" style="font-size:10px">--</span> 架</div>'
+      + '<div style="font-size:9px;color:#C4B5FD;margin:3px 0 2px">🚀 '+lv.ship+'</div>'
+      + '<div style="font-size:11px;font-weight:bold;color:#C4B5FD"><span class="spShipN" style="font-size:10px">--</span> 艘</div>'
+      + '<div style="font-size:9px;color:#52C41A;margin:3px 0 2px">🛳️ '+lv.trav+'</div>'
+      + '<div style="font-size:11px;font-weight:bold;color:#52C41A"><span class="spTravN" style="font-size:10px">--</span> 辆</div>'
+      + '<div style="font-size:9px;padding:2px 8px;border-radius:10px;background:rgba(0,212,255,0.2);color:#00d4ff;margin-top:5px">🟢 已分配 · 全宇宙可乘</div></div>';
+  }).join('');
+  var fly = LV.map(function(lv){ return lv.fly; });
+  var ship = LV.map(function(lv){ return lv.shipN; });
+  var trav = LV.map(function(lv){ return lv.travN; });
+  function tick(){
+    fly.forEach(function(v, i){
+      var card = box.querySelector('[data-spTravel="'+i+'"]');
+      if(!card) return;
+      fly[i] += 1000 + Math.floor(Math.random()*9000);
+      ship[i] += 800 + Math.floor(Math.random()*7000);
+      trav[i] += 600 + Math.floor(Math.random()*5000);
+      var f = card.querySelector('.spFlyN'); if(f) f.textContent = fly[i].toLocaleString();
+      var s = card.querySelector('.spShipN'); if(s) s.textContent = ship[i].toLocaleString();
+      var t = card.querySelector('.spTravN'); if(t) t.textContent = trav[i].toLocaleString();
+    });
+  }
+  tick();
+  setInterval(tick, 2000);
+})();
 function outdoorRegsRender(){
   var box = document.getElementById('outdoorRegs');
   if (!box) return;
@@ -15694,7 +15742,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.6.40';
+var systemVersion = 'v1.6.41';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
