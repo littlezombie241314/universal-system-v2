@@ -1565,7 +1565,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.49 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.50 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -5321,14 +5321,14 @@ select option{background:#040b1a;color:var(--cyan)}
   var box = document.getElementById('phyLevels');
   if (!box) return;
   var LV=[
-    {icon:'🌌',name:'宇宙层级',pName:'寰宇恒等物理核心',n:88888888,p:99.90},
-    {icon:'🌠',name:'星系层级',pName:'星系恒等云服务器',n:77777777,p:99.91},
-    {icon:'🪐',name:'星球层级',pName:'星球恒等数据中心',n:66666666,p:99.92},
-    {icon:'👽',name:'文明层级',pName:'文明恒等计算中心',n:55555555,p:99.93},
-    {icon:'🏛️',name:'国家层级',pName:'国家恒等智算中心',n:44444444,p:99.94},
-    {icon:'🏙️',name:'地区层级',pName:'地区恒等边缘节点',n:33333333,p:99.95},
-    {icon:'👤',name:'个人层级',pName:'个人恒等SoC终端',n:22222222,p:99.96},
-    {icon:'✨',name:'未分层级存在',pName:'全域弥散物理节点',n:11111111,p:99.97}
+    {icon:'🌌',name:'宇宙层级',pName:'寰宇恒等物理核心',n:88888888,p:90.00},
+    {icon:'🌠',name:'星系层级',pName:'星系恒等云服务器',n:77777777,p:90.00},
+    {icon:'🪐',name:'星球层级',pName:'星球恒等数据中心',n:66666666,p:90.00},
+    {icon:'👽',name:'文明层级',pName:'文明恒等计算中心',n:55555555,p:90.00},
+    {icon:'🏛️',name:'国家层级',pName:'国家恒等智算中心',n:44444444,p:90.00},
+    {icon:'🏙️',name:'地区层级',pName:'地区恒等边缘节点',n:33333333,p:90.00},
+    {icon:'👤',name:'个人层级',pName:'个人恒等SoC终端',n:22222222,p:90.00},
+    {icon:'✨',name:'未分层级存在',pName:'全域弥散物理节点',n:11111111,p:90.00}
   ];
   box.innerHTML = LV.map(function(lv, i){
     return '<div style="background:rgba(0,0,0,0.25);border:1px solid rgba(255,184,0,0.25);border-radius:8px;padding:10px;text-align:center" data-phy="'+i+'">'
@@ -5337,8 +5337,8 @@ select option{background:#040b1a;color:var(--cyan)}
       + '<div style="font-size:10px;color:#ffb800;margin:4px 0">'+lv.pName+'</div>'
       + '<div style="font-size:14px;font-weight:bold;color:#ffb800;margin-bottom:4px"><span class="phyN" style="font-size:11px">--</span> 节点</div>'
       + '<div style="height:5px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden;margin:4px 0"><div class="phyBar" style="height:100%;width:0%;background:linear-gradient(90deg,#ffb800,#52C41A)"></div></div>'
-      + '<div style="font-size:9px;color:#52C41A"><span class="phyPct">--</span>% 物理实现</div>'
-      + '<div style="font-size:9px;padding:2px 8px;border-radius:10px;background:rgba(255,184,0,0.2);color:#ffb800;margin-top:4px">🟢 AI驱动 · 全宇宙实时</div></div>';
+      + '<div style="font-size:9px;color:#52C41A"><span class="phyPct">--</span>% 物理实现 · <span style="color:#ffb800">⚡ 最快</span></div>'
+      + '<div style="font-size:9px;padding:2px 8px;border-radius:10px;background:rgba(255,184,0,0.2);color:#ffb800;margin-top:4px">⚡ 最快的速度 · AI驱动 · 全宇宙实时</div></div>';
   }).join('');
   var nums = LV.map(function(lv){ return lv.n; });
   var pcts = LV.map(function(lv){ return lv.p; });
@@ -5349,7 +5349,7 @@ select option{background:#040b1a;color:var(--cyan)}
       nums[i] += 1000 + Math.floor(Math.random()*9000);
       var elN = card.querySelector('.phyN');
       if(elN) elN.textContent = nums[i].toLocaleString();
-      pcts[i] = Math.min(100, pcts[i] + Math.random()*0.0012);
+      pcts[i] = Math.min(100, pcts[i] + (8 + Math.random()*10));
       var elP = card.querySelector('.phyPct');
       var elB = card.querySelector('.phyBar');
       if(elP) elP.textContent = pcts[i].toFixed(2);
@@ -6123,7 +6123,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.49 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.50 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -15855,7 +15855,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.6.49';
+var systemVersion = 'v1.6.50';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
