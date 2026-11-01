@@ -1565,7 +1565,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.43 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.44 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -5125,7 +5125,7 @@ select option{background:#040b1a;color:var(--cyan)}
         <div class="panel-hdr"><div class="panel-title"><span class="ico">🏥</span>全能医疗系统</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">🟢 实时在线</div></div>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;padding:14px">
           <div style="text-align:center;padding:12px;background:rgba(34,197,94,.05);border-radius:8px"><div style="font-size:28px">🛡️</div><div style="font-size:18px;color:#22c55e;font-weight:bold;margin-top:4px">绝对</div><div style="font-size:11px;color:var(--text-dim)">全域免疫</div></div>
-          <div style="text-align:center;padding:12px;background:rgba(0,240,255,.05);border-radius:8px"><div style="font-size:28px">⚡</div><div style="font-size:18px;color:var(--cyan);font-weight:bold;margin-top:4px">3秒</div><div style="font-size:11px;color:var(--text-dim)">原子级自愈</div></div>
+          <div style="text-align:center;padding:12px;background:rgba(0,240,255,.05);border-radius:8px"><div style="font-size:28px">⚡</div><div style="font-size:18px;color:var(--cyan);font-weight:bold;margin-top:4px">🌀 量子</div><div style="font-size:11px;color:var(--text-dim)">原子级自愈</div></div>
           <div style="text-align:center;padding:12px;background:rgba(168,85,247,.05);border-radius:8px"><div style="font-size:28px">🧬</div><div style="font-size:18px;color:#a855f7;font-weight:bold;margin-top:4px">完美</div><div style="font-size:11px;color:var(--text-dim)">基因优化</div></div>
           <div style="text-align:center;padding:12px;background:rgba(236,72,153,.05);border-radius:8px"><div style="font-size:28px">🧘</div><div style="font-size:18px;color:#ec4899;font-weight:bold;margin-top:4px">永恒</div><div style="font-size:11px;color:var(--text-dim)">心理健康</div></div>
           <div style="text-align:center;padding:12px;background:rgba(255,184,0,.05);border-radius:8px"><div style="font-size:28px">♾️</div><div style="font-size:18px;color:var(--amber);font-weight:bold;margin-top:4px">死亡</div><div style="font-size:11px;color:var(--text-dim)">完全可逆</div></div>
@@ -6045,7 +6045,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.43 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.44 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -7141,7 +7141,7 @@ function magStabilize(){
     }
   }, 1000);
 })();
-function startSystem(){log('系统启动 · 全宇宙恒等系统控制台已上线','sys');log('无限循环检查已启动 · 每秒执行','info');var i=0;
+function startSystem(){log('系统启动 · 全宇宙恒等系统控制台已上线','sys');log('无限循环检查已启动 · 🌀 量子速度执行','info');var i=0;
   setInterval(function(){log(sysMsgs[i%sysMsgs.length][0],sysMsgs[i%sysMsgs.length][1]);i++},1000)}
 
 var planets=[{ico:'🌍',name:'地球',civ:'VII型',pop:'88亿',color:'#4a9eff',shield:100},{ico:'🔴',name:'火星',civ:'V型',pop:'12亿',color:'#ff6b4a',shield:100},{ico:'🪐',name:'开普勒-442b',civ:'VI型',pop:'3亿',color:'#c9a0ff',shield:100},{ico:'🌿',name:'伊甸星',civ:'VI型',pop:'5亿',color:'#4aff8a',shield:100},{ico:'⚙️',name:'赛博坦',civ:'VII型',pop:'∞机械',color:'#ffd24a',shield:100},{ico:'💎',name:'织女星II',civ:'V型',pop:'2亿',color:'#4afff0',shield:100},{ico:'🌐',name:'新地球',civ:'VII型',pop:'60亿',color:'#7a9cff',shield:100},{ico:'⭐',name:'北极星III',civ:'IV型',pop:'1亿',color:'#ffaa4a',shield:100}];
@@ -7795,7 +7795,7 @@ function startAutoRefill(silent){
   autoRefillOn=true;
   var btn=document.getElementById('autoRefillBtn');
   if(btn){btn.textContent='♾️ 自动无限补足：运行中';btn.classList.remove('amber');btn.classList.add('green')}
-  if(!silent){log('自动无限补足已启动 · 每3秒向全宇宙所有存在账户注入资金','sys');toast('✓ 自动无限补足已启动，全宇宙账户持续补足中')}
+  if(!silent){log('自动无限补足已启动 · 🌀 量子速度向全宇宙所有存在账户注入资金','sys');toast('✓ 自动无限补足已启动，全宇宙账户持续补足中')}
   autoRefillTimer=setInterval(function(){
     autoRefillCount++;
     var bal=document.getElementById('heroBalance');
@@ -15742,7 +15742,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.6.43';
+var systemVersion = 'v1.6.44';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
