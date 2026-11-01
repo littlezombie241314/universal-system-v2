@@ -1565,7 +1565,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.38 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.40 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -5158,6 +5158,126 @@ select option{background:#040b1a;color:var(--cyan)}
 </div>
 <script>renderUniverseLevels('aiLevels', '🟢 共生生效');</script>
 
+<!-- 🤖 全宇宙层级 · 人工智能终端 8卡片实时状态 -->
+<div class="panel wide"><div class="panel-hdr"><div class="panel-title"><span class="ico">🤖</span>全宇宙层级 · 人工智能终端</div><div class="panel-badge" style="background:rgba(0,212,255,0.2);color:#00d4ff">8层级实时状态</div></div>
+  <div id="aiTerminalLevels" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;padding:10px 14px 6px"></div>
+</div>
+<script>/* ===== 全宇宙层级 · 人工智能终端 8卡片实时状态 ===== */
+(function(){
+  var box = document.getElementById('aiTerminalLevels');
+  if (!box) return;
+  var LV=[
+    {icon:'🌌',name:'宇宙层级',tName:'寰宇智核终端',n:99999999},
+    {icon:'🌠',name:'星系层级',tName:'星系云脑终端',n:88888888},
+    {icon:'🪐',name:'星球层级',tName:'星球中枢终端',n:77777777},
+    {icon:'👽',name:'文明层级',tName:'文明灵境终端',n:66666666},
+    {icon:'🏛️',name:'国家层级',tName:'国家智网终端',n:55555555},
+    {icon:'🏙️',name:'地区层级',tName:'地区慧联终端',n:44444444},
+    {icon:'👤',name:'个人层级',tName:'个人随身终端',n:33333333},
+    {icon:'✨',name:'未分层级存在',tName:'全域弥散终端',n:22222222}
+  ];
+  box.innerHTML = LV.map(function(lv, i){
+    return '<div style="background:rgba(0,0,0,0.25);border:1px solid rgba(0,212,255,0.25);border-radius:8px;padding:10px;text-align:center" data-aiTerm="'+i+'">'
+      + '<div style="font-size:20px">'+lv.icon+'</div>'
+      + '<div style="font-size:12px;font-weight:bold;color:var(--text);margin-top:2px">'+lv.name+'</div>'
+      + '<div style="font-size:10px;color:#00d4ff;margin:4px 0">'+lv.tName+'</div>'
+      + '<div style="font-size:14px;font-weight:bold;color:#00d4ff;margin-bottom:4px"><span class="aiTermN" style="font-size:11px">--</span> 台</div>'
+      + '<div style="font-size:9px;padding:2px 8px;border-radius:10px;background:rgba(0,212,255,0.2);color:#00d4ff">🟢 智能在线 · 全宇宙实时</div></div>';
+  }).join('');
+  var nums = LV.map(function(lv){ return lv.n; });
+  function tick(){
+    nums.forEach(function(n, i){
+      var card = box.querySelector('[data-aiTerm="'+i+'"]');
+      if(!card) return;
+      nums[i] += 1000 + Math.floor(Math.random()*9000);
+      var el = card.querySelector('.aiTermN');
+      if(el) el.textContent = nums[i].toLocaleString();
+    });
+  }
+  tick();
+  setInterval(tick, 2000);
+})();</script>
+
+<!-- 🧠 全宇宙层级 · Agent 8卡片实时状态 -->
+<div class="panel wide"><div class="panel-hdr"><div class="panel-title"><span class="ico">🧠</span>全宇宙层级 · Agent</div><div class="panel-badge" style="background:rgba(168,85,247,0.2);color:#a855f7">8层级实时状态</div></div>
+  <div id="agentLevels" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;padding:10px 14px 6px"></div>
+</div>
+<script>/* ===== 全宇宙层级 · Agent 8卡片实时状态 ===== */
+(function(){
+  var box = document.getElementById('agentLevels');
+  if (!box) return;
+  var LV=[
+    {icon:'🌌',name:'宇宙层级',aName:'寰宇元Agent',n:88888888},
+    {icon:'🌠',name:'星系层级',aName:'星系主Agent',n:77777777},
+    {icon:'🪐',name:'星球层级',aName:'星球统Agent',n:66666666},
+    {icon:'👽',name:'文明层级',aName:'文明策Agent',n:55555555},
+    {icon:'🏛️',name:'国家层级',aName:'国家理Agent',n:44444444},
+    {icon:'🏙️',name:'地区层级',aName:'地区管Agent',n:33333333},
+    {icon:'👤',name:'个人层级',aName:'个人助Agent',n:22222222},
+    {icon:'✨',name:'未分层级存在',aName:'全域弥散Agent',n:11111111}
+  ];
+  box.innerHTML = LV.map(function(lv, i){
+    return '<div style="background:rgba(0,0,0,0.25);border:1px solid rgba(168,85,247,0.25);border-radius:8px;padding:10px;text-align:center" data-agent="'+i+'">'
+      + '<div style="font-size:20px">'+lv.icon+'</div>'
+      + '<div style="font-size:12px;font-weight:bold;color:var(--text);margin-top:2px">'+lv.name+'</div>'
+      + '<div style="font-size:10px;color:#a855f7;margin:4px 0">'+lv.aName+'</div>'
+      + '<div style="font-size:14px;font-weight:bold;color:#a855f7;margin-bottom:4px"><span class="agentN" style="font-size:11px">--</span> 个</div>'
+      + '<div style="font-size:9px;padding:2px 8px;border-radius:10px;background:rgba(168,85,247,0.2);color:#a855f7">🟢 自主运行 · 全宇宙实时</div></div>';
+  }).join('');
+  var nums = LV.map(function(lv){ return lv.n; });
+  function tick(){
+    nums.forEach(function(n, i){
+      var card = box.querySelector('[data-agent="'+i+'"]');
+      if(!card) return;
+      nums[i] += 1000 + Math.floor(Math.random()*9000);
+      var el = card.querySelector('.agentN');
+      if(el) el.textContent = nums[i].toLocaleString();
+    });
+  }
+  tick();
+  setInterval(tick, 2000);
+})();</script>
+
+<!-- ⚡ 全宇宙层级 · AI 8卡片实时状态 -->
+<div class="panel wide"><div class="panel-hdr"><div class="panel-title"><span class="ico">⚡</span>全宇宙层级 · AI</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">8层级实时状态</div></div>
+  <div id="aiCoreLevels" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;padding:10px 14px 6px"></div>
+</div>
+<script>/* ===== 全宇宙层级 · AI 8卡片实时状态 ===== */
+(function(){
+  var box = document.getElementById('aiCoreLevels');
+  if (!box) return;
+  var LV=[
+    {icon:'🌌',name:'宇宙层级',aiName:'寰宇全知AI',n:77777777},
+    {icon:'🌠',name:'星系层级',aiName:'星系全知AI',n:66666666},
+    {icon:'🪐',name:'星球层级',aiName:'星球全知AI',n:55555555},
+    {icon:'👽',name:'文明层级',aiName:'文明全知AI',n:44444444},
+    {icon:'🏛️',name:'国家层级',aiName:'国家全知AI',n:33333333},
+    {icon:'🏙️',name:'地区层级',aiName:'地区全知AI',n:22222222},
+    {icon:'👤',name:'个人层级',aiName:'个人全知AI',n:11111111},
+    {icon:'✨',name:'未分层级存在',aiName:'全域全知AI',n:9999999}
+  ];
+  box.innerHTML = LV.map(function(lv, i){
+    return '<div style="background:rgba(0,0,0,0.25);border:1px solid rgba(82,196,26,0.25);border-radius:8px;padding:10px;text-align:center" data-aiCore="'+i+'">'
+      + '<div style="font-size:20px">'+lv.icon+'</div>'
+      + '<div style="font-size:12px;font-weight:bold;color:var(--text);margin-top:2px">'+lv.name+'</div>'
+      + '<div style="font-size:10px;color:#52C41A;margin:4px 0">'+lv.aiName+'</div>'
+      + '<div style="font-size:14px;font-weight:bold;color:#52C41A;margin-bottom:4px"><span class="aiCoreN" style="font-size:11px">--</span> 个</div>'
+      + '<div style="font-size:9px;padding:2px 8px;border-radius:10px;background:rgba(82,196,26,0.2);color:#52C41A">🟢 全知运行 · 全宇宙实时</div></div>';
+  }).join('');
+  var nums = LV.map(function(lv){ return lv.n; });
+  function tick(){
+    nums.forEach(function(n, i){
+      var card = box.querySelector('[data-aiCore="'+i+'"]');
+      if(!card) return;
+      nums[i] += 1000 + Math.floor(Math.random()*9000);
+      var el = card.querySelector('.aiCoreN');
+      if(el) el.textContent = nums[i].toLocaleString();
+    });
+  }
+  tick();
+  setInterval(tick, 2000);
+})();</script>
+
     <div class="grid">
       <div class="panel wide">
         <div class="panel-hdr"><div class="panel-title"><span class="ico">🤖</span>AI共生系统</div><div class="panel-badge">人机合作</div></div>
@@ -5921,7 +6041,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.38 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.40 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -15574,7 +15694,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.6.38';
+var systemVersion = 'v1.6.40';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
