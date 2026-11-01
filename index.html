@@ -1565,7 +1565,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.45 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.46 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -4415,6 +4415,13 @@ select option{background:#040b1a;color:var(--cyan)}
           </div>
           <div style="font-size:9px;color:var(--text-dim);margin-top:8px;line-height:1.6">12 颗立方星双环星座 · 环绕空间站城市运行 · 通信/观测/能源/巡查四类任务 · 数据由全宇宙恒等系统驱动 · 实时保存 · 多端同步</div>
         </div>
+
+        <div class="panel wide" style="margin-top:12px">
+          <div class="panel-hdr"><div class="panel-title"><span class="ico">🛰️</span>12 颗立方星 · 数字孪生实时遥测</div><div class="panel-badge" style="background:rgba(82,196,26,.15);color:#52C41A">🟢 实时同步 · 延迟 0ms</div></div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:8px" id="dtGrid"></div>
+          <div style="font-size:9px;color:var(--text-dim);margin-top:8px;line-height:1.5">数字孪生：12 颗立方星按真实 LEO 轨道参数绕地实时仿真（视觉 1 秒 = 1 分钟）· 相位/高度/信号/能源/温度/姿态持续同步 · 数据由全宇宙恒等系统驱动 · 实时保存 · 多端同步</div>
+        </div>
+
         <div style="text-align:center"><button class="btn" onclick="quickMsg('宇宙城市持续扩张中：全宇宙每颗星球都在自动建设新城市，城市数量⚡ 最快的速度增长，无上限。')">🚀 扩展更多宇宙城市</button></div>
         <div style="font-size:10px;color:var(--text-dim);text-align:center;margin-top:10px">宇宙城市系统 · 数据由全宇宙恒等系统驱动 · 实时保存 · 多端同步</div>
       </div>
@@ -6045,7 +6052,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.45 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.46 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -10009,6 +10016,62 @@ function initRxGrid(){
   setTimeout(function(){initRxGrid();}, 0);
 }
 document.addEventListener('DOMContentLoaded',function(){setTimeout(initRxGrid, 0);});
+
+/* ===== 12颗立方星 · 数字孪生实时遥测 ===== */
+(function(){
+  var grid=document.getElementById('dtGrid');
+  if(!grid) return;
+  var sats=[
+    {name:'UES-01',orbit:'A',task:'通信中继',ico:'📡'},
+    {name:'UES-02',orbit:'A',task:'深空观测',ico:'🔭'},
+    {name:'UES-03',orbit:'A',task:'能源传输',ico:'⚡'},
+    {name:'UES-04',orbit:'A',task:'轨道巡查',ico:'🛰️'},
+    {name:'UES-05',orbit:'B',task:'通信中继',ico:'📡'},
+    {name:'UES-06',orbit:'B',task:'深空观测',ico:'🔭'},
+    {name:'UES-07',orbit:'B',task:'能源传输',ico:'⚡'},
+    {name:'UES-08',orbit:'B',task:'轨道巡查',ico:'🛰️'},
+    {name:'UES-09',orbit:'C',task:'通信中继',ico:'📡'},
+    {name:'UES-10',orbit:'C',task:'深空观测',ico:'🔭'},
+    {name:'UES-11',orbit:'C',task:'能源传输',ico:'⚡'},
+    {name:'UES-12',orbit:'C',task:'轨道巡查',ico:'🛰️'}
+  ];
+  var state=[];
+  sats.forEach(function(s,i){
+    state.push({ang:i*30*Math.PI/180,sig:94+Math.random()*5,eng:95+Math.random()*4,tmp:16+Math.random()*7,att:99.3+Math.random()*0.7,ph:0});
+    var d=document.createElement('div');
+    d.style.cssText='background:rgba(0,0,0,.25);border:1px solid rgba(82,224,255,.22);border-radius:8px;padding:9px';
+    d.innerHTML='<div style="display:flex;align-items:center;justify-content:space-between">'
+      +'<span style="font-size:12px;font-weight:bold;color:var(--text)">'+s.ico+' '+s.name+'</span>'
+      +'<span style="font-size:9px;color:#52C41A">🟢 在轨</span></div>'
+      +'<div style="font-size:10px;color:var(--text-dim);margin:3px 0">轨道面 '+s.orbit+' · '+s.task+'</div>'
+      +'<div style="font-size:10px;color:var(--cyan)">相位 <span class="dt-ang">0.0°</span> · 高度 <span class="dt-alt">500.0 km</span></div>'
+      +'<div style="font-size:9px;color:var(--text-dim);margin-top:3px">信号 <span class="dt-sig">0%</span> · 能源 <span class="dt-eng">0%</span> · 温度 <span class="dt-tmp">0°C</span> · 姿态 <span class="dt-att">0%</span></div>';
+    grid.appendChild(d);
+  });
+  setInterval(function(){
+    var now=Date.now();
+    state.forEach(function(st,i){
+      st.ang += (2*Math.PI/92.4)/10; // 视觉1s=1min，约每秒推进
+      if(st.ang>=Math.PI*2) st.ang-=Math.PI*2;
+      st.ph=(st.ph+0.05)%1;
+      var angDeg=((st.ang*180/Math.PI)%360).toFixed(1);
+      var alt=500+Math.sin(st.ph*Math.PI*2)*0.8;
+      var sig=st.sig+Math.sin(now/1200+i*1.7)*0.9;
+      var eng=st.eng+Math.sin(now/900+i*2.3)*0.6;
+      var tmp=st.tmp+Math.sin(now/700+i*1.1)*0.4;
+      var att=st.att+Math.sin(now/1500+i)*0.2;
+      var card=grid.children[i];
+      if(!card) return;
+      card.querySelector('.dt-ang').textContent=angDeg+'°';
+      card.querySelector('.dt-alt').textContent=alt.toFixed(1)+' km';
+      card.querySelector('.dt-sig').textContent=sig.toFixed(1)+'%';
+      card.querySelector('.dt-eng').textContent=eng.toFixed(1)+'%';
+      card.querySelector('.dt-tmp').textContent=tmp.toFixed(1)+'°C';
+      card.querySelector('.dt-att').textContent=att.toFixed(2)+'%';
+    });
+  },1000);
+})();
+
 /* ===== UES-1 立方星在轨动画 ===== */
 (function(){
   var ang=Math.random()*Math.PI*2, lap=0, last=0;
@@ -15742,7 +15805,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.6.45';
+var systemVersion = 'v1.6.46';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
