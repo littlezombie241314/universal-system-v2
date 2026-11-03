@@ -1565,7 +1565,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.50 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.51 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -3567,6 +3567,11 @@ select option{background:#040b1a;color:var(--cyan)}
 <!-- 💰 全宇宙层级 · 无限工资全覆盖 -->
 <div class="panel wide"><div class="panel-hdr"><div class="panel-title"><span class="ico">💰</span>全宇宙层级 · 无限工资全覆盖</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">所有层级生效</div></div>
   <div id="karmaSalaryLevels" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;padding:10px 14px 6px"></div>
+</div>
+
+<!-- 🧪 全宇宙层级 · 科学家与工程师全覆盖 -->
+<div class="panel wide"><div class="panel-hdr"><div class="panel-title"><span class="ico">🧪</span>全宇宙层级 · 科学家与工程师全覆盖</div><div class="panel-badge" style="background:rgba(139,92,246,0.2);color:#B39DDB">所有层级生效</div></div>
+  <div id="karmaTalentLevels" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;padding:10px 14px 6px"></div>
 </div>
 
 <!-- 人品系统模块 · 全局最优通信方式 -->
@@ -6123,7 +6128,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.50 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.51 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -9221,6 +9226,58 @@ setInterval(function(){
       wages[i] += 1000 + Math.floor(Math.random()*9000);
       var el = card.querySelector('.kSalaryWage');
       if(el) el.textContent = wages[i].toLocaleString();
+    });
+  }
+  tick();
+  setInterval(tick, 1000);
+})();
+
+/* ===== 全宇宙层级 · 科学家与工程师 8卡片实时状态 ===== */
+(function(){
+  var box = document.getElementById('karmaTalentLevels');
+  if (!box) return;
+  var LV=[
+    {icon:'🌌',name:'宇宙层级',ach:'诺奖级',sci:99999999,eng:88888888},
+    {icon:'🌠',name:'星系层级',ach:'图灵奖级',sci:77777777,eng:66666666},
+    {icon:'🪐',name:'星球层级',ach:'菲尔兹奖级',sci:55555555,eng:44444444},
+    {icon:'👽',name:'文明层级',ach:'院士级',sci:33333333,eng:22222222},
+    {icon:'🏛️',name:'国家层级',ach:'国士级',sci:11111111,eng:9999999},
+    {icon:'🏙️',name:'地区层级',ach:'卓越级',sci:8888888,eng:7777777},
+    {icon:'👤',name:'个人层级',ach:'巅峰级',sci:6666666,eng:5555555},
+    {icon:'✨',name:'未分层级存在',ach:'全才全能级',sci:4444444,eng:3333333}
+  ];
+  box.innerHTML = LV.map(function(lv, i){
+    return '<div style="background:rgba(0,0,0,0.25);border:1px solid rgba(139,92,246,0.35);border-radius:8px;padding:10px;text-align:center" data-ktalent="'+i+'">'
+      + '<div style="font-size:20px">'+lv.icon+'</div>'
+      + '<div style="font-size:12px;font-weight:bold;color:var(--text);margin-top:2px">'+lv.name+'</div>'
+      + '<div style="font-size:10px;color:var(--text-dim);margin:4px 0">🔬 科学家 <span class="kTalentSci" style="color:#00d4ff;font-weight:bold">--</span></div>'
+      + '<div style="font-size:10px;color:var(--text-dim);margin-bottom:4px">⚙️ 工程师 <span class="kTalentEng" style="color:#00d4ff;font-weight:bold">--</span></div>'
+      + '<div style="font-size:10px;color:#B39DDB;margin-bottom:2px">最高成就 <span class="kTalentAch" style="font-weight:bold">'+lv.ach+'</span></div>'
+      + '<div style="font-size:9px;padding:2px 8px;border-radius:10px;background:rgba(139,92,246,0.2);color:#B39DDB">● 全宇宙最高成就 · 实时涌现</div></div>';
+  }).join('');
+  var sts = LV.map(function(lv){ return {sci: lv.sci, eng: lv.eng}; });
+  var ACH=[
+    ['诺奖级','图灵奖级','菲尔兹奖级','全宇宙至高成就'],
+    ['图灵奖级','诺奖级','沃尔夫奖级','星河至冠成就'],
+    ['菲尔兹奖级','诺奖级','院士级','行星之巅成就'],
+    ['院士级','诺奖级','最高发明奖级','文明之光成就'],
+    ['国士无双','院士级','最高科学奖级','九州栋梁成就'],
+    ['卓越级','杰出科学奖级','城市英才成就'],
+    ['巅峰级','全能天才级','至臻学者级'],
+    ['全才全能级','至高成就','跨界奇才级']
+  ];
+  function tick(){
+    sts.forEach(function(st, i){
+      var card = box.querySelector('[data-ktalent="'+i+'"]');
+      if(!card) return;
+      st.sci += 1 + Math.floor(Math.random()*4);
+      st.eng += 2 + Math.floor(Math.random()*6);
+      var s = card.querySelector('.kTalentSci');
+      var e = card.querySelector('.kTalentEng');
+      var a = card.querySelector('.kTalentAch');
+      if(s) s.textContent = st.sci.toLocaleString();
+      if(e) e.textContent = st.eng.toLocaleString();
+      if(a) a.textContent = ACH[i][Math.floor(Math.random()*ACH[i].length)];
     });
   }
   tick();
@@ -15855,7 +15912,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.6.50';
+var systemVersion = 'v1.6.51';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
