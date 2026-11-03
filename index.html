@@ -1565,7 +1565,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.51 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.52 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -6128,7 +6128,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.51 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.52 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -11436,6 +11436,7 @@ function runTranslate(){
     ecosystem: { name: '生态守护', icon: '🌳' },
     space: { name: '全宇宙居住空间', icon: '🏙️' },
     cosmos: { name: '星际娱乐', icon: '💫' },
+    entertainment: { name: '星际娱乐', icon: '💫' },
     defense: { name: '防御系统', icon: '🛡️' },
     economy: { name: '无限钱包', icon: '👝' },
     karma: { name: '人品系统', icon: '🍀' },
@@ -11649,6 +11650,7 @@ function runTranslate(){
         const moduleId = otherModules[Math.floor(Math.random() * otherModules.length)];
         const mockData = getMockData(moduleId);
         const moduleInfo = MODULES[moduleId];
+        if (!moduleInfo) continue;
         
         html += '<div style="margin-bottom:4px;padding:3px 0;border-bottom:1px dashed rgba(0,255,157,0.1);">';
         html += `<span style="color:#00ff9d;">${moduleInfo.icon} ${moduleInfo.name}</span>`;
@@ -15912,7 +15914,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.6.51';
+var systemVersion = 'v1.6.52';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
