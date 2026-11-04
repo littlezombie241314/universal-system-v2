@@ -1607,7 +1607,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.61 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.62 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -6216,7 +6216,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.61 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.62 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -10766,14 +10766,21 @@ function startBarcodeTimer(){
   },1000);
 }
 
-var payHistory=[],scanMethod='all',scannedTarget='';
+var payHistory=[],scanMethod='all',scannedTarget='',deductMethod='user';
+var deductNames={user:'存在账户',pool:'网站余额'};
 
-// payment method selector
+// payment method selector（按组隔离：data-m=扣款账户 / data-deduct=扣款方式）
 document.addEventListener('click',function(e){
   if(e.target.classList&&e.target.classList.contains('pm-btn')){
-    document.querySelectorAll('.pm-btn').forEach(function(b){b.classList.remove('active')});
+    var m=e.target.dataset.m, d=e.target.dataset.deduct;
+    var group=(m!==undefined)?'m':'d';
+    document.querySelectorAll('#payMethods .pm-btn, #scanDeductMethod .pm-btn').forEach(function(b){
+      if(group==='m' && b.dataset.m!==undefined){ b.classList.remove('active'); }
+      if(group==='d' && b.dataset.deduct!==undefined){ b.classList.remove('active'); }
+    });
     e.target.classList.add('active');
-    scanMethod=e.target.dataset.m;
+    if(m!==undefined) scanMethod=m;
+    if(d!==undefined) deductMethod=d;
   }
 });
 
@@ -16059,7 +16066,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.6.61';
+var systemVersion = 'v1.6.62';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
