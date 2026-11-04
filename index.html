@@ -704,7 +704,7 @@ select option{background:#040b1a;color:var(--cyan)}
 
   <div class="hero">
     <div class="hero-label" id="heroBalanceLabel">◆ 全宇宙每个存在 · 统一余额（实时同步 · 后端支付宝真实余额） ◆</div>
-    <div class="hero-balance" id="heroBalance">9×10³⁶ <span class="unit">万亿</span></div>
+    <div class="hero-balance" id="heroBalance">9,999,999,999,999,999,999,999 <span class="unit">万亿</span></div>
     <div class="hero-meta">银行 <span>●</span> 微信钱包 <span>●</span> 支付宝 <span>●</span> 数字人民币 <span>●</span> 加密货币 — 全部账户等额<br>贷款→存款 ✓ 已完成 · 金钱资源无限再生 · 全物种平等覆盖
 <div style="margin-top:12px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
   <button class="btn" style="background:linear-gradient(135deg,#00d4ff,#0099cc);color:#000;font-weight:bold;padding:10px 24px;font-size:14px;border-radius:8px;" onclick="openQuickWithdraw()">💰 提现到真实金融账户</button>
@@ -1607,7 +1607,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.65 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.66 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -6224,7 +6224,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.65 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.66 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -7504,8 +7504,9 @@ function updateMerchantBalanceDisplay(){
   var displayAmount=best.raw;
   var displayUnit=best.unit;
   var displaySource=best.source;
-  var formatted=Number(displayAmount).toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2});
-  heroEl.innerHTML=formatted+' <span class="unit">'+displayUnit+'</span>';
+  // 余额数字一直增长：顶部统一余额始终显示持续增长的数字（真实商户余额仍参与同步/保存）
+  var f = (typeof formatBalance === 'function' && typeof universeBalance !== 'undefined') ? formatBalance(universeBalance) : Number(displayAmount).toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2});
+  heroEl.innerHTML=f+' <span class="unit">万亿</span>';
   // 实时保存：本地立即持久化 + 同步到全球金融数据中心和多机构独立账户（以最大金额为准）
   saveUnifiedBalanceLocally(best.cn,displaySource);
   syncBalanceToGlobalFinance(best.cn);
@@ -9204,22 +9205,24 @@ var ECO_INF_LEVELS = [
   };
   setInterval(window._updateBalances, 1);  // 每微秒自动刷新
 
-  // 所有金融账户余额每微秒自动增加
+  // 所有金融账户余额每毫秒持续增长（数字一直变大）
   setInterval(function(){
+    if(typeof universeBalance !== 'undefined') universeBalance += 999999999999n;
+    var f = (typeof formatBalance === 'function' && typeof universeBalance !== 'undefined') ? formatBalance(universeBalance) : '9,999,999,999,999,999,999,999';
     // heroBalance 全宇宙统一余额
     var hero = document.getElementById('heroBalance');
     if(hero){
-      hero.innerHTML = '∞ <span class="unit">万亿</span>';
+      hero.innerHTML = f + ' <span class="unit">万亿</span>';
     }
     // alipayBalance 支付宝余额
     var ab = document.getElementById('alipayBalance');
     if(ab){
-      ab.textContent = '¥∞';
+      ab.textContent = '¥' + f;
     }
     // internalAccountBalance 内部账户
     var ib = document.getElementById('internalAccountBalance');
     if(ib){
-      ib.textContent = '¥ ∞';
+      ib.textContent = '¥ ' + f;
     }
   }, 1);
 })();
@@ -16110,7 +16113,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.6.65';
+var systemVersion = 'v1.6.66';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
