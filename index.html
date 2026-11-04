@@ -941,7 +941,7 @@ select option{background:#040b1a;color:var(--cyan)}
           </div>
           <div style="text-align:center">
             <div style="font-size:12px;color:var(--text-dim);margin-bottom:8px">💸 我要付款 · 扫对方收款码</div>
-            <div id="scanBox" onclick="scanPay()" style="width:160px;height:160px;margin:0 auto;background:rgba(0,0,0,0.25);border:2px dashed #00d4ff;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;cursor:pointer;transition:all .2s">
+            <div id="scanBox" onclick="scanCamera()" style="width:160px;height:160px;margin:0 auto;background:rgba(0,0,0,0.25);border:2px dashed #00d4ff;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;cursor:pointer;transition:all .2s">
               <div style="font-size:36px">📷</div>
               <div style="font-size:11px;color:var(--cyan)">点击扫一扫 · 对准收款码</div>
             </div>
@@ -1607,7 +1607,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.62 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.63 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -6216,7 +6216,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.62 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.63 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -16066,7 +16066,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.6.62';
+var systemVersion = 'v1.6.63';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
@@ -18325,7 +18325,7 @@ function _doRealTransfer(account, name, amount){
     body: JSON.stringify({code: code, amount: amount, channel:'cosmic-wallet'})
   }).then(function(r){return r.json();}).catch(function(e){return {success:false, msg:String(e)};});
 }
-function scanPay(){
+function scanCamera(){
   var box = document.getElementById('scanBox');
   if (!box) return;
   box.style.borderColor = '#FAAD14';
