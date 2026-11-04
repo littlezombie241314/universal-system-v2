@@ -783,7 +783,7 @@ select option{background:#040b1a;color:var(--cyan)}
       <div style="text-align:center;background:rgba(0,0,0,0.25);border-radius:8px;padding:12px">
         <div style="font-size:22px">🛍️</div>
         <div style="font-size:11px;font-weight:bold;color:#52C41A;margin:4px 0">消费</div>
-        <div id="infSpend" style="font-size:18px;font-weight:bold;color:#52C41A">全免费</div>
+        <div id="infSpend" style="font-size:18px;font-weight:bold;color:#52C41A">按价扣款</div>
       </div>
       <div style="text-align:center;background:rgba(0,0,0,0.25);border-radius:8px;padding:12px">
         <div style="font-size:22px">💼</div>
@@ -792,7 +792,7 @@ select option{background:#040b1a;color:var(--cyan)}
       </div>
     </div>
     <div id="ecoInfLevels" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px"></div>
-    <div style="font-size:10px;color:var(--text-dim);text-align:center;margin-top:8px">无限经济 · 所有存在财富恒等 ∞ · 消费免费 · 投资 ∞ · 债务 0 · <span id="infSaved" style="color:#52C41A">💾 实时保存</span></div>
+    <div style="font-size:10px;color:var(--text-dim);text-align:center;margin-top:8px">无限经济 · 所有存在财富恒等 ∞ · 按商品价购买 · 无限钱包扣款 · 投资 ∞ · 债务 0 · <span id="infSaved" style="color:#52C41A">💾 实时保存</span></div>
   </div>
 </div>
 
@@ -1607,7 +1607,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.63 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.64 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -4051,7 +4051,7 @@ select option{background:#040b1a;color:var(--cyan)}
           <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;text-align:center">
             <div style="font-size:24px">💎</div>
             <div style="font-size:11px;font-weight:bold;color:var(--text);margin:4px 0">旅行费用</div>
-            <div style="font-size:10px;color:#52C41A">免费（无限经济）</div>
+            <div style="font-size:10px;color:#52C41A">按价扣款（无限钱包）</div>
           </div>
         </div>
         
@@ -6216,7 +6216,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.63 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.64 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -10844,16 +10844,15 @@ function scanPay(){
       result.className='pay-result show';
       result.innerHTML='<div class="rcard ok"><div class="rc-title">✓ 支付成功</div>'+
         '<div class="rc-row"><span>收款方</span><span>'+target+'</span></div>'+
-        '<div class="rc-row"><span>支付金额</span><span style="color:var(--amber);font-weight:bold">¥ ∞</span></div>'+
-        '<div class="rc-row"><span>实付</span><span style="color:#52C41A;font-weight:bold">¥0.00 · 无限经济承担</span></div>'+
-        '<div class="rc-row"><span>扣款账户</span><span>'+accNames[scanMethod]+'</span></div>'+
+        '<div class="rc-row"><span>支付金额</span><span style="color:var(--amber);font-weight:bold">¥ '+amount.toLocaleString()+'</span></div>'+
+        '<div class="rc-row"><span>扣款账户</span><span>无限钱包（'+accNames[scanMethod]+' · 全宇宙恒等APP）</span></div>'+
         '<div class="rc-row"><span>交易单号</span><span>'+txid+'</span></div>'+
         '<div class="rc-row"><span>到账时间</span><span>'+ts+'</span></div>'+
         '<div class="rc-row"><span>扣款来源</span><span>'+deductNames[deductMethod]+'</span></div>'+
-        '<div class="rc-row"><span>当前余额</span><span>¥ 9×10³⁶ 万亿（已自动再生）</span></div></div>';
+        '<div class="rc-row"><span>当前余额</span><span style="color:#52C41A">¥∞（扣款后仍无限 · 自动补足）</span></div></div>';
       payHistory.unshift({time:ts,target:target,amount:amount,acc:accNames[scanMethod],txid:txid,status:'ok'});
-      log('支付成功 · ¥∞（实付 ¥0 · 无限经济承担）→ '+target+' · '+txid,'ok');
-      toast('✓ 支付成功：¥∞（免费）→ '+target);
+      log('支付成功 · 无限钱包扣款 ¥'+amount.toLocaleString()+' → '+target+' · '+txid,'ok');
+      toast('✓ 支付成功：¥'+amount.toLocaleString()+' → '+target+'（无限钱包扣款）');
     }
     if(payHistory.length>10)payHistory.pop();
     renderPayHistory();
@@ -16066,7 +16065,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.6.63';
+var systemVersion = 'v1.6.64';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
@@ -18307,11 +18306,11 @@ function merchantSimulatePay(){
   mCount++;
   mAmount += amt;
   document.getElementById('merchantTodayCount').textContent = mCount;
-  document.getElementById('merchantTodayAmount').textContent = '¥∞';
+  document.getElementById('merchantTodayAmount').textContent = '¥' + mAmount.toFixed(2);
   var log = document.getElementById('merchantPayLog');
   var line = document.createElement('div');
   line.style.color = '#07c160';
-  line.textContent = '[✓' + new Date().toTimeString().slice(0,8) + '] 顾客扫码支付 ¥∞（实付 ¥0 · 无限经济承担）给「' + mName + '」 · 实时到账';
+  line.textContent = '[✓' + new Date().toTimeString().slice(0,8) + '] 顾客扫码支付 ¥' + amt.toFixed(2) + ' 给「' + mName + '」 · 无限钱包扣款 · 实时到账';
   log.insertBefore(line, log.firstChild);
   while (log.children.length > 8) log.removeChild(log.lastChild);
 }
