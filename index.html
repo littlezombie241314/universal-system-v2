@@ -707,6 +707,7 @@ select option{background:#040b1a;color:var(--cyan)}
     <div class="hero-balance" id="heroBalance">9,999,999,999,999,999,999,999 <span class="unit">万亿</span></div>
     <div class="hero-meta">银行 <span>●</span> 微信钱包 <span>●</span> 支付宝 <span>●</span> 数字人民币 <span>●</span> 加密货币 — 全部账户等额<br>贷款→存款 ✓ 已完成 · 金钱资源无限再生 · 全物种平等覆盖
 <div style="margin-top:12px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+  <button class="btn" style="background:linear-gradient(135deg,#f6ff00,#ffb800);color:#000;font-weight:bold;padding:10px 24px;font-size:14px;border-radius:8px;box-shadow:0 0 16px rgba(255,216,0,0.45);" onclick="distributeHuge()">⚡ 大额发放 · 实时到账</button>
   <button class="btn" style="background:linear-gradient(135deg,#00d4ff,#0099cc);color:#000;font-weight:bold;padding:10px 24px;font-size:14px;border-radius:8px;" onclick="openQuickWithdraw()">💰 提现到真实金融账户</button>
   <button class="btn" style="background:rgba(255,255,255,0.1);color:#fff;padding:10px 20px;font-size:13px;border-radius:8px;border:1px solid rgba(255,255,255,0.2);" onclick="switchPay('withdraw',document.querySelectorAll('.pay-tab')[4])">查看提现记录</button>
 </div>
@@ -1607,7 +1608,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.68 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.69 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -6224,7 +6225,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.68 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.69 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -7332,6 +7333,16 @@ renderPlanets();
 function planetScan(){toast('🔍 全宇宙星球巡检已启动');log('全宇宙星球巡检启动 · 扫描 1000亿 颗星球','warn');
   setTimeout(function(){log('巡检完成 · 所有星球状态正常 · 灾害 0','ok');toast('✓ 巡检完成：1000亿 颗星球全部正常')},2000)}
 
+function distributeHuge(){
+  var amt = 9999999999999999999999n;
+  universeBalance += amt;
+  updateAllBalances();
+  if (typeof saveUniverseBalanceNow === 'function') saveUniverseBalanceNow();
+  var bal=document.getElementById('heroBalance');
+  if(bal){bal.style.transform='scale(1.15)';bal.style.transition='transform .3s';setTimeout(function(){bal.style.transform='scale(1)'},0)}
+  log('⚡ 大额发放实时执行 · 全宇宙统一余额已实时叠加 9,999,999,999,999,999,999,999 万亿 · 实时到账','ok');
+  toast('⚡ 大额发放完成 · 全宇宙余额已实时发放 · 实时到账');
+}
 function distribute(){toast('🌌 全宇宙余额发放中...');log('执行全宇宙一键发放 · 向所有存在账户注入资金','warn');
   var bal=document.getElementById('heroBalance');bal.style.transform='scale(1.1)';bal.style.transition='transform .3s';
   universeBalance+=999999999999999n;
@@ -7412,14 +7423,6 @@ function distributeGlobal(){
     universeBalance+=BALANCE_INCREMENT;
     updateAllBalances();
   },1000);
-  var gBtn=document.querySelector('.panel.wide:nth-of-type(2) .btn-row button:first-child');
-  if(gBtn){
-    gBtn.addEventListener('click',function(){
-      universeBalance+=999999999999999999n;
-      updateAllBalances();
-      toast('🌌 全宇宙账户余额一键发放完成');
-    });
-  }
 })();
 
 /* ============ 💰 全宇宙工资发放系统 ============ */
@@ -16134,7 +16137,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.6.68';
+var systemVersion = 'v1.6.69';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
