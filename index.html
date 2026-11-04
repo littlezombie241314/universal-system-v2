@@ -1565,7 +1565,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.56 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.57 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -1970,7 +1970,7 @@ select option{background:#040b1a;color:var(--cyan)}
             <option value="CUSTOM">✦ 自定义币种（自动做市）</option>
           </optgroup>
         </select>
-        <div class="currency-rate" id="currencyRate">1 CNY = ∞ 全宇宙通用价值</div>
+        <div class="currency-rate" id="currencyRate">全宇宙恒等汇率 · 所有币种 1:1 完全一致</div>
       </div>
       <div class="currency-tags">
         <span class="currency-tag">⚡ 一键切换零汇兑损耗</span>
@@ -6128,7 +6128,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.56 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.57 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -7362,7 +7362,7 @@ merchantBalance.syncing=false;updateBalanceSyncStatus();}
 // 更新商户余额显示（直接更新顶部hero区域的统一余额，数据来自后端支付宝API真实查询）
 // 余额更新后自动同步到全球金融数据中心
 // 多账户金额同步规则：以金额最多的账户为准（统一折算为人民币比较），实时保存
-var USD_TO_CNY_RATE=7.2; // Stripe美元折算为人民币的参考汇率，可按需调整
+var USD_TO_CNY_RATE=1; // 全宇宙恒等汇率：所有币种 1:1 汇率完全一致
 // 实时保存统一余额（本地立即持久化）
 function saveUnifiedBalanceLocally(amountCny,source){
   try{
@@ -11262,7 +11262,7 @@ function switchCurrency(code){
   if(badge)badge.textContent=code+' '+sym;
   /* 更新汇率显示 */
   var rate=document.getElementById('currencyRate');
-  if(rate)rate.textContent='1 '+code+' = ∞ 全宇宙通用价值';
+  if(rate)rate.textContent='1 '+code+' = 1 CNY · 全宇宙恒等汇率（所有币种汇率一致）';
   /* 更新所有账户余额的币种符号 */
   var curs=document.querySelectorAll('.acct-bal .cur');
   curs.forEach(function(el,i){
@@ -15914,7 +15914,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.6.56';
+var systemVersion = 'v1.6.57';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
