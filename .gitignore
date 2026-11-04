@@ -2,3 +2,10 @@ index_backup_wormhole.html
 alipay-backend/keys/
 alipay-backend/deploy_env_prod.txt
 alipay-backend/.env.example
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example

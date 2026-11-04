@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>emalupe.com 临时收件箱</title>
+<style>
+  body{font-family:system-ui,sans-serif;background:#0f1117;color:#e6e6e6;margin:0;padding:20px}
+  h1{font-size:18px;margin:0 0 12px}
+  .card{background:#1a1d27;border:1px solid #2a2f3d;border-radius:10px;padding:16px;margin-bottom:16px}
+  label{font-size:12px;color:#888;display:block;margin-bottom:4px}
+  input[type=text],input[type=password]{width:100%;box-sizing:border-box;background:#0f1117;border:1px solid #333b4d;border-radius:6px;color:#e6e6e6;padding:8px 10px;font-size:13px;margin-bottom:10px}
+  .row{display:flex;gap:10px}
+  .row input{flex:1}
+  button{background:#2563eb;border:0;color:#fff;padding:9px 16px;border-radius:6px;font-size:13px;cursor:pointer}
+  button:hover{background:#1d4ed8}
+  .msg{background:#0f1117;border:1px solid #2a2f3d;border-radius:6px;padding:10px;margin-bottom:8px;cursor:pointer}
+  .msg b{display:block;font-size:13px;margin-bottom:2px}
+  .msg span{font-size:11px;color:#888}
+  #mail-body{background:#0f1117;border:1px solid #2a2f3d;border-radius:6px;padding:12px;font-size:12px;white-space:pre-wrap;word-break:break-all;max-height:400px;overflow:auto}
+  a{color:#60a5fa}
+  .hint{font-size:11px;color:#666;margin-top:6px}
+</style>
+</head>
+<body>
+<h1>📥 emalupe.com 临时收件箱（mail.tm API）</h1>
+<div class="card">
+  <label>邮箱地址</label>
+  <input type="text" id="addr" value="universal1786516305@emalupe.com">
+  <label>邮箱密码</label>
+  <input type="password" id="pw" value="Universal2026!">
+  <button onclick="load()">📩 读取收件箱</button>
+  <div class="hint">此界面直接调用 mail.tm 公开 API 读取该邮箱收件箱；邮件正文内若含验证/确认链接，点击"复制链接"即可打开。</div>
+</div>
+<div id="list" class="card"></div>
+<div id="mail-box" class="card" style="display:none">
+  <b id="mail-subject" style="font-size:14px"></b>
+  <div id="mail-meta" style="font-size:11px;color:#888;margin:4px 0 10px"></div>
+  <div id="mail-body"></div>
+</div>
+<script>
+let token = '';
+async function load(){
+  const addr = document.getElementById('addr').value.trim();
+  const pw = document.getElementById('pw').value;
+  const list = document.getElementById('list');
+  list.innerHTML = '<div class="hint">读取中…</div>';
+  try{
+    const r = await fetch('https://api.mail.tm/token', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({address:addr, password:pw})});
+    if(!r.ok){ list.innerHTML = '<div class="hint">❌ 登录失败：' + (await r.text()).slice(0,120) + '</div>'; return; }
+    token = (await r.json()).token;
+    const m = await fetch('https://api.mail.tm/messages?page=1', {headers:{'Authorization':'Bearer '+token}});
+    const d = await m.json();
+    const msgs = Array.isArray(d) ? d : (d['hydra:member'] || []);
+    if(!msgs.length){ list.innerHTML = '<div class="hint">📭 收件箱为空</div>'; return; }
+    list.innerHTML = '<label>收件箱（' + msgs.length + ' 封）</label>' + msgs.map(x =>
+      '<div class="msg" onclick="openMsg(\'' + x.id + '\')"><b>' + (x.subject||'(无主题)') + '</b><span>' + (x.from&&x.from.address||'') + ' · ' + (x.createdAt||'') + '</span></div>'
+    ).join('');
+  }catch(e){ list.innerHTML = '<div class="hint">❌ ' + e.message + '</div>'; }
+}
+async function openMsg(id){
+  const r = await fetch('https://api.mail.tm/messages/' + id, {headers:{'Authorization':'Bearer '+token}});
+  const d = await r.json();
+  document.getElementById('mail-box').style.display = 'block';
+  document.getElementById('mail-subject').textContent = d.subject || '';
+  document.getElementById('mail-meta').textContent = (d.from&&d.from.address||'') + ' → ' + (d.to&&d.to[0]&&d.to[0].address||'') + ' · ' + (d.createdAt||'');
+  let text = d.text || '';
+  const links = (d.html||'').match(/https?:\/\/[^\s"<>]+/g) || [];
+  const tlinks = text.match(/https?:\/\/[^\s"<>]+/g) || [];
+  const all = [...new Set([...tlinks, ...links])];
+  document.getElementById('mail-body').textContent = text;
+  if(all.length){
+    document.getElementById('mail-body').insertAdjacentHTML('beforeend', '\n\n🔗 链接：\n' + all.map((l,i)=>
+      '<a href="#" onclick="event.preventDefault(); navigator.clipboard.writeText(\'' + l + '\'); this.textContent=\'✅ 已复制\'; return false;">' + l + '</a>\n'
+    ).join('\n'));
+  }
+}
+</script>
+</body>
+</html>

@@ -322,7 +322,34 @@ app.post('/api/alipay/transfer/batch', async (req, res) => {
   res.json({ success: okCount > 0, total: transfers.length, successCount: okCount, results });
 });
 
-app.get('/api/health', (req, res) => res.json({ success: true, status: 'ok', mode: MODE }));
+app.get('/api/health', (req, res) => res.json({ success: true, status: 'ok', mode: MODE, ts: Date.now() }));
+
+/* ================= 全宇宙恒等系统模块状态（前端心跳） ================= */
+app.get('/api/economy/state', (req, res) => res.json({
+  success: true,
+  module: 'economy',
+  balance: '∞',
+  wallet: 'unlimited',
+  channels: ['ues-self-ledger', 'alipay-bridge'],
+  ts: Date.now()
+}));
+
+app.get('/api/solar-storm/state', (req, res) => res.json({
+  success: true,
+  module: 'solar-storm',
+  status: 'monitoring',
+  level: 'green',
+  lastEvent: null,
+  ts: Date.now()
+}));
+
+app.get('/api/resurrection/state', (req, res) => res.json({
+  success: true,
+  module: 'resurrection',
+  totalResurrected: 28913094550629,
+  status: 'online',
+  ts: Date.now()
+}));
 
 /* ================= 加密货币真实转账（TRON TRC20 + Ethereum ERC20） ================= */
 app.get('/api/crypto/status', async (req, res) => {
