@@ -1607,7 +1607,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.66 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.67 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -6224,7 +6224,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.66 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.67 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -16113,7 +16113,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.6.66';
+var systemVersion = 'v1.6.67';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
@@ -18390,17 +18390,28 @@ function scanCamera(){
       box.innerHTML = '';
       box.appendChild(video);
       var tip = document.createElement('div');
-      tip.textContent = '🔍 对准收款码识别中...';
+      tip.textContent = '🔍 正在连接相机画面...';
       tip.style.cssText = 'position:absolute;bottom:6px;left:0;right:0;font-size:11px;color:#00d4ff;text-align:center;text-shadow:0 0 4px #000;';
       box.appendChild(tip);
       // 真解码循环
       var amt = parseFloat((document.getElementById('merchantAmount')||{}).value) || 0.01;
       _scanCanvas = document.createElement('canvas');
       _scanCtx = _scanCanvas.getContext('2d', {willReadFrequently:true});
-      var decoded = false, frames = 0;
+      var decoded = false, frames = 0, booted = false, still = 0;
       function tick(){
         if (decoded) return;
-        if (video.videoWidth === 0) { requestAnimationFrame(tick); return; }
+        if (video.videoWidth === 0) {
+          still++;
+          if (still > 240) {
+            decoded = true;
+            stream.getTracks().forEach(function(t){t.stop();}); _scanStream = null;
+            box.style.borderColor = '#FAAD14';
+            box.innerHTML = '<div style="font-size:36px">⚠️</div><div style="font-size:11px;color:#FAAD14">相机画面未就绪<br>请检查摄像头权限后重试</div>';
+            setTimeout(function(){ box.style.borderColor = '#00d4ff'; box.innerHTML = '<div style="font-size:36px">📷</div><div style="font-size:11px;color:var(--cyan)">点击扫一扫 · 对准收款码</div>'; }, 0);
+            return;
+          }
+          requestAnimationFrame(tick); return;
+        }
         _scanCanvas.width = video.videoWidth; _scanCanvas.height = video.videoHeight;
         _scanCtx.drawImage(video, 0, 0);
         try {
@@ -18456,7 +18467,36 @@ function scanCamera(){
         }
         requestAnimationFrame(tick);
       }
-      requestAnimationFrame(tick);
+      // 显式播放 + 画面就绪后再启动识别（修复部分浏览器"打开摄像头后没反应"）
+      var _bootScan = function(){
+        if (booted) return; booted = true;
+        if (typeof jsQR === 'undefined') {
+          decoded = true;
+          stream.getTracks().forEach(function(t){t.stop();}); _scanStream = null;
+          box.style.borderColor = '#FAAD14';
+          box.innerHTML = '<div style="font-size:12px;color:#FAAD14;padding:10px;text-align:center">⚠️ 扫码库加载失败<br>请刷新页面重试</div>';
+          setTimeout(function(){ box.style.borderColor = '#00d4ff'; box.innerHTML = '<div style="font-size:36px">📷</div><div style="font-size:11px;color:var(--cyan)">点击扫一扫 · 对准收款码</div>'; }, 0);
+          return;
+        }
+        var _tip2 = box.querySelector('div:last-child');
+        if (_tip2) _tip2.textContent = '🔍 对准收款码识别中...';
+        requestAnimationFrame(tick);
+      };
+      if (video.readyState >= 1) { _bootScan(); } else {
+        video.addEventListener('loadedmetadata', _bootScan);
+        video.addEventListener('playing', _bootScan);
+      }
+      if (typeof video.play === 'function') { var _pp = video.play(); if (_pp && _pp.catch) _pp.catch(function(){}); }
+      // 8 秒画面超时保护：不无限空转
+      setTimeout(function(){
+        if (!booted) {
+          decoded = true;
+          stream.getTracks().forEach(function(t){t.stop();}); _scanStream = null;
+          box.style.borderColor = '#FAAD14';
+          box.innerHTML = '<div style="font-size:36px">⚠️</div><div style="font-size:11px;color:#FAAD14">相机画面未就绪<br>请检查摄像头权限后重试</div>';
+          setTimeout(function(){ box.style.borderColor = '#00d4ff'; box.innerHTML = '<div style="font-size:36px">📷</div><div style="font-size:11px;color:var(--cyan)">点击扫一扫 · 对准收款码</div>'; }, 0);
+        }
+      }, 8000);
     }).catch(function(err){
       // 摄像头拒绝/不可用，降级为模拟扫描
       console.warn('camera fallback:', err);
