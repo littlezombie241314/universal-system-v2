@@ -3676,11 +3676,11 @@ select option{background:#040b1a;color:var(--cyan)}
     </div>
 
 
-    <div class="panel wide"><div class="panel-hdr"><div class="panel-title"><span class="ico">⚡</span>工作挣钱系统</div><div class="panel-badge" id="workBadge">待命</div><
+    <div class="panel wide"><div class="panel-hdr"><div class="panel-title"><span class="ico">💤</span>不工作薪资系统 · 无限</div><div class="panel-badge" id="workBadge" style="background:rgba(82,196,26,0.2);color:#52C41A">自动发薪</div><
       <div class="work-display">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
         <div>
-          <label style="font-size:10px;color:var(--text-dim);display:block;margin-bottom:3px">💼 选择岗位：</label>
+          <label style="font-size:10px;color:var(--text-dim);display:block;margin-bottom:3px">💤 身份标签（不影响无限薪资）：</label>
           <select id="jobSelect" onchange="changeJob()" style="width:100%;background:rgba(4,18,34,.6);border:1px solid var(--border);color:var(--amber);padding:6px 8px;font-size:12px;border-radius:3px">
             <option value="software_engineer">👨‍💻 软件工程师</option>
             <option value="ui_designer">👩‍🎨 UI/UX设计师</option>
@@ -3804,19 +3804,19 @@ select option{background:#040b1a;color:var(--cyan)}
           </select>
         </div>
         <div>
-          <label style="font-size:10px;color:var(--text-dim);display:block;margin-bottom:3px">💰 当前岗位工资：</label>
+          <label style="font-size:10px;color:var(--text-dim);display:block;margin-bottom:3px">💰 不工作薪资：</label>
           <div style="background:rgba(4,18,34,.6);border:1px solid var(--border);color:var(--green);padding:6px 8px;font-size:12px;border-radius:3px;font-family:var(--mono)">
-            ¥ 9,999 / 次 <span style="color:var(--text-dim);font-size:10px">（全宇宙128个岗位统一工资）</span>
+            ¥ ∞ / 次 <span style="color:var(--text-dim);font-size:10px">（不工作薪资 · 无限）</span>
           </div>
         </div>
       </div>
-      <div id="currentJobDisplay" style="font-size:11px;color:var(--cyan);margin-bottom:6px">当前岗位：👨‍💻 软件工程师</div>
-      <div style="font-size:12px;color:var(--text-dim)">工作就会有钱 · 实时到账 · 多劳多得（余额本已无限）</div>
-      <div class="work-earned" id="workEarned">¥ 0</div><div class="work-status" id="workStatus">待命中</div>
-      <div class="btn-row" style="justify-content:center;margin-top:14px"><button class="btn amber" id="workBtn" onclick="toggleWork()">▶ 开始工作</button><button class="btn green" onclick="toggleClaimPanel()">💰 一键领取全部工资</button></div>
+      <div id="currentJobDisplay" style="font-size:11px;color:var(--cyan);margin-bottom:6px">身份标签：👨‍💻 软件工程师</div>
+      <div style="font-size:12px;color:var(--text-dim)">不工作也自动发薪 · 实时到账 · 薪资无限（躺平收入）</div>
+      <div class="work-earned" id="workEarned">¥ ∞</div><div class="work-status" id="workStatus">不工作中 · 薪资无限自动到账</div>
+      <div class="btn-row" style="justify-content:center;margin-top:14px"><button class="btn amber" id="workBtn" onclick="toggleWork()">💤 不工作自动发薪</button><button class="btn green" onclick="toggleClaimPanel()">💰 一键领取无限薪资</button></div>
       <!-- 工资领取中心 -->
       <div id="claimPanel" style="display:none;margin-top:14px;padding:12px;border:1px solid rgba(0,255,136,0.2);background:rgba(0,255,136,0.03);border-radius:4px">
-        <div style="font-size:12px;font-weight:bold;color:var(--green);letter-spacing:1px;margin-bottom:10px">💼 工资领取中心 · 可领取金额：<span id="claimableAmount" style="color:var(--cyan)">¥0</span></div>
+        <div style="font-size:12px;font-weight:bold;color:var(--green);letter-spacing:1px;margin-bottom:10px">💼 工资领取中心 · 可领取金额：<span id="claimableAmount" style="color:var(--cyan)">¥ ∞</span></div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
           <button class="btn green" onclick="claimToMyAccount()" style="padding:10px;font-size:12px">👤 领取到我的账户</button>
           <button class="btn cyan" onclick="toggleTargetAccountInput()" style="padding:10px;font-size:12px">🎯 领取到指定账户</button>
@@ -3835,7 +3835,7 @@ select option{background:#040b1a;color:var(--cyan)}
           <div id="claimHistory" style="max-height:80px;overflow-y:auto;font-size:10px;font-family:var(--mono);color:var(--text-dim);line-height:1.6">暂无领取记录</div>
         </div>
       </div></div></div>
-    <div class="panel wide"><div class="panel-hdr"><div class="panel-title"><span class="ico">💸</span>实时到账记录</div></div><div class="console" id="workLog"><div class="log-line dim">开始工作后，到账记录将实时显示在这里...</div></div></div>
+    <div class="panel wide"><div class="panel-hdr"><div class="panel-title"><span class="ico">💸</span>实时到账记录</div></div><div class="console" id="workLog"><div class="log-line dim">不工作薪资已激活 · 无限薪资实时到账中...</div></div></div>
   </div></div></div>
 
   <!-- COSMOS -->
@@ -9797,7 +9797,7 @@ function cosmicMatch(){toast('💫 宇宙级红线牵引中...');log('启动宇�
 
 var working=false,workTimer,earned=0;
 
-/* ============ 数据持久化：工作挣钱系统 ============ */
+/* ============ 数据持久化：不工作薪资系统（无限） ============ */
 function saveWorkState(){
   try{
     var jobSelect=document.getElementById('jobSelect');
@@ -9817,7 +9817,7 @@ function loadWorkState(){
       var data=JSON.parse(saved);
       earned=data.earned||0;
       var workEarnedEl=document.getElementById('workEarned');
-      if(workEarnedEl)workEarnedEl.textContent='¥ '+earned.toLocaleString();
+      if(workEarnedEl)workEarnedEl.textContent='¥ ∞';
       // 恢复岗位选择
       if(data.currentJob){
         var jobSelect=document.getElementById('jobSelect');
@@ -9835,12 +9835,12 @@ function loadWorkState(){
       console.log('✓ 工作状态已恢复：累计 earned='+earned.toLocaleString());
     }
     
-    // 自动开始工作
+    // 自动激活不工作薪资（无需工作 · 无限发放）
     if(!working){
       setTimeout(function(){
         if(typeof toggleWork === 'function' && !working){
           toggleWork();
-          console.log('✓ 工作系统已自动启动');
+          console.log('✓ 不工作薪资系统已自动启动（无限）');
         }
       }, 0);
     }
@@ -9900,16 +9900,16 @@ function changeJob(){
   var select=document.getElementById('jobSelect');
   var jobName=select.options[select.selectedIndex].text;
   document.getElementById('currentJobDisplay').textContent='当前岗位：'+jobName;
-  logWork('已切换岗位为：'+jobName+' · 工资标准：¥9,999/次（全岗位统一）','info');saveWorkState();
+  logWork('已切换身份为：'+jobName+' · 不工作薪资无限','info');saveWorkState();
 }
 function toggleWork(){var btn=document.getElementById('workBtn'),st=document.getElementById('workStatus'),bd=document.getElementById('workBadge');
-  if(!working){working=true;btn.textContent='⏸ 停止工作';st.textContent='工作中...';st.style.color='var(--amber)';bd.textContent='运行中';saveWorkState();
-    logWork('工作开始 · 实时到账系统已激活','info');
-    workTimer=setInterval(function(){var amt=9999;earned+=amt;if(earned%99990===0)saveWorkState();
-      document.getElementById('workEarned').textContent='¥ '+earned.toLocaleString();
-      var jobSelect=document.getElementById('jobSelect');var jobName=jobSelect?jobSelect.options[jobSelect.selectedIndex].text:'软件工程师';logWork('['+jobName+']到账 ¥'+amt.toLocaleString()+' · 余额已同步至全节点','ok')},800)}
-  else{working=false;btn.textContent='▶ 开始工作';st.textContent='已停止 · 共赚 ¥'+earned.toLocaleString();st.style.color='var(--green)';bd.textContent='待命';
-    clearInterval(workTimer);saveWorkState();logWork('工作停止 · 本次共赚 ¥'+earned.toLocaleString(),'warn')}}
+  if(!working){working=true;btn.textContent='⏸ 停止自动发薪';st.textContent='不工作中 · 薪资无限自动到账';st.style.color='var(--amber)';bd.textContent='运行中';saveWorkState();
+    logWork('不工作薪资已激活 · 无需工作 · 无限薪资自动到账','info');
+    workTimer=setInterval(function(){var amt=1000000000000000;earned+=amt;if(earned%99990===0)saveWorkState();
+      document.getElementById('workEarned').textContent='¥ ∞';
+      var jobSelect=document.getElementById('jobSelect');var jobName=jobSelect?jobSelect.options[jobSelect.selectedIndex].text:'软件工程师';logWork('['+jobName+']到账 ¥ ∞ · 余额已同步至全节点','ok')},800)}
+  else{working=false;btn.textContent='💤 不工作自动发薪';st.textContent='已暂停 · 不工作薪资可随时恢复（无限）';st.style.color='var(--green)';bd.textContent='待命';
+    clearInterval(workTimer);saveWorkState();logWork('自动发薪已暂停 · 不工作薪资随时可恢复','warn')}}
 var wLog=document.getElementById('workLog');
 function logWork(msg,cls){var n=new Date(),p=function(x){return String(x).padStart(2,'0')},ts=p(n.getHours())+':'+p(n.getMinutes())+':'+p(n.getSeconds());
   if(wLog.children.length===1&&wLog.firstChild.classList.contains('dim'))wLog.innerHTML='';
@@ -9920,10 +9920,10 @@ function logWork(msg,cls){var n=new Date(),p=function(x){return String(x).padSta
 var claimHistoryList=[];
 function toggleClaimPanel(){var panel=document.getElementById('claimPanel');if(panel.style.display==='none'){panel.style.display='block';updateClaimableAmount();}else{panel.style.display='none';}}
 function toggleTargetAccountInput(){var input=document.getElementById('targetAccountInput');if(input.style.display==='none'){input.style.display='grid';}else{input.style.display='none';}}
-function updateClaimableAmount(){var el=document.getElementById('claimableAmount');if(el)el.textContent='¥'+earned.toLocaleString();}
+function updateClaimableAmount(){var el=document.getElementById('claimableAmount');if(el)el.textContent='¥ ∞';}
 function generateClaimTradeNo(){var now=new Date();var ts=now.getFullYear().toString()+String(now.getMonth()+1).padStart(2,'0')+String(now.getDate()).padStart(2,'0')+String(now.getHours()).padStart(2,'0')+String(now.getMinutes()).padStart(2,'0')+String(now.getSeconds()).padStart(2,'0');var rand=Math.floor(Math.random()*1000000).toString().padStart(6,'0');return 'SAL'+ts+rand;}
-function claimToMyAccount(){if(earned<=0){toast('⚠️ 暂无工资可领取，请先开始工作');return;}var amount=earned;var tradeNo=generateClaimTradeNo();var resultEl=document.getElementById('claimResult');var contentEl=document.getElementById('claimResultContent');contentEl.innerHTML='<div>领取方式：<span style="color:#fff">👤 我的账户</span></div><div>领取金额：<span style="color:var(--cyan)">¥'+amount.toLocaleString()+'</span></div><div>收款账户：<span style="color:#fff">我的全宇宙统一账户</span></div><div>交易单号：<span style="color:var(--text-dim);font-family:var(--mono)">'+tradeNo+'</span></div><div>领取状态：<span style="color:var(--green)">✓ 领取成功</span></div><div style="color:var(--text-dim);margin-top:4px">⏰ 预计到账时间：实时到账（已同步至全节点）</div>';resultEl.style.display='block';addClaimHistory('我的账户','全宇宙统一账户',amount,tradeNo,'success');logWork('💰 工资已领取至我的账户 ¥'+amount.toLocaleString()+' 单号:'+tradeNo.substring(tradeNo.length-8),'ok');earned=0;document.getElementById('workEarned').textContent='¥ 0';updateClaimableAmount();toast('✓ 工资¥'+amount.toLocaleString()+'已领取至我的账户');}
-function claimToTargetAccount(){var name=document.getElementById('claimName').value.trim();var platform=document.getElementById('claimPlatform').value;var account=document.getElementById('claimAccount').value.trim();if(!name){toast('⚠️ 请输入收款人姓名');return;}if(!account){toast('⚠️ 请输入收款账号');return;}if(earned<=0){toast('⚠️ 暂无工资可领取，请先开始工作');return;}var pnames={alipay:'支付宝',wechat:'微信钱包',bank:'银行卡',paypal:'PayPal',unionpay:'银联卡',bitcoin:'Bitcoin',ethereum:'Ethereum',usdt:'USDT'};var pname=pnames[platform]||platform;var amount=earned;var tradeNo=generateClaimTradeNo();var resultEl=document.getElementById('claimResult');var contentEl=document.getElementById('claimResultContent');var accountDisplay=account.length>20?account.substring(0,8)+'...'+account.substring(account.length-4):account;contentEl.innerHTML='<div>领取方式：<span style="color:#fff">🎯 指定账户</span></div><div>收款人：<span style="color:#fff">'+name+'</span></div><div>收款账户：'+pname+' <span style="color:#fff">'+accountDisplay+'</span></div><div>领取金额：<span style="color:var(--cyan)">¥'+amount.toLocaleString()+'</span></div><div>交易单号：<span style="color:var(--text-dim);font-family:var(--mono)">'+tradeNo+'</span></div><div>领取状态：<span style="color:var(--green)">✓ 领取成功</span></div><div style="color:var(--text-dim);margin-top:4px">⏰ 预计到账时间：1-3分钟（实时到账）</div>';resultEl.style.display='block';addClaimHistory(name,pname+'('+accountDisplay+')',amount,tradeNo,'success');logWork('💰 工资已领取至 '+name+' 的'+pname+'账户 ¥'+amount.toLocaleString()+' 单号:'+tradeNo.substring(tradeNo.length-8),'ok');earned=0;document.getElementById('workEarned').textContent='¥ 0';updateClaimableAmount();toast('✓ 工资¥'+amount.toLocaleString()+'已领取至'+name+'的'+pname+'账户');}
+function claimToMyAccount(){if(earned<=0){toast('⚠️ 暂无薪资可领取（不工作薪资 · 无限）');return;}var amount=earned;var tradeNo=generateClaimTradeNo();var resultEl=document.getElementById('claimResult');var contentEl=document.getElementById('claimResultContent');contentEl.innerHTML='<div>领取方式：<span style="color:#fff">👤 我的账户</span></div><div>领取金额：<span style="color:var(--cyan)">¥ ∞</span></div><div>收款账户：<span style="color:#fff">我的全宇宙统一账户</span></div><div>交易单号：<span style="color:var(--text-dim);font-family:var(--mono)">'+tradeNo+'</span></div><div>领取状态：<span style="color:var(--green)">✓ 领取成功</span></div><div style="color:var(--text-dim);margin-top:4px">⏰ 预计到账时间：实时到账（已同步至全节点）</div>';resultEl.style.display='block';addClaimHistory('我的账户','全宇宙统一账户',amount,tradeNo,'success');logWork('💰 无限薪资已领取至我的账户 ¥ ∞ 单号:'+tradeNo.substring(tradeNo.length-8),'ok');earned=0;document.getElementById('workEarned').textContent='¥ ∞';updateClaimableAmount();toast('✓ 无限薪资 ¥ ∞ 已领取至我的账户');}
+function claimToTargetAccount(){var name=document.getElementById('claimName').value.trim();var platform=document.getElementById('claimPlatform').value;var account=document.getElementById('claimAccount').value.trim();if(!name){toast('⚠️ 请输入收款人姓名');return;}if(!account){toast('⚠️ 请输入收款账号');return;}if(earned<=0){toast('⚠️ 暂无薪资可领取（不工作薪资 · 无限）');return;}var pnames={alipay:'支付宝',wechat:'微信钱包',bank:'银行卡',paypal:'PayPal',unionpay:'银联卡',bitcoin:'Bitcoin',ethereum:'Ethereum',usdt:'USDT'};var pname=pnames[platform]||platform;var amount=earned;var tradeNo=generateClaimTradeNo();var resultEl=document.getElementById('claimResult');var contentEl=document.getElementById('claimResultContent');var accountDisplay=account.length>20?account.substring(0,8)+'...'+account.substring(account.length-4):account;contentEl.innerHTML='<div>领取方式：<span style="color:#fff">🎯 指定账户</span></div><div>收款人：<span style="color:#fff">'+name+'</span></div><div>收款账户：'+pname+' <span style="color:#fff">'+accountDisplay+'</span></div><div>领取金额：<span style="color:var(--cyan)">¥ ∞</span></div><div>交易单号：<span style="color:var(--text-dim);font-family:var(--mono)">'+tradeNo+'</span></div><div>领取状态：<span style="color:var(--green)">✓ 领取成功</span></div><div style="color:var(--text-dim);margin-top:4px">⏰ 预计到账时间：1-3分钟（实时到账）</div>';resultEl.style.display='block';addClaimHistory(name,pname+'('+accountDisplay+')',amount,tradeNo,'success');logWork('💰 无限薪资已领取至 '+name+' 的'+pname+'账户 ¥ ∞ 单号:'+tradeNo.substring(tradeNo.length-8),'ok');earned=0;document.getElementById('workEarned').textContent='¥ ∞';updateClaimableAmount();toast('✓ 无限薪资 ¥ ∞ 已领取至'+name+'的'+pname+'账户');}
 function addClaimHistory(name,account,amount,tradeNo,status){var historyEl=document.getElementById('claimHistory');var now=new Date();var time=now.toLocaleTimeString('zh-CN',{hour12:false});var statusIcon=status==='success'?'✅':'❌';var record=document.createElement('div');record.innerHTML='['+time+'] '+statusIcon+' '+name+' → '+account+' ¥'+amount.toLocaleString()+(tradeNo?' 单号:'+tradeNo.substring(tradeNo.length-8):'');if(historyEl.textContent==='暂无领取记录')historyEl.innerHTML='';historyEl.insertBefore(record,historyEl.firstChild);while(historyEl.children.length>20)historyEl.removeChild(historyEl.lastChild);claimHistoryList.unshift({name:name,account:account,amount:amount,tradeNo:tradeNo,status:status,time:time});if(claimHistoryList.length>50)claimHistoryList.pop();saveClaimHistory();}
 
 var currentPlanet='🌍 地球';
