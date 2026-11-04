@@ -1607,7 +1607,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.67 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.68 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -6224,7 +6224,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.67 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.68 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -7342,6 +7342,26 @@ function distribute(){toast('🌌 全宇宙余额发放中...');log('执行全�
 var universeBalance = 9999999999999999999999n;
 // 账户余额持久化
 function saveUniverseBalance(){try{localStorage.setItem('universeBalance',universeBalance.toString());}catch(e){}}
+// 余额实时保存：节流250ms + 页面关闭/隐藏兜底
+var _lastUBTs = 0;
+function saveUniverseBalanceNow(){
+  var n = Date.now();
+  if (n - _lastUBTs < 100) return;
+  _lastUBTs = n;
+  try{ localStorage.setItem('universeBalance', universeBalance.toString()); }catch(e){}
+}
+function scheduleSaveUniverseBalance(){
+  var n = Date.now();
+  if (n - _lastUBTs >= 250) { _lastUBTs = n; try{ localStorage.setItem('universeBalance', universeBalance.toString()); }catch(e){} }
+}
+(function(){
+  function flush(){ try{ localStorage.setItem('universeBalance', universeBalance.toString()); }catch(e){} }
+  if (window.addEventListener) {
+    window.addEventListener('beforeunload', flush);
+    window.addEventListener('pagehide', flush);
+    document.addEventListener('visibilitychange', function(){ if (document.visibilityState === 'hidden') flush(); });
+  }
+})();
 function loadUniverseBalance(){try{var raw=localStorage.getItem('universeBalance');if(raw){universeBalance=BigInt(raw);console.log('账户余额已恢复:',universeBalance.toString());return true;}}catch(e){console.error('恢复账户余额失败:',e);}return false;}
 var BALANCE_INCREMENT = 999999999999n;
 function formatBalance(bal){
@@ -9208,6 +9228,7 @@ var ECO_INF_LEVELS = [
   // 所有金融账户余额每毫秒持续增长（数字一直变大）
   setInterval(function(){
     if(typeof universeBalance !== 'undefined') universeBalance += 999999999999n;
+    if (typeof scheduleSaveUniverseBalance === 'function') scheduleSaveUniverseBalance();
     var f = (typeof formatBalance === 'function' && typeof universeBalance !== 'undefined') ? formatBalance(universeBalance) : '9,999,999,999,999,999,999,999';
     // heroBalance 全宇宙统一余额
     var hero = document.getElementById('heroBalance');
@@ -16113,7 +16134,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.6.67';
+var systemVersion = 'v1.6.68';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
