@@ -1565,7 +1565,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.58 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.59 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -6173,7 +6173,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.58 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.59 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -15959,7 +15959,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.6.58';
+var systemVersion = 'v1.6.59';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
@@ -17074,8 +17074,8 @@ setTimeout(function() {
   }
 
   function invPerSecTotal(){
-    // 每秒收益固定为 ¥9,999,999,999
-    return BigInt('9999999999');
+    // 每秒收益固定为 ¥∞（无限）
+    return BigInt('999999999999999999');
   }
 
   function invRender(){
@@ -17116,15 +17116,15 @@ setTimeout(function() {
 
   function invTick(){
     if(!invState.running) return;
-    // 每秒收益 ¥9,999,999,999 分摊：宇宙70% + 星球20% + 国家8% + 重点项目2%
-    // 全部宇宙：+¥7,000,000,000
-    invState.universe.invested += BigInt(7000000000);
-    // 全部星球：+¥2,000,000,000
-    invState.planet.invested += BigInt(2000000000);
-    // 全部国家：+¥799,999,999
-    invState.country.invested += BigInt(799999999);
-    // 重点投资项目：+¥200,000,000（6个分摊）
-    var prjAlloc = [BigInt(33333334), BigInt(33333334), BigInt(33333333), BigInt(33333333), BigInt(33333333), BigInt(33333333)];
+    // 每秒收益 ¥∞（无限）分摊：宇宙70% + 星球20% + 国家8% + 重点项目2%
+    // 全部宇宙：+¥700,000,000,000,000,000（无限）
+    invState.universe.invested += BigInt(700000000000000000);
+    // 全部星球：+¥200,000,000,000,000,000（无限）
+    invState.planet.invested += BigInt(200000000000000000);
+    // 全部国家：+¥79,999,999,999,999,999（无限）
+    invState.country.invested += BigInt(79999999999999999);
+    // 重点投资项目：+¥20,000,000,000,000,000（6个分摊·无限）
+    var prjAlloc = [BigInt(3333333333333334), BigInt(3333333333333334), BigInt(3333333333333333), BigInt(3333333333333333), BigInt(3333333333333333), BigInt(3333333333333333)];
     invProjects.forEach(function(p, idx){
       p.invested += prjAlloc[idx % prjAlloc.length];
       p.rounds++;
@@ -17140,7 +17140,7 @@ setTimeout(function() {
     invRender();
     invSave();
     if(invState.rounds % 5 === 0){
-      invLog('第 ' + invState.rounds + ' 轮：全部宇宙(∞)·全部星球(1000亿)·全部国家(195)·重点项目(' + invProjects.length + ') 全部自动投资，⚡ 最快的速度 ¥9,999,999,999', 'ok');
+      invLog('第 ' + invState.rounds + ' 轮：全部宇宙(∞)·全部星球(1000亿)·全部国家(195)·重点项目(' + invProjects.length + ') 全部自动投资，⚡ 最快的速度 ¥∞（无限）', 'ok');
     }
   }
 
