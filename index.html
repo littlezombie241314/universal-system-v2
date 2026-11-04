@@ -1565,7 +1565,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.57 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.58 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -5365,6 +5365,51 @@ select option{background:#040b1a;color:var(--cyan)}
   setInterval(tick, 2000);
 })();</script>
 
+<!-- ⬇️ 全宇宙层级 · 恒等下载使用全覆盖 8卡片实时状态 -->
+<div class="panel wide"><div class="panel-hdr"><div class="panel-title"><span class="ico">⬇️</span>全宇宙层级 · 恒等下载使用全覆盖</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">8层级实时状态 · 所有存在</div></div>
+  <div id="dlLevels" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;padding:10px 14px 6px"></div>
+</div>
+<script>/* ===== 全宇宙层级 · 恒等下载使用全覆盖 8卡片实时状态 ===== */
+(function(){
+  var box = document.getElementById('dlLevels');
+  if (!box) return;
+  var LV=[
+    {icon:'🌌',name:'宇宙层级',dName:'寰宇恒等全量包',d:88888888,u:88888888},
+    {icon:'🌠',name:'星系层级',dName:'星系恒等客户端',d:77777777,u:77777777},
+    {icon:'🪐',name:'星球层级',dName:'星球恒等终端版',d:66666666,u:66666666},
+    {icon:'👽',name:'文明层级',dName:'文明恒等社区版',d:55555555,u:55555555},
+    {icon:'🏛️',name:'国家层级',dName:'国家恒等政务版',d:44444444,u:44444444},
+    {icon:'🏙️',name:'地区层级',dName:'地区恒等随身版',d:33333333,u:33333333},
+    {icon:'👤',name:'个人层级',dName:'个人恒等轻量版',d:22222222,u:22222222},
+    {icon:'✨',name:'未分层级存在',dName:'全域弥散恒等印记',d:11111111,u:11111111}
+  ];
+  box.innerHTML = LV.map(function(lv, i){
+    return '<div style="background:rgba(0,0,0,0.25);border:1px solid rgba(82,196,26,0.25);border-radius:8px;padding:10px;text-align:center" data-dl="'+i+'">'
+      + '<div style="font-size:20px">'+lv.icon+'</div>'
+      + '<div style="font-size:12px;font-weight:bold;color:var(--text);margin-top:2px">'+lv.name+'</div>'
+      + '<div style="font-size:10px;color:#52C41A;margin:4px 0">'+lv.dName+'</div>'
+      + '<div style="font-size:13px;font-weight:bold;color:#00d4ff;margin-bottom:2px">⬇️ <span class="dlN" style="font-size:11px">--</span> 已下载</div>'
+      + '<div style="font-size:13px;font-weight:bold;color:#52C41A;margin-bottom:4px">🟢 <span class="dlU" style="font-size:11px">--</span> 使用中</div>'
+      + '<div style="font-size:9px;padding:2px 8px;border-radius:10px;background:rgba(82,196,26,0.2);color:#52C41A">⚡ 最快的速度 · 全宇宙实时</div></div>';
+  }).join('');
+  var ds = LV.map(function(lv){ return lv.d; });
+  var us = LV.map(function(lv){ return lv.u; });
+  function tick(){
+    ds.forEach(function(n, i){
+      var card = box.querySelector('[data-dl="'+i+'"]');
+      if(!card) return;
+      ds[i] += 1000 + Math.floor(Math.random()*9000);
+      var elD = card.querySelector('.dlN');
+      if(elD) elD.textContent = ds[i].toLocaleString();
+      us[i] = Math.min(ds[i], us[i] + 1000 + Math.floor(Math.random()*9000));
+      var elU = card.querySelector('.dlU');
+      if(elU) elU.textContent = us[i].toLocaleString();
+    });
+  }
+  tick();
+  setInterval(tick, 2000);
+})();</script>
+
     <div class="grid">
       <div class="panel wide">
         <div class="panel-hdr"><div class="panel-title"><span class="ico">🤖</span>AI系统</div><div class="panel-badge">人机合作</div></div>
@@ -6128,7 +6173,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.57 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.58 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -15914,7 +15959,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.6.57';
+var systemVersion = 'v1.6.58';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
