@@ -1274,6 +1274,22 @@ select option{background:#040b1a;color:var(--cyan)}
         </div>
       </div>
 
+      <!-- 每个宇宙自动投资 · 9大具名宇宙各自独立自动投资 -->
+      <div style="margin-bottom:12px;background:rgba(139,92,246,0.03);border:1px solid rgba(139,92,246,0.15);border-radius:10px;padding:12px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <div style="display:flex;align-items:center;gap:8px"><span style="font-size:20px">🌌</span><span style="font-size:14px;font-weight:bold;color:var(--text)">每个宇宙自动投资</span></div>
+          <span style="font-size:11px;color:#52C41A;background:rgba(82,196,26,0.1);padding:2px 8px;border-radius:10px">✓ 9 个宇宙全部自动投资中</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px;font-size:11px;margin-bottom:8px">
+          <div style="color:var(--text-dim)">覆盖宇宙：<span style="color:var(--text)">9 个具名宇宙</span></div>
+          <div style="color:var(--text-dim)">每秒全宇宙投资：<span style="color:#00d4ff;font-weight:bold" id="invUniversePerSec">¥0</span></div>
+          <div style="color:var(--text-dim)">每个宇宙已投资：<span style="color:#52C41A;font-weight:bold" id="invUniverseTotal">¥0</span></div>
+        </div>
+        <div id="invUniverseGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px">
+          <!-- 每个宇宙卡片由JS动态生成 -->
+        </div>
+      </div>
+
       <div style="font-size:11px;color:var(--text-dim);margin-bottom:8px">重点投资项目（⚡ 最快的速度同步自动投资）：</div>
       <div id="invProjectList" style="max-height:220px;overflow-y:auto">
         <!-- 项目卡片由JS动态生成 -->
@@ -1662,7 +1678,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.70 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.71 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -6279,7 +6295,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.70 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.71 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -16191,7 +16207,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.6.70';
+var systemVersion = 'v1.6.71';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
@@ -17251,6 +17267,31 @@ setTimeout(function() {
     {name:'量子纠缠+量子加密星座', icon:'🛰️', rate:10, invested:BigInt(0), rounds:0}
   ];
 
+  // 每个宇宙自动投资 · 9 大具名宇宙各自独立自动投资（与虫洞平行时空世界观一致）
+  var invUniverses = [
+    {id:'main',   icon:'🌌', name:'主宇宙 · 现在时刻',     perSecond:BigInt(500000000000), rate:20, invested:BigInt(0), rounds:0},
+    {id:'uni-a',  icon:'🤖', name:'平行宇宙-A · 机械纪元',  perSecond:BigInt(300000000000), rate:18, invested:BigInt(0), rounds:0},
+    {id:'uni-b',  icon:'🪄', name:'平行宇宙-B · 魔法纪元',  perSecond:BigInt(300000000000), rate:18, invested:BigInt(0), rounds:0},
+    {id:'tl-alpha',icon:'🦕', name:'时空线α · 恐龙纪元',    perSecond:BigInt(200000000000), rate:16, invested:BigInt(0), rounds:0},
+    {id:'tl-beta', icon:'⚙️', name:'时空线β · 蒸汽朋克纪元', perSecond:BigInt(200000000000), rate:16, invested:BigInt(0), rounds:0},
+    {id:'quantum', icon:'⚛️', name:'量子时空 · 多维叠加态',  perSecond:BigInt(150000000000), rate:14, invested:BigInt(0), rounds:0},
+    {id:'eternal', icon:'⏳', name:'永恒时空 · 时间静止',    perSecond:BigInt(120000000000), rate:13, invested:BigInt(0), rounds:0},
+    {id:'dream',   icon:'🌊', name:'梦境时空 · 意识海洋',    perSecond:BigInt(100000000000), rate:12, invested:BigInt(0), rounds:0},
+    {id:'chaos',   icon:'🔮', name:'混沌时空 · 万有可能',    perSecond:BigInt(99900000000),  rate:11, invested:BigInt(0), rounds:0}
+  ];
+
+  // 每个宇宙金额显示：真实持续增长数字（¥ + 万/亿/万亿）
+  function invUniFmt(n){
+    try{
+      if(typeof formatSalaryNum === 'function') return formatSalaryNum(n);
+    }catch(e){}
+    n = BigInt(n);
+    if(n < 10000n) return n.toString();
+    if(n < 100000000n) return (n / 10000n).toString() + '万';
+    if(n < 1000000000000n) return (n / 100000000n).toString() + '亿';
+    return (n / 1000000000000n).toString() + '万亿';
+  }
+
   // 从宇宙恒等系统加载投资状态（数据驱动 · 持久化即同步）
   try {
     var savedInv = localStorage.getItem('universal_invest_state');
@@ -17268,6 +17309,11 @@ setTimeout(function() {
         if(d.projects){
           d.projects.forEach(function(p, i){
             if(invProjects[i]){ invProjects[i].invested = BigInt(p.invested || 0); invProjects[i].rounds = p.rounds || 0; }
+          });
+        }
+        if(d.universes){
+          d.universes.forEach(function(u, i){
+            if(invUniverses[i]){ invUniverses[i].invested = BigInt(u.invested || 0); invUniverses[i].rounds = u.rounds || 0; }
           });
         }
         if(d.totalInvested) invState.totalInvested = BigInt(d.totalInvested);
@@ -17294,6 +17340,7 @@ setTimeout(function() {
         person: { invested: invState.person.invested.toString() },
         other: { invested: invState.other.invested.toString() },
         projects: invProjects.map(function(p){ return {name: p.name, invested: p.invested.toString(), rounds: p.rounds}; }),
+        universes: invUniverses.map(function(u){ return {id: u.id, invested: u.invested.toString(), rounds: u.rounds}; }),
         totalInvested: invState.totalInvested.toString(),
         totalReturns: invState.totalReturns.toString(),
         rounds: invState.rounds,
@@ -17345,6 +17392,34 @@ setTimeout(function() {
           '<span style="color:var(--text-dim)">🌍 ' + name + '</span>' +
           '<span style="color:#00d4ff">' + invFmt(perCountry) + '</span></div>';
       }).join('') + '<div style="padding:3px 6px;color:#52C41A;text-align:center">…共 195 个国家全部投资中</div>';
+    }
+
+    // 每个宇宙自动投资 · 9 大具名宇宙卡片
+    var perSecEl = document.getElementById('invUniversePerSec');
+    if(perSecEl){
+      var uniPerSec = BigInt(0);
+      invUniverses.forEach(function(u){ uniPerSec += u.perSecond; });
+      perSecEl.textContent = '¥' + invUniFmt(uniPerSec) + '/秒';
+    }
+    var uniTotalEl = document.getElementById('invUniverseTotal');
+    if(uniTotalEl){
+      var uniTotal = BigInt(0);
+      invUniverses.forEach(function(u){ uniTotal += u.invested; });
+      uniTotalEl.textContent = '¥' + invUniFmt(uniTotal);
+    }
+    var grid = document.getElementById('invUniverseGrid');
+    if(grid){
+      grid.innerHTML = invUniverses.map(function(u){
+        var ret = u.invested * BigInt(Math.round(u.rate * 100)) / BigInt(100) / BigInt(31536000);
+        return '<div style="background:rgba(139,92,246,0.07);border:1px solid rgba(139,92,246,0.3);border-radius:10px;padding:10px">'
+          + '<div style="display:flex;justify-content:space-between;align-items:center">'
+          + '<div style="font-size:18px">' + u.icon + '</div>'
+          + '<span style="font-size:9px;color:#52C41A;background:rgba(82,196,26,0.1);padding:1px 6px;border-radius:8px">✓ 自动投资中</span></div>'
+          + '<div style="font-size:11px;font-weight:bold;color:var(--text);margin:4px 0">' + u.name + '</div>'
+          + '<div id="invu-' + u.id + '" style="font-size:15px;font-weight:bold;color:#52C41A">¥' + invUniFmt(u.invested) + '</div>'
+          + '<div style="font-size:10px;color:var(--text-dim)">每秒 +¥' + invUniFmt(u.perSecond) + ' · 年化 ' + u.rate + '%</div>'
+          + '<div style="font-size:9px;color:#00d4ff">⚡ 收益 +¥' + invUniFmt(ret) + '/秒</div></div>';
+      }).join('');
     }
 
     // 重点投资项目列表
@@ -17399,17 +17474,25 @@ setTimeout(function() {
     invState.totalReturns += invState.region.invested * BigInt(8) / BigInt(100) / BigInt(31536000);
     invState.totalReturns += invState.person.invested * BigInt(6) / BigInt(100) / BigInt(31536000);
     invState.totalReturns += invState.other.invested * BigInt(5) / BigInt(100) / BigInt(31536000);
+    // 每个宇宙自动投资：9 大具名宇宙各自每秒 +¥（独立累计 · 年化收益折算）
+    invUniverses.forEach(function(u){
+      u.invested += u.perSecond;
+      u.rounds++;
+      var uGain = u.invested * BigInt(Math.round(u.rate * 100)) / BigInt(100) / BigInt(31536000);
+      invState.totalReturns += uGain;
+      invState.totalInvested += u.perSecond;
+    });
     invState.totalInvested += invPerSecTotal();
     invState.rounds++;
     invRender();
     invSave();
     if(invState.rounds % 5 === 0){
-      invLog('第 ' + invState.rounds + ' 轮：全宇宙 8 层级（宇宙/星系/星球/文明/国家/地区/个人/其他存在）·重点项目(' + invProjects.length + ') 全部自动投资，⚡ 最快的速度 ¥∞（无限）', 'ok');
+      invLog('第 ' + invState.rounds + ' 轮：全宇宙 8 层级（宇宙/星系/星球/文明/国家/地区/个人/其他存在）·9 大具名宇宙各自自动投资·重点项目(' + invProjects.length + ') 全部自动投资，⚡ 最快的速度 ¥∞（无限）', 'ok');
     }
   }
 
   invRender();
-  invLog('全宇宙投资系统已启动：⚡ 最快的速度自动投资全部宇宙、全部星球、全部国家及全部重点项目', 'info');
+  invLog('全宇宙投资系统已启动：⚡ 最快的速度自动投资全部宇宙、全部星球、全部国家、9 大具名宇宙各自独立自动投资及全部重点项目', 'info');
   setInterval(invTick, 1000);
 })();</script>
 
