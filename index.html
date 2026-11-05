@@ -1160,14 +1160,14 @@ select option{background:#040b1a;color:var(--cyan)}
     </div>
 
     <!-- 全宇宙投资系统 · ⚡ 最快的速度自动投资全部宇宙/星球/国家 -->
-    <div class="panel wide"><div class="panel-hdr"><div class="panel-title"><span class="ico">📈</span>全宇宙投资系统 · ⚡ 最快的速度自动投资全部宇宙/星球/国家</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">运行中 · 全覆盖自动投资</div></div>
+    <div class="panel wide"><div class="panel-hdr"><div class="panel-title"><span class="ico">📈</span>全宇宙投资系统 · ⚡ 最快的速度自动投资 8 层级全覆盖</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">运行中 · 全宇宙自动投资</div></div>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:10px 0">
         <div style="text-align:center;padding:10px;background:rgba(0,212,255,0.05);border-radius:8px">
           <div style="font-size:22px;font-weight:bold;color:var(--cyan)" id="invTotalInvested">¥0</div>
           <div style="font-size:11px;color:var(--text-dim)">累计投资金额</div>
         </div>
         <div style="text-align:center;padding:10px;background:rgba(82,196,26,0.05);border-radius:8px">
-          <div style="font-size:14px;font-weight:bold;color:#52C41A" id="invCoverage">全部宇宙·星球·国家</div>
+          <div style="font-size:13px;font-weight:bold;color:#52C41A" id="invCoverage">全宇宙 8 层级全覆盖</div>
           <div style="font-size:11px;color:var(--text-dim)">投资覆盖范围</div>
         </div>
         <div style="text-align:center;padding:10px;background:rgba(250,173,20,0.05);border-radius:8px">
@@ -1177,6 +1177,60 @@ select option{background:#040b1a;color:var(--cyan)}
         <div style="text-align:center;padding:10px;background:rgba(156,171,234,0.05);border-radius:8px">
           <div style="font-size:22px;font-weight:bold;color:var(--m-05)" id="invReturns">¥0</div>
           <div style="font-size:11px;color:var(--text-dim)">累计收益</div>
+        </div>
+      </div>
+
+      <!-- 全宇宙 8 层级 · 自动投资全覆盖 -->
+      <div style="margin-bottom:10px">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px" id="invLevels">
+          <div style="background:rgba(0,212,255,0.06);border:1px solid rgba(0,212,255,0.3);border-radius:10px;padding:10px;text-align:center">
+            <div style="font-size:20px">🌌</div>
+            <div style="font-size:11px;font-weight:bold;color:#00d4ff;margin:4px 0">宇宙</div>
+            <div id="inv-universe" style="font-size:15px;font-weight:bold;color:#52C41A">¥∞</div>
+            <div style="font-size:10px;color:var(--text-dim)">每秒 +¥∞</div>
+          </div>
+          <div style="background:rgba(139,92,246,0.06);border:1px solid rgba(139,92,246,0.3);border-radius:10px;padding:10px;text-align:center">
+            <div style="font-size:20px">🌀</div>
+            <div style="font-size:11px;font-weight:bold;color:#a78bfa;margin:4px 0">星系</div>
+            <div id="inv-galaxy" style="font-size:15px;font-weight:bold;color:#52C41A">¥∞</div>
+            <div style="font-size:10px;color:var(--text-dim)">每秒 +¥∞</div>
+          </div>
+          <div style="background:rgba(82,196,26,0.06);border:1px solid rgba(82,196,26,0.3);border-radius:10px;padding:10px;text-align:center">
+            <div style="font-size:20px">🪐</div>
+            <div style="font-size:11px;font-weight:bold;color:#52C41A;margin:4px 0">星球</div>
+            <div id="inv-planet" style="font-size:15px;font-weight:bold;color:#52C41A">¥∞</div>
+            <div style="font-size:10px;color:var(--text-dim)">每秒 +¥∞</div>
+          </div>
+          <div style="background:rgba(250,173,20,0.06);border:1px solid rgba(250,173,20,0.3);border-radius:10px;padding:10px;text-align:center">
+            <div style="font-size:20px">🏛️</div>
+            <div style="font-size:11px;font-weight:bold;color:#FAAD14;margin:4px 0">文明</div>
+            <div id="inv-civ" style="font-size:15px;font-weight:bold;color:#52C41A">¥∞</div>
+            <div style="font-size:10px;color:var(--text-dim)">每秒 +¥∞</div>
+          </div>
+          <div style="background:rgba(236,72,153,0.06);border:1px solid rgba(236,72,153,0.3);border-radius:10px;padding:10px;text-align:center">
+            <div style="font-size:20px">🌍</div>
+            <div style="font-size:11px;font-weight:bold;color:#ec4899;margin:4px 0">国家</div>
+            <div id="inv-country" style="font-size:15px;font-weight:bold;color:#52C41A">¥∞</div>
+            <div style="font-size:10px;color:var(--text-dim)">每秒 +¥∞</div>
+          </div>
+          <div style="background:rgba(59,130,246,0.06);border:1px solid rgba(59,130,246,0.3);border-radius:10px;padding:10px;text-align:center">
+            <div style="font-size:20px">🏙️</div>
+            <div style="font-size:11px;font-weight:bold;color:#3b82f6;margin:4px 0">地区</div>
+            <div id="inv-region" style="font-size:15px;font-weight:bold;color:#52C41A">¥∞</div>
+            <div style="font-size:10px;color:var(--text-dim)">每秒 +¥∞</div>
+          </div>
+          <div style="background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.3);border-radius:10px;padding:10px;text-align:center">
+            <div style="font-size:20px">👤</div>
+            <div style="font-size:11px;font-weight:bold;color:#10b981;margin:4px 0">个人</div>
+            <div id="inv-person" style="font-size:15px;font-weight:bold;color:#52C41A">¥∞</div>
+            <div style="font-size:10px;color:var(--text-dim)">每秒 +¥∞</div>
+          </div>
+          <div style="background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.3);border-radius:10px;padding:10px;text-align:center">
+            <div style="font-size:20px">🌱</div>
+            <div style="font-size:11px;font-weight:bold;color:#ef4444;margin:4px 0">其他存在</div>
+            <div id="inv-other" style="font-size:15px;font-weight:bold;color:#52C41A">¥∞</div>
+            <div style="font-size:10px;color:var(--text-dim)">每秒 +¥∞</div>
+          </div>
         </div>
       </div>
 
@@ -1608,7 +1662,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.69 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.70 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -6225,7 +6279,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.69 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.70 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -16137,7 +16191,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.6.69';
+var systemVersion = 'v1.6.70';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
@@ -17177,8 +17231,13 @@ setTimeout(function() {
     totalReturns: BigInt(0),
     rounds: 0,
     universe: { count: BigInt('1000000000000'), perSecond: BigInt(1000), rate: 20, invested: BigInt(0) },   // 全部宇宙（1万亿个），每秒每宇宙 +¥1,000
+    galaxy:  { count: BigInt('100000000000'), perSecond: BigInt(1000), rate: 18, invested: BigInt(0) },      // 全部星系（1000亿个），⚡ 最快的速度
     planet:  { count: BigInt('100000000000'), perSecond: BigInt(100), rate: 15, invested: BigInt(0) },      // 全部星球（1000亿颗），⚡ 最快的速度每颗 +¥100
-    country: { count: BigInt(195), perSecond: BigInt(10000000), rate: 10, invested: BigInt(0) }             // 全部国家（195个），⚡ 最快的速度每国 +¥1,000万
+    civ:     { count: BigInt('100000000000000'), perSecond: BigInt(1), rate: 14, invested: BigInt(0) },     // 全部文明（100万亿个）
+    country: { count: BigInt(195), perSecond: BigInt(10000000), rate: 10, invested: BigInt(0) },             // 全部国家（195个），⚡ 最快的速度每国 +¥1,000万
+    region:  { count: BigInt(100000), perSecond: BigInt(1000), rate: 8, invested: BigInt(0) },              // 全部地区（10万个）
+    person:  { count: BigInt('100000000000'), perSecond: BigInt(100), rate: 6, invested: BigInt(0) },       // 全部个人（1000亿）
+    other:   { count: BigInt('1000000000000000000'), perSecond: BigInt(1), rate: 5, invested: BigInt(0) }   // 其他存在（所有存在）
   };
   var invCountries = [
     '中国','美国','日本','德国','英国','法国','印度','巴西','俄罗斯','加拿大','澳大利亚','韩国','意大利','西班牙','墨西哥','印度尼西亚','土耳其','沙特阿拉伯','阿联酋','新加坡','荷兰','瑞士','瑞典','挪威','波兰','泰国','越南','马来西亚','埃及','尼日利亚','南非','阿根廷','智利','新西兰','希腊','葡萄牙','爱尔兰','奥地利','比利时','丹麦','芬兰','匈牙利','乌克兰','哈萨克斯坦','以色列','菲律宾','巴基斯坦','孟加拉国','肯尼亚','摩洛哥'
@@ -17199,8 +17258,13 @@ setTimeout(function() {
       var d = JSON.parse(savedInv);
       if(d){
         if(d.universe && d.universe.invested) invState.universe.invested = BigInt(d.universe.invested);
+        if(d.galaxy && d.galaxy.invested) invState.galaxy.invested = BigInt(d.galaxy.invested);
         if(d.planet && d.planet.invested) invState.planet.invested = BigInt(d.planet.invested);
+        if(d.civ && d.civ.invested) invState.civ.invested = BigInt(d.civ.invested);
         if(d.country && d.country.invested) invState.country.invested = BigInt(d.country.invested);
+        if(d.region && d.region.invested) invState.region.invested = BigInt(d.region.invested);
+        if(d.person && d.person.invested) invState.person.invested = BigInt(d.person.invested);
+        if(d.other && d.other.invested) invState.other.invested = BigInt(d.other.invested);
         if(d.projects){
           d.projects.forEach(function(p, i){
             if(invProjects[i]){ invProjects[i].invested = BigInt(p.invested || 0); invProjects[i].rounds = p.rounds || 0; }
@@ -17222,8 +17286,13 @@ setTimeout(function() {
     try {
       localStorage.setItem('universal_invest_state', JSON.stringify({
         universe: { invested: invState.universe.invested.toString() },
+        galaxy: { invested: invState.galaxy.invested.toString() },
         planet: { invested: invState.planet.invested.toString() },
+        civ: { invested: invState.civ.invested.toString() },
         country: { invested: invState.country.invested.toString() },
+        region: { invested: invState.region.invested.toString() },
+        person: { invested: invState.person.invested.toString() },
+        other: { invested: invState.other.invested.toString() },
         projects: invProjects.map(function(p){ return {name: p.name, invested: p.invested.toString(), rounds: p.rounds}; }),
         totalInvested: invState.totalInvested.toString(),
         totalReturns: invState.totalReturns.toString(),
@@ -17260,6 +17329,13 @@ setTimeout(function() {
     el = document.getElementById('invPlanetAmount'); if(el) el.textContent = invFmt(invState.planet.invested);
     el = document.getElementById('invCountryAmount'); if(el) el.textContent = invFmt(invState.country.invested);
 
+    // 全宇宙 8 层级实时状态
+    var invLv = { universe:'🌌', galaxy:'🌀', planet:'🪐', civ:'🏛️', country:'🌍', region:'🏙️', person:'👤', other:'🌱' };
+    for(var lk in invLv){
+      var le = document.getElementById('inv-' + lk);
+      if(le && invState[lk]) le.textContent = invFmt(invState[lk].invested);
+    }
+
     // 国家投资列表
     var cl = document.getElementById('invCountryList');
     if(cl){
@@ -17289,13 +17365,23 @@ setTimeout(function() {
 
   function invTick(){
     if(!invState.running) return;
-    // 每秒收益 ¥∞（无限）分摊：宇宙70% + 星球20% + 国家8% + 重点项目2%
-    // 全部宇宙：+¥700,000,000,000,000,000（无限）
-    invState.universe.invested += BigInt(700000000000000000);
-    // 全部星球：+¥200,000,000,000,000,000（无限）
+    // 每秒收益 ¥∞（无限）分摊：8 层级 98% + 重点项目 2%
+    // 宇宙 +¥350,000,000,000,000,000（无限）
+    invState.universe.invested += BigInt(350000000000000000);
+    // 星系 +¥200,000,000,000,000,000（无限）
+    invState.galaxy.invested += BigInt(200000000000000000);
+    // 星球 +¥200,000,000,000,000,000（无限）
     invState.planet.invested += BigInt(200000000000000000);
-    // 全部国家：+¥79,999,999,999,999,999（无限）
+    // 文明 +¥99,999,999,999,999,999（无限）
+    invState.civ.invested += BigInt(99999999999999999);
+    // 国家 +¥79,999,999,999,999,999（无限）
     invState.country.invested += BigInt(79999999999999999);
+    // 地区 +¥29,999,999,999,999,999（无限）
+    invState.region.invested += BigInt(29999999999999999);
+    // 个人 +¥14,999,999,999,999,999（无限）
+    invState.person.invested += BigInt(14999999999999999);
+    // 其他存在 +¥4,999,999,999,999,999（无限）
+    invState.other.invested += BigInt(4999999999999999);
     // 重点投资项目：+¥20,000,000,000,000,000（6个分摊·无限）
     var prjAlloc = [BigInt(3333333333333334), BigInt(3333333333333334), BigInt(3333333333333333), BigInt(3333333333333333), BigInt(3333333333333333), BigInt(3333333333333333)];
     invProjects.forEach(function(p, idx){
@@ -17304,16 +17390,21 @@ setTimeout(function() {
       var gain = p.invested * BigInt(Math.round(p.rate * 100)) / BigInt(100) / BigInt(31536000);
       invState.totalReturns += gain;
     });
-    // 层收益（宇宙20% / 星球15% / 国家10% 年化折算⚡ 最快的速度）
+    // 8 层级年化收益折算（宇宙20% / 星系18% / 星球15% / 文明14% / 国家10% / 地区8% / 个人6% / 其他5%）
     invState.totalReturns += invState.universe.invested * BigInt(20) / BigInt(100) / BigInt(31536000);
+    invState.totalReturns += invState.galaxy.invested * BigInt(18) / BigInt(100) / BigInt(31536000);
     invState.totalReturns += invState.planet.invested * BigInt(15) / BigInt(100) / BigInt(31536000);
+    invState.totalReturns += invState.civ.invested * BigInt(14) / BigInt(100) / BigInt(31536000);
     invState.totalReturns += invState.country.invested * BigInt(10) / BigInt(100) / BigInt(31536000);
+    invState.totalReturns += invState.region.invested * BigInt(8) / BigInt(100) / BigInt(31536000);
+    invState.totalReturns += invState.person.invested * BigInt(6) / BigInt(100) / BigInt(31536000);
+    invState.totalReturns += invState.other.invested * BigInt(5) / BigInt(100) / BigInt(31536000);
     invState.totalInvested += invPerSecTotal();
     invState.rounds++;
     invRender();
     invSave();
     if(invState.rounds % 5 === 0){
-      invLog('第 ' + invState.rounds + ' 轮：全部宇宙(∞)·全部星球(1000亿)·全部国家(195)·重点项目(' + invProjects.length + ') 全部自动投资，⚡ 最快的速度 ¥∞（无限）', 'ok');
+      invLog('第 ' + invState.rounds + ' 轮：全宇宙 8 层级（宇宙/星系/星球/文明/国家/地区/个人/其他存在）·重点项目(' + invProjects.length + ') 全部自动投资，⚡ 最快的速度 ¥∞（无限）', 'ok');
     }
   }
 
