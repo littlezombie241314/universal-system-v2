@@ -371,5 +371,210 @@ app.post('/api/crypto/transfer', async (req, res) => {
   }
 });
 
+/* ============================================================
+ * 💳 全宇宙无限钱包 · 唯一支付接口（/wallet/api/v1/*）
+ * 全宇宙所有层级、所有支付场景（收款/付款码/扫码支付/转账/提现/消费）
+ * 仅此一个支付接口，统一调用本接口层：
+ *   - internal / 全宇宙内部账户 -> 自研结算通道：账本直结，无限制，不经过支付宝
+ *   - alipay_personal / alipay_company -> 现实世界桥：真实转账到支付宝账户
+ *   - bank -> 现实世界桥：待开通「单笔转账到银行卡」功能包（如实返回，不假装成功）
+ * ============================================================ */
+const WALLET_VERSION = '1.0';
+const WALLET_LEDGER = { orders: [], internal_flow: 0, bridge: { available_amount: 0, freeze_amount: 0 } };
+
+function walletNewNo(prefix) {
+  return (prefix || 'UEI') + Date.now().toString(36).toUpperCase() + Math.random().toString(36).slice(2, 8).toUpperCase();
+}
+
+function walletOrder(o) {
+  const order = Object.assign({
+    outBizNo: o.outBizNo, orderId: o.outBizNo,
+    payeeType: o.payeeType || '', payeeAccount: o.payeeAccount || '', payeeName: o.payeeName || '',
+    amount: o.amount || 0, remark: o.remark || '', status: o.status || 'PENDING',
+    channel: o.channel || '', mode: o.mode || 'ledger', payDate: new Date().toISOString(), ts: Date.now()
+  }, o.extra || {});
+  WALLET_LEDGER.orders.unshift(order);
+  if (WALLET_LEDGER.orders.length > 500) WALLET_LEDGER.orders.length = 500;
+  return order;
+}
+
+function walletOk(data) { return { success: true, code: '0', msg: 'ok', data: data || {} }; }
+function walletFail(msg, code) { return { success: false, code: code || 'ERROR', msg: msg }; }
+
+// 现实世界桥 · 真实单笔转账到支付宝账户（与 /api/alipay/transfer 同一链路）
+async function execAlipayTransfer({ payeeAccount, payeeName, amount, remark, transferSceneName, infoType, infoContent, prefix }) {
+  if (!cfgOk()) return { success: false, code: 'NOT_CONFIGURED', message: '支付宝现实世界桥未配置（APPID/私钥/证书）' };
+  const amt = parseFloat(amount);
+  if (!amt || amt <= 0) return { success: false, message: '金额无效' };
+  if (amt > LIMIT) return { success: false, message: '超出单笔限额 ' + LIMIT + ' 元' };
+  const outBizNo = (prefix || 'UEW') + Date.now().toString(36).toUpperCase() + Math.random().toString(36).slice(2, 8).toUpperCase();
+  const isLogon = /^1\d{10}$/.test(payeeAccount) || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payeeAccount);
+  const identity = isLogon
+    ? { identity_type: 'ALIPAY_LOGON_ID', identity: payeeAccount, name: payeeName || '' }
+    : { identity_type: 'ALIPAY_USER_ID', identity: payeeAccount, name: payeeName || '' };
+  try {
+    const r = await alipay.exec('alipay.fund.trans.uni.transfer', {
+      bizContent: {
+        out_biz_no: outBizNo,
+        trans_amount: amt.toFixed(2),
+        product_code: 'TRANS_ACCOUNT_NO_PWD',
+        biz_scene: 'DIRECT_TRANSFER',
+        transfer_scene_name: transferSceneName || '佣金报酬',
+        transfer_scene_report_infos: [
+          { info_type: infoType || '佣金报酬说明', info_content: infoContent || remark || '全宇宙恒等系统·真实转账' },
+        ],
+        payee_info: identity,
+      },
+    });
+    const code = r && (r.code || r.errorCode);
+    if (code && code !== '10000') {
+      return { success: false, code, subCode: (r && (r.subCode || r.sub_code)) || '', message: (r && (r.subMsg || r.sub_msg || r.msg)) || '支付宝网关拒绝该请求', outBizNo };
+    }
+    return { success: true, data: { orderId: outBizNo, outBizNo, status: 'SUCCESS', tradeNo: (r && (r.tradeNo || r.trade_no)) || '', payDate: (r && (r.payDate || r.pay_date)) || '', mode: 'real', channel: '支付宝官方·现实世界桥', payeeAccount, amount: amt, remark: remark || '' } };
+  } catch (e) {
+    return { success: false, code: (e && (e.code || e.subCode)) || '', message: (e && (e.message || e.subMsg || e.rawErrorMessage)) || String(e), outBizNo };
+  }
+}
+
+// 1) 钱包网关状态
+app.post('/wallet/api/v1/status', (req, res) => {
+  const b = WALLET_LEDGER.bridge;
+  res.json(walletOk({
+    apiVersion: WALLET_VERSION,
+    gateway: 'self-ledger',
+    settlement: '自研结算通道·账本直结',
+    unlimited: true,
+    channels: {
+      self_ledger: { status: 'enabled', desc: '内部支付 · 账本直结 · 不经过支付宝' },
+      alipay_bridge: { status: cfgOk() ? 'enabled' : 'pending', desc: '现实世界桥 · 真实转账到支付宝' },
+      bank_withdraw: { status: 'pending', desc: '提现到银行卡 · 待开通功能包' }
+    },
+    balance: { internal_flow: WALLET_LEDGER.internal_flow, bridge: { available_amount: b.available_amount, freeze_amount: b.freeze_amount } }
+  }));
+});
+
+// 2) 钱包余额
+app.post('/wallet/api/v1/balance', (req, res) => {
+  const b = WALLET_LEDGER.bridge;
+  res.json(walletOk({
+    internal_total: '∞',
+    internal_flow: WALLET_LEDGER.internal_flow,
+    settlement: '自研结算通道·账本直结',
+    unlimited: true,
+    bridge: { available_amount: b.available_amount, freeze_amount: b.freeze_amount }
+  }));
+});
+
+// 3) 全宇宙转账（唯一支付接口核心）
+app.post('/wallet/api/v1/transfer', async (req, res) => {
+  const { payeeType, payeeAccount, payeeName, amount, remark, transferSceneName, infoType, infoContent } = req.body || {};
+  const amt = parseFloat(amount);
+  if (!payeeAccount) return res.json(walletFail('缺少收款账户', 'INVALID_PARAMETER'));
+  if (!amt || amt <= 0) return res.json(walletFail('金额无效', 'INVALID_PARAMETER'));
+  const type = String(payeeType || '').toLowerCase();
+  // 自研结算通道：内部账户账本直结（无限制）
+  if (type === 'internal' || type === 'ues' || payeeType === '全宇宙系统内部账户') {
+    const order = walletOrder({ outBizNo: walletNewNo('UEI'), payeeType: 'internal', payeeAccount, payeeName, amount: amt, remark, status: 'SUCCESS', channel: '自研结算通道·账本直结', mode: 'ledger' });
+    WALLET_LEDGER.internal_flow += amt;
+    return res.json(walletOk(order));
+  }
+  // 现实世界桥：真实转账到支付宝账户
+  if (type === 'alipay_personal' || type === 'alipay_company' || type === 'alipay') {
+    const r = await execAlipayTransfer({ payeeAccount, payeeName, amount: amt, remark, transferSceneName, infoType, infoContent, prefix: 'UEW' });
+    if (r.success) {
+      const d = r.data;
+      walletOrder({ outBizNo: d.outBizNo, payeeType: 'alipay', payeeAccount, payeeName, amount: amt, remark, status: 'SUCCESS', channel: '支付宝官方·现实世界桥', mode: 'real', extra: { tradeNo: d.tradeNo } });
+      return res.json(walletOk(d));
+    }
+    return res.json({ success: false, code: r.code || 'ALIPAY_ERROR', subCode: r.subCode || '', msg: r.message, outBizNo: r.outBizNo || '' });
+  }
+  // 银行卡：如实返回未开通（不假装成功）
+  if (type === 'bank') {
+    return res.json({ success: false, code: 'CHANNEL_NOT_OPEN', msg: '银行卡渠道待开通：需先开通「单笔转账到银行卡」功能包（当前调用会返回 identity_type 取值不合法）' });
+  }
+  // 其他渠道：如实返回未开通
+  return res.json({ success: false, code: 'CHANNEL_NOT_OPEN', msg: '渠道未开通：全宇宙唯一支付接口仅支持 内部账户（账本直结）/ 支付宝现实世界桥 / 银行卡（待开通）' });
+});
+
+// 4) 转账单据核验
+app.post('/wallet/api/v1/transfer/query', async (req, res) => {
+  const outBizNo = (req.body && req.body.outBizNo) || '';
+  if (!outBizNo) return res.json(walletFail('缺少交易单号 outBizNo', 'INVALID_PARAMETER'));
+  const found = WALLET_LEDGER.orders.find(o => o.outBizNo === outBizNo);
+  if (found) {
+    return res.json(walletOk({ outBizNo: found.outBizNo, status: found.status, orderId: found.orderId, payDate: found.payDate, transAmount: found.amount, gateway: found.channel }));
+  }
+  if (cfgOk() && (outBizNo.indexOf('UEW') === 0 || outBizNo.indexOf('UES') === 0)) {
+    try {
+      const r = await alipay.exec('alipay.fund.trans.common.query', {
+        bizContent: { out_biz_no: outBizNo, product_code: 'TRANS_ACCOUNT_NO_PWD', biz_scene: 'DIRECT_TRANSFER' },
+      });
+      return res.json(walletOk({ outBizNo, status: (r && (r.status || r.order_status)) || 'UNKNOWN', orderId: outBizNo, transAmount: (r && (r.amount || r.trans_amount)) || '', gateway: '支付宝官方·现实世界桥' }));
+    } catch (e) {
+      return res.json(walletFail('查询失败：' + (e.message || e), 'QUERY_FAILED'));
+    }
+  }
+  return res.json(walletFail('未找到该交易单号', 'ORDER_NOT_FOUND'));
+});
+
+// 5) 批量代发（逐笔：internal 账本直结 / alipay 真实转账）
+app.post('/wallet/api/v1/transfer/batch', async (req, res) => {
+  const transfers = (req.body && req.body.transfers) || [];
+  if (!Array.isArray(transfers) || transfers.length === 0) return res.json(walletFail('缺少转账明细列表 transfers', 'INVALID_PARAMETER'));
+  if (transfers.length > 500) return res.json(walletFail('单批最多500笔', 'INVALID_PARAMETER'));
+  const results = [];
+  let okCount = 0;
+  for (const t of transfers) {
+    const { payeeType, payeeAccount, payeeName, amount, remark } = t || {};
+    if (!payeeAccount || !amount) { results.push({ payeeAccount: payeeAccount || '', amount: amount || '', success: false, message: '明细缺少收款账号或金额' }); continue; }
+    const type = String(payeeType || 'internal').toLowerCase();
+    if (type === 'internal' || type === 'ues') {
+      const amt = parseFloat(amount);
+      if (!amt || amt <= 0) { results.push({ payeeAccount, amount, success: false, message: '金额无效' }); continue; }
+      const order = walletOrder({ outBizNo: walletNewNo('UEI'), payeeType: 'internal', payeeAccount, payeeName, amount: amt, remark, status: 'SUCCESS', channel: '自研结算通道·账本直结', mode: 'ledger' });
+      WALLET_LEDGER.internal_flow += amt;
+      okCount++;
+      results.push({ payeeAccount, payeeName, amount: amt, success: true, outBizNo: order.outBizNo, message: '账本直结' });
+    } else {
+      const r = await execAlipayTransfer({ payeeAccount, payeeName, amount, remark, prefix: 'UEW' });
+      if (r.success) { okCount++; results.push({ payeeAccount, payeeName, amount, success: true, outBizNo: r.data.outBizNo, message: '真实到账' }); }
+      else { results.push({ payeeAccount, payeeName, amount, success: false, message: r.message }); }
+    }
+  }
+  res.json({ success: okCount > 0, total: transfers.length, successCount: okCount, results });
+});
+
+// 6) 提现（internal 账本直结 / alipay 现实世界桥 / bank 待开通如实返回）
+app.post('/wallet/api/v1/withdraw', async (req, res) => {
+  const { payeeType, payeeAccount, payeeName, account, name, amount, remark } = req.body || {};
+  const amt = parseFloat(amount);
+  if (!amt || amt <= 0) return res.json(walletFail('金额无效', 'INVALID_PARAMETER'));
+  const type = String(payeeType || '').toLowerCase();
+  const acc = payeeAccount || account || '';
+  const nm = payeeName || name || '';
+  if (!acc) return res.json(walletFail('缺少收款账户', 'INVALID_PARAMETER'));
+  if (type === 'internal' || type === 'ues' || payeeType === '全宇宙系统内部账户') {
+    const order = walletOrder({ outBizNo: walletNewNo('UEI'), payeeType: 'internal', payeeAccount: acc, payeeName: nm, amount: amt, remark: remark || '全宇宙无限钱包提现', status: 'SUCCESS', channel: '自研结算通道·账本直结', mode: 'ledger' });
+    WALLET_LEDGER.internal_flow += amt;
+    return res.json(walletOk(Object.assign({}, order, { withdrawId: order.outBizNo, arriveTime: '实时到账', fee: '0.00' })));
+  }
+  if (type === 'alipay' || type === 'alipay_personal' || type === 'alipay_company') {
+    const r = await execAlipayTransfer({ payeeAccount: acc, payeeName: nm, amount: amt, remark: remark || '全宇宙无限钱包提现', prefix: 'UEW' });
+    if (r.success) return res.json(walletOk(Object.assign({}, r.data, { withdrawId: r.data.orderId, arriveTime: '实时到账', fee: '0.00' })));
+    return res.json({ success: false, code: r.code || 'ALIPAY_ERROR', subCode: r.subCode || '', msg: r.message });
+  }
+  return res.json({ success: false, code: 'CHANNEL_NOT_OPEN', msg: '提现到银行卡渠道待开通：需先开通「单笔转账到银行卡」功能包，开通后钱包 API 即可真实提现到任意银行卡' });
+});
+
+// 7) 充值入账（现实世界桥入金）
+app.post('/wallet/api/v1/recharge', (req, res) => {
+  const { amount, channel } = req.body || {};
+  const amt = parseFloat(amount);
+  if (!amt || amt <= 0) return res.json(walletFail('金额无效', 'INVALID_PARAMETER'));
+  WALLET_LEDGER.bridge.available_amount += amt;
+  const order = walletOrder({ outBizNo: walletNewNo('UER'), payeeType: 'recharge', payeeAccount: '全宇宙无限钱包·现实世界桥', payeeName: '', amount: amt, remark: '充值入账（' + (channel || 'alipay') + '）', status: 'SUCCESS', channel: '现实世界桥·入金', mode: 'recharge' });
+  res.json(walletOk({ orderNo: order.outBizNo, amount: amt, status: 'SUCCESS', channel: channel || 'alipay', bridgeBalance: WALLET_LEDGER.bridge.available_amount }));
+});
+
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log('[真实支付宝后端] 运行于 :' + PORT + ' · 模式=' + MODE + ' · configured=' + cfgOk()));
