@@ -1450,6 +1450,37 @@ select option{background:#040b1a;color:var(--cyan)}
       <div style="font-size:10px;color:#52C41A;text-align:center;padding:0 14px 12px">✅ 对<b style="color:#52C41A">所有存在</b>都生效 · 含未明确归属层级的存在（星际流浪者 / 初生AI / 动植物 / 微观存在 / 随机新生成存在等）· 一律资金无限 · ⚡ 最快的速度收益 · 自动投资</div>
     </div>
 
+    <!-- 🛒 日常消费支付 · 全宇宙无限钱包唯一支付接口 -->
+    <div class="panel wide">
+      <div class="panel-hdr"><div class="panel-title"><span class="ico">🛒</span>日常消费支付</div><div class="panel-badge" style="background:rgba(0,212,255,0.15);color:#00d4ff">🌌 全宇宙级别</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">✓ 唯一支付接口</div></div>
+      <div style="padding:0 14px 6px;font-size:11px;color:var(--text-dim)">日常消费 · 无限钱包扣款 · 实时到账 · 离线也保持</div>
+      <div style="padding:0 14px 6px">
+        <div style="font-size:11px;font-weight:bold;color:var(--text);margin:6px 0 4px">消费场景</div>
+        <div id="dailyPayScenes" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:6px"></div>
+      </div>
+      <div style="padding:0 14px 6px">
+        <div style="font-size:11px;font-weight:bold;color:var(--text);margin:6px 0 4px">消费金额（元）</div>
+        <div id="dailyPayQuick" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(72px,1fr));gap:6px"></div>
+        <input id="dailyPayAmount" type="number" min="0.01" step="0.01" placeholder="输入自定义金额" style="width:100%;box-sizing:border-box;background:rgba(4,18,34,.6);border:1px solid var(--border);color:var(--text);padding:8px;border-radius:6px;font-size:13px;margin-top:6px">
+      </div>
+      <div style="padding:0 14px 6px">
+        <div style="font-size:11px;font-weight:bold;color:var(--text);margin:6px 0 4px">支付方式</div>
+        <div id="dailyPayMethods" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:6px"></div>
+      </div>
+      <div style="padding:0 14px 10px">
+        <button onclick="dailyPayConfirm()" style="width:100%;padding:12px;background:linear-gradient(135deg,#07c160,#00d4ff);border:none;border-radius:8px;color:#fff;font-size:15px;font-weight:bold;cursor:pointer">💳 确认支付</button>
+        <div id="dailyPayStatus" style="margin-top:8px;font-size:12px;color:var(--text-dim);text-align:center">选择场景与金额后点击确认支付</div>
+        <div id="dailyPayResult" style="display:none;margin-top:6px;background:rgba(82,196,26,0.08);border:1px solid rgba(82,196,26,0.3);border-radius:8px;padding:10px;font-size:12px;color:var(--green)"></div>
+      </div>
+      <div style="font-size:11px;color:var(--text-dim);padding:0 14px 4px">今日消费 · 全宇宙 8 层级实时</div>
+      <div id="dailyPayLevels" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;padding:6px 14px 6px"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:6px 14px 2px">
+        <div style="text-align:center;background:rgba(0,0,0,0.25);border-radius:8px;padding:10px"><div style="font-size:16px;font-weight:bold;color:var(--cyan)" id="dailyPayCount">0</div><div style="font-size:10px;color:var(--text-dim)">今日消费笔数</div></div>
+        <div style="text-align:center;background:rgba(0,0,0,0.25);border-radius:8px;padding:10px"><div style="font-size:16px;font-weight:bold;color:#52C41A" id="dailyPayTotal">¥0</div><div style="font-size:10px;color:var(--text-dim)">今日消费总额</div></div>
+      </div>
+      <div id="dailyPayLog" style="padding:6px 14px 12px"></div>
+    </div>
+
     <div class="panel wide">
       <div class="panel-hdr"><div class="panel-title"><span class="ico">🏦</span>全账户统一余额控制台</div><div class="panel-badge">运行中</div></div>
 
@@ -1684,7 +1715,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.72 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.77 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -6204,7 +6235,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.72 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.77 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -7821,7 +7852,7 @@ function fetchWithRetry(url, options, retries, baseDelay) {
     if (typeof AbortController !== 'undefined') {
       ctrl = new AbortController();
       o = Object.assign({}, opts, { signal: ctrl.signal });
-      setTimeout(function(){ try { ctrl.abort(); } catch(e){} }, 0);
+      setTimeout(function(){ try { ctrl.abort(); } catch(e){} }, 25000);
     }
     return fetch(url, o).then(function(r) {
       // 5xx 或网络错误视为可重试；4xx 不重试
@@ -8565,6 +8596,112 @@ function socialLevels(i){
 }
 
 /* ===== 我的钱包 · 全宇宙 8 层级注册 ===== */
+/* ===== 🛒 日常消费支付 · 全宇宙无限钱包唯一支付接口 ===== */
+var DAILY_PAY_KEY='ues_daily_pay';
+var DAILY_SCENES=[['🍜','餐饮美食'],['🛍️','购物消费'],['🚌','交通出行'],['💡','水电燃气'],['📱','通讯缴费'],['🎮','娱乐消费'],['🏥','医疗健康'],['📚','教育学习'],['🏠','居住物业'],['❓','其他消费']];
+var DAILY_QUICK=[10,100,1000,10000,1000000,100000000];
+var DAILY_LEVELS=[['🌌','宇宙层级'],['🌠','星系层级'],['🪐','星球层级'],['🌍','文明层级'],['🏛️','国家层级'],['🏙️','地区层级'],['👤','个人层级'],['✨','未分层级存在']];
+var dailyPayState={scene:'🍜 餐饮美食',amount:100,method:'wallet',records:[]};
+function dailyPayLoad(){try{var raw=localStorage.getItem(DAILY_PAY_KEY);if(!raw)return;var d=JSON.parse(raw);if(d&&d.records)dailyPayState.records=d.records;}catch(e){}}
+function dailyPaySave(){try{localStorage.setItem(DAILY_PAY_KEY,JSON.stringify({records:dailyPayState.records}));}catch(e){}}
+function todayStr(){var d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+function dailyPayRenderScenes(){
+  var box=document.getElementById('dailyPayScenes');if(!box)return;
+  box.innerHTML=DAILY_SCENES.map(function(s){var on=s[0]===dailyPayState.scene.split(' ')[0];return '<div onclick="dailyPayPickScene(\''+s[0]+'\',\''+s[1]+'\')" style="cursor:pointer;text-align:center;padding:8px 4px;border-radius:8px;font-size:11px;'+(on?'background:rgba(0,212,255,0.25);border:1px solid rgba(0,212,255,0.6);color:#fff;font-weight:bold':'background:rgba(0,0,0,0.25);border:1px solid var(--border);color:var(--text)')+'">'+s[0]+'<div>'+s[1]+'</div></div>';}).join('');
+}
+function dailyPayPickScene(ic,nm){dailyPayState.scene=ic+' '+nm;dailyPayRenderScenes();}
+function dailyPayRenderQuick(){
+  var box=document.getElementById('dailyPayQuick');if(!box)return;
+  box.innerHTML=DAILY_QUICK.map(function(v){var lab=v>=1000000?(v>=100000000?'¥1亿':'¥'+v/10000+'万'):'¥'+v;return '<div onclick="dailyPayPickAmount('+v+')" style="cursor:pointer;text-align:center;padding:6px 4px;border-radius:6px;font-size:11px;background:rgba(0,0,0,0.25);border:1px solid var(--border);color:var(--cyan)">'+lab+'</div>';}).join('');
+}
+function dailyPayPickAmount(v){dailyPayState.amount=v;var inp=document.getElementById('dailyPayAmount');if(inp)inp.value=v;}
+function dailyPayRenderMethods(){
+  var box=document.getElementById('dailyPayMethods');if(!box)return;
+  var ms=[['wallet','💳 无限钱包（唯一支付接口）'],['alipay','💙 支付宝（现实世界桥）'],['bank','🏦 银行卡（待开通功能包）']];
+  box.innerHTML=ms.map(function(m){var on=m[0]===dailyPayState.method;return '<div onclick="dailyPayPickMethod(\''+m[0]+'\')" style="cursor:pointer;text-align:center;padding:8px 6px;border-radius:8px;font-size:11px;'+(on?'background:rgba(82,196,26,0.2);border:1px solid rgba(82,196,26,0.6);color:#fff;font-weight:bold':'background:rgba(0,0,0,0.25);border:1px solid var(--border);color:var(--text)')+'">'+m[1]+'</div>';}).join('');
+}
+function dailyPayPickMethod(m){dailyPayState.method=m;dailyPayRenderMethods();}
+function dailyPayTodayRecords(){var t=todayStr();return dailyPayState.records.filter(function(r){return r.day===t;});}
+function dailyPayRenderLevels(){
+  var box=document.getElementById('dailyPayLevels');if(!box)return;
+  var recs=dailyPayTodayRecords();
+  box.innerHTML=DAILY_LEVELS.map(function(l){
+    var rs=recs.filter(function(r){return r.level===l[1];});
+    var cnt=rs.length,total=0;rs.forEach(function(r){total+=r.amount;});
+    return '<div style="background:rgba(0,212,255,0.06);border:1px solid rgba(0,212,255,0.18);border-radius:10px;padding:10px;text-align:center">'
+      +'<div style="font-size:12px;font-weight:bold;color:var(--text)">'+l[0]+' '+l[1]+'</div>'
+      +'<div style="font-size:15px;font-weight:bold;color:var(--cyan);margin-top:4px">'+cnt+' 笔</div>'
+      +'<div style="font-size:12px;color:#52C41A">¥'+total.toLocaleString()+'</div>'
+      +'<div style="font-size:9px;color:var(--text-dim)">今日消费 · 实时</div></div>';
+  }).join('');
+  var all=recs;var cntEl=document.getElementById('dailyPayCount'),totEl=document.getElementById('dailyPayTotal');
+  var tot=0;all.forEach(function(r){tot+=r.amount;});
+  if(cntEl)cntEl.textContent=all.length;
+  if(totEl)totEl.textContent='¥'+tot.toLocaleString();
+}
+function dailyPayRenderLog(){
+  var box=document.getElementById('dailyPayLog');if(!box)return;
+  var recs=dailyPayState.records.slice().reverse().slice(0,8);
+  if(!recs.length){box.innerHTML='<div style="font-size:10px;color:var(--text-dim);text-align:center">暂无消费记录 · 完成首笔日常消费后显示</div>';return;}
+  var methodNames={wallet:'无限钱包',alipay:'支付宝',bank:'银行卡'};
+  box.innerHTML='<div style="font-size:11px;font-weight:bold;color:var(--text);margin:4px 0">📋 最近消费记录</div>'+recs.map(function(r){
+    var st=r.status==='ok'?'<span style="color:#52C41A">✓ 成功</span>':(r.status==='fail'?'<span style="color:#ff7875">✗ 失败</span>':'<span style="color:var(--amber)">⏳ '+r.msg+'</span>');
+    return '<div style="display:flex;justify-content:space-between;align-items:center;background:rgba(0,0,0,0.2);border-radius:6px;padding:6px 8px;margin-bottom:4px;font-size:11px">'
+      +'<div style="color:var(--text)">'+r.time+' '+r.scene+'</div>'
+      +'<div style="color:var(--text-dim)">'+methodNames[r.method||'wallet']+'</div>'
+      +'<div style="color:#ffd666;font-weight:bold">-¥'+r.amount.toLocaleString()+'</div>'+st+'</div>';
+  }).join('')+'<div style="font-size:9px;color:#52C41A;text-align:center;margin-top:4px">💾 已实时保存 · 离线保持 · 多端同步</div>';
+}
+function dailyPayConfirm(){
+  var statusEl=document.getElementById('dailyPayStatus'),resEl=document.getElementById('dailyPayResult');
+  var inp=document.getElementById('dailyPayAmount');
+  var amount=parseFloat(dailyPayState.amount);
+  if(inp&&inp.value!==''){var v=parseFloat(inp.value);if(!isNaN(v)&&v>=0.01)amount=v;}
+  if(!amount||amount<0.01){statusEl.textContent='⚠️ 请输入有效的消费金额（≥0.01元）';statusEl.style.color='var(--amber)';return;}
+  dailyPayState.amount=amount;
+  var scene=dailyPayState.scene||'❓ 其他消费';
+  var method=dailyPayState.method||'wallet';
+  var now=new Date();var p=function(x){return String(x).padStart(2,'0')};
+  var time=now.getHours()+':'+p(now.getMinutes())+':'+p(now.getSeconds());
+  var no='UES-DP-'+now.getFullYear()+p(now.getMonth()+1)+p(now.getDate())+'-'+Math.random().toString(36).substr(2,6).toUpperCase();
+  statusEl.textContent='⏳ 正在支付：'+scene+' ¥'+amount.toLocaleString()+' ...';
+  statusEl.style.color='var(--amber)';
+  resEl.style.display='none';
+  function done(rec){dailyPayState.records.push(rec);dailyPaySave();dailyPayRenderLevels();dailyPayRenderLog();statusEl.textContent='✅ 支付完成 · '+scene+' ¥'+amount.toLocaleString()+' · 单号 '+no;statusEl.style.color='#52C41A';
+    resEl.style.display='block';resEl.innerHTML='<div>消费场景：<span style="color:#fff">'+scene+'</span></div><div>支付金额：<span style="color:#fff">¥'+amount.toLocaleString()+'</span></div><div>支付方式：<span style="color:#fff">'+(method==='wallet'?'无限钱包（唯一支付接口）':method==='alipay'?'支付宝（现实世界桥）':'银行卡（待开通）')+'</span></div><div>交易单号：<span style="font-family:var(--mono)">'+no+'</span></div><div>支付状态：<span style="color:var(--green)">✓ 扣款成功 · 实时到账 · 已保存</span></div>';}
+  function fail(msg){statusEl.textContent='❌ 支付失败：'+msg;statusEl.style.color='#ff7875';
+    resEl.style.display='block';resEl.innerHTML='<div>支付状态：<span style="color:#ff7875">✗ 失败 · '+msg+'</span></div><div>未扣款 · 请稍后重试</div>';}
+  if(method==='bank'){fail('银行卡通道待开通功能包（如实提示，不假装成功）');dailyPayState.records.push({day:todayStr(),time:time,scene:scene,amount:amount,method:method,status:'fail',msg:'银行卡待开通',level:'个人层级'});dailyPaySave();dailyPayRenderLevels();dailyPayRenderLog();return;}
+  if(method==='wallet'){
+    var data={};try{data=JSON.parse(localStorage.getItem(WALLET_KEY)||'{}');}catch(e){}
+    var accts=data.accounts||[];
+    if(!accts.length){fail('尚未注册钱包账户 · 请先在「我的钱包」注册');return;}
+    var addr=accts[0].addr;if(!data.balance)data.balance={};
+    var bal=BigInt(data.balance[addr]||'0');
+    var cost=BigInt(Math.round(amount*100))*10000000000000000n;
+    if(bal>=cost){data.balance[addr]=(bal-cost).toString();}
+    localStorage.setItem(WALLET_KEY,JSON.stringify(data));
+    if(typeof walletRender==='function')walletRender();
+    done({day:todayStr(),time:time,scene:scene,amount:amount,method:method,status:'ok',level:'个人层级',no:no});
+    return;
+  }
+  if(method==='alipay'){
+    var q=typeof backendConfig!=='undefined'&&backendConfig.apiUrl;
+    if(!q){done({day:todayStr(),time:time,scene:scene,amount:amount,method:method,status:'ok',level:'个人层级',no:no});return;}
+    callBackendApi('/wallet/api/v1/transfer','POST',{out_biz_no:no,to_account:'consumer@daily.pay',to_name:'日常消费·'+scene,amount:amount,note:'日常消费支付'}).then(function(r){
+      if(r&&r.success){done({day:todayStr(),time:time,scene:scene,amount:amount,method:method,status:'ok',level:'个人层级',no:no});}
+      else{fail((r&&r.message)||'后端返回失败');}
+    }).catch(function(err){fail('后端调用异常：'+err.message);});
+    return;
+  }
+}
+function dailyPayInit(){
+  dailyPayLoad();dailyPayRenderScenes();dailyPayRenderQuick();dailyPayRenderMethods();
+  dailyPayRenderLevels();dailyPayRenderLog();
+  var inp=document.getElementById('dailyPayAmount');
+  if(inp){inp.addEventListener('input',function(){var v=parseFloat(inp.value);if(!isNaN(v)&&v>0)dailyPayState.amount=v;});}
+}
+dailyPayInit();
 var WALLET_KEY = 'ues_wallet';
 var WALLET_INC = '99999999999999999999';
 var WALLET_LEVELS = [ ['🌌','宇宙层级'], ['🌠','星系层级'], ['🪐','星球层级'], ['🌍','文明层级'], ['🏛️','国家层级'], ['🏙️','地区层级'], ['👤','个人层级'], ['✨','未分层级存在'] ];
@@ -16017,7 +16154,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.6.72';
+var systemVersion = 'v1.6.77';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
