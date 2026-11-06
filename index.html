@@ -1715,7 +1715,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.77 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.78 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -4191,6 +4191,15 @@ select option{background:#040b1a;color:var(--cyan)}
   <div id="stationLevels" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;padding:10px 14px 6px"></div>
 </div>
 
+<!-- 🚀 全宇宙层级 · 载人火箭发射系统操作板 -->
+<div class="panel wide" style="background:linear-gradient(135deg,rgba(255,87,159,0.10),rgba(0,212,255,0.08));border:1px solid rgba(255,87,159,0.4)">
+  <div class="panel-hdr"><div class="panel-title"><span class="ico">🚀</span>全宇宙层级 · 载人火箭发射系统操作板</div><div class="panel-badge" style="background:rgba(255,87,159,0.2);color:#FF579F">8层级 · 实时操作</div></div>
+  <div style="padding:10px 14px 8px">
+    <div id="rocketBoard" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px"></div>
+    <div id="rocketStats" style="font-size:11px;color:var(--text-dim);margin-top:10px"></div>
+  </div>
+</div>
+
 <!-- 🏙️ 居住空间通信方式 -->
 <div class="panel wide" style="background:linear-gradient(135deg,rgba(139,92,246,0.12),rgba(250,173,20,0.06));border:1px solid rgba(139,92,246,0.4)">
   <div class="panel-hdr"><div class="panel-title"><span class="ico">🏙️</span>居住空间通信方式</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">已锁定 · 零延迟跨宇宙</div></div>
@@ -6235,7 +6244,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.77 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.78 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -8596,6 +8605,62 @@ function socialLevels(i){
 }
 
 /* ===== 我的钱包 · 全宇宙 8 层级注册 ===== */
+/* ===== 🚀 全宇宙层级 · 载人火箭发射系统操作板 ===== */
+var ROCKET_KEY='ues_rocket';
+var ROCKET_LEVELS=[['🌌','宇宙层级'],['🌠','星系层级'],['🪐','星球层级'],['🌍','文明层级'],['🏛️','国家层级'],['🏙️','地区层级'],['👤','个人层级'],['✨','未分层级存在']];
+var ROCKET_BASE=[108,72,48,36,24,16,8,12];
+var rocketState={levels:{}};
+function rocketLoad(){try{var raw=localStorage.getItem(ROCKET_KEY);if(raw){var d=JSON.parse(raw);if(d&&d.levels)rocketState.levels=d.levels;}}catch(e){}}
+function rocketSave(){try{localStorage.setItem(ROCKET_KEY,JSON.stringify(rocketState));}catch(e){}}
+function rocketEnsure(){
+  ROCKET_LEVELS.forEach(function(l,idx){var nm=l[1];if(!rocketState.levels[nm]){rocketState.levels[nm]={status:'idle',total:0,ok:0,rockets:ROCKET_BASE[idx],pads:Math.max(2,Math.round(ROCKET_BASE[idx]/3)),cd:0};}});
+}
+function rocketStatusMeta(s){
+  if(s==='prep')return ['🟡','准备中','#FAAD14'];
+  if(s==='launch')return ['🔵','点火升空','#00d4ff'];
+  if(s==='orbit')return ['🟣','已入轨','#a855f7'];
+  return ['🟢','待命','#52C41A'];
+}
+function rocketRate(v){return v.total?Math.round(v.ok/v.total*1000)/10:0;}
+function rocketRender(){
+  var box=document.getElementById('rocketBoard');if(!box)return;
+  var html='';
+  ROCKET_LEVELS.forEach(function(l,idx){
+    var nm=l[1];var v=rocketState.levels[nm];if(!v)return;
+    var st=rocketStatusMeta(v.status);
+    var btn = v.status==='idle'
+      ? '<div onclick="rocketFire('+idx+')" style="cursor:pointer;margin-top:8px;padding:7px 0;border-radius:8px;text-align:center;font-size:12px;font-weight:bold;background:linear-gradient(135deg,#FF579F,#00d4ff);color:#fff">🚀 点火发射</div>'
+      : '<div style="margin-top:8px;padding:7px 0;border-radius:8px;text-align:center;font-size:12px;color:'+st[2]+';background:rgba(0,0,0,0.3);border:1px solid '+st[2]+'">'+st[0]+' '+st[1]+((v.status==='prep'||v.status==='launch')?' · T-'+v.cd+'s':'')+'</div>';
+    html+='<div style="background:rgba(0,0,0,0.28);border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:10px 12px">'
+      +'<div style="display:flex;justify-content:space-between;align-items:center"><div style="font-size:13px;font-weight:bold;color:var(--text)">'+l[0]+' '+nm+'</div><div style="font-size:10px;color:'+st[2]+'">'+st[0]+' '+st[1]+'</div></div>'
+      +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:8px;font-size:10px;color:var(--text-dim)">'
+      +'<div>载人火箭<br><b style="color:#00d4ff;font-size:13px">'+v.rockets+'</b> 枚</div>'
+      +'<div>发射架<br><b style="color:#FF579F;font-size:13px">'+v.pads+'</b> 座</div>'
+      +'<div>累计发射<br><b style="color:var(--text);font-size:13px">'+v.total+'</b> 次</div>'
+      +'<div>成功率<br><b style="color:#52C41A;font-size:13px">'+rocketRate(v)+'%</b></div>'
+      +'</div>'+btn+'</div>';
+  });
+  box.innerHTML=html;
+  var g=document.getElementById('rocketStats');
+  if(g){var total=0,ok=0,rockets=0;ROCKET_LEVELS.forEach(function(l){var v=rocketState.levels[l[1]];if(v){total+=v.total;ok+=v.ok;rockets+=v.rockets;}});g.textContent='全宇宙累计发射 '+total+' 次 · 成功 '+ok+' 次 · 在役载人火箭 '+rockets+' 枚 · 待命发射架 '+ROCKET_LEVELS.length+' 层级实时；点击任一层级「点火发射」执行载人发射';}
+}
+function rocketFire(idx){
+  var nm=ROCKET_LEVELS[idx][1];var v=rocketState.levels[nm];if(!v||v.status!=='idle')return;
+  v.status='prep';v.cd=2;rocketSave();rocketRender();
+}
+function rocketTick(){
+  var changed=false;
+  ROCKET_LEVELS.forEach(function(l){
+    var v=rocketState.levels[l[1]];if(!v)return;
+    if(v.status==='prep'){v.cd--;if(v.cd<=0){v.status='launch';v.cd=2;}changed=true;}
+    else if(v.status==='launch'){v.cd--;if(v.cd<=0){v.status='orbit';v.cd=2;v.total++;if(Math.random()<0.98)v.ok++;}changed=true;}
+    else if(v.status==='orbit'){v.cd--;if(v.cd<=0){v.status='idle';v.cd=0;}changed=true;}
+  });
+  if(changed){rocketSave();rocketRender();}
+}
+function rocketInit(){rocketLoad();rocketEnsure();rocketRender();setInterval(rocketTick,1000);}
+rocketInit();
+
 /* ===== 🛒 日常消费支付 · 全宇宙无限钱包唯一支付接口 ===== */
 var DAILY_PAY_KEY='ues_daily_pay';
 var DAILY_SCENES=[['🍜','餐饮美食'],['🛍️','购物消费'],['🚌','交通出行'],['💡','水电燃气'],['📱','通讯缴费'],['🎮','娱乐消费'],['🏥','医疗健康'],['📚','教育学习'],['🏠','居住物业'],['❓','其他消费']];
@@ -16154,7 +16219,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.6.77';
+var systemVersion = 'v1.6.78';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
