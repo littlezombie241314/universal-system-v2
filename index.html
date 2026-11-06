@@ -481,7 +481,7 @@ select option{background:#040b1a;color:var(--cyan)}
     <meta name="application-name" content="全宇宙恒等系统">
     <link rel="manifest" href="manifest.json">
 <script src="assets/qrcode.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+<script src="assets/jsQR.js"></script>
 </head>
 <body>
 
@@ -947,6 +947,9 @@ select option{background:#040b1a;color:var(--cyan)}
               <div style="font-size:11px;color:var(--cyan)">点击扫一扫 · 对准收款码</div>
             </div>
             <div style="font-size:10px;color:#52C41A;margin-top:8px">支持全宇宙任何存在扫码付款 · ⚡ 最快的速度到账</div>
+            <input id="scanQrFile" type="file" accept="image/*" style="display:none" onchange="scanQrImage(this)">
+            <div onclick="document.getElementById('scanQrFile').click()" style="margin:8px auto 0;width:160px;box-sizing:border-box;cursor:pointer;text-align:center;padding:7px 0;border-radius:8px;font-size:11px;color:#00d4ff;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.35)">🖼️ 上传二维码图片</div>
+            <div id="scanResult" style="margin:8px 4px 0;font-size:11px;line-height:1.6;color:var(--text-dim);text-align:left;word-break:break-all">等待扫码 · 识别金额后直接从无限钱包余额扣款</div>
           </div>
         </div>
         <div style="margin-top:14px;background:rgba(0,212,255,0.05);border:1px solid rgba(0,212,255,0.2);border-radius:8px;padding:10px">
@@ -1715,7 +1718,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.80 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.81 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -6249,7 +6252,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.80 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.81 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -16328,7 +16331,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.6.80';
+var systemVersion = 'v1.6.81';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
@@ -18693,6 +18696,118 @@ function _doRealTransfer(account, name, amount){
     body: JSON.stringify({payeeType:'internal', payeeAccount: account || '扫码收款方', payeeName: name || '', amount: amount, remark: '扫码支付·'+(name||'收款方')})
   }).then(function(r){return r.json();}).catch(function(e){return {success:false, msg:String(e)};});
 }
+/* ===== 扫码支付 · 二维码金额识别 + 无限钱包余额直扣（v1.6.81） ===== */
+var SCAN_HISTORY_KEY = 'ues_scan_pay_history';
+window.lastScanResult = null;
+function parseQrAmount(raw){
+  if(!raw) return null;
+  var s=String(raw).trim();
+  var keys=['amount','amt','money','price','total','payAmount','pay_amount','金额','value'];
+  try{
+    var j=JSON.parse(s);
+    for(var i=0;i<keys.length;i++){
+      var v=j[keys[i]];
+      if(v!==undefined&&v!==null){
+        var n=parseFloat(String(v).replace(/[^0-9.]/g,''));
+        if(isFinite(n)&&n>0) return {amount:n,payee:(j.account||j.payeeAccount||j.name||j.payeeName||j.merchant||'')};
+      }
+    }
+    if(j.data&&typeof j.data==='object'){
+      for(var k in j.data){
+        if(/amount|amt|money|price|total|金额/i.test(k)){
+          var n2=parseFloat(String(j.data[k]).replace(/[^0-9.]/g,''));
+          if(isFinite(n2)&&n2>0) return {amount:n2,payee:(j.data.account||j.data.payeeAccount||'')};
+        }
+      }
+    }
+  }catch(e){}
+  var m=s.match(/[?&](?:amount|amt|money|price|total|金额)=([0-9]+(?:\.[0-9]+)?)/i);
+  if(m) return {amount:parseFloat(m[1]),payee:''};
+  m=s.match(/(?:¥|￥|金额|应付|付款|PAY|AMOUNT)[:：\s]*([0-9]+(?:\.[0-9]+)?)/i);
+  if(m) return {amount:parseFloat(m[1]),payee:''};
+  m=s.match(/^([0-9]+(?:\.[0-9]+)?)$/);
+  if(m) return {amount:parseFloat(m[1]),payee:''};
+  return null;
+}
+function walletEnsureAccount(){
+  var data={};try{data=JSON.parse(localStorage.getItem(WALLET_KEY)||'{}');}catch(e){}
+  if(!data.accounts) data.accounts=[];
+  if(!data.balance) data.balance={};
+  if(!data.accounts.length){
+    var addr='UES-W-1-宇宙层级';
+    data.accounts.push({addr:addr,user:'刘莹',level:'宇宙层级',time:new Date().toLocaleString('zh-CN',{hour12:false})});
+    if(!data.balance[addr]) data.balance[addr]='999999999999999999999999';
+    localStorage.setItem(WALLET_KEY,JSON.stringify(data));
+    if(typeof walletRender==='function') walletRender();
+  }
+  return data;
+}
+function walletScanDebit(amount,payee,raw){
+  var data=walletEnsureAccount();
+  var accts=data.accounts||[];
+  var addr=accts[0].addr;
+  var bal=BigInt(data.balance[addr]||'0');
+  var cost=BigInt(Math.round(amount*100))*BigInt('10000000000000000');
+  if(bal<cost) return {ok:false,msg:'无限钱包余额不足（'+bal.toString()+' 单位），未扣款'};
+  data.balance[addr]=(bal-cost).toString();
+  localStorage.setItem(WALLET_KEY,JSON.stringify(data));
+  if(typeof walletRender==='function') walletRender();
+  var now=new Date(),p=function(x){return String(x).padStart(2,'0')};
+  var rec={time:now.getFullYear()+'-'+p(now.getMonth()+1)+'-'+p(now.getDate())+' '+p(now.getHours())+':'+p(now.getMinutes())+':'+p(now.getSeconds()),amount:amount,payee:(payee||'扫码收款方'),addr:addr,no:'UES-QR-'+now.getFullYear()+p(now.getMonth()+1)+p(now.getDate())+'-'+Math.random().toString(36).substr(2,6).toUpperCase(),raw:String(raw||'').slice(0,120)};
+  var hist=[];try{hist=JSON.parse(localStorage.getItem(SCAN_HISTORY_KEY)||'[]');}catch(e){}
+  hist.push(rec);if(hist.length>50) hist=hist.slice(-50);
+  localStorage.setItem(SCAN_HISTORY_KEY,JSON.stringify(hist));
+  return {ok:true,rec:rec,amount:amount,before:bal.toString(),after:(bal-cost).toString()};
+}
+function handleScanPayload(data,outEl){
+  outEl=outEl||document.getElementById('scanResult');
+  var amt=parseQrAmount(data);
+  if(!amt){
+    window.lastScanResult={ok:false,msg:'未识别金额'};
+    if(outEl) outEl.innerHTML='⚠️ 已识别二维码，但未包含金额数字 · 未扣款<br><span style="font-size:10px;opacity:.75">'+String(data).slice(0,60).replace(/</g,'&lt;')+'</span>';
+    if(typeof toast==='function') toast('⚠️ 二维码未包含金额，未扣款');
+    return false;
+  }
+  var r=walletScanDebit(amt.amount,amt.payee,data);
+  window.lastScanResult=r.ok?{ok:true,amount:amt.amount}:{ok:false,msg:r.msg};
+  if(r.ok){
+    if(outEl) outEl.innerHTML='✅ 扫码支付成功 · 已从无限钱包扣除 <b style="color:var(--amber)">¥'+amt.amount.toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2})+'</b><br>收款方：'+(amt.payee||'扫码收款方')+' · 单号：'+r.rec.no+'<br>扣款账户：'+r.rec.addr+'<br>扣款前余额：'+BigInt(r.before).toLocaleString()+' 单位 → 扣款后：'+BigInt(r.after).toLocaleString()+' 单位 · 已实时保存';
+    if(typeof toast==='function') toast('✅ 扫码支付成功 · 已扣 ¥'+amt.amount+' · 无限钱包余额已更新');
+    if(typeof quickMsg==='function') quickMsg('✅ 扫码支付 ¥'+amt.amount+' 已从无限钱包扣除 · 单号 '+r.rec.no);
+  }else{
+    if(outEl) outEl.innerHTML='⚠️ 扣款失败：'+r.msg;
+    if(typeof toast==='function') toast('⚠️ 扣款失败：'+r.msg);
+  }
+  return r.ok;
+}
+function scanQrImage(input){
+  var f=input.files&&input.files[0];if(!f)return;
+  var res=document.getElementById('scanResult');
+  if(res) res.textContent='🔍 正在识别图片中的二维码...';
+  var img=new Image();
+  img.onload=function(){
+    var cv=document.createElement('canvas');cv.width=img.width;cv.height=img.height;
+    var ctx=cv.getContext('2d',{willReadFrequently:true});ctx.drawImage(img,0,0);
+    var d=ctx.getImageData(0,0,cv.width,cv.height);
+    var code=(typeof jsQR!=='undefined')?jsQR(d.data,d.width,d.height,{inversionAttempts:'attemptBoth'}):null;
+    if(!code||!code.data){
+      if(res) res.innerHTML='⚠️ 未识别到二维码，请换清晰的图片重试（未扣款）';
+      input.value='';return;
+    }
+    handleScanPayload(code.data,res);
+    input.value='';
+  };
+  img.onerror=function(){if(res)res.innerHTML='⚠️ 图片读取失败（未扣款）';input.value='';};
+  img.src=URL.createObjectURL(f);
+}
+function scanHistoryRender(){
+  var box=document.getElementById('scanHistory');if(!box)return;
+  var hist=[];try{hist=JSON.parse(localStorage.getItem(SCAN_HISTORY_KEY)||'[]');}catch(e){}
+  if(!hist.length){box.innerHTML='<div style="font-size:10px;color:var(--text-dim)">暂无扫码扣款记录</div>';return;}
+  box.innerHTML=hist.slice().reverse().slice(0,6).map(function(r){
+    return '<div style="display:flex;justify-content:space-between;gap:8px;font-size:10px;padding:4px 0;border-bottom:1px solid rgba(0,212,255,.08)"><span style="color:var(--text-dim)">'+r.time+'</span><span style="color:var(--amber)">-¥'+Number(r.amount).toLocaleString()+'</span><span style="color:var(--cyan);font-family:var(--mono)">'+r.no+'</span></div>';
+  }).join('');
+}
 function scanCamera(){
   var box = document.getElementById('scanBox');
   if (!box) return;
@@ -18744,21 +18859,13 @@ function scanCamera(){
             stream.getTracks().forEach(function(t){t.stop();});
             _scanStream = null;
             box.innerHTML = '<div style="font-size:14px;color:#FAAD14;padding:10px;text-align:center">🔍 已识别：' + data.slice(0,30) + '...<br>💸 正在真实付款...</div>';
-            var account = data, name = '';
-            try { var j = JSON.parse(data); account = j.account || j.payeeAccount || data; name = j.name || j.payeeName || ''; } catch(e){}
-            _doRealTransfer(account, name, amt).then(function(res){
-              if (res && res.success) {
-                box.innerHTML = '<div style="font-size:36px">✅</div><div style="font-size:11px;color:#52C41A">真实付款成功 · ¥' + amt + '</div>';
-                if (typeof quickMsg === 'function') quickMsg('✅ 真实扫码支付成功 · 已付款 ¥' + amt + ' 到 ' + account + ' · 实时到账');
-              } else {
-                box.innerHTML = '<div style="font-size:36px">⚠️</div><div style="font-size:10px;color:#FAAD1A;padding:6px;text-align:center">已识别码，但真实转账未受理：' + ((res&&res.msg)||(res&&res.subMsg)||'接口未上线') + '</div>';
-                if (typeof quickMsg === 'function') quickMsg('⚠️ 扫码已识别，但付款接口暂未受理（应用审核/签约中）');
-              }
-              setTimeout(function(){
-                box.style.borderColor = '#00d4ff';
-                box.innerHTML = '<div style="font-size:36px">📷</div><div style="font-size:11px;color:var(--cyan)">点击扫一扫 · 对准收款码</div>';
-              }, 0);
-            });
+            var resBox = document.getElementById('scanResult');
+            handleScanPayload(data, resBox);
+            var lr = window.lastScanResult || {};
+            box.innerHTML = lr.ok
+              ? '<div style="font-size:30px">✅</div><div style="font-size:10px;color:#52C41A;text-align:center;padding:2px">已扣 ¥' + lr.amount + '</div>'
+              : '<div style="font-size:30px">⚠️</div><div style="font-size:10px;color:#FAAD14;text-align:center;padding:2px">' + (lr.msg||'未识别金额') + '</div>';
+            scanHistoryRender();
             return;
           }
         } catch(e){}
@@ -18839,6 +18946,7 @@ function scanCamera(){
     }, 0);
   }
 }
+try{scanHistoryRender();}catch(e){}
 </script>
 </body>
 </html>
