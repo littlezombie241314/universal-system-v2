@@ -1715,7 +1715,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.79 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.80 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -4022,6 +4022,11 @@ select option{background:#040b1a;color:var(--cyan)}
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;padding:14px" id="spaceTravelLevels"></div>
       </div>
       <div class="panel wide">
+        <div class="panel-hdr"><div class="panel-title"><span class="ico">🚦</span>全宇宙层级 · 交通工具调度系统</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">8 层级 · 实时运行</div></div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:6px;padding:10px 14px 0" id="transportStats"></div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:10px;padding:10px 14px 14px" id="transportLevels"></div>
+      </div>
+      <div class="panel wide">
         <div class="panel-hdr"><div class="panel-title"><span class="ico">🎫</span>我的星际娱乐预约</div><div class="panel-badge">实时保存</div></div>
         <div style="padding:14px" id="outdoorRegs"></div>
       </div>
@@ -6244,7 +6249,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.79 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.80 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -8420,6 +8425,110 @@ function outdoorLevelsRender(){
   tick();
   setInterval(tick, 2000);
 })();
+/* ===== 全宇宙层级 · 交通工具调度系统（8层级 + 实时状态） ===== */
+var TRANSPORT_KEY = 'ues_transport_vehicles';
+var TRANSPORT_LEVELS = [
+  {icon:'🌌', name:'宇宙层级', total:1800000000, running:1200000000, speed:'∞ 光速', kinds:'星际母舰/曲速飞船/空间跃迁器'},
+  {icon:'🌠', name:'星系层级', total:960000000,  running:640000000,  speed:'0.9c', kinds:'星系穿梭机/星云运输舰/引力滑轨'},
+  {icon:'🪐', name:'星球层级', total:720000000,  running:480000000,  speed:'12,000 km/s', kinds:'行星巡航机/轨道列车/深海潜航器'},
+  {icon:'👽', name:'文明层级', total:480000000,  running:320000000,  speed:'8,000 km/s', kinds:'文明传送艇/反重力巴士/磁悬浮干线'},
+  {icon:'🏛️', name:'国家层级', total:360000000,  running:240000000,  speed:'3,200 km/h', kinds:'行政飞行器/高速列车/城际航运'},
+  {icon:'🏙️', name:'地区层级', total:240000000,  running:160000000,  speed:'1,800 km/h', kinds:'通勤飞车/地铁快线/水上巴士'},
+  {icon:'👤', name:'个人层级', total:120000000,  running:80000000,   speed:'1,200 km/h', kinds:'个人飞艇/悬浮车/单人潜航器'},
+  {icon:'✨', name:'未分层级存在', total:60000000, running:40000000,  speed:'∞ 全域', kinds:'全域漫游机/弥散载具/相位穿梭器'}
+];
+var transportState = { levels:{}, updated:0 };
+
+(function(){
+  var box = document.getElementById('transportLevels');
+  var statBox = document.getElementById('transportStats');
+  if (!box || !statBox) return;
+
+  function load(){
+    var saved = null;
+    try { saved = JSON.parse(localStorage.getItem(TRANSPORT_KEY) || 'null'); } catch(e) {}
+    TRANSPORT_LEVELS.forEach(function(lv, i){
+      var s = saved && saved.levels && saved.levels[lv.name];
+      transportState.levels[lv.name] = {
+        total: lv.total,
+        running: s && typeof s.running === 'number' ? Math.min(s.running, lv.total) : lv.running,
+        speed: lv.speed,
+        kinds: lv.kinds
+      };
+    });
+    transportState.updated = saved && saved.updated ? saved.updated : 0;
+  }
+  function save(){
+    transportState.updated = Date.now();
+    try { localStorage.setItem(TRANSPORT_KEY, JSON.stringify({levels:transportState.levels, updated:transportState.updated})); } catch(e) {}
+  }
+  function build(){
+    box.innerHTML = TRANSPORT_LEVELS.map(function(lv, i){
+      return '<div data-transport="' + i + '" style="background:rgba(0,0,0,0.25);border:1px solid rgba(82,196,26,0.25);border-radius:8px;padding:10px;text-align:center">'
+        + '<div style="font-size:20px">' + lv.icon + '</div>'
+        + '<div style="font-size:12px;font-weight:bold;color:var(--text);margin-top:2px">' + lv.name + '</div>'
+        + '<div style="font-size:9px;color:var(--text-dim);margin:5px 0 1px">🛣️ 交通工具总数</div>'
+        + '<div style="font-size:12px;font-weight:bold;color:#52C41A" data-tr-total>--</div>'
+        + '<div style="font-size:9px;color:var(--text-dim);margin:5px 0 1px">🟢 运行中</div>'
+        + '<div style="font-size:12px;font-weight:bold;color:#00d4ff" data-tr-run>--</div>'
+        + '<div style="font-size:9px;color:var(--text-dim);margin:5px 0 1px">⚡ 平均时速</div>'
+        + '<div style="font-size:11px;font-weight:bold;color:#C4B5FD" data-tr-speed>--</div>'
+        + '<div style="font-size:9px;color:var(--text-dim);margin:5px 0 1px" data-tr-kinds>--</div>'
+        + '<div style="font-size:9px;padding:2px 8px;border-radius:10px;background:rgba(82,196,26,0.18);color:#52C41A;margin-top:6px" data-tr-status>🟢 全速运行</div>'
+        + '<div onclick="transportDispatch(' + i + ')" style="margin-top:7px;padding:5px 8px;border-radius:5px;background:rgba(82,196,26,0.18);border:1px solid rgba(82,196,26,0.35);color:#52C41A;font-size:10px;font-weight:bold;cursor:pointer">🚀 一键调度全部</div>'
+        + '</div>';
+    }).join('');
+  }
+  function render(){
+    TRANSPORT_LEVELS.forEach(function(lv, i){
+      var st = transportState.levels[lv.name];
+      var card = box.querySelector('[data-transport="' + i + '"]');
+      if (!card || !st) return;
+      card.querySelector('[data-tr-total]').textContent = st.total.toLocaleString();
+      card.querySelector('[data-tr-run]').textContent = st.running.toLocaleString();
+      card.querySelector('[data-tr-speed]').textContent = st.speed;
+      card.querySelector('[data-tr-kinds]').textContent = st.kinds;
+      var pct = Math.round(st.running / st.total * 100);
+      var tag = card.querySelector('[data-tr-status]');
+      tag.textContent = pct >= 100 ? '🟢 全量运行 ' + pct + '%' : '🟢 运行中 ' + pct + '%';
+    });
+    var total = 0, running = 0;
+    TRANSPORT_LEVELS.forEach(function(lv){ var st = transportState.levels[lv.name]; total += st.total; running += st.running; });
+    var pct = total ? Math.round(running / total * 100) : 0;
+    statBox.innerHTML = [
+      {k:'交通工具总量', v:total.toLocaleString(), c:'#52C41A'},
+      {k:'运行中', v:running.toLocaleString(), c:'#00d4ff'},
+      {k:'在线率', v:pct + '%', c:'#C4B5FD'},
+      {k:'类型覆盖', v:'陆/海/空/轨道/星际 5/5', c:'#FFB020'}
+    ].map(function(x){
+      return '<div style="background:rgba(0,0,0,0.22);border:1px solid rgba(255,255,255,0.08);border-radius:7px;padding:7px 10px;text-align:center">'
+        + '<div style="font-size:9px;color:var(--text-dim)">' + x.k + '</div>'
+        + '<div style="font-size:12px;font-weight:bold;color:' + x.c + ';margin-top:2px">' + x.v + '</div></div>';
+    }).join('');
+  }
+  window.transportDispatch = function(i){
+    var lv = TRANSPORT_LEVELS[i];
+    if (!lv) return;
+    var st = transportState.levels[lv.name];
+    st.running = st.total;
+    render(); save();
+    if (typeof toast === 'function') toast('🚀 ' + lv.name + ' 交通工具已全量调度 · ' + st.total.toLocaleString() + ' 辆/艘/架投入运行 · 实时保存');
+  };
+  window.transportTick = function(){
+    var changed = false;
+    TRANSPORT_LEVELS.forEach(function(lv){
+      var st = transportState.levels[lv.name];
+      if (st.running < st.total){
+        st.running = Math.min(st.total, st.running + Math.max(1, Math.floor(st.total * 0.005)));
+        changed = true;
+      }
+    });
+    if (changed) { render(); }
+  };
+  load(); build(); render();
+  setInterval(function(){ transportTick(); }, 3000);
+})();
+
 function outdoorRegsRender(){
   var box = document.getElementById('outdoorRegs');
   if (!box) return;
@@ -16219,7 +16328,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.6.79';
+var systemVersion = 'v1.6.80';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
