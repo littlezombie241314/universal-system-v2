@@ -2,6 +2,7 @@
 
 **当前版本** v1.6.96 · `index.html` 1,343,862 字节 · md5 `c25508b7f21fc7a173bf4c844a01336e`
 **Service Worker** `ues-v1.6.960` · **PWA** `display: standalone`（可安装、可离线启动）
+**ARM / 移动端** Android、iOS、鸿蒙与 ARM 服务器部署见 `ARM_MOBILE_DEPLOY.md`。
 **适用端** Android / iPhone / iPad / HarmonyOS / Windows / macOS / Linux / 云主机 / ARM 工控板
 
 > 本文所有命令、路径、参数都与仓库里的 `deploy/` 目录实际内容一致；改动代码后请同步更新版本号与 md5。
