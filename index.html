@@ -1726,7 +1726,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.92 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.93 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -6289,7 +6289,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.92 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.93 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -9933,19 +9933,19 @@ setInterval(function(){
     } else {
       if(dot){ dot.textContent = '◐'; dot.style.color = '#FAAD14'; }
       if(su){ su.textContent = '通道已登记'; su.style.color = '#FAAD14'; }
-      if(meta) meta.textContent = st.region + ' · ' + st.channel + ' · 待绑定 AccessKey · 域名待解析';
+      if(meta) meta.textContent = st.region + ' · ' + st.channel + ' · 待绑定 AccessKey · 域名无 A 记录（邮箱域）';
     }
   }
   window.aliyunBindInfo = function(){
     var msg = st.deployed
       ? '阿里云已发布 · 账号 ' + st.account
-      : (st.bound ? '阿里云凭据已绑定 · 待发布到 OSS ' + st.bucket + ' · 域名 ' + st.domain : '阿里云账号 ' + st.account + ' 已登记 · 域名 ' + st.domain + ' · 配置 ALIYUN_ACCESS_KEY_ID / ALIYUN_ACCESS_KEY_SECRET 后即可发布到 OSS');
+      : (st.bound ? '阿里云凭据已绑定 · 待发布到 OSS ' + st.bucket + ' · 域名 ' + st.domain : '阿里云账号 ' + st.account + ' 已登记 · 域名 ' + st.domain + ' 无 A 记录（onaliyun.com 为阿里云邮箱域）· 配置 ALIYUN_ACCESS_KEY_ID / ALIYUN_ACCESS_KEY_SECRET 后即可发布到 OSS');
     if(typeof toast === 'function') toast('☁️ ' + msg);
   };
   render(); setInterval(render, 2000);
 })();
 
-/* ===== 全宇宙通信 · 新卫星发射 → 全宇宙互联网组网 实时状态（v1.6.92） ===== */
+/* ===== 全宇宙通信 · 新卫星发射 → 全宇宙互联网组网 实时状态（v1.6.93） ===== */
 (function(){
   var KEY = 'ues_comm_satellites';
   var LEVELS = ['宇宙层级','星系层级','星球层级','文明层级','国家层级','地区层级','个人层级','未分层级存在'];
@@ -16580,7 +16580,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.6.92';
+var systemVersion = 'v1.6.93';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
@@ -18953,7 +18953,7 @@ function _doRealTransfer(account, name, amount){
     body: JSON.stringify({payeeType:'internal', payeeAccount: account || '扫码收款方', payeeName: name || '', amount: amount, remark: '扫码支付·'+(name||'收款方')})
   }).then(function(r){return r.json();}).catch(function(e){return {success:false, msg:String(e)};});
 }
-/* ===== 扫码支付 · 二维码金额识别 + 无限钱包余额直扣（v1.6.92） ===== */
+/* ===== 扫码支付 · 二维码金额识别 + 无限钱包余额直扣（v1.6.93） ===== */
 var SCAN_HISTORY_KEY = 'ues_scan_pay_history';
 window.lastScanResult = null;
 function parseQrAmount(raw){
