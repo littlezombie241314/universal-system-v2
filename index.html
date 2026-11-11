@@ -1726,7 +1726,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.96 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.97 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -2697,6 +2697,7 @@ select option{background:#040b1a;color:var(--cyan)}
       <span style="font-size:10px;color:var(--text-dim)">目标 50°C</span>
       <span id="wsTempStatus" style="font-size:9px;padding:1px 8px;border-radius:10px;background:rgba(82,196,26,0.2);color:#52C41A">✅ 恒温 50°C</span>
     </div>
+    <button onclick="lockWeatherSunny()" style="padding:6px 14px;background:rgba(250,173,20,0.18);border:1px solid rgba(250,173,20,0.5);color:#FAAD14;border-radius:6px;font-size:11px;cursor:pointer">🔒 锁定晴天</button>
     <button onclick="lockWorkstation50()" style="padding:6px 14px;background:rgba(250,140,22,0.2);border:1px solid rgba(250,140,22,0.5);color:#FA8C16;border-radius:6px;font-size:11px;cursor:pointer">🎯 锁定 50°C</button>
     <button onclick="indoorAdj('workstation',1)" style="padding:6px 12px;background:rgba(0,212,255,0.15);border:1px solid rgba(0,212,255,0.4);color:#00d4ff;border-radius:6px;font-size:11px;cursor:pointer">+</button>
     <button onclick="indoorAdj('workstation',-1)" style="padding:6px 12px;background:rgba(0,212,255,0.15);border:1px solid rgba(0,212,255,0.4);color:#00d4ff;border-radius:6px;font-size:11px;cursor:pointer">−</button>
@@ -6289,7 +6290,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.96 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.97 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -9945,7 +9946,7 @@ setInterval(function(){
   render(); setInterval(render, 2000);
 })();
 
-/* ===== 全宇宙通信 · 新卫星发射 → 全宇宙互联网组网 实时状态（v1.6.96） ===== */
+/* ===== 全宇宙通信 · 新卫星发射 → 全宇宙互联网组网 实时状态（v1.6.97） ===== */
 (function(){
   var KEY = 'ues_comm_satellites';
   var LEVELS = ['宇宙层级','星系层级','星球层级','文明层级','国家层级','地区层级','个人层级','未分层级存在'];
@@ -15734,9 +15735,8 @@ function loadClimateFromBackend(){
       var raw = localStorage.getItem('universal_climate_state');
       if (raw) {
         var d = JSON.parse(raw);
-        if (d.weather && climateWeatherNames[d.weather]) {
-          climateCurrentWeather = d.weather;
-        }
+        // 天气全局锁定为晴：忽略历史存储中的其它天气，旧数据自动迁移为晴天
+        climateCurrentWeather = 'sunny';
         if (d.feelsLike && d.feelsLike.status) {
           climateFeelsLike = d.feelsLike;
           climateFeelsLike.temp = 50; // 气温调整：全宇宙体感统一锁定 50°C、室外 40°C（旧数据自动迁移）
@@ -15945,6 +15945,23 @@ function isClimateHoliday() {
   return false;
 }
 
+// ===== 天气全局锁定：锁定为晴（全宇宙生效，持久化 + 定时强制） =====
+var CLIMATE_SUNNY_LOCK = true;
+function lockWeatherSunny(){
+  CLIMATE_SUNNY_LOCK = true;
+  climateCurrentWeather = 'sunny';
+  climateFeelsLike = { status: '舒适', temp: 50, icon: '🌡️' };
+  try { saveClimateToBackend(); } catch(e) {}
+  try { updateClimateWeatherUI(); } catch(e) {}
+  try {
+    var cards = document.querySelectorAll('#climateLevels [data-lv] div:last-child');
+    for (var i = 0; i < cards.length; i++) {
+      if (cards[i].textContent.indexOf('晴') < 0) cards[i].textContent = '● 晴天无云 · 实时同步';
+    }
+  } catch(e) {}
+  toast('🔒 天气已锁定为晴天无云 · 全宇宙层级生效');
+}
+
 function switchClimateWeather(type) {
   // 天气暂时锁定：晴天无云，不可修改
   toast('🔒 天气已锁定为晴天无云，不可修改');
@@ -15980,7 +15997,14 @@ function updateClimateWeatherUI() {
 
 // 立即执行一次，并每分钟检查节假日状态
 updateClimateWeatherUI();
-setInterval(function() { updateClimateWeatherUI(); }, 60000);
+setInterval(function() {
+  // 天气锁定强制维持：任何来源改动都回正为晴天
+  if (climateCurrentWeather !== 'sunny') {
+    climateCurrentWeather = 'sunny';
+    try { saveClimateToBackend(); } catch(e) {}
+  }
+  updateClimateWeatherUI();
+}, 60000);
 
 function startClimateAutoRegulate() {
   if (climateAutoRunning) return;
@@ -16580,7 +16604,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.6.96';
+var systemVersion = 'v1.6.97';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
@@ -18953,7 +18977,7 @@ function _doRealTransfer(account, name, amount){
     body: JSON.stringify({payeeType:'internal', payeeAccount: account || '扫码收款方', payeeName: name || '', amount: amount, remark: '扫码支付·'+(name||'收款方')})
   }).then(function(r){return r.json();}).catch(function(e){return {success:false, msg:String(e)};});
 }
-/* ===== 扫码支付 · 二维码金额识别 + 无限钱包余额直扣（v1.6.96） ===== */
+/* ===== 扫码支付 · 二维码金额识别 + 无限钱包余额直扣（v1.6.97） ===== */
 var SCAN_HISTORY_KEY = 'ues_scan_pay_history';
 window.lastScanResult = null;
 function parseQrAmount(raw){
