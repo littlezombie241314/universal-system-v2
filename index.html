@@ -1726,7 +1726,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.91 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.92 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -6289,7 +6289,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.91 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.92 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -6591,7 +6591,8 @@ select option{background:#040b1a;color:var(--cyan)}
           <span id="aliyunDot" style="color:#FAAD14">◐</span>
           <span style="color:var(--text-dim)">阿里云 <b id="aliyunStatus" style="color:#FAAD14;font-weight:bold">通道已登记</b></span>
         </div>
-        <div style="grid-column:1/-1;font-size:9px;color:var(--text-dim);padding-left:2px" id="aliyunDetail">账号 1064000396395260 · cn-hangzhou · OSS 静态托管 · 待绑定 AccessKey</div>
+        <div style="grid-column:1/-1;font-size:9px;color:var(--text-dim);padding-left:2px" id="aliyunDetail">账号 1064000396395260 · 域名 1064000396395260.onaliyun.com</div>
+        <div style="grid-column:1/-1;font-size:9px;color:var(--text-dim);padding-left:2px" id="aliyunMeta">cn-hangzhou · OSS 静态托管 + CDN · 待绑定 AccessKey</div>
         <div style="display:flex;align-items:center;gap:4px">
           <span style="color:#52C41A">✅</span>
           <span style="color:var(--text-dim)">腾讯云 全球节点</span>
@@ -9908,7 +9909,7 @@ setInterval(function(){
 /* ===== 阿里云部署通道 · 账号登记与发布状态 ===== */
 (function(){
   var KEY = 'ues_aliyun_deploy';
-  var st = {account:'1064000396395260', region:'cn-hangzhou', bucket:'universal-system', channel:'OSS 静态托管 + CDN', bound:false, deployed:false, lastSync:null};
+  var st = {account:'1064000396395260', domain:'1064000396395260.onaliyun.com', region:'cn-hangzhou', bucket:'universal-system', channel:'OSS 静态托管 + CDN', bound:false, deployed:false, lastSync:null};
   try{ var d = JSON.parse(localStorage.getItem(KEY) || 'null'); if(d){ for(var k in d){ if(d[k]!==undefined) st[k]=d[k]; } } }catch(e){}
   function fmt(ts){
     if(!ts) return '刚刚';
@@ -9918,32 +9919,33 @@ setInterval(function(){
     return Math.floor(m/60) + ' 小时前';
   }
   function render(){
-    var dot = document.getElementById('aliyunDot'), det = document.getElementById('aliyunDetail'), su = document.getElementById('aliyunStatus');
+    var dot = document.getElementById('aliyunDot'), det = document.getElementById('aliyunDetail'), meta = document.getElementById('aliyunMeta'), su = document.getElementById('aliyunStatus');
     if(!det) return;
+    det.textContent = '账号 ' + st.account + ' · 域名 ' + st.domain;
     if(st.deployed){
       if(dot){ dot.textContent = '✅'; dot.style.color = '#52C41A'; }
       if(su){ su.textContent = '已发布'; su.style.color = '#52C41A'; }
-      det.textContent = '账号 ' + st.account + ' · ' + st.region + ' · ' + st.channel + ' · 同步 ' + fmt(st.lastSync);
+      if(meta) meta.textContent = st.region + ' · ' + st.channel + ' · 同步 ' + fmt(st.lastSync);
     } else if(st.bound){
       if(dot){ dot.textContent = '◐'; dot.style.color = '#00d4ff'; }
       if(su){ su.textContent = '凭据已绑定'; su.style.color = '#00d4ff'; }
-      det.textContent = '账号 ' + st.account + ' · ' + st.region + ' · ' + st.channel + ' · 待发布';
+      if(meta) meta.textContent = st.region + ' · ' + st.channel + ' · 待发布到 ' + st.domain;
     } else {
       if(dot){ dot.textContent = '◐'; dot.style.color = '#FAAD14'; }
       if(su){ su.textContent = '通道已登记'; su.style.color = '#FAAD14'; }
-      det.textContent = '账号 ' + st.account + ' · ' + st.region + ' · ' + st.channel + ' · 待绑定 AccessKey';
+      if(meta) meta.textContent = st.region + ' · ' + st.channel + ' · 待绑定 AccessKey · 域名待解析';
     }
   }
   window.aliyunBindInfo = function(){
     var msg = st.deployed
       ? '阿里云已发布 · 账号 ' + st.account
-      : (st.bound ? '阿里云凭据已绑定 · 待发布到 OSS ' + st.bucket : '阿里云账号 ' + st.account + ' 已登记 · 配置 ALIYUN_ACCESS_KEY_ID / ALIYUN_ACCESS_KEY_SECRET 后即可发布到 OSS');
+      : (st.bound ? '阿里云凭据已绑定 · 待发布到 OSS ' + st.bucket + ' · 域名 ' + st.domain : '阿里云账号 ' + st.account + ' 已登记 · 域名 ' + st.domain + ' · 配置 ALIYUN_ACCESS_KEY_ID / ALIYUN_ACCESS_KEY_SECRET 后即可发布到 OSS');
     if(typeof toast === 'function') toast('☁️ ' + msg);
   };
   render(); setInterval(render, 2000);
 })();
 
-/* ===== 全宇宙通信 · 新卫星发射 → 全宇宙互联网组网 实时状态（v1.6.91） ===== */
+/* ===== 全宇宙通信 · 新卫星发射 → 全宇宙互联网组网 实时状态（v1.6.92） ===== */
 (function(){
   var KEY = 'ues_comm_satellites';
   var LEVELS = ['宇宙层级','星系层级','星球层级','文明层级','国家层级','地区层级','个人层级','未分层级存在'];
@@ -16578,7 +16580,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.6.91';
+var systemVersion = 'v1.6.92';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
@@ -18951,7 +18953,7 @@ function _doRealTransfer(account, name, amount){
     body: JSON.stringify({payeeType:'internal', payeeAccount: account || '扫码收款方', payeeName: name || '', amount: amount, remark: '扫码支付·'+(name||'收款方')})
   }).then(function(r){return r.json();}).catch(function(e){return {success:false, msg:String(e)};});
 }
-/* ===== 扫码支付 · 二维码金额识别 + 无限钱包余额直扣（v1.6.91） ===== */
+/* ===== 扫码支付 · 二维码金额识别 + 无限钱包余额直扣（v1.6.92） ===== */
 var SCAN_HISTORY_KEY = 'ues_scan_pay_history';
 window.lastScanResult = null;
 function parseQrAmount(raw){
