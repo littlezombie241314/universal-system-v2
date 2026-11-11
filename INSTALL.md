@@ -1,7 +1,7 @@
 # 全宇宙恒等系统 · 安装说明
 
-**当前版本** v1.6.95 · `index.html` 1,343,152 字节 · md5 `cfb802b29f58e49bec9cd4701f74835d`
-**Service Worker** `ues-v1.6.950` · **PWA** `display: standalone`（可安装、可离线启动）
+**当前版本** v1.6.96 · `index.html` 1,343,862 字节 · md5 `c25508b7f21fc7a173bf4c844a01336e`
+**Service Worker** `ues-v1.6.960` · **PWA** `display: standalone`（可安装、可离线启动）
 **适用端** Android / iPhone / iPad / HarmonyOS / Windows / macOS / Linux / 云主机 / ARM 工控板
 
 > 本文所有命令、路径、参数都与仓库里的 `deploy/` 目录实际内容一致；改动代码后请同步更新版本号与 md5。
@@ -92,13 +92,13 @@ Chrome / Edge：
 |---|---|
 | 窗口形态 | 独立窗口，无地址栏、无标签页 |
 | 开发者工具 → Application → Manifest | 名称「全宇宙恒等系统 · UNIVERSAL EQUALITY SYSTEM」，图标 192/512 正常 |
-| Application → Service Workers | `sw.js` 状态 **activated and is running**，版本 `ues-v1.6.950` |
+| Application → Service Workers | `sw.js` 状态 **activated and is running**，版本 `ues-v1.6.960` |
 | 断网测试 | 关掉 Wi-Fi 再点图标，仍能进入控制台 |
 
 ### 2.5 更新与"一直是旧版"
 
 - 页面导航走**网络优先**：联网打开就是最新版；离线才回退缓存。
-- 更新生效靠 `sw.js` 里的 `VERSION`（当前 `ues-v1.6.950`）变化触发：新版本号 → 安装新缓存 → 删除旧缓存。
+- 更新生效靠 `sw.js` 里的 `VERSION`（当前 `ues-v1.6.960`）变化触发：新版本号 → 安装新缓存 → 删除旧缓存。
 - 若仍看到旧版：关掉所有该站标签页重开；或 DevTools → Application → Service Workers → **Unregister** → 刷新两次。
 
 ---
@@ -229,8 +229,8 @@ bash deploy_stable.sh --verify     # 只校验，不改线上
 发布前把 `deploy/index.html`、`deploy/sw.js` 更新到最新，并确认版本号一致：
 
 ```bash
-grep -c "v1.6.95" deploy/index.html     # 期望 5
-grep -o "ues-v1.6.950" deploy/sw.js     # 期望 1
+grep -c "v1.6.96" deploy/index.html     # 期望 5
+grep -o "ues-v1.6.960" deploy/sw.js     # 期望 1
 md5sum deploy/index.html                # 期望 cfb802b2...
 ```
 
@@ -308,7 +308,7 @@ python3 aliyun_deploy.py --dir /tmp/uv2_publish --bucket universal-system --regi
    done
    ```
    期望全部 200。
-2. **版本指纹**：页面内 `v1.6.95` 出现 5 处；`index.html` md5 `cfb802b2…`、大小 1,343,152 B。
+2. **版本指纹**：页面内 `v1.6.96` 出现 5 处；`index.html` md5 `cfb802b2…`、大小 1,343,862 B。
 3. **PWA**：DevTools → Application，Manifest 无报错、Service Worker 为 activated；断网后仍能打开。
 4. **界面真实点击**：点顶部的「☁️ 云平台部署状态」里的阿里云卡片，应弹出
    `阿里云已发布 · https://universal-system.oss-cn-hangzhou.aliyuncs.com/index.html（默认域名强制下载）`，
@@ -350,4 +350,4 @@ docker rm -f universal-system && docker rmi universal-system
 
 ---
 
-*文档与 v1.6.95 同步。旧版说明保留在 `INSTALL_legacy_2026-10-09.md`（v1.3.0 时期，仅作历史参考）。*
+*文档与 v1.6.96 同步。旧版说明保留在 `INSTALL_legacy_2026-10-09.md`（v1.3.0 时期，仅作历史参考）。*

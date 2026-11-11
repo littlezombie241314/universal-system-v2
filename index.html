@@ -183,7 +183,7 @@ select option{background:#040b1a;color:var(--cyan)}
 .section{display:none}.section.active{display:block;animation:fadeIn .4s}
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 #globeCanvas{width:100%;height:180px;display:block}
-@media(max-width:640px){.hdr-time{font-size:18px}.grid{grid-template-columns:1fr}.hero-balance{font-size:28px}.res-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.hdr-time{font-size:18px}.grid{grid-template-columns:1fr}.hero-balance{font-size:15px!important;letter-spacing:0!important;word-break:break-all;line-height:1.35;padding:0 4px;text-shadow:0 0 12px var(--cyan)}.hero{padding:14px 10px!important}.hero-meta{letter-spacing:0;font-size:10px;line-height:1.7}.hdr{padding:8px 10px!important}.hdr-name{font-size:14px!important;letter-spacing:1px!important}.hdr-sub{font-size:9px!important;letter-spacing:1px!important}#autoRefreshPanel{position:static!important;margin:6px 8px!important;min-width:0!important;width:auto!important;padding:8px 10px!important}#realtimePanel{position:static!important;left:auto!important;right:auto!important;bottom:auto!important;width:auto!important;max-height:50vh!important;overflow-y:auto!important;margin:8px!important}.res-grid{grid-template-columns:repeat(2,1fr)}}
 
 /* ============ PUSH BROADCAST ============ */
 .hdr-push{display:flex;align-items:center;gap:6px;padding:6px 12px;border:1px solid var(--magenta);background:rgba(255,45,149,0.1);color:var(--magenta);font-family:var(--mono);font-size:11px;cursor:pointer;letter-spacing:1px;transition:all .2s;clip-path:polygon(0 0,calc(100% - 6px) 0,100% 6px,100% 100%,6px 100%,0 calc(100% - 6px))}
@@ -1726,7 +1726,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.95 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.96 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -6289,7 +6289,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.95 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.96 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -9945,7 +9945,7 @@ setInterval(function(){
   render(); setInterval(render, 2000);
 })();
 
-/* ===== 全宇宙通信 · 新卫星发射 → 全宇宙互联网组网 实时状态（v1.6.95） ===== */
+/* ===== 全宇宙通信 · 新卫星发射 → 全宇宙互联网组网 实时状态（v1.6.96） ===== */
 (function(){
   var KEY = 'ues_comm_satellites';
   var LEVELS = ['宇宙层级','星系层级','星球层级','文明层级','国家层级','地区层级','个人层级','未分层级存在'];
@@ -16580,7 +16580,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.6.95';
+var systemVersion = 'v1.6.96';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
@@ -18953,7 +18953,7 @@ function _doRealTransfer(account, name, amount){
     body: JSON.stringify({payeeType:'internal', payeeAccount: account || '扫码收款方', payeeName: name || '', amount: amount, remark: '扫码支付·'+(name||'收款方')})
   }).then(function(r){return r.json();}).catch(function(e){return {success:false, msg:String(e)};});
 }
-/* ===== 扫码支付 · 二维码金额识别 + 无限钱包余额直扣（v1.6.95） ===== */
+/* ===== 扫码支付 · 二维码金额识别 + 无限钱包余额直扣（v1.6.96） ===== */
 var SCAN_HISTORY_KEY = 'ues_scan_pay_history';
 window.lastScanResult = null;
 function parseQrAmount(raw){
