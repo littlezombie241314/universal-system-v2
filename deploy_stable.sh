@@ -117,11 +117,32 @@ deploy_github() {
     return 1
   fi
   G "master 推送成功"
-  # gh-pages 始终 = master（强制推送，避免本地 gh-pages 分支落后导致 non-fast-forward）
-  if ! retry_cmd 3 5 git push -f origin master:gh-pages >/dev/null 2>&1; then
-    R "gh-pages 推送失败"
+  # gh-pages 仅作入口：极小的 HTTPS 跳转页，避免 GitHub Pages 对 1.3MB 单文件的传输截断
+  GH_DIR="$(mktemp -d)"
+  cat > "$GH_DIR/index.html" <<'HTMLEOF'
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<title>全宇宙恒等系统 · 入口</title>
+<meta http-equiv="refresh" content="0;url=https://universal-system-final.surge.sh/index.html">
+<link rel="canonical" href="https://universal-system-final.surge.sh/index.html">
+<style>html,body{margin:0;height:100%;background:#04070f;color:#e8f3ff;font-family:system-ui,sans-serif;display:flex;align-items:center;justify-content:center}a{color:#00d4ff}</style>
+</head><body><div style="text-align:center"><p style="font-size:18px">正在进入全宇宙恒等系统...</p>
+<p><a href="https://universal-system-final.surge.sh/index.html">若未自动跳转，点此进入</a></p></div>
+<script>location.replace("https://universal-system-final.surge.sh/index.html");</script></body></html>
+HTMLEOF
+  REMOTE_URL="$(git -C "$APP_DIR" remote get-url origin)"
+  ( cd "$GH_DIR" && git init -q && git checkout -q -b gh-pages \
+    && printf '.DS_Store\n' > .gitignore \
+    && git add -A \
+    && git -c user.name=deploy -c user.email=deploy@local commit -q -m 'entry redirect' \
+    && git remote add origin "$REMOTE_URL" \
+    && git push -f origin gh-pages ) >/dev/null 2>&1
+  if [ $? -ne 0 ]; then
+    R "gh-pages 入口推送失败"
+    rm -rf "$GH_DIR"
     return 1
   fi
+  rm -rf "$GH_DIR"
   G "gh-pages 推送成功"
   # 校验 Pages 线上：仓库含 CNAME 指向 Surge 时 github.io 会 301 重定向（内容实时来自 Surge）
   local md5="" ok=0 loc=""
@@ -137,17 +158,21 @@ deploy_github() {
       Y "Pages 重定向目标 $target 校验不一致（${md5:0:8} vs ${EXPECTED_MD5:0:8}）"
     fi
   else
-    # 无重定向：常规 CDN 校验（最多 9 次 × 10s）
+    # 无重定向：gh-pages 仅为极小入口页，校验入口页可达且指向主站
+    local tmpf size=""
+    tmpf="$(mktemp)"
     for i in $(seq 1 9); do
-      md5="$(curl -sL --compressed --noproxy "*" --connect-timeout 15 --max-time 90 "https://littlezombie241314.github.io/universal-system-v2/?v=$(date +%s)" 2>/dev/null | md5sum | awk '{print $1}')"
-      if [ "$md5" = "$EXPECTED_MD5" ]; then ok=1; break; fi
-      Y "  Pages CDN 同步中(第${i}次, ${md5:0:8})，10s 后重查"
+      curl -sL --compressed --noproxy "*" --connect-timeout 15 --max-time 60 "https://littlezombie241314.github.io/universal-system-v2/?v=$(date +%s)" -o "$tmpf" 2>/dev/null
+      size="$(wc -c < "$tmpf" | tr -d ' ')"
+      if [ "$size" -lt 5000 ] && grep -q "universal-system-final.surge.sh" "$tmpf" 2>/dev/null; then ok=1; break; fi
+      Y "  Pages 入口同步中(第${i}次, ${size}B)，10s 后重查"
       sleep 10
     done
+    rm -f "$tmpf"
     if [ "$ok" = "1" ]; then
-      G "GitHub Pages 线上校验一致"
+      G "GitHub Pages 入口页正常（${size}B，HTTPS 跳转主站）"
     else
-      Y "GitHub Pages 线上仍在 CDN 缓存中（分支已推送，稍后会同步）"
+      Y "GitHub Pages 入口页暂未同步（分支已推送，稍后会生效）"
     fi
   fi
 }
@@ -258,8 +283,13 @@ verify_all() {
     if [ "$gh_md5" = "$EXPECTED_MD5" ]; then G "  GitHub Pages → 实时指向 $gh_target ✅ ${gh_md5:0:8}"; else Y "  GitHub Pages → $gh_target ⏳ ${gh_md5:0:8}（重定向目标校验中）"; fi
   else
     curl_retry /tmp/v_gh.html "https://littlezombie241314.github.io/universal-system-v2/?v=$(date +%s)"
+    local gh_size="$(wc -c < /tmp/v_gh.html | tr -d ' ')"
     local gh_md5="$(md5sum /tmp/v_gh.html | awk '{print $1}')"
-    if [ "$gh_md5" = "$EXPECTED_MD5" ]; then G "  GitHub Pages ✅ ${gh_md5:0:8}"; else Y "  GitHub Pages ⏳ ${gh_md5:0:8}（CDN 缓存中）"; fi
+    if [ "$gh_size" -lt 5000 ] && grep -q "universal-system-final.surge.sh" /tmp/v_gh.html 2>/dev/null; then
+      G "  GitHub Pages 入口页 ✅ ${gh_size}B（HTTPS 跳转主站）"
+    else
+      Y "  GitHub Pages ⏳ ${gh_md5:0:8}（入口页校验中，${gh_size}B）"
+    fi
   fi
   curl_retry /tmp/v_doubao.html "https://xb4r414nb9.doubaoapps.com/app/app_17f4htz1kfy/"
   local climate="$(grep -c 'climateWeatherIcon' /tmp/v_doubao.html)"
