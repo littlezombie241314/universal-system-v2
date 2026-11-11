@@ -16,8 +16,11 @@ import argparse
 import os
 import sys
 
+import hashlib
+
 try:
     import oss2
+    from oss2.models import BucketWebsite
 except ImportError:
     sys.exit("缺少 oss2，请先执行: pip install --user oss2")
 
@@ -84,6 +87,15 @@ def main():
         print("[aliyun] 创建 bucket: %s (%s)" % (args.bucket, args.region))
         bucket.create_bucket(oss2.BUCKET_ACL_PUBLIC_READ)
 
+    # 阿里云新建 bucket 默认开启「阻止公共访问」，会导致匿名访问 403
+    try:
+        if bucket.get_bucket_public_access_block().block_public_access:
+            bucket.put_bucket_public_access_block(block_public_access=False)
+            print("[aliyun] 已关闭 阻止公共访问")
+        bucket.put_bucket_acl(oss2.BUCKET_ACL_PUBLIC_READ)
+    except Exception as exc:
+        print("[aliyun] 警告: 公共读配置失败 (%s)" % exc)
+
     files = collect(args.dir)
     if not files:
         sys.exit("发布目录为空: %s" % args.dir)
@@ -97,14 +109,15 @@ def main():
     print("[aliyun] 已上传 %d 个文件" % len(files))
 
     try:
-        bucket.put_bucket_website(oss2.BucketWebsite(index_file="index.html", error_file="index.html"))
+        bucket.put_bucket_website(BucketWebsite(index_file="index.html", error_file="index.html"))
         print("[aliyun] 静态网站托管已启用")
     except Exception as exc:  # 权限不足时不影响上传结果
         print("[aliyun] 警告: 静态网站托管设置失败 (%s)" % exc)
 
-    site = "https://%s.%s.aliyuncs.com/index.html" % (args.bucket, args.region)
+    site = "https://%s.oss-%s.aliyuncs.com/index.html" % (args.bucket, args.region)
     print("[aliyun] 访问地址: %s" % site)
-    print("[aliyun] md5(index.html): %s" % oss2.utils.content_md5(open(os.path.join(args.dir, "index.html"), "rb").read()).replace("=", ""))
+    with open(os.path.join(args.dir, "index.html"), "rb") as fh:
+        print("[aliyun] md5(index.html): %s" % hashlib.md5(fh.read()).hexdigest())
 
 
 if __name__ == "__main__":
