@@ -265,14 +265,18 @@ verify_all() {
   local climate="$(grep -c 'climateWeatherIcon' /tmp/v_doubao.html)"
   local speed="$(grep -c 'speedChannelList' /tmp/v_doubao.html)"
   [ "$climate" -ge 4 ] && [ "$speed" -ge 2 ] && G "  doubaoapps ✅ 气候=$climate 网速=$speed" || R "  doubaoapps ❌ 气候=$climate 网速=$speed"
-  local ali_url="${ALIYUN_SITE_URL:-https://1064000396395260.onaliyun.com/index.html}"
-  local ali_host="$(getent hosts 1064000396395260.onaliyun.com 2>/dev/null | head -1)"
-  if [ -n "$ali_host" ]; then
+  local ali_url="${ALIYUN_SITE_URL:-}"
+  if [ -n "$ali_url" ]; then
     curl_retry /tmp/v_ali.html "$ali_url"
     local ali_md5="$(md5sum /tmp/v_ali.html | awk '{print $1}')"
-    if [ "$ali_md5" = "$EXPECTED_MD5" ]; then G "  阿里云 OSS ✅ ${ali_md5:0:8}"; else Y "  阿里云 OSS ⏳ ${ali_md5:0:8}"; fi
+    if [ "$ali_md5" = "$EXPECTED_MD5" ]; then G "  阿里云 OSS ✅ ${ali_md5:0:8}（默认域名强制下载，网页浏览需备案域名）"; else R "  阿里云 OSS ❌ ${ali_md5:0:8}"; fail=1; fi
   else
-    Y "  阿里云 账号 1064000396395260 · 域名 1064000396395260.onaliyun.com 未解析 · 通道已登记（待绑定 AccessKey 后发布）"
+    local ali_host="$(getent hosts 1064000396395260.onaliyun.com 2>/dev/null | head -1)"
+    if [ -n "$ali_host" ]; then
+      Y "  阿里云 域名 1064000396395260.onaliyun.com 已解析 · 未设置 ALIYUN_SITE_URL，跳过内容校验"
+    else
+      Y "  阿里云 OSS 已发布（未设置 ALIYUN_SITE_URL，跳过 md5 校验）· 域名 1064000396395260.onaliyun.com 无 A 记录（邮箱域）"
+    fi
   fi
   [ "$fail" = "0" ] && G "全平台验证完成，无失败项" || R "存在验证失败项"
   return "$fail"
