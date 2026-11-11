@@ -12,6 +12,7 @@
 #   ./deploy_stable.sh --github      # 只推送 GitHub
 #   ./deploy_stable.sh --doubaoapps  # 只发布 doubaoapps
 #   ./deploy_stable.sh --cloudflare  # 只更新 Cloudflare Workers
+#   ./deploy_stable.sh --aliyun      # 发布到阿里云 OSS（账号 1064000396395260）
 #   ./deploy_stable.sh --verify      # 只做全平台验证
 # ============================================================
 set -u
@@ -264,8 +265,32 @@ verify_all() {
   local climate="$(grep -c 'climateWeatherIcon' /tmp/v_doubao.html)"
   local speed="$(grep -c 'speedChannelList' /tmp/v_doubao.html)"
   [ "$climate" -ge 4 ] && [ "$speed" -ge 2 ] && G "  doubaoapps ✅ 气候=$climate 网速=$speed" || R "  doubaoapps ❌ 气候=$climate 网速=$speed"
+  local ali_url="${ALIYUN_SITE_URL:-}"
+  if [ -n "$ali_url" ]; then
+    curl_retry /tmp/v_ali.html "$ali_url"
+    local ali_md5="$(md5sum /tmp/v_ali.html | awk '{print $1}')"
+    if [ "$ali_md5" = "$EXPECTED_MD5" ]; then G "  阿里云 OSS ✅ ${ali_md5:0:8}"; else R "  阿里云 OSS ❌ ${ali_md5:0:8}"; fail=1; fi
+  else
+    Y "  阿里云 账号 1064000396395260 · 通道已登记（待 AccessKey，尚未发布）"
+  fi
   [ "$fail" = "0" ] && G "全平台验证完成，无失败项" || R "存在验证失败项"
   return "$fail"
+}
+
+# ---------- 阿里云 OSS ----------
+deploy_aliyun() {
+  local ACC="1064000396395260"
+  local BUCKET="${ALIYUN_OSS_BUCKET:-universal-system}"
+  local REGION="${ALIYUN_REGION:-cn-hangzhou}"
+  Y "阿里云 OSS 通道 · 账号 $ACC · bucket $BUCKET ($REGION)"
+  if [ -z "${ALIYUN_ACCESS_KEY_ID:-}" ] || [ -z "${ALIYUN_ACCESS_KEY_SECRET:-}" ]; then
+    Y "  未配置 ALIYUN_ACCESS_KEY_ID / ALIYUN_ACCESS_KEY_SECRET"
+    Y "  通道已登记（账号 $ACC）· 绑定 RAM 子账号 AccessKey 后执行 ./deploy_stable.sh --aliyun 即可真实发布"
+    Y "  权限建议: AliyunOSSFullAccess · 地域 $REGION"
+    return 2
+  fi
+  python3 "$APP_DIR/aliyun_deploy.py" --dir "$PUBLISH_DIR" --bucket "$BUCKET" --region "$REGION" || { R "阿里云 OSS 发布失败"; return 1; }
+  G "阿里云 OSS 发布完成 · 账号 $ACC"
 }
 
 # ---------- 主流程 ----------
@@ -275,6 +300,7 @@ case "$MODE" in
   --github)     prepare && deploy_github ;;
   --doubaoapps) prepare && deploy_doubaoapps ;;
   --cloudflare) prepare && deploy_cloudflare ;;
+  --aliyun)     prepare && deploy_aliyun ;;
   --verify)     verify_all ;;
   *)            prepare && deploy_surge && deploy_github && deploy_doubaoapps && deploy_cloudflare && warmup_backend && verify_all ;;
 esac
