@@ -1726,7 +1726,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.88 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.89 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -5738,7 +5738,8 @@ select option{background:#040b1a;color:var(--cyan)}
       <option value="未分层级存在">✨ 未分层级存在</option>
     </select>
     <button onclick="commLaunchSatellite()" class="btn cyan">🛰️ 发射新卫星 · 接入全宇宙互联网</button>
-    <span style="font-size:11px;color:var(--text-dim)">在轨 <b id="commSatTotal" style="color:#00d4ff">0</b> · 组网中 <b id="commSatJoining" style="color:#FAAD14">0</b> · 已组网 <b id="commSatOnline" style="color:#52C41A">0</b> · 互联网节点 <b id="commNetNodes" style="color:#C4B5FD">8</b></span>
+    <button onclick="commJoinCivilization()" class="btn cyan">👽 接入小麦哲伦文明</button>
+    <span style="font-size:11px;color:var(--text-dim)">在轨 <b id="commSatTotal" style="color:#00d4ff">0</b> · 组网中 <b id="commSatJoining" style="color:#FAAD14">0</b> · 已组网 <b id="commSatOnline" style="color:#52C41A">0</b> · 互联网节点 <b id="commNetNodes" style="color:#C4B5FD">8</b> · 文明在线 <b id="commCivOnline" style="color:#8B5CF6">0</b></span>
   </div>
   <div id="commSatList" style="padding:0 14px 12px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:8px"></div>
 </div>
@@ -6288,7 +6289,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.88 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.89 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -9903,12 +9904,17 @@ setInterval(function(){
   setInterval(tick, 2000);
 })();
 
-/* ===== 全宇宙通信 · 新卫星发射 → 全宇宙互联网组网 实时状态（v1.6.88） ===== */
+/* ===== 全宇宙通信 · 新卫星发射 → 全宇宙互联网组网 实时状态（v1.6.89） ===== */
 (function(){
   var KEY = 'ues_comm_satellites';
   var LEVELS = ['宇宙层级','星系层级','星球层级','文明层级','国家层级','地区层级','个人层级','未分层级存在'];
   var S = {seq:0, sats:[]};
   try{ var d = JSON.parse(localStorage.getItem(KEY) || 'null'); if(d && d.sats){ S = d; } }catch(e){}
+  if(!S.civ){
+    S.civ = {id:'UES-CIV-SMC-001', name:'小麦哲伦文明', galaxy:'小麦哲伦星系(SMC)', dist:'20.0 万光年',
+             pop:'3.2 兆亿', joinedAt: Date.now() - 90000, node:1001, relinks:0};
+    try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){}
+  }
   function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
   function pad(n){ n = String(n); while(n.length < 4) n = '0' + n; return n; }
   function phase(ms){
@@ -9917,6 +9923,26 @@ setInterval(function(){
     if(ms < 16000) return {p:'link',  label:'🔗 组网接入', color:'#8B5CF6', pct:(ms-9000)/7000*100};
     return {p:'online', label:'🟢 已组网在线', color:'#52C41A', pct:100};
   }
+  function phaseCiv(ms){
+    if(ms < 3000) return {p:'scan',  label:'📡 信号捕获', color:'#FAAD14', pct: ms/3000*100};
+    if(ms < 6000) return {p:'auth',  label:'🔐 身份认证', color:'#00d4ff', pct:(ms-3000)/3000*100};
+    if(ms < 9000) return {p:'nego',  label:'🔗 协议协商', color:'#8B5CF6', pct:(ms-6000)/3000*100};
+    return {p:'online', label:'🟢 在线', color:'#52C41A', pct:100};
+  }
+  window.commJoinCivilization = function(){
+    if(!S.civ) S.civ = {};
+    var online = S.civ.joinedAt && phaseCiv(Date.now() - S.civ.joinedAt).p === 'online';
+    S.civ.id = 'UES-CIV-SMC-001';
+    S.civ.name = '小麦哲伦文明';
+    S.civ.galaxy = '小麦哲伦星系(SMC)';
+    S.civ.dist = '20.0 万光年';
+    S.civ.pop = '3.2 兆亿';
+    S.civ.node = S.civ.node || 1001;
+    S.civ.relinks = (S.civ.relinks || 0) + 1;
+    S.civ.joinedAt = Date.now();
+    save(); render();
+    if(typeof toast === 'function') toast(online ? '👽 小麦哲伦文明开始重连 · 重新建立量子纠缠链路' : '👽 小麦哲伦文明发起接入 · 信号捕获中');
+  };
   window.commLaunchSatellite = function(){
     var sel = document.getElementById('commLaunchLevel');
     var lv = sel ? sel.value : LEVELS[0];
@@ -9940,7 +9966,34 @@ setInterval(function(){
   function render(){
     var list = document.getElementById('commSatList');
     if(!list) return;
-    var now = Date.now(), online = 0, joining = 0, html = '';
+    var now = Date.now(), online = 0, joining = 0, html = '', civOnline = 0;
+    if(S.civ && S.civ.joinedAt){
+      var cp = phaseCiv(now - S.civ.joinedAt);
+      if(cp.p === 'online') civOnline = 1;
+      var cup = Math.floor((now - S.civ.joinedAt)/1000);
+      var cupStr = cup < 60 ? cup + 's' : (Math.floor(cup/60) + 'm' + (cup%60) + 's');
+      var cRate = (38 + Math.random()*12).toFixed(1);
+      var cLat = (0.3 + Math.random()*0.6).toFixed(2);
+      var cRely = 3 + Math.floor(Math.random()*4);
+      html += '<div style="background:rgba(139,92,246,0.08);border:1px solid ' + cp.color + '66;border-radius:8px;padding:10px">'
+        + '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">'
+          + '<span style="font-size:12px;font-weight:bold;color:var(--text)">👽 ' + S.civ.name + '</span>'
+          + '<span style="font-size:9px;padding:1px 8px;border-radius:10px;background:' + cp.color + '22;color:' + cp.color + '">' + cp.label + '</span>'
+        + '</div>'
+        + '<div style="font-size:10px;color:var(--text-dim);margin-bottom:4px">' + S.civ.id + ' · ' + S.civ.galaxy + ' · ' + S.civ.dist + ' · 人口 ' + S.civ.pop + '</div>'
+        + '<div style="height:4px;background:rgba(255,255,255,0.1);border-radius:2px;overflow:hidden;margin-bottom:6px"><div style="height:100%;width:' + cp.pct.toFixed(0) + '%;background:' + cp.color + ';transition:width .5s"></div></div>'
+        + '<div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-dim)">'
+          + '<span>链路 <b style="color:#00d4ff">' + cRate + ' Gbps</b></span>'
+          + '<span>时延 <b style="color:#C4B5FD">' + cLat + ' ms</b></span>'
+          + '<span>在线 <b style="color:#52C41A">' + cupStr + '</b></span>'
+        + '</div>'
+        + '<div style="font-size:9px;color:' + (cp.p === 'online' ? '#52C41A' : '#FAAD14') + ';margin-top:4px">'
+          + (cp.p === 'online'
+              ? '🌐 已接入全宇宙互联网 · 节点 #' + (S.civ.node || 1001) + ' · 中继卫星 ' + cRely + ' 颗 · 重连 ' + (S.civ.relinks || 0) + ' 次'
+              : '⏳ 正在接入全宇宙互联网组网 · 节点待分配')
+        + '</div>'
+      + '</div>';
+    }
     S.sats.slice().reverse().forEach(function(sat){
       var ph = phase(now - sat.launchedAt);
       if(ph.p === 'online') online++; else joining++;
@@ -9972,7 +10025,9 @@ setInterval(function(){
     if(t) t.textContent = S.sats.length;
     if(j) j.textContent = joining;
     if(o) o.textContent = online;
-    if(nn) nn.textContent = (8 + online).toLocaleString();
+    if(nn) nn.textContent = (8 + online + civOnline).toLocaleString();
+    var cv = document.getElementById('commCivOnline');
+    if(cv) cv.textContent = civOnline;
     LEVELS.forEach(function(name, i){
       var card = document.querySelector('[data-comm="' + i + '"]');
       if(!card) return;
@@ -16484,7 +16539,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.6.88';
+var systemVersion = 'v1.6.89';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
@@ -18849,7 +18904,7 @@ function _doRealTransfer(account, name, amount){
     body: JSON.stringify({payeeType:'internal', payeeAccount: account || '扫码收款方', payeeName: name || '', amount: amount, remark: '扫码支付·'+(name||'收款方')})
   }).then(function(r){return r.json();}).catch(function(e){return {success:false, msg:String(e)};});
 }
-/* ===== 扫码支付 · 二维码金额识别 + 无限钱包余额直扣（v1.6.88） ===== */
+/* ===== 扫码支付 · 二维码金额识别 + 无限钱包余额直扣（v1.6.89） ===== */
 var SCAN_HISTORY_KEY = 'ues_scan_pay_history';
 window.lastScanResult = null;
 function parseQrAmount(raw){
