@@ -112,6 +112,17 @@ deploy_surge() {
 deploy_github() {
   Y "推送 GitHub master + gh-pages..."
   cd "$APP_DIR" || return 1
+  # 先把工作区改动提交到本地，否则 push 会把旧提交推上去，GitHub / Vercel 拿不到新版
+  git add -A >/dev/null 2>&1
+  if ! git diff --cached --quiet 2>/dev/null; then
+    if ! git -c user.name=deploy -c user.email=deploy@local commit -q -m "release: auto commit $(date +%Y%m%d-%H%M%S)" >/dev/null 2>&1; then
+      R "master 本地提交失败"
+      return 1
+    fi
+    G "master 本地提交完成"
+  else
+    Y "master 无待提交改动"
+  fi
   if ! retry_cmd 3 5 git push origin master >/dev/null 2>&1; then
     R "master 推送失败"
     return 1
