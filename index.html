@@ -1679,9 +1679,9 @@ select option{background:#040b1a;color:var(--cyan)}
                 <div style="color:var(--text-dim);font-size:9px;margin-top:2px">主芯片统一调度·低功耗嵌入式</div>
               </div>
               <div style="background:rgba(0,0,0,0.2);border-radius:6px;padding:8px">
-                <div style="color:var(--text);font-weight:bold">🤖 Android 工控板</div>
-                <div style="color:#52C41A;font-size:10px;margin-top:2px">✓ Linux内核 · 应用框架 · 运行中</div>
-                <div style="color:var(--text-dim);font-size:9px;margin-top:2px">驱动/内存管理/外设全适配</div>
+                <div style="color:var(--text);font-weight:bold">🧠 数字智能工控板 UICA v3.0</div>
+                <div style="color:#52C41A;font-size:10px;margin-top:2px">✓ 纯数字形态 · 八层级恒等算力 · 运行中</div>
+                <div style="color:var(--text-dim);font-size:9px;margin-top:2px">核心+八环 · 无实体 PCB · ARM 移动 SoC</div>
               </div>
               <div style="background:rgba(0,0,0,0.2);border-radius:6px;padding:8px">
                 <div style="color:var(--text);font-weight:bold">🍎 iOS</div>
@@ -1689,9 +1689,9 @@ select option{background:#040b1a;color:var(--cyan)}
                 <div style="color:var(--text-dim);font-size:9px;margin-top:2px">触屏/蓝牙/WiFi/传感器全驱动</div>
               </div>
               <div style="background:rgba(0,0,0,0.2);border-radius:6px;padding:8px">
-                <div style="color:var(--text);font-weight:bold">🔷 鸿蒙 HarmonyOS 工控板</div>
-                <div style="color:#52C41A;font-size:10px;margin-top:2px">✓ 嵌入式工控 · 运行中</div>
-                <div style="color:var(--text-dim);font-size:9px;margin-top:2px">ARM架构·外设驱动全适配</div>
+                <div style="color:var(--text);font-weight:bold">🛡️ UIOS v3.0 操作系统</div>
+                <div style="color:#52C41A;font-size:10px;margin-top:2px">✓ 恒等内核 · 八层同步 · 3 秒自愈</div>
+                <div style="color:var(--text-dim);font-size:9px;margin-top:2px">国密加密 · Modbus/CANopen/EtherCAT</div>
               </div>
             </div>
             <div style="margin-top:8px;padding:6px 10px;background:rgba(82,196,26,0.1);border:1px solid rgba(82,196,26,0.3);border-radius:6px;font-size:10px;color:#52C41A;text-align:center">
@@ -1726,7 +1726,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.8.1 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.8.2 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -5564,9 +5564,67 @@ select option{background:#040b1a;color:var(--cyan)}
 <script>renderUniverseLevels('devicesLevels', '🟢 更新生效');</script>
 <div class="grid">
     <div class="panel wide">
+      <div class="panel-hdr"><div class="panel-title"><span class="ico">🧠</span>数字智能工控板 · UICA v3.0</div><div class="panel-badge" style="background:rgba(139,92,246,0.2);color:#a78bfa">纯数字形态 · 无实体 PCB</div></div>
+      <div style="padding:16px">
+        <div id="boardLayers" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-bottom:10px"></div>
+        <div id="boardPlane" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-bottom:10px"></div>
+        <div id="boardOS" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:8px;margin-bottom:12px"></div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+          <a class="btn" href="https://universal-system-final.surge.sh/remote.html" target="_blank" rel="noopener" style="background:linear-gradient(135deg,#a855f7,#7c3aed);color:#fff;text-decoration:none;display:inline-flex;align-items:center">🖥️ 远程登录数字智能工控板（免登录）</a>
+          <span id="boardSync" style="font-size:11px;color:#52C41A">⚡ 八层逐环同步 · 全层最终一致</span>
+        </div>
+      </div>
+    </div>
+    <script>
+    (function(){
+      var L=[
+        ['核心','蓝金星云恒等核','算力与恒等印签统一签发'],
+        ['第一环','宇宙层','跨维度身份互认、全物种登记总账'],
+        ['第二环','星系层','星系级身份分发与冲突仲裁'],
+        ['第三环','恒星系层','区域内身份同步与时延收敛'],
+        ['第四环','行星层','行星内多域身份联邦'],
+        ['第五环','生态层','生物与非生物实体身份接入'],
+        ['第六环','社会层','组织/机构/账户恒等映射'],
+        ['第七环','个体层','个体身份与授权关系'],
+        ['第八环','比特层','数字实体/AI/合约身份锚定']
+      ];
+      var P=[
+        ['🛡️ 三层防护屏障','边界 / 加密 / 运行','100% 在线'],
+        ['✨ 自进化光圈','AI 自适应调度与威胁预测','自适应'],
+        ['🟡 外层金色光带','稳定服务访问通道','已连通']
+      ];
+      var OS=[
+        ['恒等内核','统一身份签发 · 跨层级互认 · 白名单免验证','运行中'],
+        ['八层级同步引擎','任一层级变更逐环自内向外同步','最终一致'],
+        ['长稳机制','多副本双活 · 3 秒自愈重建 · 断连 3 秒重连','双活'],
+        ['安全体系','国密全链路加密 · 实时入侵熔断 · 留痕不可篡改','全加密'],
+        ['兼容层','Modbus / CANopen / EtherCAT · 1:1 镜像双向同步','0 差异']
+      ];
+      function esc(t){return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+      function card(a,b,c,color){
+        return '<div style="background:rgba(0,0,0,0.2);border:1px solid rgba(139,92,246,0.22);border-radius:8px;padding:8px">'
+          +'<div style="font-size:11px;color:'+color+';font-weight:bold">'+esc(a)+'</div>'
+          +'<div style="font-size:10px;color:var(--text);margin-top:3px">'+esc(b)+'</div>'
+          +'<div style="font-size:9px;color:var(--text-dim);margin-top:3px">'+esc(c)+'</div></div>';
+      }
+      var el=document.getElementById('boardLayers');
+      if(el) el.innerHTML=L.map(function(r,i){return card(r[0]+' · '+r[1],r[2],'✓ 在线 · 已同步','#a78bfa');}).join('');
+      var ep=document.getElementById('boardPlane');
+      if(ep) ep.innerHTML=P.map(function(r){return card(r[0],r[1],r[2],'#52C41A');}).join('');
+      var eo=document.getElementById('boardOS');
+      if(eo) eo.innerHTML=OS.map(function(r){return card('UIOS · '+r[0],r[1],'✓ '+r[2],'#00d4ff');}).join('');
+      var n=0;
+      setInterval(function(){
+        var b=document.getElementById('boardSync');
+        if(b){n++;b.textContent='⚡ 八层逐环同步 · 第 '+n+' 轮完成 · 全层最终一致 · 0 差异';}
+      },5000);
+    })();
+    </script>
+    
+    <div class="panel wide">
       <div class="panel-hdr"><div class="panel-title"><span class="ico">📲</span>设备系统更新 · 全宇宙智能终端</div><div class="panel-badge" style="background:rgba(0,212,255,0.2);color:#00d4ff">自动更新中 · ⚡ 最快的速度同步全部在线终端</div></div>
       <div style="padding:16px">
-        <div style="font-size:12px;color:var(--text-dim);margin-bottom:12px">全宇宙恒等系统实时为每个智能终端推送系统更新：<span style="color:#00d4ff">Android / iOS / 鸿蒙 HarmonyOS / ARM 工控板</span> 全架构覆盖，⚡ 最快的速度自动扫描在线终端并同步最新系统版本。</div>
+        <div style="font-size:12px;color:var(--text-dim);margin-bottom:12px">全宇宙恒等系统实时为每个智能终端推送系统更新：<span style="color:#00d4ff">Android / iOS / 鸿蒙 HarmonyOS / ARM SoC / 数字智能工控板 UICA v3.0</span> 全架构覆盖，⚡ 最快的速度自动扫描在线终端并同步最新系统版本。</div>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:12px">
           <div style="text-align:center;background:rgba(0,212,255,0.05);border-radius:8px;padding:10px">
             <div id="devSystemVersion" style="font-size:20px;font-weight:bold;color:var(--cyan)">UES-OS v2.0</div>
@@ -6291,7 +6349,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.8.1 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.8.2 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -16664,7 +16722,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.8.1';
+var systemVersion = 'v1.8.2';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
