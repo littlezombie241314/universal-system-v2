@@ -1726,7 +1726,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.8.2 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.8.3 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -5633,6 +5633,7 @@ select option{background:#040b1a;color:var(--cyan)}
           <div style="text-align:center;background:rgba(0,212,255,0.05);border-radius:8px;padding:10px">
             <div id="devTotal" style="font-size:20px;font-weight:bold;color:var(--cyan)">17,000,000,000</div>
             <div style="font-size:11px;color:var(--text-dim)">已接入终端总数</div>
+            <div style="font-size:9px;color:#52C41A">⚡ 每秒持续增加</div>
           </div>
           <div style="text-align:center;background:rgba(82,196,26,0.08);border-radius:8px;padding:10px">
             <div id="devUpdated" style="font-size:20px;font-weight:bold;color:#52C41A">17,000,000,000</div>
@@ -6349,7 +6350,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.8.2 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.8.3 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -15593,9 +15594,7 @@ function updateTerminalSync() {
     
     if (totalEl && onlineEl) {
       // 每秒扫描在线终端数（扫描持续发现新终端上线）
-      var baseTotal = 17000000000; // 全球IoT联网设备数（Statista，2024年）
-      var variation = Math.floor(Math.random() * 500000);
-      var total = baseTotal + variation;
+      var total = uesTerminalTotal();
       // 自动同步全部在线终端：在线终端数 = 已同步终端总数（100% 全覆盖同步）
       var online = total;
       
@@ -16722,7 +16721,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.8.2';
+var systemVersion = 'v1.8.3';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
@@ -18624,6 +18623,27 @@ if ('serviceWorker' in navigator) {
 </script>
 
 <script>
+// ========== 全宇宙智能终端接入计数 · 每秒单调递增（持久化） ==========
+var uesTerminalState = (function(){
+  var base = 17000000000;
+  var total = base;
+  try {
+    var raw = localStorage.getItem('ues_terminal_counter');
+    if(raw){ var d = JSON.parse(raw); if(d && typeof d.total === 'number' && d.total >= base) total = d.total; }
+  } catch(e){}
+  return { total: total, last: Date.now() };
+})();
+function uesTerminalTotal(){ return uesTerminalState.total; }
+setInterval(function(){
+  // 每秒新接入终端：3,000 ~ 8,999 台，累计只增不减
+  var inc = 3000 + Math.floor(Math.random() * 6000);
+  uesTerminalState.total += inc;
+  if(Date.now() - uesTerminalState.last > 5000){
+    try { localStorage.setItem('ues_terminal_counter', JSON.stringify({ total: uesTerminalState.total, updatedAt: new Date().toISOString() })); } catch(e){}
+    uesTerminalState.last = Date.now();
+  }
+}, 1000);
+
 // ========== 📲 设备系统更新模块 ==========
 (function(){
   var DEV_UPDATES = [
@@ -18672,9 +18692,8 @@ if ('serviceWorker' in navigator) {
   }
   function devTick(){
     devState.rounds++;
-    // 每秒自动扫描在线终端数（发现新终端纳入系统更新）
-    var variation = Math.floor(Math.random() * 500000);
-    devState.total = 17000000000 + variation;
+    // 每秒读取全宇宙终端计数器（持续新增，只增不减）
+    devState.total = uesTerminalTotal();
     // 自动同步全部在线终端：全部终端更新至最新系统版本
     devState.updated = devState.total;
     devRender();
