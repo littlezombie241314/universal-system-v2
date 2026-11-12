@@ -2688,6 +2688,7 @@ select option{background:#040b1a;color:var(--cyan)}
 <!-- 🌡️ 全宇宙层级 · 天气全覆盖 -->
 <div class="panel wide"><div class="panel-hdr"><div class="panel-title"><span class="ico">🌡️</span>全宇宙层级 · 天气全覆盖</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">所有层级生效</div></div>
   <div id="climateLevels" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;padding:10px 14px 6px"></div>
+  <div id="universeWeatherLevels" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:8px;padding:0 14px 8px"></div>
   <div style="font-size:10px;color:#52C41A;text-align:center;padding:0 14px 8px">✅ 全宇宙每个层级 · 实时真实温度同步 · 晴天无云 · 每层独立显示</div>
   <div style="display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;padding:0 14px 12px">
     <div style="display:flex;align-items:center;gap:10px;background:rgba(250,140,22,0.12);border:1px solid rgba(250,140,22,0.45);border-radius:8px;padding:8px 14px">
@@ -10145,6 +10146,35 @@ setInterval(function(){
   window.commSatRender = render;
   setInterval(render, 1000);
   setTimeout(render, 500);
+})();
+
+/* ===== 每个宇宙 × 每个层级 · 天气为晴（9 宇宙 × 8 层级） ===== */
+(function(){
+  var box = document.getElementById('universeWeatherLevels');
+  if (!box) return;
+  var UNIVERSES = [
+    {icon:'🌌', name:'主宇宙 · 现在时刻'},
+    {icon:'🤖', name:'平行宇宙-A · 机械纪元'},
+    {icon:'🪄', name:'平行宇宙-B · 魔法纪元'},
+    {icon:'🦕', name:'时空线α · 恐龙纪元'},
+    {icon:'⚙️', name:'时空线β · 蒸汽朋克纪元'},
+    {icon:'⚛️', name:'量子时空 · 多维叠加态'},
+    {icon:'⏳', name:'永恒时空 · 时间静止'},
+    {icon:'🌊', name:'梦境时空 · 意识海洋'},
+    {icon:'🔮', name:'混沌时空 · 万有可能'}
+  ];
+  var LEVELS = ['宇宙','星系','星球','文明','国家','地区','个人','未分层级'];
+  function render(){
+    box.innerHTML = UNIVERSES.map(function(u){
+      var chips = LEVELS.map(function(lv){
+        return '<span style="display:inline-block;font-size:9px;padding:2px 6px;margin:2px;border-radius:10px;background:rgba(250,173,20,0.14);border:1px solid rgba(250,173,20,0.32);color:#FAAD14">'+lv+' ☀️晴 40°C</span>';
+      }).join('');
+      return '<div style="background:rgba(0,0,0,0.25);border:1px solid rgba(250,173,20,0.22);border-radius:8px;padding:8px 10px">'
+        + '<div style="font-size:11px;font-weight:bold;color:var(--text);margin-bottom:4px">'+u.icon+' '+u.name+'</div>'
+        + '<div>'+chips+'</div></div>';
+    }).join('');
+  }
+  render();
 })();
 
 /* ===== 全宇宙层级 · 天气全覆盖 8卡片实时温度 ===== */
