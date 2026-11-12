@@ -1726,7 +1726,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.99 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.7.0 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -6290,7 +6290,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.6.99 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.7.0 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -9946,7 +9946,7 @@ setInterval(function(){
   render(); setInterval(render, 2000);
 })();
 
-/* ===== 全宇宙通信 · 新卫星发射 → 全宇宙互联网组网 实时状态（v1.6.99） ===== */
+/* ===== 全宇宙通信 · 新卫星发射 → 全宇宙互联网组网 实时状态（v1.7.0） ===== */
 (function(){
   var KEY = 'ues_comm_satellites';
   var LEVELS = ['宇宙层级','星系层级','星球层级','文明层级','国家层级','地区层级','个人层级','未分层级存在'];
@@ -12283,6 +12283,59 @@ function runTranslate(){
     return mockDataMap[moduleId] || {};
   }
   
+  // ===== 🌐 实时网速监测（v1.7.0）：真实下载采样，非模拟值 =====
+  var NET_PROBE_URL = 'icons/icon-192.png';
+  var NET_PROBE_INTERVAL = 8000;
+  var netSpeedState = { mbps: 0, kbps: 0, bytes: 0, ms: 0, latency: 0, at: 0, err: false };
+
+  async function probeNetSpeed() {
+    try {
+      var url = NET_PROBE_URL + '?ns=' + Date.now();
+      var t0 = performance.now();
+      var res = await fetch(url, { cache: 'no-store' });
+      var t1 = performance.now();
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      var buf = await res.arrayBuffer();
+      var t2 = performance.now();
+      var totalMs = Math.max(t2 - t0, 1);
+      var mbps = (buf.byteLength * 8) / (totalMs / 1000) / 1e6;
+      netSpeedState.bytes = buf.byteLength;
+      netSpeedState.ms = Math.round(totalMs);
+      netSpeedState.latency = Math.round(t1 - t0);
+      netSpeedState.mbps = mbps;
+      netSpeedState.kbps = mbps * 1000;
+      netSpeedState.at = Date.now();
+      netSpeedState.err = false;
+    } catch (e) {
+      netSpeedState.err = true;
+    }
+  }
+
+  function startNetSpeedMonitor() {
+    probeNetSpeed();
+    setTimeout(probeNetSpeed, 2000);
+    setInterval(probeNetSpeed, NET_PROBE_INTERVAL);
+    document.addEventListener('visibilitychange', function () {
+      if (!document.hidden) probeNetSpeed();
+    });
+  }
+
+  function netSpeedRowHtml() {
+    var s = netSpeedState;
+    var val = s.at ? (s.mbps >= 1 ? s.mbps.toFixed(2) + ' Mbps' : s.kbps.toFixed(0) + ' Kbps') : '采样中…';
+    var age = s.at ? Math.max(0, Math.round((Date.now() - s.at) / 1000)) + 's前' : '—';
+    var h = '<div style="margin-bottom:6px;padding:4px 6px;background:rgba(0,212,255,0.06);border-radius:4px;border-left:2px solid #00d4ff;">';
+    h += '<div style="display:flex;justify-content:space-between;align-items:center;">';
+    h += '<span style="color:#00d4ff;font-size:11px;">🌐 实时网速</span>';
+    h += '<span style="color:#888;font-size:9px;">' + age + ' · 采样 ' + (s.bytes ? (s.bytes / 1024).toFixed(0) + 'KB' : '—') + '</span>';
+    h += '</div>';
+    h += '<div style="color:#fff;font-size:14px;font-weight:bold;margin-top:2px;">↓ ' + val;
+    h += ' <span style="font-size:9px;color:#888;font-weight:normal;">' + (s.latency ? '延迟 ' + s.latency + ' ms' : '') + '</span></div>';
+    if (s.err) h += '<div style="color:#FF6B6B;font-size:9px;">采样失败，当前显示最近一次有效值</div>';
+    h += '</div>';
+    return h;
+  }
+
   // 更新实时数据面板
   async function updateRealtimePanel() {
     try {
@@ -12320,6 +12373,9 @@ function runTranslate(){
         html += `<div style="color:#aaa;font-size:10px;">PM2.5: ${airQualityData.pm25 || 'N/A'} | PM10: ${airQualityData.pm10 || 'N/A'}</div>`;
         html += '</div>';
       }
+      
+      // 🌐 实时网速（真实下载采样）
+      html += netSpeedRowHtml();
       
       // 显示其他模块的模拟数据
       const otherModules = ['immortality', 'resource', 'ecosystem', 'space', 'cosmos', 'economy', 'karma', 'marriage', 'education', 'medical', 'entertainment', 'ai', 'spirit'];
@@ -12359,6 +12415,9 @@ function runTranslate(){
     
     // 立即更新一次
     updateRealtimePanel();
+    
+    // 🌐 启动实时网速监测（真实下载采样，8 秒一次）
+    startNetSpeedMonitor();
     
     // 每秒测量温度·低于40°自动调校
     setInterval(updateRealtimePanel, 1000);
@@ -16604,7 +16663,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.6.99';
+var systemVersion = 'v1.7.0';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
@@ -18977,7 +19036,7 @@ function _doRealTransfer(account, name, amount){
     body: JSON.stringify({payeeType:'internal', payeeAccount: account || '扫码收款方', payeeName: name || '', amount: amount, remark: '扫码支付·'+(name||'收款方')})
   }).then(function(r){return r.json();}).catch(function(e){return {success:false, msg:String(e)};});
 }
-/* ===== 扫码支付 · 二维码金额识别 + 无限钱包余额直扣（v1.6.99） ===== */
+/* ===== 扫码支付 · 二维码金额识别 + 无限钱包余额直扣（v1.7.0） ===== */
 var SCAN_HISTORY_KEY = 'ues_scan_pay_history';
 window.lastScanResult = null;
 function parseQrAmount(raw){
