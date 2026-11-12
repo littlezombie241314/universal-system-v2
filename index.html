@@ -1726,7 +1726,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.7.1 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.8.0 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -5598,6 +5598,7 @@ select option{background:#040b1a;color:var(--cyan)}
         <div style="display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap">
           <button class="btn" style="background:linear-gradient(135deg,#00d4ff,#0ea5e9);color:#fff" onclick="devUpdateNow()">🔄 立即更新全部在线设备</button>
           <button class="btn" style="background:linear-gradient(135deg,#14b8a6,#0d9488);color:#fff" onclick="devCheckUpdate()">🔍 检查更新</button>
+          <a class="btn" href="https://universal-system-final.surge.sh/remote.html" target="_blank" rel="noopener" style="background:linear-gradient(135deg,#a855f7,#7c3aed);color:#fff;text-decoration:none;display:inline-flex;align-items:center">🖥️ 数字智能工控板 · 远程登录</a>
         </div>
         <div id="devStatus" style="font-size:12px;color:#52C41A;margin-bottom:8px">🔄 ⚡ 最快的速度自动扫描在线终端并同步系统更新...</div>
         <div id="devLog" style="max-height:160px;overflow-y:auto;background:rgba(0,0,0,0.2);border-radius:6px;padding:8px;font-size:11px;font-family:var(--mono)"></div>
@@ -6290,7 +6291,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.7.1 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.8.0 · UES-OS</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -9946,7 +9947,7 @@ setInterval(function(){
   render(); setInterval(render, 2000);
 })();
 
-/* ===== 全宇宙通信 · 新卫星发射 → 全宇宙互联网组网 实时状态（v1.7.1） ===== */
+/* ===== 全宇宙通信 · 新卫星发射 → 全宇宙互联网组网 实时状态（v1.8.0） ===== */
 (function(){
   var KEY = 'ues_comm_satellites';
   var LEVELS = ['宇宙层级','星系层级','星球层级','文明层级','国家层级','地区层级','个人层级','未分层级存在'];
@@ -12283,7 +12284,7 @@ function runTranslate(){
     return mockDataMap[moduleId] || {};
   }
   
-  // ===== 🌐 实时网速监测（v1.7.1）：真实下载采样，非模拟值 =====
+  // ===== 🌐 实时网速监测（v1.8.0）：真实下载采样，非模拟值 =====
   var NET_PROBE_URL = 'icons/icon-192.png';
   var NET_PROBE_INTERVAL = 8000;
   var netSpeedState = { mbps: 0, kbps: 0, bytes: 0, ms: 0, latency: 0, at: 0, err: false };
@@ -16663,7 +16664,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.7.1';
+var systemVersion = 'v1.8.0';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
@@ -19036,7 +19037,7 @@ function _doRealTransfer(account, name, amount){
     body: JSON.stringify({payeeType:'internal', payeeAccount: account || '扫码收款方', payeeName: name || '', amount: amount, remark: '扫码支付·'+(name||'收款方')})
   }).then(function(r){return r.json();}).catch(function(e){return {success:false, msg:String(e)};});
 }
-/* ===== 扫码支付 · 二维码金额识别 + 无限钱包余额直扣（v1.7.1） ===== */
+/* ===== 扫码支付 · 二维码金额识别 + 无限钱包余额直扣（v1.8.0） ===== */
 var SCAN_HISTORY_KEY = 'ues_scan_pay_history';
 window.lastScanResult = null;
 function parseQrAmount(raw){
