@@ -12344,9 +12344,17 @@ function runTranslate(){
   }
   
   // ===== 🌐 实时网速监测（v1.8.1）：真实下载采样，非模拟值 =====
-  var NET_PROBE_URL = 'icons/icon-192.png';
-  var NET_PROBE_INTERVAL = 8000;
-  var netSpeedState = { mbps: 0, kbps: 0, bytes: 0, ms: 0, latency: 0, at: 0, err: false };
+  var NET_PROBE_URL = 'icons/icon-512.png';
+  var NET_PROBE_INTERVAL = 4000;
+  var netSpeedState = { mbps: 0, kbps: 0, bytes: 0, ms: 0, latency: 0, at: 0, err: false, samples: 0 };
+  var NET_SMOOTH = 0.65; // 指数平滑：读数稳定一致，不来回跳变
+
+  // 统一的网速文本：所有位置都调用同一个函数，保证全站显示一致
+  function netSpeedText() {
+    if (!netSpeedState.at) return '采样中…';
+    return netSpeedState.mbps.toFixed(2) + ' Mbps';
+  }
+  window.uesNetSpeedText = netSpeedText;
 
   async function probeNetSpeed() {
     try {
@@ -12358,14 +12366,25 @@ function runTranslate(){
       var buf = await res.arrayBuffer();
       var t2 = performance.now();
       var totalMs = Math.max(t2 - t0, 1);
-      var mbps = (buf.byteLength * 8) / (totalMs / 1000) / 1e6;
+      if (buf.byteLength < 8192) throw new Error('sample too small');
+      var rawMbps = (buf.byteLength * 8) / (totalMs / 1000) / 1e6;
+      var rawLat = t1 - t0;
+      if (netSpeedState.at) {
+        // 平滑到同一口径：最近读数为主，抑制瞬时抖动
+        netSpeedState.mbps = netSpeedState.mbps * NET_SMOOTH + rawMbps * (1 - NET_SMOOTH);
+        netSpeedState.latency = netSpeedState.latency * NET_SMOOTH + rawLat * (1 - NET_SMOOTH);
+      } else {
+        netSpeedState.mbps = rawMbps;
+        netSpeedState.latency = rawLat;
+      }
+      netSpeedState.kbps = netSpeedState.mbps * 1000;
       netSpeedState.bytes = buf.byteLength;
       netSpeedState.ms = Math.round(totalMs);
-      netSpeedState.latency = Math.round(t1 - t0);
-      netSpeedState.mbps = mbps;
-      netSpeedState.kbps = mbps * 1000;
+      netSpeedState.samples++;
       netSpeedState.at = Date.now();
       netSpeedState.err = false;
+      var lbl = document.getElementById('netSpeedValue');
+      if (lbl) lbl.textContent = netSpeedText();
     } catch (e) {
       netSpeedState.err = true;
     }
@@ -12373,7 +12392,7 @@ function runTranslate(){
 
   function startNetSpeedMonitor() {
     probeNetSpeed();
-    setTimeout(probeNetSpeed, 2000);
+    setTimeout(probeNetSpeed, 800); setTimeout(probeNetSpeed, 2000);
     setInterval(probeNetSpeed, NET_PROBE_INTERVAL);
     document.addEventListener('visibilitychange', function () {
       if (!document.hidden) probeNetSpeed();
@@ -12382,15 +12401,15 @@ function runTranslate(){
 
   function netSpeedRowHtml() {
     var s = netSpeedState;
-    var val = s.at ? (s.mbps >= 1 ? s.mbps.toFixed(2) + ' Mbps' : s.kbps.toFixed(0) + ' Kbps') : '采样中…';
+    var val = netSpeedText();
     var age = s.at ? Math.max(0, Math.round((Date.now() - s.at) / 1000)) + 's前' : '—';
     var h = '<div style="margin-bottom:6px;padding:4px 6px;background:rgba(0,212,255,0.06);border-radius:4px;border-left:2px solid #00d4ff;">';
     h += '<div style="display:flex;justify-content:space-between;align-items:center;">';
     h += '<span style="color:#00d4ff;font-size:11px;">🌐 实时网速</span>';
     h += '<span style="color:#888;font-size:9px;">' + age + ' · 采样 ' + (s.bytes ? (s.bytes / 1024).toFixed(0) + 'KB' : '—') + '</span>';
     h += '</div>';
-    h += '<div style="color:#fff;font-size:14px;font-weight:bold;margin-top:2px;">↓ ' + val;
-    h += ' <span style="font-size:9px;color:#888;font-weight:normal;">' + (s.latency ? '延迟 ' + s.latency + ' ms' : '') + '</span></div>';
+    h += '<div style="color:#fff;font-size:14px;font-weight:bold;margin-top:2px;">↓ <span id="netSpeedValue">' + val + '</span>';
+    h += ' <span style="font-size:9px;color:#888;font-weight:normal;">' + (s.latency ? '延迟 ' + Math.round(s.latency) + ' ms · 平滑' + s.samples + '次' : '') + '</span></div>';
     if (s.err) h += '<div style="color:#FF6B6B;font-size:9px;">采样失败，当前显示最近一次有效值</div>';
     h += '</div>';
     return h;
