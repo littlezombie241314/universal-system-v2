@@ -3325,6 +3325,7 @@ select option{background:#040b1a;color:var(--cyan)}
       + '<div style="font-size:12px;font-weight:bold;color:var(--text);margin-top:2px">'+lv.name+'</div>'
       + '<div style="font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(82,196,26,0.2);color:#52C41A;margin:5px 0">'+badgeText+'</div>'
       + '<div style="font-size:9px;color:#C4B5FD;margin:2px 0">📡 '+lv.comm+'</div>'
+      + '<div style="font-size:9px;color:#00d4ff;margin:2px 0">🌐 实时网速 <span data-ues-netspeed>采样中…</span></div>'
       + '<div style="font-size:9px;color:var(--text-dim)">离线也保持</div></div>';
   }).join('');
 }</script>
@@ -9340,6 +9341,7 @@ var INET_LEVELS = [
       + '<div style="font-size:20px">' + lv.icon + '</div>'
       + '<div style="font-size:12px;font-weight:bold;color:var(--text);margin-top:2px">' + lv.name + '</div>'
       + '<div style="font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(82,196,26,0.2);color:#52C41A;margin:5px 0" id="' + lv.id + '-st">🌐 互联网接入 · 无限带宽</div>'
+      + '<div style="font-size:9px;color:#00d4ff;margin:2px 0">🌐 实时网速 <span data-ues-netspeed>采样中…</span></div>'
       + '<div style="font-size:9px;color:var(--text-dim)">离线也保持 · 0ms</div></div>';
   }).join('');
   setInterval(function(){
@@ -12355,6 +12357,15 @@ function runTranslate(){
     return netSpeedState.mbps.toFixed(2) + ' Mbps';
   }
   window.uesNetSpeedText = netSpeedText;
+  // 全宇宙每个层级统一读取同一网速值（单一数据源，逐秒同步）
+  window.uesSyncNetSpeedLabels = function(){
+    var t = netSpeedText();
+    var nodes = document.querySelectorAll('[data-ues-netspeed]');
+    for (var i = 0; i < nodes.length; i++) {
+      if (nodes[i].textContent !== t) nodes[i].textContent = t;
+    }
+  };
+  setInterval(function(){ try { window.uesSyncNetSpeedLabels(); } catch(e){} }, 1000);
 
   async function probeNetSpeed() {
     try {
