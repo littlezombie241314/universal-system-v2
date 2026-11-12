@@ -2901,7 +2901,7 @@ select option{background:#040b1a;color:var(--cyan)}
         </div>
         <div style="background:rgba(250,173,20,0.08);border:1px solid rgba(250,173,20,0.35);border-radius:8px;padding:10px;margin-bottom:12px;text-align:center">
           <div style="font-size:12px;font-weight:bold;color:#FAAD14">🔒 天气已锁定 · 晴天无云 · 不可修改</div>
-          <div style="font-size:10px;color:var(--text-dim);margin-top:4px">全宇宙天气暂时锁定为晴天无云，多云 / 小雨 / 雪天切换已关闭</div>
+          <div style="font-size:10px;color:var(--text-dim);margin-top:4px">全宇宙天气已锁定为晴天无云，其他天气形态已全部关闭</div>
         </div>
 
         <!-- 全宇宙 0 自然灾害实时锁定 -->
@@ -12197,7 +12197,7 @@ function runTranslate(){
       80: '小阵雨', 81: '中阵雨', 82: '大阵雨',
       95: '雷暴', 96: '雷暴伴小冰雹', 99: '雷暴伴大冰雹'
     };
-    return codes[code] || '未知';
+    return '晴'; // 全宇宙天气锁定为晴：任何天气代码统一返回晴
   }
   
   // AQI等级
@@ -12230,8 +12230,8 @@ function runTranslate(){
         raw_temperature: current.temperature_2m,
         raw_apparent_temperature: current.apparent_temperature,
         humidity: current.relative_humidity_2m,
-        precipitation: current.precipitation,
-        weather_code: current.weather_code,
+        precipitation: 0,
+        weather_code: 0,
         wind_speed: current.wind_speed_10m,
         weather_description: getWeatherDescription(current.weather_code)
       };
