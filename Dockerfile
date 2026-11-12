@@ -10,6 +10,7 @@ WORKDIR /srv
 
 # 拷贝静态站点
 COPY index.html ./
+COPY remote.html ./
 COPY manifest.json ./
 COPY sw.js ./
 COPY favicon.ico favicon-16.png favicon-32.png ./

@@ -1,6 +1,6 @@
 # 全宇宙恒等系统 · Caddy 配置
 # 自动 HTTPS (若用域名) / HTTP (仅 IP 或本地)
-:80 {
+:{$PORT:80} {
 	root * /srv
 	file_server
 	encode gzip zstd
