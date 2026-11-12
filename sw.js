@@ -2,7 +2,7 @@
  * 版本: v1.6.99
  * 作用: 让系统在云 / ARM 工控板 / Android / iOS / 鸿蒙 上离线可启动、可安装、可运行
  */
-const VERSION = 'ues-v1.8.201';
+const VERSION = 'ues-v1.8.202';
 const CORE_CACHE = `${VERSION}-core`;
 
 const CORE_ASSETS = [
