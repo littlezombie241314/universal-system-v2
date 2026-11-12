@@ -15622,14 +15622,14 @@ function updateTerminalSync() {
 (function(){
   var deviceAutoRunning = true;
   var deviceRounds = 0;
-  var DEVICE_VERSION = 'v∞.U-2026.10.10'; // 全宇宙设备统一最新版本
+  var DEVICE_VERSION = 'v∞.U-2026.11.12'; // 全宇宙设备统一最新版本
   var deviceTypes = [
     {icon:'📱', name:'智能手机', count:'82亿'},
     {icon:'📟', name:'平板电脑', count:'21亿'},
     {icon:'💻', name:'个人电脑', count:'35亿'},
     {icon:'🏠', name:'智能家居设备', count:'50亿'},
     {icon:'⌚', name:'可穿戴设备', count:'28亿'},
-    {icon:'🏭', name:'工业工控板', count:'120亿'},
+    {icon:'🧠', name:'数字智能工控板', count:'120亿'},
     {icon:'🚗', name:'车载智能终端', count:'46亿'},
     {icon:'🤖', name:'服务机器人', count:'15亿'},
     {icon:'🛰️', name:'量子纠缠+量子加密终端', count:'8亿'},
@@ -18687,7 +18687,7 @@ if ('serviceWorker' in navigator) {
   window.devUpdateNow = function(){
     devState.updated = devState.total;
     devRender();
-    devLog('已立即更新全部在线设备 ' + devFmt(devState.updated) + ' 台至 ' + devState.version + '（Android/iOS/鸿蒙全架构）', 'ok');
+    devLog('已立即更新全部在线设备 ' + devFmt(devState.updated) + ' 台至 ' + devState.version + '（Android/iOS/鸿蒙/数字智能工控板全架构）', 'ok');
     var status = document.getElementById('devStatus');
     if(status) status.textContent = '✅ 全部在线设备已立即更新至 ' + devState.version;
   };
