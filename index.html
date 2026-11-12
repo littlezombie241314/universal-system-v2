@@ -3326,7 +3326,7 @@ select option{background:#040b1a;color:var(--cyan)}
       + '<div style="font-size:12px;font-weight:bold;color:var(--text);margin-top:2px">'+lv.name+'</div>'
       + '<div style="font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(82,196,26,0.2);color:#52C41A;margin:5px 0">'+badgeText+'</div>'
       + '<div style="font-size:9px;color:#C4B5FD;margin:2px 0">📡 '+lv.comm+'</div>'
-      + '<div style="font-size:9px;color:#00d4ff;margin:2px 0">🌐 实时网速 <span data-ues-netspeed>∞ Mbps</span></div><div style="font-size:8px;color:#52C41A;margin-bottom:2px">⚛️ 量子模式 · 全层统一</div>'
+      + '<div style="font-size:9px;color:#00d4ff;margin:2px 0">🌐 实时网速 <span data-ues-netspeed>∞ Qbps</span></div><div style="font-size:8px;color:#52C41A;margin-bottom:2px">⚡ 超量子模式 · 0 ms · 全层统一</div>'
       + '<div style="font-size:9px;color:var(--text-dim)">离线也保持</div></div>';
   }).join('');
 }</script>
@@ -9349,7 +9349,7 @@ var INET_LEVELS = [
       + '<div style="font-size:20px">' + lv.icon + '</div>'
       + '<div style="font-size:12px;font-weight:bold;color:var(--text);margin-top:2px">' + lv.name + '</div>'
       + '<div style="font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(82,196,26,0.2);color:#52C41A;margin:5px 0" id="' + lv.id + '-st">🌐 互联网接入 · 无限带宽</div>'
-      + '<div style="font-size:9px;color:#00d4ff;margin:2px 0">🌐 实时网速 <span data-ues-netspeed>∞ Mbps</span></div><div style="font-size:8px;color:#52C41A;margin-bottom:2px">⚛️ 量子模式 · 全层统一</div>'
+      + '<div style="font-size:9px;color:#00d4ff;margin:2px 0">🌐 实时网速 <span data-ues-netspeed>∞ Qbps</span></div><div style="font-size:8px;color:#52C41A;margin-bottom:2px">⚡ 超量子模式 · 0 ms · 全层统一</div>'
       + '<div style="font-size:9px;color:var(--text-dim)">离线也保持 · 0ms</div></div>';
   }).join('');
   setInterval(function(){
@@ -12390,7 +12390,7 @@ function runTranslate(){
 
   // 统一的网速文本：所有位置都调用同一个函数，保证全站显示一致
   // 全宇宙所有层级统一口径：量子模式网速（单一常量，所有层级/浮窗/卡片完全一致）
-  var UES_UNIFIED_NETSPEED = '∞ Mbps';
+  var UES_UNIFIED_NETSPEED = '∞ Qbps';
   function netSpeedText() {
     return UES_UNIFIED_NETSPEED;
   }
@@ -12458,8 +12458,8 @@ function runTranslate(){
     h += '<span style="color:#888;font-size:9px;">' + age + ' · 采样 ' + (s.bytes ? (s.bytes / 1024).toFixed(0) + 'KB' : '—') + '</span>';
     h += '</div>';
     h += '<div style="color:#fff;font-size:14px;font-weight:bold;margin-top:2px;">↓ <span id="netSpeedValue">' + val + '</span>';
-    h += ' <span style="font-size:9px;color:#52C41A;font-weight:normal;">⚛️ 量子模式 · 0 ms</span></div>';
-    if (s.err) h += '<div style="color:#888;font-size:9px;">量子通道自愈中 · 网速口径恒定 量子模式</div>';
+    h += ' <span style="font-size:9px;color:#52C41A;font-weight:normal;">⚡ 超量子模式 · 0 ms</span></div>';
+    if (s.err) h += '<div style="color:#888;font-size:9px;">超量子通道自愈中 · 网速口径恒定 超量子 0 ms</div>';
     h += '</div>';
     return h;
   }
@@ -18805,14 +18805,14 @@ setInterval(function(){
     }).join('');
     box.innerHTML = DEPLOY_UNIVERSES.map(function(u){
       var rows = DEPLOY_LEVELS.map(function(lv){
-        return '<div style="display:flex;align-items:flex-start;gap:4px;padding:2px 0"><span style="font-size:9px;color:#00d4ff;min-width:52px;padding-top:3px">'+lv+'</span><div style="flex:1">'+chips+'<span class="net-chip" style="display:inline-block;font-size:9px;padding:1px 6px;margin:2px;border-radius:9px;background:rgba(0,212,255,0.14);border:1px solid rgba(0,212,255,0.4);color:#00d4ff">🌐 <span data-ues-netspeed>∞ Mbps</span></span></div></div>';
+        return '<div style="display:flex;align-items:flex-start;gap:4px;padding:2px 0"><span style="font-size:9px;color:#00d4ff;min-width:52px;padding-top:3px">'+lv+'</span><div style="flex:1">'+chips+'<span class="net-chip" style="display:inline-block;font-size:9px;padding:1px 6px;margin:2px;border-radius:9px;background:rgba(0,212,255,0.14);border:1px solid rgba(0,212,255,0.4);color:#00d4ff">🌐 <span data-ues-netspeed>∞ Qbps</span></span></div></div>';
       }).join('');
       return '<div style="background:rgba(0,0,0,0.25);border:1px solid rgba(0,212,255,0.2);border-radius:8px;padding:8px 10px">'
         + '<div style="font-size:11px;font-weight:bold;color:var(--text);margin-bottom:2px">'+u.icon+' '+u.name+'</div>'
         + rows + '</div>';
     }).join('');
     var sum = document.getElementById('devDeploySummary');
-    if(sum) sum.textContent = '576 / 576 · 最新版 ' + devState.version + ' · 🌐 ∞ Mbps';
+    if(sum) sum.textContent = '576 / 576 · 最新版 ' + devState.version + ' · 🌐 ∞ Qbps · 0 ms';
   }
   devRender();
   devDeployRender();
