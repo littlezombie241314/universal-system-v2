@@ -93,7 +93,7 @@ input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,229,255,.12)}
     <input id="userName" placeholder="输入用户名（小僵免验证）" autocomplete="off" spellcheck="false">
     <div class="err" id="loginErr"></div>
     <button class="gate-btn" id="loginBtn">远程登录</button>
-    <div class="gate-hint">与主系统共用账号体系：主系统内存在的账户可直接登录；小僵账号免验证；无需密码。</div>
+    <div class="gate-hint">默认免登录直通控制台；此处用于切换为指定账号操作。小僵账号免验证；主系统内已有账户可直接登录。</div>
     <div class="gate-note">通道：国密全链路加密 · 操作留痕不可篡改 · 断连 3 秒自动重连</div>
   </div>
 </section>
@@ -105,6 +105,7 @@ input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,229,255,.12)}
       <h1>数字智能工控板 · 远程控制台</h1>
       <p>BLUE-GOLD STAR CLOUD CORE · UIOS v3.0 DIGITAL TWIN</p>
     </div>
+    <a href="#" id="switchUser" style="margin-left:auto;font-size:11px;color:#7b93ad;text-decoration:none;border:1px solid rgba(0,214,255,.22);padding:5px 10px;border-radius:20px">切换账号</a>
     <div class="badge" id="linkBadge"><span class="dot warn" id="linkDot"></span><span id="linkText">链路检测中</span></div>
   </div>
 
@@ -120,6 +121,11 @@ input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,229,255,.12)}
     <div class="panel">
       <div class="panel-h"><span class="t">八层级嵌套恒等算力架构</span><span class="tag" id="layerTag">UICA v3.0</span></div>
       <div class="layers" id="layerGrid"></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-h"><span class="t">业务模块 · 在数字智能工控板上运行</span><span class="tag" id="modTag">21 模块</span></div>
+      <div class="ops" id="moduleGrid"></div>
     </div>
 
     <div class="panel" style="grid-column:span 7">
@@ -373,11 +379,40 @@ input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,229,255,.12)}
     location.reload();
   }
 
+  // ---------- 业务模块矩阵 ----------
+  var MODULES=[
+    {k:'atmosphere',n:'🍃 大气净化'},{k:'economy',n:'👝 无限钱包'},{k:'communication',n:'📡 全宇宙通信'},
+    {k:'internet',n:'🌐 全宇宙互联网'},{k:'immortality',n:'⏳ 长生不老'},{k:'climate',n:'☀️ 气候控制'},
+    {k:'planet',n:'🪐 星球运行'},{k:'resource',n:'♻️ 资源再生'},{k:'ecosystem',n:'🌳 生态守护'},
+    {k:'space',n:'🏙️ 全宇宙居住空间'},{k:'cosmos',n:'💫 全宇宙娱乐中心'},{k:'defense',n:'🛡️ 防御系统'},
+    {k:'karma',n:'🍀 人品系统'},{k:'solar',n:'☀️ 太阳风暴'},{k:'marriage',n:'💞 连理婚姻'},
+    {k:'education',n:'📚 全知教育'},{k:'medical',n:'🏥 全能医疗'},{k:'ai',n:'🤖 AI'},
+    {k:'spirit',n:'🌱 精神哲学'},{k:'devices',n:'📲 系统更新'},{k:'magneto',n:'🧭 地磁系统'}
+  ];
+  function renderModules(){
+    var g=$('moduleGrid');if(!g)return;
+    g.innerHTML=MODULES.map(function(m){
+      return '<a class="op" href="index.html#'+m.k+'" target="_blank" rel="noopener" style="display:inline-block;text-decoration:none">'+m.n+'</a>';
+    }).join('');
+    $('modTag').textContent=MODULES.length+' 模块';
+  }
+
+  // ---------- 免登录直通 ----------
+  function enterConsole(user,board){
+    state.user=user;state.board=board;state.t0=Date.now();
+    sessionStorage.setItem('uica_remote_user',user);
+    sessionStorage.setItem('uica_remote_board',board);
+    sessionStorage.setItem('uica_remote_session',sessionStorage.getItem('uica_remote_session')||sid());
+    $('loginView').hidden=true;
+    $('consoleView').hidden=false;
+    bootConsole();
+  }
+
   function bootConsole(){
     $('kvBoard').textContent=state.board;
     $('kvUser').textContent=state.user+(state.user==='小僵'?' · 白名单免验证':'');
     $('kvSession').textContent=sessionStorage.getItem('uica_remote_session')||'-';
-    buildLayers();initPeriph();tickLayers();tickTelemetry();tickShield();
+    buildLayers();initPeriph();renderModules();tickLayers();tickTelemetry();tickShield();
     state.timer=setInterval(function(){
       tickLayers();tickTelemetry();tickShield();
       $('kvUptime').textContent=fmtDur(Date.now()-state.t0);
@@ -386,6 +421,16 @@ input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,229,255,.12)}
     checkLinks();
   }
 
+  $('switchUser').addEventListener('click',function(e){
+    e.preventDefault();
+    if(state.timer)clearInterval(state.timer);
+    if(state.retryTimer)clearTimeout(state.retryTimer);
+    $('consoleView').hidden=true;
+    $('loginView').hidden=false;
+    $('boardId').value=state.board||'UICA-CORE-01';
+    $('userName').value=state.user||'';
+  });
+
   $('btnSync').addEventListener('click',doSyncAll);
   $('btnCheck').addEventListener('click',doSelfCheck);
   $('btnRestart').addEventListener('click',doRestart);
@@ -393,14 +438,15 @@ input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,229,255,.12)}
   $('btnMirror').addEventListener('click',doMirror);
   $('btnLogout').addEventListener('click',doLogout);
 
-  // 恢复上次会话
+  // 免登录：无会话也直接进入数字智能工控板控制台（小僵白名单直通）
   var lastUser=sessionStorage.getItem('uica_remote_user');
   var lastBoard=sessionStorage.getItem('uica_remote_board');
   if(lastUser&&lastBoard){
-    state.user=lastUser;state.board=lastBoard;state.t0=Date.now();
-    $('loginView').hidden=true;$('consoleView').hidden=false;
-    bootConsole();
+    enterConsole(lastUser,lastBoard);
     log('会话恢复 · '+lastBoard+' · '+lastUser,'info');
+  }else{
+    enterConsole('小僵','UICA-CORE-01');
+    log('免登录通道 · 小僵白名单直通 · 工控板 UICA-CORE-01','ok');
   }
 })();
 </script>
