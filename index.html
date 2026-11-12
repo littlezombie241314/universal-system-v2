@@ -1726,7 +1726,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.8.3 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">UES-OS v2.0</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -5629,7 +5629,7 @@ select option{background:#040b1a;color:var(--cyan)}
         <div style="font-size:12px;color:var(--text-dim);margin-bottom:12px">全宇宙恒等系统实时为每个智能终端推送系统更新：<span style="color:#00d4ff">Android / iOS / 鸿蒙 HarmonyOS / ARM SoC / 数字智能工控板 UICA v3.0</span> 全架构覆盖，⚡ 最快的速度自动扫描在线终端并同步最新系统版本。</div>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:12px">
           <div style="text-align:center;background:rgba(0,212,255,0.05);border-radius:8px;padding:10px">
-            <div id="devSystemVersion" style="font-size:20px;font-weight:bold;color:var(--cyan)">v1.8.3 · UES-OS</div>
+            <div id="devSystemVersion" style="font-size:20px;font-weight:bold;color:var(--cyan)">UES-OS v2.0</div>
             <div style="font-size:11px;color:var(--text-dim)">最新系统版本</div>
           </div>
           <div style="text-align:center;background:rgba(0,212,255,0.05);border-radius:8px;padding:10px">
@@ -5656,6 +5656,13 @@ select option{background:#040b1a;color:var(--cyan)}
           </div>
         </div>
         <div id="devUpdateList" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;margin-bottom:12px"></div>
+        <div style="margin-bottom:12px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+            <span style="font-size:12px;color:var(--text-dim)">全宇宙主机 / 服务器 / 芯片 / 系统 / 云主机 / 云服务器 / 云芯片 / 云系统 · 9 宇宙 × 8 层级</span>
+            <span id="devDeploySummary" style="font-size:11px;color:#52C41A;font-weight:bold">576 / 576 · 最新版</span>
+          </div>
+          <div id="allUniverseDeviceDeploy" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:8px"></div>
+        </div>
         <div style="display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap">
           <button class="btn" style="background:linear-gradient(135deg,#00d4ff,#0ea5e9);color:#fff" onclick="devUpdateNow()">🔄 立即更新全部在线设备</button>
           <button class="btn" style="background:linear-gradient(135deg,#14b8a6,#0d9488);color:#fff" onclick="devCheckUpdate()">🔍 检查更新</button>
@@ -6352,7 +6359,7 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">v1.8.3 · UES-OS</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">UES-OS v2.0</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -16782,7 +16789,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v1.8.3';
+var systemVersion = 'v2.0';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
@@ -18718,7 +18725,7 @@ setInterval(function(){
     {name:'长生不老模块', icon:'⏳'}
   ];
   var devState = {
-    version: (typeof systemVersion!=='undefined' ? systemVersion + ' · UES-OS' : 'v1.8.3 · UES-OS'),
+    version: (typeof systemVersion!=='undefined' ? 'UES-OS ' + systemVersion : 'UES-OS v2.0'),
     total: 17000000000,
     updated: 17000000000,
     rounds: 0
@@ -18776,8 +18783,41 @@ setInterval(function(){
     var status = document.getElementById('devStatus');
     if(status) status.textContent = '✅ 检查完成：全部终端已是最新版本 ' + devState.version;
   };
+  // ===== 全宇宙：每宇宙 × 每层级 × 每类节点 全部部署最新版 =====
+  var NODE_TYPES = ['主机','服务器','芯片','系统','云主机','云服务器','云芯片','云系统'];
+  var DEPLOY_UNIVERSES = [
+    {icon:'🌌', name:'主宇宙 · 现在时刻'},
+    {icon:'🤖', name:'平行宇宙-A · 机械纪元'},
+    {icon:'🪄', name:'平行宇宙-B · 魔法纪元'},
+    {icon:'🦕', name:'时空线α · 恐龙纪元'},
+    {icon:'⚙️', name:'时空线β · 蒸汽朋克纪元'},
+    {icon:'⚛️', name:'量子时空 · 多维叠加态'},
+    {icon:'⏳', name:'永恒时空 · 时间静止'},
+    {icon:'🌊', name:'梦境时空 · 意识海洋'},
+    {icon:'🔮', name:'混沌时空 · 万有可能'}
+  ];
+  var DEPLOY_LEVELS = ['宇宙','星系','星球','文明','国家','地区','个人','未分层级'];
+  function devDeployRender(){
+    var box = document.getElementById('allUniverseDeviceDeploy');
+    if(!box) return;
+    var chips = NODE_TYPES.map(function(t){
+      return '<span class="dep-chip" style="display:inline-block;font-size:9px;padding:1px 5px;margin:2px;border-radius:9px;background:rgba(82,196,26,0.14);border:1px solid rgba(82,196,26,0.34);color:#52C41A">'+t+' ✔</span>';
+    }).join('');
+    box.innerHTML = DEPLOY_UNIVERSES.map(function(u){
+      var rows = DEPLOY_LEVELS.map(function(lv){
+        return '<div style="display:flex;align-items:flex-start;gap:4px;padding:2px 0"><span style="font-size:9px;color:#00d4ff;min-width:52px;padding-top:3px">'+lv+'</span><div style="flex:1">'+chips+'</div></div>';
+      }).join('');
+      return '<div style="background:rgba(0,0,0,0.25);border:1px solid rgba(0,212,255,0.2);border-radius:8px;padding:8px 10px">'
+        + '<div style="font-size:11px;font-weight:bold;color:var(--text);margin-bottom:2px">'+u.icon+' '+u.name+'</div>'
+        + rows + '</div>';
+    }).join('');
+    var sum = document.getElementById('devDeploySummary');
+    if(sum) sum.textContent = '576 / 576 · 最新版 ' + devState.version;
+  }
   devRender();
+  devDeployRender();
   devLog('设备系统更新模块已启动：⚡ 最快的速度自动扫描在线终端并同步 ' + devState.version, 'info');
+  setInterval(function(){ devDeployRender(); }, 5000);
   setInterval(devTick, 1000);
 })();
 
