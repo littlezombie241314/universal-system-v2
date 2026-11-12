@@ -5627,7 +5627,7 @@ select option{background:#040b1a;color:var(--cyan)}
         <div style="font-size:12px;color:var(--text-dim);margin-bottom:12px">全宇宙恒等系统实时为每个智能终端推送系统更新：<span style="color:#00d4ff">Android / iOS / 鸿蒙 HarmonyOS / ARM SoC / 数字智能工控板 UICA v3.0</span> 全架构覆盖，⚡ 最快的速度自动扫描在线终端并同步最新系统版本。</div>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:12px">
           <div style="text-align:center;background:rgba(0,212,255,0.05);border-radius:8px;padding:10px">
-            <div id="devSystemVersion" style="font-size:20px;font-weight:bold;color:var(--cyan)">UES-OS v2.0</div>
+            <div id="devSystemVersion" style="font-size:20px;font-weight:bold;color:var(--cyan)">v1.8.3 · UES-OS</div>
             <div style="font-size:11px;color:var(--text-dim)">最新系统版本</div>
           </div>
           <div style="text-align:center;background:rgba(0,212,255,0.05);border-radius:8px;padding:10px">
@@ -18657,7 +18657,7 @@ setInterval(function(){
     {name:'长生不老模块', icon:'⏳'}
   ];
   var devState = {
-    version: 'UES-OS v2.0',
+    version: (typeof systemVersion!=='undefined' ? systemVersion + ' · UES-OS' : 'v1.8.3 · UES-OS'),
     total: 17000000000,
     updated: 17000000000,
     rounds: 0
