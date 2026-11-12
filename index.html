@@ -3325,7 +3325,7 @@ select option{background:#040b1a;color:var(--cyan)}
       + '<div style="font-size:12px;font-weight:bold;color:var(--text);margin-top:2px">'+lv.name+'</div>'
       + '<div style="font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(82,196,26,0.2);color:#52C41A;margin:5px 0">'+badgeText+'</div>'
       + '<div style="font-size:9px;color:#C4B5FD;margin:2px 0">📡 '+lv.comm+'</div>'
-      + '<div style="font-size:9px;color:#00d4ff;margin:2px 0">🌐 实时网速 <span data-ues-netspeed>∞ Mbps · 量子模式</span></div>'
+      + '<div style="font-size:9px;color:#00d4ff;margin:2px 0">🌐 实时网速 <span data-ues-netspeed>∞ Mbps</span></div>'
       + '<div style="font-size:9px;color:var(--text-dim)">离线也保持</div></div>';
   }).join('');
 }</script>
@@ -9341,7 +9341,7 @@ var INET_LEVELS = [
       + '<div style="font-size:20px">' + lv.icon + '</div>'
       + '<div style="font-size:12px;font-weight:bold;color:var(--text);margin-top:2px">' + lv.name + '</div>'
       + '<div style="font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(82,196,26,0.2);color:#52C41A;margin:5px 0" id="' + lv.id + '-st">🌐 互联网接入 · 无限带宽</div>'
-      + '<div style="font-size:9px;color:#00d4ff;margin:2px 0">🌐 实时网速 <span data-ues-netspeed>∞ Mbps · 量子模式</span></div>'
+      + '<div style="font-size:9px;color:#00d4ff;margin:2px 0">🌐 实时网速 <span data-ues-netspeed>∞ Mbps</span></div>'
       + '<div style="font-size:9px;color:var(--text-dim)">离线也保持 · 0ms</div></div>';
   }).join('');
   setInterval(function(){
@@ -12353,7 +12353,7 @@ function runTranslate(){
 
   // 统一的网速文本：所有位置都调用同一个函数，保证全站显示一致
   // 全宇宙所有层级统一口径：量子模式网速（单一常量，所有层级/浮窗/卡片完全一致）
-  var UES_UNIFIED_NETSPEED = '∞ Mbps · 量子模式';
+  var UES_UNIFIED_NETSPEED = '∞ Mbps';
   function netSpeedText() {
     return UES_UNIFIED_NETSPEED;
   }
