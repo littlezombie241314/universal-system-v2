@@ -10203,7 +10203,7 @@ setInterval(function(){
       + '<div style="font-size:20px">'+lv.icon+'</div>'
       + '<div style="font-size:12px;font-weight:bold;color:var(--text);margin-top:2px">'+lv.name+'</div>'
       + '<div style="font-size:10px;color:var(--text-dim)">'+lv.city+'</div>'
-      + '<div style="font-size:20px;font-weight:bold;color:#52C41A;margin:4px 0"><span class="lvTemp">--°C</span></div>'
+      + '<div style="font-size:20px;font-weight:bold;color:#52C41A;margin:4px 0"><span class="lvTemp">40°C</span></div>'
       + '<div style="font-size:9px;padding:2px 8px;border-radius:10px;background:rgba(82,196,26,0.2);color:#52C41A">☀️ 晴 · 已锁定</div></div>';
   }).join('');
   // 实时温度（复用 CITIES 坐标）
@@ -10217,21 +10217,8 @@ setInterval(function(){
     if(card) card.textContent = Math.round(v) + '°C';
   }
   function refreshAll(){
-    C.forEach(function(c, i){
-      if(c.lat===0 && c.lon===0){
-        // 均值层级：取全宇宙统一温度
-        var v = 40;
-        setTemp(i, v);
-        return;
-      }
-      fetch('https://api.open-meteo.com/v1/forecast?latitude='+c.lat+'&longitude='+c.lon+'&current=temperature_2m&timezone=auto')
-        .then(function(r){return r.json();})
-        .then(function(d){
-          var t = d.current ? d.current.temperature_2m : 40;
-          setTemp(i, 40);
-        })
-        .catch(function(){ setTemp(i, 40); });
-    });
+    // 天气锁定为晴：所有层级温度统一 40°C，不依赖外部接口
+    for(var i=0;i<LV.length;i++) setTemp(i, 40);
   }
   refreshAll();
   setInterval(refreshAll, 30000);
