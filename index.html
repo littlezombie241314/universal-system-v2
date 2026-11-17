@@ -12271,7 +12271,7 @@ function runTranslate(){
       const city = CITIES[Math.floor(Math.random() * CITIES.length)];
       const url = `https://api.open-meteo.com/v1/forecast?latitude=${city.lat}&longitude=${city.lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m&timezone=auto`;
       
-      const response = await fetch(url);
+      const response = await rtFetch(url, 6000);
       if (!response.ok) throw new Error('天气API请求失败');
       
       const data = await response.json();
@@ -12302,7 +12302,7 @@ function runTranslate(){
       const city = CITIES[Math.floor(Math.random() * CITIES.length)];
       const url = `https://api.waqi.info/feed/${city.name.toLowerCase()}/?token=demo`;
       
-      const response = await fetch(url);
+      const response = await rtFetch(url, 6000);
       if (!response.ok) throw new Error('空气质量API请求失败');
       
       const data = await response.json();
@@ -12482,12 +12482,34 @@ function runTranslate(){
     return h;
   }
 
-  // 更新实时数据面板
+  // 🌐 外部数据 30 秒拉一次并缓存；面板每秒渲染只读缓存，永不因网络阻塞而停更
+  var rtCache = { weather: null, air: null, at: 0, busy: false };
+  function rtFetch(url, ms){
+    return new Promise(function(resolve, reject){
+      var settled = false;
+      var timer = setTimeout(function(){ if(!settled){ settled = true; reject(new Error('request timeout')); } }, ms || 6000);
+      fetch(url, {cache:'no-store'}).then(function(r){ if(!settled){ settled = true; clearTimeout(timer); resolve(r); } })
+        .catch(function(e){ if(!settled){ settled = true; clearTimeout(timer); reject(e); } });
+    });
+  }
+  async function rtRefreshData(){
+    if (rtCache.busy) return;
+    rtCache.busy = true;
+    try {
+      var w = await fetchWeatherData();
+      var a = await fetchAirQualityData();
+      if (w) rtCache.weather = w;
+      if (a) rtCache.air = a;
+      rtCache.at = Date.now();
+    } catch (e) { console.warn('实时数据拉取失败，沿用缓存', e); }
+    finally { rtCache.busy = false; }
+  }
+
+  // 更新实时数据面板（渲染与网络解耦）
   async function updateRealtimePanel() {
     try {
-      // 获取天气数据
-      const weatherData = await fetchWeatherData();
-      const airQualityData = await fetchAirQualityData();
+      const weatherData = rtCache.weather;
+      const airQualityData = rtCache.air;
       
       // 更新面板显示
       const panel = document.getElementById('realtimePanel');
@@ -12538,7 +12560,7 @@ function runTranslate(){
       }
       
       html += '<div style="margin-top:8px;padding-top:6px;border-top:1px solid rgba(0,255,157,0.1);font-size:10px;color:#666;">';
-      html += '最后更新: ' + new Date().toLocaleTimeString();
+      html += '最后更新: ' + new Date().toLocaleTimeString() + ' · 数据 ' + (rtCache.at ? Math.max(0, Math.round((Date.now()-rtCache.at)/1000)) + 's 前' : '拉取中');
       html += '</div>';
       
       panel.innerHTML = html;
@@ -12559,14 +12581,17 @@ function runTranslate(){
       toggle.style.display = 'none';
     }
     
-    // 立即更新一次
+    // 立即拉一次数据并渲染
+    if (typeof rtRefreshData === 'function') rtRefreshData();
     updateRealtimePanel();
     
     // 🌐 启动实时网速监测（真实下载采样，8 秒一次）
     startNetSpeedMonitor();
     
-    // 每秒测量温度·低于40°自动调校
+    // 面板每秒原位渲染（只读缓存，不发起网络请求）
     setInterval(updateRealtimePanel, 1000);
+    // 外部数据 30 秒刷新一次
+    setInterval(function(){ try { rtRefreshData(); } catch (e) {} }, 30000);
 
     // 💾 全系统数据实时持久化（localStorage 即时事件 + 周期快照 + 启动恢复）
     (function(){
@@ -18593,18 +18618,24 @@ function toggleAutoRefresh() {
 }
 
 function startAutoRefresh() {
-  var interval = parseInt(document.getElementById('refreshInterval').value);
+  if (countdownTimer) { clearInterval(countdownTimer); countdownTimer = null; }
+  var interval = parseInt(document.getElementById('refreshInterval').value) || 5;
   countdownSeconds = interval;
   autoRefreshEnabled = true;
   
   countdownTimer = setInterval(function() {
     countdownSeconds--;
     var el = document.getElementById('nextRefreshCountdown');
-    if(el) el.textContent = countdownSeconds + '秒';
-    
-    if(countdownSeconds <= 0) {
-      location.reload();
+    if (countdownSeconds <= 0) {
+      // 原位刷新全部实时数据：不再整页重载（避免倒计时转负、BIOS 启动页重启、页面状态丢失）
+      countdownSeconds = interval;
+      if (el) el.textContent = countdownSeconds + '秒';
+      try { if (typeof rtRefreshData === 'function') rtRefreshData(); } catch (e) {}
+      try { if (typeof window._updateBalances === 'function') window._updateBalances(); } catch (e) {}
+      try { if (typeof refreshAll === 'function') refreshAll(); } catch (e) {}
+      return;
     }
+    if (el) el.textContent = countdownSeconds + '秒';
   }, 1000);
 }
 
