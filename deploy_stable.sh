@@ -269,7 +269,7 @@ except: print('')
 warmup_backend() {
   Y "预热 onrender 后端（唤醒实例）..."
   for ep in "/api/resurrection/state" "/api/economy/state" "/api/solar-storm/state" "/api/health"; do
-    local code="$(curl -s -o /dev/null -w "%{http_code}" --connect-timeout 20 --max-time 60 "https://universal-pay-backend.onrender.com${ep}" 2>/dev/null)"
+    local code="$(curl -s -o /dev/null -w "%{http_code}" --connect-timeout 20 --max-time 60 "https://universal-pay-alipay.onrender.com${ep}" 2>/dev/null)"
     if [ "$code" = "200" ]; then G "  ${ep} ✅ 200"; else Y "  ${ep} ⚠️ ${code}"; fi
   done
 }
