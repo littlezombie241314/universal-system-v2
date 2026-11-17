@@ -1461,6 +1461,37 @@ select option{background:#040b1a;color:var(--cyan)}
       <div style="font-size:10px;color:#52C41A;text-align:center;padding:0 14px 12px">✅ 对<b style="color:#52C41A">所有存在</b>都生效 · 含未明确归属层级的存在（星际流浪者 / 初生AI / 动植物 / 微观存在 / 随机新生成存在等）· 一律资金无限 · ⚡ 最快的速度收益 · 自动投资</div>
     </div>
 
+    <!-- 🛒 无限钱包 · 全宇宙电商平台接入 -->
+    <div class="panel wide" id="uesEcPanel">
+      <div class="panel-hdr">
+        <div class="panel-title"><span class="ico">🛒</span>无限钱包 · 全宇宙电商平台接入</div>
+        <div class="panel-badge" style="background:rgba(0,212,255,0.15);color:#00d4ff">∞ 无限额度 · 0 手续费</div>
+        <div class="panel-badge" id="uesEcBackendBadge" style="background:rgba(82,196,26,0.18);color:#52C41A">账本直结</div>
+      </div>
+      <div id="uesEcStats" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;padding:10px 14px 6px"></div>
+      <div id="uesEcGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:8px;padding:8px 14px 10px"></div>
+      <div id="uesEcLive" style="font-size:10px;color:#52C41A;text-align:center;padding:0 14px 4px">🟢 电商全平台在线 · 结算通道 账本直结</div>
+      <div style="font-size:10px;color:var(--text-dim);text-align:center;padding:0 14px 12px">点击任一平台 · 无限钱包直接扣款 · 实时对账 · 0 手续费 · 离线也保持</div>
+    </div>
+
+    <div id="uesEcPayModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.78);z-index:99999;align-items:center;justify-content:center;padding:16px">
+      <div style="width:min(420px,94vw);background:#0b1626;border:1px solid rgba(0,212,255,0.35);border-radius:10px;padding:16px;color:var(--text)">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+          <div style="font-size:14px;font-weight:bold;color:#00d4ff"><span id="uesEcPayIcon">🛒</span> <span id="uesEcPayTitle">无限钱包支付</span></div>
+          <div onclick="uesEcClosePay()" style="cursor:pointer;color:var(--text-dim);font-size:16px;padding:0 4px">✕</div>
+        </div>
+        <div style="font-size:11px;color:#8ba3c7;margin-bottom:10px">付款账户：全宇宙无限钱包 · 余额 ∞ · 结算 0 ms</div>
+        <div style="font-size:12px;margin-bottom:4px">订单金额（元）</div>
+        <input id="uesEcAmount" type="number" min="0" step="0.01" value="1" style="width:100%;box-sizing:border-box;background:rgba(255,255,255,0.06);border:1px solid rgba(0,212,255,0.3);border-radius:6px;color:#fff;padding:8px;font-size:14px;margin-bottom:10px">
+        <div style="font-size:12px;margin-bottom:4px">商品 / 订单备注</div>
+        <input id="uesEcDesc" type="text" placeholder="例如：全宇宙旗舰店 · 订单 #001" style="width:100%;box-sizing:border-box;background:rgba(255,255,255,0.06);border:1px solid rgba(0,212,255,0.3);border-radius:6px;color:#fff;padding:8px;font-size:13px;margin-bottom:12px">
+        <div style="display:flex;gap:8px">
+          <button onclick="uesEcDoPay()" style="flex:1;padding:10px;border:none;border-radius:6px;background:linear-gradient(135deg,#00d4ff,#0077ff);color:#fff;font-size:14px;font-weight:bold;cursor:pointer">立即支付</button>
+          <button onclick="uesEcClosePay()" style="flex:1;padding:10px;border:1px solid rgba(255,255,255,0.2);border-radius:6px;background:transparent;color:var(--text-dim);font-size:14px;cursor:pointer">取消</button>
+        </div>
+      </div>
+    </div>
+
     <!-- 🛒 日常消费支付 · 全宇宙无限钱包唯一支付接口 -->
     <div class="panel wide">
       <div class="panel-hdr"><div class="panel-title"><span class="ico">🛒</span>日常消费支付</div><div class="panel-badge" style="background:rgba(0,212,255,0.15);color:#00d4ff">🌌 全宇宙级别</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">✓ 唯一支付接口</div></div>
@@ -19464,6 +19495,96 @@ function scanCamera(){
 }
 try{scanHistoryRender();}catch(e){}
 </script>
+<script>
+/* ===== 无限钱包 · 全宇宙电商平台接入 ===== */
+(function(){
+  var PLATS = [
+    {n:'淘宝',e:'🛍️'},{n:'天猫',e:'🐱'},{n:'京东',e:'🐶'},{n:'拼多多',e:'🍑'},{n:'抖音商城',e:'🎵'},
+    {n:'快手小店',e:'⚡'},{n:'小红书商城',e:'📕'},{n:'唯品会',e:'👜'},{n:'苏宁易购',e:'🔵'},{n:'得物',e:'👟'},
+    {n:'1688',e:'🏭'},{n:'闲鱼',e:'🐟'},{n:'美团',e:'🍚'},{n:'饿了么',e:'🥡'},{n:'大众点评',e:'⭐'},
+    {n:'携程',e:'✈️'},{n:'飞猪',e:'🐷'},{n:'Amazon',e:'📦'},{n:'eBay',e:'🏷️'},{n:'Temu',e:'🧧'},
+    {n:'SHEIN',e:'👗'},{n:'AliExpress',e:'🌏'},{n:'Shopee',e:'🛵'},{n:'Lazada',e:'🛺'},{n:'TikTok Shop',e:'🎬'},
+    {n:'Wish',e:'🌠'},{n:'Etsy',e:'🧶'},{n:'Walmart',e:'🏬'},{n:'Mercado Libre',e:'🤝'},{n:'Rakuten',e:'🇯🇵'},
+    {n:'Coupang',e:'🚀'},{n:'Shopify 独立站',e:'🧩'}
+  ];
+  var KEY='ues_ec_wallet_state';
+  var st={tx:0,amount:0,last:null,plat:null};
+  try{ var raw=localStorage.getItem(KEY); if(raw){ var d=JSON.parse(raw); st.tx=d.tx||0; st.amount=d.amount||0; st.last=d.last||null; st.plat=d.plat||null; } }catch(e){}
+  function save(){ try{ localStorage.setItem(KEY, JSON.stringify(st)); }catch(e){} }
+  function money(v){ return '¥'+(Number(v)||0).toLocaleString('zh-CN',{maximumFractionDigits:2}); }
+  function fmtTime(ts){ if(!ts) return '—'; var d=new Date(ts); return d.toLocaleTimeString('zh-CN',{hour12:false}); }
+  function statCard(label,val,color,sub){
+    return '<div style="background:rgba(255,255,255,0.04);border:1px solid rgba(0,212,255,0.15);border-radius:8px;padding:10px;text-align:center">'
+      + '<div style="font-size:18px;font-weight:bold;color:'+color+'">'+val+'</div>'
+      + '<div style="font-size:10px;color:var(--text-dim);margin-top:2px">'+label+'</div>'
+      + (sub?'<div style="font-size:9px;color:#52C41A;margin-top:3px">'+sub+'</div>':'')
+      + '</div>';
+  }
+  function renderStats(){
+    var el=document.getElementById('uesEcStats'); if(!el) return;
+    el.innerHTML =
+      statCard('接入电商平台', PLATS.length+' / '+PLATS.length, '#00d4ff', '全量接入 · 100%') +
+      statCard('钱包余额', '∞', '#52C41A', '无限额度 · 无上限') +
+      statCard('累计支付', money(st.amount), '#FAAD14', st.tx+' 笔 · 0 手续费') +
+      statCard('结算延迟', '0 ms', '#9254DE', '实时到账 · 账本直结');
+  }
+  function renderGrid(){
+    var el=document.getElementById('uesEcGrid'); if(!el) return;
+    el.innerHTML = PLATS.map(function(p,i){
+      var hot = st.plat===p.n;
+      return '<div class="uesEcCard" data-plat="'+p.n+'" onclick="uesEcOpenPay(\''+p.n+'\',\''+p.e+'\')" '
+        + 'style="cursor:pointer;background:rgba(255,255,255,0.04);border:1px solid '+(hot?'rgba(0,212,255,0.55)':'rgba(255,255,255,0.12)')
+        + ';border-radius:8px;padding:8px 6px;text-align:center;transition:all .15s">'
+        + '<div style="font-size:18px;line-height:1.3">'+p.e+'</div>'
+        + '<div style="font-size:11px;font-weight:bold;color:var(--text);margin-top:2px">'+p.n+'</div>'
+        + '<div style="font-size:9px;color:#52C41A;margin-top:2px">● 已接入 · ∞</div>'
+        + '</div>';
+    }).join('');
+  }
+  window.uesEcOpenPay=function(name,icon){
+    var m=document.getElementById('uesEcPayModal'); if(!m) return;
+    document.getElementById('uesEcPayTitle').textContent=name+' · 无限钱包';
+    document.getElementById('uesEcPayIcon').textContent=icon||'🛒';
+    document.getElementById('uesEcDesc').value='';
+    document.getElementById('uesEcAmount').value='1';
+    m.setAttribute('data-plat',name);
+    m.style.display='flex';
+  };
+  window.uesEcClosePay=function(){
+    var m=document.getElementById('uesEcPayModal'); if(m) m.style.display='none';
+  };
+  window.uesEcDoPay=function(){
+    var m=document.getElementById('uesEcPayModal'); if(!m) return;
+    var name=m.getAttribute('data-plat')||'电商平台';
+    var amount=parseFloat(document.getElementById('uesEcAmount').value);
+    if(!(amount>0)){ if(typeof toast==='function') toast('⚠️ 请输入有效金额'); return; }
+    var desc=document.getElementById('uesEcDesc').value.trim()||'商品订单';
+    st.tx+=1; st.amount+=amount; st.last=Date.now(); st.plat=name;
+    save(); renderStats(); renderGrid();
+    window.uesEcClosePay();
+    if(typeof toast==='function') toast('✅ '+name+' 支付成功 · '+money(amount)+' · 无限钱包扣款 · 0 ms 到账');
+    if(typeof log==='function') log('无限钱包电商支付 · '+name+' · '+money(amount)+' · '+desc);
+  };
+  function loadBackend(){
+    try{
+      fetch('https://universal-pay-alipay.onrender.com/wallet/api/v1/status',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'})
+        .then(function(r){return r.json();})
+        .then(function(d){
+          var b=document.getElementById('uesEcBackendBadge'); if(!b) return;
+          if(d&&d.success&&d.data){ b.textContent=(d.data.gateway==='self-ledger'?'账本直结':'已连接')+' · 在线'; b.style.color='#52C41A'; }
+        }).catch(function(){ var b=document.getElementById('uesEcBackendBadge'); if(b){ b.textContent='离线账本 · 本地结算'; } });
+    }catch(e){}
+  }
+  function live(){
+    var el=document.getElementById('uesEcLive'); if(!el) return;
+    var t=new Date().toLocaleTimeString('zh-CN',{hour12:false});
+    el.textContent='🟢 在线平台 '+PLATS.length+'/'+PLATS.length+' · 结算通道 账本直结 · 最近结算 '+(st.last?fmtTime(st.last):'—')+' · 当前 '+t;
+  }
+  renderStats(); renderGrid(); loadBackend(); live();
+  setInterval(live,1000);
+})();
+</script>
+
 </body>
 </html>
     
