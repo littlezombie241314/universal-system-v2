@@ -66,6 +66,9 @@ curl_retry() {
 # ---------- 步骤 0: 准备发布目录 ----------
 prepare() {
   Y "准备发布目录..."
+  # 先生成构建戳，保证 Surge/Pages/Worker/GitHub 用的是同一份指纹
+  printf '<!doctype html><meta charset="utf-8"><title>build stamp</title><pre>build=%s\nversion=%s\ntime=%s</pre>\n' \
+    "$EXPECTED_MD5" "$(grep -o 'ues-v[0-9.]*' "$APP_DIR/sw.js" | head -1)" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > "$APP_DIR/build-stamp.html"
   mkdir -p "$PUBLISH_DIR"
   rsync -a --exclude '.git' --exclude '.gitignore' --exclude 'index_backup_wormhole.html' --exclude '.github' "$APP_DIR/" "$PUBLISH_DIR/"
   local md5
@@ -112,9 +115,6 @@ deploy_surge() {
 deploy_github() {
   Y "推送 GitHub master + gh-pages..."
   cd "$APP_DIR" || return 1
-  # 生成跨网络可读的构建指纹页（Vercel 侧 web_fetch 只能解析 HTML，.txt/.json 读不到）
-  printf '<!doctype html><meta charset="utf-8"><title>build stamp</title><pre>build=%s\nversion=%s\ntime=%s</pre>\n' \
-    "$EXPECTED_MD5" "$(grep -o 'ues-v[0-9.]*' "$APP_DIR/sw.js" | head -1)" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > "$APP_DIR/build-stamp.html"
   # 先把工作区改动提交到本地，否则 push 会把旧提交推上去，GitHub / Vercel 拿不到新版
   git add -A >/dev/null 2>&1
   if ! git diff --cached --quiet 2>/dev/null; then
