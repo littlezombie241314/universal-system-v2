@@ -2806,10 +2806,7 @@ select option{background:#040b1a;color:var(--cyan)}
         <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
           <span style="font-size:12px;color:var(--text-dim)">当前高度角：</span>
           <b style="font-size:22px;color:#FACC15;text-shadow:0 0 10px rgba(250,204,21,0.5)" id="sunAngleVal">70°</b>
-          <span style="flex:1;min-width:200px">
-            <input type="range" min="0" max="90" value="70" id="sunAngleSlider" style="width:100%;accent-color:#FACC15" oninput="document.getElementById('sunAngleVal').innerText=this.value+'°';document.getElementById('sunAngleDisplay').innerText=this.value+'°';toast('☀️ 太阳高度角已调整为 '+this.value+'°')">
-          </span>
-          <button class="btn amber" onclick="document.getElementById('sunAngleSlider').value=70;document.getElementById('sunAngleVal').innerText='70°';document.getElementById('sunAngleDisplay').innerText='70°';toast('☀️ 已恢复默认 70°')">恢复 70°</button>
+          <span style="flex:1"></span>
           <button class="btn cyan" onclick="toast('☀️ 已开启自动追踪最优光照角度')">🤖 自动最优</button>
         </div>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-top:12px;font-size:11px">
@@ -9827,10 +9824,8 @@ setInterval(function(){
   setInterval(function(){
     var now = new Date();
     var angle = getTargetAngle(now.getHours(), now.getMinutes());
-    var slider = document.getElementById('sunAngleSlider');
     var val = document.getElementById('sunAngleVal');
     var disp = document.getElementById('sunAngleDisplay');
-    if(slider) slider.value = angle;
     if(val) val.textContent = angle + '°';
     if(disp) disp.textContent = angle + '°（自动）';
   }, 1000);

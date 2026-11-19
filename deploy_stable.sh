@@ -240,7 +240,10 @@ deploy_cloudflare() {
   # 同步全部文件（index.html + sw.js + manifest + icons + assets），避免部分文件旧版导致内容不完整
   rsync -a --delete --exclude '.git' --exclude '.gitignore' --exclude '.github' --exclude 'index_backup_wormhole.html' \
     "$PUBLISH_DIR/" "$APP_DIR/../worker/public/" || return 1
+  # 构建戳以刚生成的为准（rsync 源里的可能是上一版）
+  [ -f "$APP_DIR/build-stamp.html" ] && cp -f "$APP_DIR/build-stamp.html" "$APP_DIR/../worker/public/build-stamp.html"
   md5sum "$APP_DIR/../worker/public/index.html" | awk '{print "worker/public/index.html md5:", $1}'
+  md5sum "$APP_DIR/../worker/public/build-stamp.html" | awk '{print "worker/public/build-stamp.html md5:", $1}'
   cd "$APP_DIR/../worker" || return 1
   export CLOUDFLARE_API_TOKEN="$CF_TOKEN"
   if ! retry_cmd 3 8 wrangler deploy >/dev/null 2>&1; then
