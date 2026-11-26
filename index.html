@@ -19829,6 +19829,12 @@ try{scanHistoryRender();}catch(e){}
     });
   }
   fillPlanetUniverseOptions();
+  function syncVehicleUniverseLabels(){
+    if(typeof renderShipMigrateStatus==='function') renderShipMigrateStatus();
+    if(typeof renderRoadsterMigrateStatus==='function') renderRoadsterMigrateStatus();
+  }
+  syncVehicleUniverseLabels();
+  setTimeout(syncVehicleUniverseLabels, 1200);
   var ticks=0;
   setInterval(function(){ ticks++; var ns=document.querySelectorAll('[data-pu-tick]'); for(var i=0;i<ns.length;i++) ns[i].textContent=ticks; },1000);
   render();
