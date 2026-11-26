@@ -4090,6 +4090,18 @@ select option{background:#040b1a;color:var(--cyan)}
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;padding:14px" id="spaceTravelLevels"></div>
         <div style="display:flex;justify-content:flex-end;padding:0 14px 12px"><div onclick="spaceTravelMigrateAll()" style="padding:6px 12px;border-radius:5px;background:rgba(0,212,255,0.15);border:1px solid rgba(0,212,255,0.35);color:#00d4ff;font-size:11px;font-weight:bold;cursor:pointer">🌌 一键移民至全部宇宙</div></div>
       </div>
+      <div class="panel wide" id="uesImmigrationPanel">
+        <div class="panel-hdr"><div class="panel-title"><span class="ico">🌌</span>全宇宙移民中心</div><div class="panel-badge" id="uesImmigBadge" style="background:rgba(139,92,246,0.2);color:#C4B5FD">21 个宇宙</div></div>
+        <div style="padding:14px">
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:12px;padding:8px 10px;background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.3);border-radius:6px">
+            <span style="font-size:11px;color:var(--text-dim)">🌌 移民目标宇宙</span>
+            <select id="uesImmigTarget" style="background:rgba(4,18,34,.6);border:1px solid rgba(139,92,246,0.45);color:#C4B5FD;padding:6px 10px;font-size:11px;border-radius:5px"></select>
+            <div onclick="uesImmigrateAll()" style="padding:6px 12px;border-radius:5px;background:rgba(139,92,246,0.18);border:1px solid rgba(139,92,246,0.5);color:#C4B5FD;font-size:11px;font-weight:bold;cursor:pointer">🌌 一键移民全部层级</div>
+            <span id="uesImmigStatus" style="font-size:10px;color:var(--text-dim)">🛸 尚未移民</span>
+          </div>
+          <div id="uesImmigLevels" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px"></div>
+        </div>
+      </div>
       <div class="panel wide">
         <div class="panel-hdr"><div class="panel-title"><span class="ico">🚦</span>全宇宙层级 · 交通工具调度系统</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">8 层级 · 实时运行</div></div>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:6px;padding:10px 14px 0" id="transportStats"></div>
@@ -19838,6 +19850,107 @@ try{scanHistoryRender();}catch(e){}
   var ticks=0;
   setInterval(function(){ ticks++; var ns=document.querySelectorAll('[data-pu-tick]'); for(var i=0;i<ns.length;i++) ns[i].textContent=ticks; },1000);
   render();
+})();
+</script>
+
+<script>
+/* ===== 全宇宙移民中心 ===== */
+(function(){
+  var LEVELS=[
+    {icon:'🌌',name:'宇宙层级'},{icon:'🌠',name:'星系层级'},{icon:'🪐',name:'星球层级'},{icon:'👽',name:'文明层级'},
+    {icon:'🏛️',name:'国家层级'},{icon:'🏙️',name:'地区层级'},{icon:'👤',name:'个人层级'},{icon:'✨',name:'未分层级存在'}
+  ];
+  var NAMED=['主宇宙 · 现在时刻','平行宇宙-A · 机械纪元','平行宇宙-B · 魔法纪元','时空线α · 恐龙纪元','时空线β · 蒸汽朋克纪元','量子时空 · 多维叠加态','永恒时空 · 时间静止','梦境时空 · 意识海洋','混沌时空 · 万有可能'];
+  var EXTRA=['月球','超级地球','海洋星球','高山星球'];
+  var KEY='ues_immigration';
+  var st={universe:'',at:0,levels:{}};
+  try{ var raw=localStorage.getItem(KEY); if(raw){ var d=JSON.parse(raw)||{}; st.universe=d.universe||''; st.at=d.at||0; st.levels=d.levels||{}; } }catch(e){}
+  function save(){ try{ localStorage.setItem(KEY, JSON.stringify(st)); }catch(e){} }
+  function planetNames(){
+    var names=[];
+    try{ names=Array.from(document.querySelectorAll('#planetUniGrid [data-pu]')).map(function(e){return e.getAttribute('data-pu');}); }catch(e){}
+    if(!names.length){ try{ names=(typeof planets!=='undefined')?planets.map(function(p){return p.name;}):[]; }catch(e){ names=[]; } }
+    EXTRA.forEach(function(n){ if(names.indexOf(n)<0) names.push(n); });
+    return names;
+  }
+  function buildSelect(){
+    var sel=document.getElementById('uesImmigTarget');
+    if(!sel || sel.getAttribute('data-filled')) return;
+    var g1=document.createElement('optgroup'); g1.label='🌌 具名宇宙';
+    NAMED.forEach(function(n){ var o=document.createElement('option'); o.value=n; o.textContent=n; g1.appendChild(o); });
+    var g2=document.createElement('optgroup'); g2.label='🪐 星球宇宙（每个星球 = 1 个宇宙）';
+    planetNames().forEach(function(n){ var o=document.createElement('option'); o.value=n+'宇宙'; o.textContent='🪐 '+n+'宇宙'; g2.appendChild(o); });
+    sel.appendChild(g1); sel.appendChild(g2);
+    sel.setAttribute('data-filled','1');
+  }
+  function tm(ts){ try{ return new Date(ts).toLocaleTimeString('zh-CN',{hour12:false}); }catch(e){ return '--:--:--'; } }
+  function render(){
+    buildSelect();
+    var grid=document.getElementById('uesImmigLevels');
+    if(grid){
+      grid.innerHTML=LEVELS.map(function(lv,i){
+        var m=st.levels[lv.name];
+        return '<div data-immig="'+i+'" style="background:rgba(139,92,246,0.07);border:1px solid rgba(139,92,246,0.3);border-radius:8px;padding:10px;text-align:center">'
+          + '<div style="font-size:20px">'+lv.icon+'</div>'
+          + '<div style="font-size:12px;font-weight:bold;color:var(--text);margin:3px 0">'+lv.name+'</div>'
+          + '<div style="font-size:9px;color:'+(m?'#52C41A':'var(--text-dim)')+'">'+(m?'✅ 已移民 · '+tm(m.at):'🛸 待移民')+'</div>'
+          + '<div onclick="uesImmigrateLevel('+i+')" style="margin-top:6px;padding:5px 8px;border-radius:5px;background:rgba(139,92,246,0.16);border:1px solid rgba(139,92,246,0.45);color:#C4B5FD;font-size:10px;font-weight:bold;cursor:pointer">🌌 移民此层级</div>'
+          + '</div>';
+      }).join('');
+    }
+    var n=0; LEVELS.forEach(function(lv){ if(st.levels[lv.name]) n++; });
+    var sEl=document.getElementById('uesImmigStatus');
+    if(sEl){
+      var sysn=0;
+      if(st.universe){
+        ['ues_ships_migrate','ues_roadsters_migrate','ues_transport_universe','ues_spacetravel_universe'].forEach(function(k){
+          try{ var o=JSON.parse(localStorage.getItem(k)||'null'); if(o && o.universe===st.universe) sysn++; }catch(e){}
+        });
+      }
+      sEl.textContent=st.universe ? '✅ 已移民至「'+st.universe+'」· '+n+'/8 层级 · '+sysn+'/4 交通工具系统 · '+tm(st.at) : '🛸 尚未移民 · 0/8 层级';
+      sEl.style.color=st.universe?'#52C41A':'var(--text-dim)';
+    }
+    var b=document.getElementById('uesImmigBadge');
+    if(b) b.textContent=st.universe?('已移民 · '+st.universe):'21 个宇宙';
+  }
+  window.uesImmigrateAll=function(){
+    var sel=document.getElementById('uesImmigTarget');
+    var target=sel?sel.value:'';
+    if(!target){ if(typeof toast==='function') toast('请选择移民目标宇宙'); return; }
+    var now=Date.now();
+    LEVELS.forEach(function(lv){ st.levels[lv.name]={migrated:true,at:now}; });
+    st.universe=target; st.at=now; save();
+    var sc=0,rc=0;
+    try{ sc=Object.keys(JSON.parse(localStorage.getItem('ues_ships')||'{}')).length; }catch(e){}
+    try{ rc=Object.keys(JSON.parse(localStorage.getItem('ues_roadsters')||'{}')).length; }catch(e){}
+    try{ localStorage.setItem('ues_ships_migrate',JSON.stringify({universe:target,at:now,count:sc})); }catch(e){}
+    try{ localStorage.setItem('ues_roadsters_migrate',JSON.stringify({universe:target,at:now,count:rc})); }catch(e){}
+    try{ localStorage.setItem('ues_transport_universe',JSON.stringify({universe:target,at:now})); }catch(e){}
+    try{ localStorage.setItem('ues_spacetravel_universe',JSON.stringify({universe:target,at:now})); }catch(e){}
+    if(typeof renderShipMigrateStatus==='function') renderShipMigrateStatus();
+    if(typeof renderRoadsterMigrateStatus==='function') renderRoadsterMigrateStatus();
+    if(typeof transportMigrateAll==='function') transportMigrateAll();
+    if(typeof spaceTravelMigrateAll==='function') spaceTravelMigrateAll();
+    render();
+    if(typeof toast==='function') toast('🌌 全部 8 层级 + 全部交通工具已移民至「'+target+'」· 飞船 / Roadster / 调度 / 星际交通全量就位 · 实时保存');
+  };
+  window.uesImmigrateLevel=function(i){
+    var lv=LEVELS[i]; if(!lv) return;
+    var sel=document.getElementById('uesImmigTarget');
+    var target=sel?sel.value:'';
+    if(!target){ if(typeof toast==='function') toast('请选择移民目标宇宙'); return; }
+    var now=Date.now();
+    st.levels[lv.name]={migrated:true,at:now};
+    if(!st.universe){ st.universe=target; st.at=now; }
+    save();
+    if(typeof transportMigrate==='function') transportMigrate(i);
+    if(typeof spaceTravelMigrate==='function') spaceTravelMigrate(i);
+    render();
+    if(typeof toast==='function') toast('🌌 '+lv.name+' 已移民至「'+target+'」· 该层级交通工具全量就位 · 实时保存');
+  };
+  render();
+  setTimeout(render,1200);
+  setInterval(render,3000);
 })();
 </script>
 
