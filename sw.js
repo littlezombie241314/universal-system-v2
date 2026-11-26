@@ -1,4 +1,4 @@
-/* 全宇宙恒等系统 · Service Worker
+/* 每个宇宙恒等系统 · Service Worker
  * 版本: v1.8.3
  * 作用: 让系统在云 / ARM 工控板 / Android / iOS / 鸿蒙 上离线可启动、可安装、可运行
  */

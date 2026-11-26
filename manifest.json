@@ -1,7 +1,7 @@
 {
-  "name": "全宇宙恒等系统 · UNIVERSAL EQUALITY SYSTEM",
-  "short_name": "全宇宙恒等",
-  "description": "UNIVERSAL EQUALITY SYSTEM v∞ — 跨云、跨节点、跨 ARM SoC、跨 Android/iOS/鸿蒙 工控板运行的全宇宙恒等系统",
+  "name": "每个宇宙恒等系统 · UNIVERSAL EQUALITY SYSTEM",
+  "short_name": "每个宇宙恒等",
+  "description": "UNIVERSAL EQUALITY SYSTEM v∞ — 跨云、跨节点、跨 ARM SoC、跨 Android/iOS/鸿蒙 工控板运行的每个宇宙恒等系统",
   "id": "/",
   "start_url": "./",
   "scope": "./",

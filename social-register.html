@@ -44,15 +44,15 @@ input:focus { border-color:#00d4ff; box-shadow:0 0 12px rgba(0,212,255,.25); }
     <input id="fName" placeholder="请输入昵称或用户名" value="刘莹">
     <label>账号 ID（可选）</label>
     <input id="fId" placeholder="自动生成，可自定义">
-    <div class="sync"><div class="switch on" id="fSync" onclick="this.classList.toggle('on')"></div><span>同步全宇宙恒等系统账号（数据实时保存，离线保持）</span></div>
+    <div class="sync"><div class="switch on" id="fSync" onclick="this.classList.toggle('on')"></div><span>同步每个宇宙恒等系统账号（数据实时保存，离线保持）</span></div>
     <button class="btn" onclick="doReg()">立即注册 · 加入「<span id="pName2"></span>」</button>
-    <div class="note">本页为该平台官方注册入口 · 注册后账号与全宇宙恒等系统同步 · 各平台间账号互通</div>
+    <div class="note">本页为该平台官方注册入口 · 注册后账号与每个宇宙恒等系统同步 · 各平台间账号互通</div>
   </div>
   <div class="ok" id="okView">
     <div class="big">🎉</div>
     <h2 id="okTitle">注册成功</h2>
     <p id="okInfo"></p>
-    <a class="back" href="#" onclick="history.back();return false">← 返回全宇宙恒等系统</a>
+    <a class="back" href="#" onclick="history.back();return false">← 返回每个宇宙恒等系统</a>
   </div>
   <div class="err" id="errView">
     <div class="big">🌌</div>
@@ -62,7 +62,7 @@ input:focus { border-color:#00d4ff; box-shadow:0 0 12px rgba(0,212,255,.25); }
 </div>
 <script>
 var PLATFORMS = [
-  { key:'ues-social', icon:'🌌', name:'全宇宙社交总网 UES-Social', level:'🌌 宇宙层级', desc:'全宇宙统一社交平台，所有存在均可入驻', steps:'注册后自动开通全宇宙空间 · 账号与全宇宙恒等系统同步 · 支持全宇宙全层级互通' },
+  { key:'ues-social', icon:'🌌', name:'全宇宙社交总网 UES-Social', level:'🌌 宇宙层级', desc:'全宇宙统一社交平台，所有存在均可入驻', steps:'注册后自动开通全宇宙空间 · 账号与每个宇宙恒等系统同步 · 支持全宇宙全层级互通' },
   { key:'universe-circle', icon:'🌍', name:'宇宙朋友圈', level:'🌌 宇宙层级', desc:'全宇宙动态分享平台，发布即全宇宙可见', steps:'注册后自动开通动态发布 · 好友无限 · 跨层级关注' },
   { key:'star-plaza', icon:'🌟', name:'星际广场', level:'🌌 宇宙层级', desc:'全宇宙公共社交广场，聚集所有存在', steps:'注册后自动入驻星际广场 · 实时全宇宙热榜' },
   { key:'universe-community', icon:'🛸', name:'全宇宙社区', level:'🌌 宇宙层级', desc:'全宇宙兴趣社区，兴趣宇宙全覆盖', steps:'注册后自动加入兴趣宇宙 · 全宇宙同好互联' },
@@ -105,7 +105,7 @@ function doReg(){
   regs[pf.name] = { user: name, account: id, level: pf.level, time: new Date().toLocaleString('zh-CN',{hour12:false}) };
   localStorage.setItem('ues_social_reg', JSON.stringify(regs));
   document.getElementById('okTitle').textContent = '「' + pf.name + '」注册成功';
-  document.getElementById('okInfo').innerHTML = '平台：' + pf.level + '<br>账号：' + name + '（' + id + '）<br>注册时间：' + regs[pf.name].time + '<br>账号已与全宇宙恒等系统同步 · 实时保存 · 离线保持';
+  document.getElementById('okInfo').innerHTML = '平台：' + pf.level + '<br>账号：' + name + '（' + id + '）<br>注册时间：' + regs[pf.name].time + '<br>账号已与每个宇宙恒等系统同步 · 实时保存 · 离线保持';
   show('okView');
 }
 </script>
