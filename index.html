@@ -4078,6 +4078,7 @@ select option{background:#040b1a;color:var(--cyan)}
       <div class="panel wide">
         <div class="panel-hdr"><div class="panel-title"><span class="ico">🚦</span>全宇宙层级 · 交通工具调度系统</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">8 层级 · 实时运行</div></div>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:6px;padding:10px 14px 0" id="transportStats"></div>
+        <div style="display:flex;justify-content:flex-end;padding:8px 14px 0"><div onclick="transportMigrateAll()" style="padding:6px 12px;border-radius:5px;background:rgba(0,212,255,0.15);border:1px solid rgba(0,212,255,0.35);color:#00d4ff;font-size:11px;font-weight:bold;cursor:pointer">🌌 一键移民至全部宇宙</div></div>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:10px;padding:10px 14px 14px" id="transportLevels"></div>
       </div>
       <div class="panel wide">
@@ -8594,7 +8595,9 @@ var transportState = { levels:{}, updated:0 };
         total: lv.total,
         running: s && typeof s.running === 'number' ? Math.min(s.running, lv.total) : lv.running,
         speed: lv.speed,
-        kinds: lv.kinds
+        kinds: lv.kinds,
+        migrated: !!(s && s.migrated),
+        migratedAt: (s && s.migratedAt) || 0
       };
     });
     transportState.updated = saved && saved.updated ? saved.updated : 0;
@@ -8616,7 +8619,9 @@ var transportState = { levels:{}, updated:0 };
         + '<div style="font-size:11px;font-weight:bold;color:#C4B5FD" data-tr-speed>--</div>'
         + '<div style="font-size:9px;color:var(--text-dim);margin:5px 0 1px" data-tr-kinds>--</div>'
         + '<div style="font-size:9px;padding:2px 8px;border-radius:10px;background:rgba(82,196,26,0.18);color:#52C41A;margin-top:6px" data-tr-status>🟢 全速运行</div>'
-        + '<div onclick="transportDispatch(' + i + ')" style="margin-top:7px;padding:5px 8px;border-radius:5px;background:rgba(82,196,26,0.18);border:1px solid rgba(82,196,26,0.35);color:#52C41A;font-size:10px;font-weight:bold;cursor:pointer">🚀 一键调度全部</div>'
+        + '<div data-tr-migrate-tag style="font-size:9px;color:var(--text-dim);margin-top:6px">🛸 未移民</div>'
+        + '<div onclick="transportDispatch(' + i + ')" style="margin-top:6px;padding:5px 8px;border-radius:5px;background:rgba(82,196,26,0.18);border:1px solid rgba(82,196,26,0.35);color:#52C41A;font-size:10px;font-weight:bold;cursor:pointer">🚀 一键调度全部</div>'
+        + '<div onclick="transportMigrate(' + i + ')" style="margin-top:5px;padding:5px 8px;border-radius:5px;background:rgba(0,212,255,0.15);border:1px solid rgba(0,212,255,0.35);color:#00d4ff;font-size:10px;font-weight:bold;cursor:pointer">🌌 移民到此宇宙</div>'
         + '</div>';
     }).join('');
   }
@@ -8632,6 +8637,13 @@ var transportState = { levels:{}, updated:0 };
       var pct = Math.round(st.running / st.total * 100);
       var tag = card.querySelector('[data-tr-status]');
       tag.textContent = pct >= 100 ? '🟢 全量运行 ' + pct + '%' : '🟢 运行中 ' + pct + '%';
+      var mt = card.querySelector('[data-tr-migrate-tag]');
+      if (mt) {
+        mt.textContent = st.migrated
+          ? '✅ 已移民 · ' + new Date(st.migratedAt).toLocaleTimeString('zh-CN', {hour12:false})
+          : '🛸 未移民';
+        mt.style.color = st.migrated ? '#00d4ff' : 'var(--text-dim)';
+      }
     });
     var total = 0, running = 0;
     TRANSPORT_LEVELS.forEach(function(lv){ var st = transportState.levels[lv.name]; total += st.total; running += st.running; });
@@ -8654,6 +8666,28 @@ var transportState = { levels:{}, updated:0 };
     st.running = st.total;
     render(); save();
     if (typeof toast === 'function') toast('🚀 ' + lv.name + ' 交通工具已全量调度 · ' + st.total.toLocaleString() + ' 辆/艘/架投入运行 · 实时保存');
+  };
+  window.transportMigrate = function(i){
+    var lv = TRANSPORT_LEVELS[i];
+    if (!lv) return;
+    var st = transportState.levels[lv.name];
+    st.migrated = true;
+    st.migratedAt = Date.now();
+    st.running = st.total;
+    render(); save();
+    if (typeof toast === 'function') toast('🌌 ' + lv.name + ' · 交通工具已整体移民至该宇宙 · ' + st.total.toLocaleString() + ' 辆/艘/架已就位 · 实时保存');
+  };
+  window.transportMigrateAll = function(){
+    var count = 0;
+    TRANSPORT_LEVELS.forEach(function(lv){
+      var st = transportState.levels[lv.name];
+      st.migrated = true;
+      st.migratedAt = Date.now();
+      st.running = st.total;
+      count++;
+    });
+    render(); save();
+    if (typeof toast === 'function') toast('🌌 已向全部 ' + count + ' 个宇宙完成交通工具移民 · 全量运力就位 · 实时保存');
   };
   window.transportTick = function(){
     var changed = false;
