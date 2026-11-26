@@ -4074,6 +4074,7 @@ select option{background:#040b1a;color:var(--cyan)}
       <div class="panel wide">
         <div class="panel-hdr"><div class="panel-title"><span class="ico">🛸</span>全宇宙层级 · 星际交通分配</div><div class="panel-badge" style="background:rgba(0,212,255,0.2);color:#00d4ff">飞行器/宇宙飞船/旅游交通工具</div></div>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;padding:14px" id="spaceTravelLevels"></div>
+        <div style="display:flex;justify-content:flex-end;padding:0 14px 12px"><div onclick="spaceTravelMigrateAll()" style="padding:6px 12px;border-radius:5px;background:rgba(0,212,255,0.15);border:1px solid rgba(0,212,255,0.35);color:#00d4ff;font-size:11px;font-weight:bold;cursor:pointer">🌌 一键移民至全部宇宙</div></div>
       </div>
       <div class="panel wide">
         <div class="panel-hdr"><div class="panel-title"><span class="ico">🚦</span>全宇宙层级 · 交通工具调度系统</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">8 层级 · 实时运行</div></div>
@@ -4771,6 +4772,14 @@ select option{background:#040b1a;color:var(--cyan)}
           <button class="btn cyan" id="shipModeSingleBtn" onclick="setShipMode('single')">🚀 每人一艘</button>
           <button class="btn" id="shipModePairBtn" onclick="setShipMode('pair')">🤝 每两人一艘</button>
         </div>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:12px;padding:8px 10px;background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.3);border-radius:6px">
+          <span style="font-size:11px;color:var(--text-dim)">🌌 移民目标宇宙</span>
+          <select id="shipMigrateUniverse" style="background:rgba(4,18,34,.6);border:1px solid rgba(0,212,255,0.35);color:var(--cyan);padding:6px 10px;font-size:11px;border-radius:5px">
+            <option value="宇宙层级">🌌 宇宙层级</option><option value="星系层级">🌠 星系层级</option><option value="星球层级">🪐 星球层级</option><option value="文明层级">👽 文明层级</option><option value="国家层级">🏛️ 国家层级</option><option value="地区层级">🏙️ 地区层级</option><option value="个人层级">👤 个人层级</option><option value="未分层级存在">✨ 未分层级存在</option>
+          </select>
+          <button class="btn cyan" style="padding:6px 12px;font-size:11px" onclick="migrateShips()">🌌 移民全部飞船</button>
+          <span id="shipMigrateStatus" style="font-size:10px;color:var(--text-dim)">🛸 尚未移民</span>
+        </div>
         <div id="shipSingleMode">
           <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:12px;font-size:11px">
             <span>全宇宙飞船池：<b style="color:var(--cyan)">∞ 无限</b></span>
@@ -4807,6 +4816,14 @@ select option{background:#040b1a;color:var(--cyan)}
         <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
           <button class="btn cyan" id="roadsterModeSingleBtn" onclick="setRoadsterMode('single')">🏎️ 每人一辆</button>
           <button class="btn" id="roadsterModePairBtn" onclick="setRoadsterMode('pair')">🤝 每两人一辆</button>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:12px;padding:8px 10px;background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.3);border-radius:6px">
+          <span style="font-size:11px;color:var(--text-dim)">🌌 移民目标宇宙</span>
+          <select id="roadsterMigrateUniverse" style="background:rgba(4,18,34,.6);border:1px solid rgba(0,212,255,0.35);color:var(--cyan);padding:6px 10px;font-size:11px;border-radius:5px">
+            <option value="宇宙层级">🌌 宇宙层级</option><option value="星系层级">🌠 星系层级</option><option value="星球层级">🪐 星球层级</option><option value="文明层级">👽 文明层级</option><option value="国家层级">🏛️ 国家层级</option><option value="地区层级">🏙️ 地区层级</option><option value="个人层级">👤 个人层级</option><option value="未分层级存在">✨ 未分层级存在</option>
+          </select>
+          <button class="btn cyan" style="padding:6px 12px;font-size:11px" onclick="migrateRoadsters()">🌌 移民全部 Roadster</button>
+          <span id="roadsterMigrateStatus" style="font-size:10px;color:var(--text-dim)">🛸 尚未移民</span>
         </div>
         <div id="roadsterSingleMode">
           <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:12px;font-size:11px">
@@ -8547,7 +8564,9 @@ function outdoorLevelsRender(){
       + '<div style="font-size:11px;font-weight:bold;color:#C4B5FD"><span class="spShipN" style="font-size:10px">--</span> 艘</div>'
       + '<div style="font-size:9px;color:#52C41A;margin:3px 0 2px">🛳️ '+lv.trav+'</div>'
       + '<div style="font-size:11px;font-weight:bold;color:#52C41A"><span class="spTravN" style="font-size:10px">--</span> 辆</div>'
-      + '<div style="font-size:9px;padding:2px 8px;border-radius:10px;background:rgba(0,212,255,0.2);color:#00d4ff;margin-top:5px">🟢 已分配 · 全宇宙可乘</div></div>';
+      + '<div style="font-size:9px;padding:2px 8px;border-radius:10px;background:rgba(0,212,255,0.2);color:#00d4ff;margin-top:5px">🟢 已分配 · 全宇宙可乘</div>'
+      + '<div class="spMigTag" style="font-size:9px;color:var(--text-dim);margin-top:5px">🛸 未移民</div>'
+      + '<div onclick="spaceTravelMigrate('+i+')" style="margin-top:5px;padding:5px 8px;border-radius:5px;background:rgba(0,212,255,0.15);border:1px solid rgba(0,212,255,0.35);color:#00d4ff;font-size:10px;font-weight:bold;cursor:pointer">🌌 移民到此宇宙</div></div>';
   }).join('');
   var fly = LV.map(function(lv){ return lv.fly; });
   var ship = LV.map(function(lv){ return lv.shipN; });
@@ -8564,6 +8583,35 @@ function outdoorLevelsRender(){
       var t = card.querySelector('.spTravN'); if(t) t.textContent = trav[i].toLocaleString();
     });
   }
+  var MIG_KEY = 'ues_spacetravel_migrate';
+  var MIG = {};
+  try { MIG = JSON.parse(localStorage.getItem(MIG_KEY) || '{}') || {}; } catch(e){}
+  function saveMig(){ try { localStorage.setItem(MIG_KEY, JSON.stringify(MIG)); } catch(e){} }
+  function paintMig(){
+    LV.forEach(function(lv, i){
+      var card = box.querySelector('[data-spTravel="'+i+'"]');
+      if (!card) return;
+      var m = MIG[lv.name];
+      var tag = card.querySelector('.spMigTag');
+      if (!tag) return;
+      tag.textContent = m ? '✅ 已移民 · ' + new Date(m.at).toLocaleTimeString('zh-CN', {hour12:false}) : '🛸 未移民';
+      tag.style.color = m ? '#00d4ff' : 'var(--text-dim)';
+    });
+  }
+  window.spaceTravelMigrate = function(i){
+    var lv = LV[i];
+    if (!lv) return;
+    MIG[lv.name] = { migrated:true, at:Date.now() };
+    saveMig(); paintMig();
+    if (typeof toast === 'function') toast('🌌 ' + lv.name + ' · 飞行器 / 宇宙飞船 / 旅游载具已整体移民至该宇宙 · 实时保存');
+  };
+  window.spaceTravelMigrateAll = function(){
+    var t = Date.now(), n = 0;
+    LV.forEach(function(lv){ MIG[lv.name] = { migrated:true, at:t }; n++; });
+    saveMig(); paintMig();
+    if (typeof toast === 'function') toast('🌌 已向全部 ' + n + ' 个宇宙完成星际交通移民 · 飞行器 / 飞船 / 旅游载具全量就位 · 实时保存');
+  };
+  paintMig();
   tick();
   setInterval(tick, 2000);
 })();
@@ -19030,6 +19078,27 @@ function renderShips(){
       + '<div style="font-size:9px;color:#52C41A">登记在名下 · 专属</div></div>';
   }).join('');
 }
+function migrateShips(){
+  var sel = document.getElementById('shipMigrateUniverse');
+  var target = sel ? sel.value : '';
+  if (!target){ quickMsg('请选择目标宇宙'); return; }
+  var reg = {}; try { reg = JSON.parse(localStorage.getItem('ues_ships') || '{}'); } catch(e){}
+  var count = Object.keys(reg).length;
+  try { localStorage.setItem('ues_ships_migrate', JSON.stringify({universe:target, at:Date.now(), count:count})); } catch(e){}
+  renderShipMigrateStatus();
+  quickMsg('🌌 已将 ' + count + ' 艘已登记宇宙飞船整体移民至「' + target + '」· 全宇宙运力就位 · 实时保存');
+}
+function renderShipMigrateStatus(){
+  var el = document.getElementById('shipMigrateStatus');
+  if (!el) return;
+  var st = null; try { st = JSON.parse(localStorage.getItem('ues_ships_migrate') || 'null'); } catch(e){}
+  if (st && st.universe){
+    el.textContent = '✅ 已移民 · ' + st.universe + ' · ' + new Date(st.at).toLocaleTimeString('zh-CN', {hour12:false}) + ' · ' + st.count + ' 艘';
+    el.style.color = '#00d4ff';
+  } else {
+    el.textContent = '🛸 尚未移民'; el.style.color = 'var(--text-dim)';
+  }
+}
 function assignShip(){
   var inp = document.getElementById('shipOwner');
   var n = inp ? inp.value.trim() : '';
@@ -19044,6 +19113,7 @@ function assignShip(){
   quickMsg('✅ 已为「' + n + '」分配专属宇宙飞船 🚀 ' + info + '，登记在名下 · 实时保存');
 }
 renderShips();
+renderShipMigrateStatus();
 
 
 /* ===== Roadster 分配系统 ===== */
@@ -19071,6 +19141,27 @@ function renderRoadsters(){
       + '<div style="font-size:10px;color:#ff6b6b">🏎️ ' + escName(reg[k]) + '</div>'
       + '<div style="font-size:9px;color:#52C41A">登记在名下 · 专属</div></div>';
   }).join('');
+}
+function migrateRoadsters(){
+  var sel = document.getElementById('roadsterMigrateUniverse');
+  var target = sel ? sel.value : '';
+  if (!target){ quickMsg('请选择目标宇宙'); return; }
+  var reg = {}; try { reg = JSON.parse(localStorage.getItem('ues_roadsters') || '{}'); } catch(e){}
+  var count = Object.keys(reg).length;
+  try { localStorage.setItem('ues_roadsters_migrate', JSON.stringify({universe:target, at:Date.now(), count:count})); } catch(e){}
+  renderRoadsterMigrateStatus();
+  quickMsg('🌌 已将 ' + count + ' 辆已登记 Roadster 整体移民至「' + target + '」· 全宇宙运力就位 · 实时保存');
+}
+function renderRoadsterMigrateStatus(){
+  var el = document.getElementById('roadsterMigrateStatus');
+  if (!el) return;
+  var st = null; try { st = JSON.parse(localStorage.getItem('ues_roadsters_migrate') || 'null'); } catch(e){}
+  if (st && st.universe){
+    el.textContent = '✅ 已移民 · ' + st.universe + ' · ' + new Date(st.at).toLocaleTimeString('zh-CN', {hour12:false}) + ' · ' + st.count + ' 辆';
+    el.style.color = '#00d4ff';
+  } else {
+    el.textContent = '🛸 尚未移民'; el.style.color = 'var(--text-dim)';
+  }
 }
 function assignRoadster(){
   var inp = document.getElementById('roadsterOwner');
