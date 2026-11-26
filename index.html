@@ -1729,7 +1729,7 @@ select option{background:#040b1a;color:var(--cyan)}
               ✓ 全平台业务验证通过 · 太阳风暴模块仅做资源可达性检查（/api/solar-storm/state 200） · 其余模块全部真实业务操作验证通过
             </div>
             <div style="margin-top:8px;padding:6px 10px;background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.3);border-radius:6px;font-size:10px;color:#00d4ff;text-align:center">
-              ⬆️ 全平台最新版 v1.9.8 · UES-OS v3.0 · ∞ Qbps · 量子 3.0 · 0 ms · 8/8 层级统一 · 21 宇宙 / 12 星球 / 4 交通工具系统
+              ⬆️ 全平台最新版 v1.9.9 · UES-OS v3.0 · ∞ Qbps · 量子 3.0 · 0 ms · 8/8 层级统一 · 21 宇宙全面合作 / 12 星球 / 4 交通工具系统
             </div>
           </div>
 
@@ -1761,7 +1761,7 @@ select option{background:#040b1a;color:var(--cyan)}
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
               <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">UES-OS v3.0 · 最新版</div>
-              <div style="font-size:9px;color:#52C41A;margin-top:2px">✅ 已升级至最新版 · 构建 v1.9.8 · 2026-11-26</div>
+              <div style="font-size:9px;color:#52C41A;margin-top:2px">✅ 已升级至最新版 · 构建 v1.9.9 · 2026-11-26</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -4103,6 +4103,20 @@ select option{background:#040b1a;color:var(--cyan)}
           <div id="uesImmigLevels" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px"></div>
         </div>
       </div>
+      <div class="panel wide" id="uesCoopPanel">
+        <div class="panel-hdr"><div class="panel-title"><span class="ico">🤝</span>全宇宙合作联盟</div><div class="panel-badge" id="uesCoopBadge" style="background:rgba(82,196,26,0.2);color:#52C41A">21 宇宙 · 全面合作</div></div>
+        <div style="padding:14px">
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:12px;padding:8px 10px;background:rgba(82,196,26,0.08);border:1px solid rgba(82,196,26,0.3);border-radius:6px">
+            <span id="uesCoopStatus" style="font-size:11px;color:#52C41A">🤝 全宇宙合作已生效</span>
+            <div onclick="uesCoopAll()" style="margin-left:auto;padding:6px 12px;border-radius:5px;background:rgba(82,196,26,0.18);border:1px solid rgba(82,196,26,0.5);color:#52C41A;font-size:11px;font-weight:bold;cursor:pointer">🤝 一键确认全宇宙合作</div>
+          </div>
+          <div id="uesCoopStats" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin-bottom:12px"></div>
+          <div style="font-size:10px;color:var(--text-dim);margin:0 0 8px 2px">全宇宙合作成员</div>
+          <div id="uesCoopUniverses" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:6px;margin-bottom:14px"></div>
+          <div style="font-size:10px;color:var(--text-dim);margin:0 0 8px 2px">全宇宙层级</div>
+          <div id="uesCoopLevels" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:6px"></div>
+        </div>
+      </div>
       <div class="panel wide">
         <div class="panel-hdr"><div class="panel-title"><span class="ico">🚦</span>全宇宙层级 · 交通工具调度系统</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">8 层级 · 实时运行</div></div>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:6px;padding:10px 14px 0" id="transportStats"></div>
@@ -6427,7 +6441,7 @@ select option{background:#040b1a;color:var(--cyan)}
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
               <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">UES-OS v3.0 · 最新版</div>
-              <div style="font-size:9px;color:#52C41A;margin-top:2px">✅ 已升级至最新版 · 构建 v1.9.8 · 2026-11-26</div>
+              <div style="font-size:9px;color:#52C41A;margin-top:2px">✅ 已升级至最新版 · 构建 v1.9.9 · 2026-11-26</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -19971,6 +19985,72 @@ try{scanHistoryRender();}catch(e){}
 })();
 </script>
 
+<script>
+/* ===== 全宇宙合作联盟 ===== */
+(function(){
+  var KEY='ues_coop';
+  var LEVELS=[
+    {icon:'🌌',name:'宇宙层级'},{icon:'🌠',name:'星系层级'},{icon:'🪐',name:'星球层级'},{icon:'👽',name:'文明层级'},
+    {icon:'🏛️',name:'国家层级'},{icon:'🏙️',name:'地区层级'},{icon:'👤',name:'个人层级'},{icon:'✨',name:'未分层级存在'}
+  ];
+  var st={all:true,universes:[],at:0};
+  try{var raw=localStorage.getItem(KEY);if(raw){var d=JSON.parse(raw)||{};st.all=d.all!==false;st.universes=d.universes||[];st.at=d.at||0;}}catch(e){}
+  function names(){
+    var out=[],seen={};
+    try{
+      var sel=document.getElementById('uesImmigTarget');
+      if(sel){for(var i=0;i<sel.options.length;i++){var v=sel.options[i].value;if(v&&!seen[v]){seen[v]=1;out.push(v);}}}
+    }catch(e){}
+    if(!out.length){
+      var base=['主宇宙 · 现在时刻','平行宇宙-A · 机械纪元','平行宇宙-B · 魔法纪元','时空线α · 恐龙纪元','时空线β · 蒸汽朋克纪元','量子时空 · 多维叠加态','永恒时空 · 时间静止','梦境时空 · 意识海洋','混沌时空 · 万有可能'];
+      var ps=[];
+      try{ps=(typeof planets!=='undefined')?planets.map(function(p){return p.name;}):[];}catch(e){ps=[];}
+      ['月球','超级地球','海洋星球','高山星球'].forEach(function(n){if(ps.indexOf(n)<0)ps.push(n);});
+      base.concat(ps.map(function(n){return n+'宇宙';})).forEach(function(v){if(!seen[v]){seen[v]=1;out.push(v);}});
+    }
+    return out;
+  }
+  function tm(ts){try{return new Date(ts).toLocaleTimeString('zh-CN',{hour12:false});}catch(e){return '--:--:--';}}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}}
+  function render(){
+    var list=names();
+    st.all=true;st.universes=list;
+    var grid=document.getElementById('uesCoopUniverses');
+    if(grid){
+      grid.innerHTML=list.map(function(u,i){
+        var nm=u.replace(/宇宙$/,'');
+        return '<div data-coop="'+i+'" style="background:rgba(82,196,26,0.07);border:1px solid rgba(82,196,26,0.32);border-radius:7px;padding:8px 9px;display:flex;align-items:center;gap:7px">'
+          +'<span style="font-size:15px">🪐</span>'
+          +'<div style="min-width:0"><div style="font-size:11px;font-weight:bold;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+nm+'</div>'
+          +'<div style="font-size:9px;color:#52C41A;margin-top:2px">✅ 合作 · 全宇宙联盟</div></div></div>';
+      }).join('');
+    }
+    var lg=document.getElementById('uesCoopLevels');
+    if(lg){
+      lg.innerHTML=LEVELS.map(function(lv,i){
+        return '<div data-cooplv="'+i+'" style="background:rgba(0,212,255,0.06);border:1px solid rgba(0,212,255,0.28);border-radius:7px;padding:7px 9px;display:flex;align-items:center;gap:7px">'
+          +'<span style="font-size:15px">'+lv.icon+'</span>'
+          +'<div><div style="font-size:11px;font-weight:bold;color:var(--text)">'+lv.name+'</div>'
+          +'<div style="font-size:9px;color:#52C41A;margin-top:2px">✅ 合作 · 实时生效</div></div></div>';
+      }).join('');
+    }
+    var sb=document.getElementById('uesCoopStats');
+    if(sb){
+      var rows=[{k:'合作宇宙',v:list.length+'/'+list.length,c:'#52C41A'},{k:'合作层级',v:'8/8',c:'#00d4ff'},{k:'联盟关系',v:'全面合作',c:'#C4B5FD'},{k:'最近确认',v:tm(st.at),c:'#FFB020'}];
+      sb.innerHTML=rows.map(function(x){return '<div style="background:rgba(0,0,0,0.22);border:1px solid rgba(255,255,255,0.08);border-radius:7px;padding:7px 10px;text-align:center"><div style="font-size:9px;color:var(--text-dim)">'+x.k+'</div><div style="font-size:11px;font-weight:bold;color:'+x.c+';margin-top:2px">'+x.v+'</div></div>';}).join('');
+    }
+    var stl=document.getElementById('uesCoopStatus');
+    if(stl) stl.textContent='✅ 全宇宙合作已生效 · '+list.length+'/'+list.length+' 宇宙 · 8/8 层级';
+    var bd=document.getElementById('uesCoopBadge');
+    if(bd) bd.textContent=list.length+' 宇宙 · 全面合作';
+    if(!st.at) st.at=Date.now();
+    save();
+  }
+  window.uesCoopAll=function(){st.all=true;st.universes=names();st.at=Date.now();save();render();if(typeof toast==='function')toast('🤝 全宇宙合作已确认 · 所有宇宙互为合作成员 · 实时保存');};
+  render();setTimeout(render,1200);setTimeout(render,4000);setInterval(render,3000);
+})();
+</script>
 </body>
+
 </html>
     
