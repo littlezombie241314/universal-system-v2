@@ -66,6 +66,16 @@ body{background:var(--bg);color:var(--text);font-family:var(--mono);font-size:13
 .hero-meta{font-size:11px;color:var(--text-dim);margin-top:8px;letter-spacing:1px;position:relative;line-height:1.8}
 .hero-meta span{color:var(--green);margin:0 6px}
 
+.coop-uni-strip{margin-top:10px;border:1px solid rgba(82,196,26,.35);background:linear-gradient(90deg,rgba(82,196,26,.09),rgba(0,212,255,.05));border-radius:9px;padding:8px 10px;display:flex;align-items:center;gap:10px;overflow:hidden}
+.coop-uni-title{flex:0 0 auto;display:flex;flex-direction:column;gap:1px;font-size:11px;font-weight:bold;color:#52C41A;line-height:1.3}
+.coop-uni-title b{font-size:13px;color:#52C41A}
+.coop-uni-title small{font-size:9px;color:var(--text-dim);font-weight:normal}
+.coop-uni-track{display:flex;gap:6px;overflow-x:auto;white-space:nowrap;padding:2px 0;scrollbar-width:none;-ms-overflow-style:none}
+.coop-uni-track::-webkit-scrollbar{display:none}
+.coop-uni-chip{flex:0 0 auto;display:inline-flex;align-items:center;gap:5px;padding:5px 9px;border:1px solid rgba(82,196,26,.3);background:rgba(82,196,26,.07);border-radius:999px;font-size:10px;color:var(--text)}
+.coop-uni-chip b{font-weight:bold}
+.coop-uni-chip i{font-style:normal;color:#52C41A;font-size:9px}
+.coop-uni-more{flex:0 0 auto;font-size:10px;color:var(--cyan);cursor:pointer;padding:5px 8px;border:1px solid rgba(0,212,255,.3);border-radius:999px;background:rgba(0,212,255,.07)}
 .stat-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-top:10px}
 .stat{padding:12px;border:1px solid var(--border);background:var(--panel);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);position:relative;overflow:hidden;transition:all .3s;
   clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px))}
@@ -727,6 +737,13 @@ select option{background:#040b1a;color:var(--cyan)}
     <div class="stat magenta"><div class="stat-icon">🧬</div><div class="stat-val">MAX</div><div class="stat-lbl">全体智商等级</div></div>
     <div class="stat purple"><div class="stat-icon">🕊️</div><div class="stat-val" id="statRevived">9833亿</div><div class="stat-lbl">已复活存在</div></div>
     <div class="stat cyan"><div class="stat-icon">🪐</div><div class="stat-val">1000亿</div><div class="stat-lbl">合作星球</div></div>
+    <div class="stat green"><div class="stat-icon">🤝</div><div class="stat-val" id="statCoopUni">21</div><div class="stat-lbl">合作宇宙</div></div>
+  </div>
+
+  <div class="coop-uni-strip" id="coopUniStrip">
+    <div class="coop-uni-title">🤝 合作宇宙 <b id="coopUniCount">0/21</b><small>每个宇宙独立合作 · 8/8 层级 · 实时</small></div>
+    <div class="coop-uni-track" id="coopUniTrack"></div>
+    <div class="coop-uni-more" onclick="document.getElementById('uesCoopPanel').scrollIntoView({behavior:'smooth',block:'start'})">查看联盟 →</div>
   </div>
 
   <div class="tabs" id="tabs">
@@ -1729,7 +1746,7 @@ select option{background:#040b1a;color:var(--cyan)}
               ✓ 全平台业务验证通过 · 太阳风暴模块仅做资源可达性检查（/api/solar-storm/state 200） · 其余模块全部真实业务操作验证通过
             </div>
             <div style="margin-top:8px;padding:6px 10px;background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.3);border-radius:6px;font-size:10px;color:#00d4ff;text-align:center">
-              ⬆️ 全平台最新版 v1.10.1 · UES-OS v3.0 · ∞ Qbps · 量子 3.0 · 0 ms · 8/8 层级统一 · 21 宇宙各自恒等 · 168 层级 / 12 星球 / 4 交通工具系统
+              ⬆️ 全平台最新版 v1.10.2 · UES-OS v3.0 · ∞ Qbps · 量子 3.0 · 0 ms · 8/8 层级统一 · 21 宇宙各自恒等 · 168 层级 / 12 星球 / 4 交通工具系统
             </div>
           </div>
 
@@ -1761,7 +1778,7 @@ select option{background:#040b1a;color:var(--cyan)}
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
               <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">UES-OS v3.0 · 最新版</div>
-              <div style="font-size:9px;color:#52C41A;margin-top:2px">✅ 已升级至最新版 · 构建 v1.10.1 · 2026-11-26</div>
+              <div style="font-size:9px;color:#52C41A;margin-top:2px">✅ 已升级至最新版 · 构建 v1.10.2 · 2026-11-26</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -6452,7 +6469,7 @@ select option{background:#040b1a;color:var(--cyan)}
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
               <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">UES-OS v3.0 · 最新版</div>
-              <div style="font-size:9px;color:#52C41A;margin-top:2px">✅ 已升级至最新版 · 构建 v1.10.1 · 2026-11-26</div>
+              <div style="font-size:9px;color:#52C41A;margin-top:2px">✅ 已升级至最新版 · 构建 v1.10.2 · 2026-11-26</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -20050,6 +20067,10 @@ try{scanHistoryRender();}catch(e){}
       var rows=[{k:'合作宇宙',v:list.length+'/'+list.length,c:'#52C41A'},{k:'合作层级',v:'8/8',c:'#00d4ff'},{k:'联盟关系',v:'全面合作',c:'#C4B5FD'},{k:'最近确认',v:tm(st.at),c:'#FFB020'}];
       sb.innerHTML=rows.map(function(x){return '<div style="background:rgba(0,0,0,0.22);border:1px solid rgba(255,255,255,0.08);border-radius:7px;padding:7px 10px;text-align:center"><div style="font-size:9px;color:var(--text-dim)">'+x.k+'</div><div style="font-size:11px;font-weight:bold;color:'+x.c+';margin-top:2px">'+x.v+'</div></div>';}).join('');
     }
+    var tr=document.getElementById('coopUniTrack');
+    if(tr){ tr.innerHTML=list.map(function(u){ var nm=u.replace(/宇宙$/,''); return '<div class="coop-uni-chip" data-coop-uni="'+u+'"><b>🪐 '+nm+'</b><i>✓ 合作</i></div>'; }).join(''); }
+    var cc=document.getElementById('coopUniCount'); if(cc) cc.textContent=list.length+'/'+list.length;
+    var sc=document.getElementById('statCoopUni'); if(sc) sc.textContent=list.length;
     var stl=document.getElementById('uesCoopStatus');
     if(stl) stl.textContent='✅ 全宇宙合作已生效 · '+list.length+'/'+list.length+' 宇宙 · 8/8 层级';
     var bd=document.getElementById('uesCoopBadge');
