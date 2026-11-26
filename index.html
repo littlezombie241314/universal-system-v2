@@ -19866,6 +19866,7 @@ try{scanHistoryRender();}catch(e){}
   var KEY='ues_immigration';
   var st={universe:'',at:0,levels:{}};
   try{ var raw=localStorage.getItem(KEY); if(raw){ var d=JSON.parse(raw)||{}; st.universe=d.universe||''; st.at=d.at||0; st.levels=d.levels||{}; } }catch(e){}
+  if(st.universe){ LEVELS.forEach(function(lv){ var m=st.levels[lv.name]; if(m && !m.universe) m.universe=st.universe; }); }
   function save(){ try{ localStorage.setItem(KEY, JSON.stringify(st)); }catch(e){} }
   function planetNames(){
     var names=[];
@@ -19900,7 +19901,7 @@ try{scanHistoryRender();}catch(e){}
           + '</div>';
       }).join('');
     }
-    var n=0; LEVELS.forEach(function(lv){ var m=st.levels[lv.name]; if(m && (!m.universe || m.universe===st.universe)) n++; });
+    var n=0; LEVELS.forEach(function(lv){ var m=st.levels[lv.name]; if(m && m.universe===st.universe) n++; });
     var sEl=document.getElementById('uesImmigStatus');
     if(sEl){
       var sysn=0;
