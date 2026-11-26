@@ -4099,6 +4099,7 @@ select option{background:#040b1a;color:var(--cyan)}
             <div onclick="uesImmigrateAll()" style="padding:6px 12px;border-radius:5px;background:rgba(139,92,246,0.18);border:1px solid rgba(139,92,246,0.5);color:#C4B5FD;font-size:11px;font-weight:bold;cursor:pointer">🌌 一键移民全部层级</div>
             <span id="uesImmigStatus" style="font-size:10px;color:var(--text-dim)">🛸 尚未移民</span>
           </div>
+          <div id="uesImmigStats" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin-bottom:12px"></div>
           <div id="uesImmigLevels" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px"></div>
         </div>
       </div>
@@ -19890,15 +19891,16 @@ try{scanHistoryRender();}catch(e){}
     if(grid){
       grid.innerHTML=LEVELS.map(function(lv,i){
         var m=st.levels[lv.name];
+        var mtxt=m?('✅ '+(m.universe||st.universe||'')+' · '+tm(m.at)):'🛸 待移民';
         return '<div data-immig="'+i+'" style="background:rgba(139,92,246,0.07);border:1px solid rgba(139,92,246,0.3);border-radius:8px;padding:10px;text-align:center">'
           + '<div style="font-size:20px">'+lv.icon+'</div>'
           + '<div style="font-size:12px;font-weight:bold;color:var(--text);margin:3px 0">'+lv.name+'</div>'
-          + '<div style="font-size:9px;color:'+(m?'#52C41A':'var(--text-dim)')+'">'+(m?'✅ 已移民 · '+tm(m.at):'🛸 待移民')+'</div>'
+          + '<div style="font-size:9px;color:'+(m?'#52C41A':'var(--text-dim)')+'">'+mtxt+'</div>'
           + '<div onclick="uesImmigrateLevel('+i+')" style="margin-top:6px;padding:5px 8px;border-radius:5px;background:rgba(139,92,246,0.16);border:1px solid rgba(139,92,246,0.45);color:#C4B5FD;font-size:10px;font-weight:bold;cursor:pointer">🌌 移民此层级</div>'
           + '</div>';
       }).join('');
     }
-    var n=0; LEVELS.forEach(function(lv){ if(st.levels[lv.name]) n++; });
+    var n=0; LEVELS.forEach(function(lv){ var m=st.levels[lv.name]; if(m && (!m.universe || m.universe===st.universe)) n++; });
     var sEl=document.getElementById('uesImmigStatus');
     if(sEl){
       var sysn=0;
@@ -19912,13 +19914,27 @@ try{scanHistoryRender();}catch(e){}
     }
     var b=document.getElementById('uesImmigBadge');
     if(b) b.textContent=st.universe?('已移民 · '+st.universe):'21 个宇宙';
+    var statBox=document.getElementById('uesImmigStats');
+    if(statBox){
+      var rows=[
+        {k:'目标宇宙', v:st.universe||'未选择', c:'#C4B5FD'},
+        {k:'已移民层级', v:n+'/8', c:'#52C41A'},
+        {k:'交通工具系统', v:sysn+'/4', c:'#00d4ff'},
+        {k:'最近移民', v:st.at?tm(st.at):'—', c:'#FFB020'}
+      ];
+      statBox.innerHTML=rows.map(function(x){
+        return '<div style="background:rgba(0,0,0,0.22);border:1px solid rgba(255,255,255,0.08);border-radius:7px;padding:7px 10px;text-align:center">'
+          + '<div style="font-size:9px;color:var(--text-dim)">'+x.k+'</div>'
+          + '<div style="font-size:11px;font-weight:bold;color:'+x.c+';margin-top:2px">'+x.v+'</div></div>';
+      }).join('');
+    }
   }
   window.uesImmigrateAll=function(){
     var sel=document.getElementById('uesImmigTarget');
     var target=sel?sel.value:'';
     if(!target){ if(typeof toast==='function') toast('请选择移民目标宇宙'); return; }
     var now=Date.now();
-    LEVELS.forEach(function(lv){ st.levels[lv.name]={migrated:true,at:now}; });
+    LEVELS.forEach(function(lv){ st.levels[lv.name]={migrated:true,universe:target,at:now}; });
     st.universe=target; st.at=now; save();
     var sc=0,rc=0;
     try{ sc=Object.keys(JSON.parse(localStorage.getItem('ues_ships')||'{}')).length; }catch(e){}
@@ -19940,8 +19956,8 @@ try{scanHistoryRender();}catch(e){}
     var target=sel?sel.value:'';
     if(!target){ if(typeof toast==='function') toast('请选择移民目标宇宙'); return; }
     var now=Date.now();
-    st.levels[lv.name]={migrated:true,at:now};
-    if(!st.universe){ st.universe=target; st.at=now; }
+    st.levels[lv.name]={migrated:true,universe:target,at:now};
+    st.universe=target; st.at=now;
     save();
     if(typeof transportMigrate==='function') transportMigrate(i);
     if(typeof spaceTravelMigrate==='function') spaceTravelMigrate(i);
