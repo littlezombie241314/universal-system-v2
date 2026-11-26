@@ -1750,7 +1750,7 @@ select option{background:#040b1a;color:var(--cyan)}
               ✓ 全平台业务验证通过 · 太阳风暴模块仅做资源可达性检查（/api/solar-storm/state 200） · 其余模块全部真实业务操作验证通过
             </div>
             <div style="margin-top:8px;padding:6px 10px;background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.3);border-radius:6px;font-size:10px;color:#00d4ff;text-align:center">
-              ⬆️ 全平台最新版 v1.10.5 · UES-OS v3.0 · ∞ Qbps · 量子 3.0 · 0 ms · 8/8 层级统一 · 21 宇宙各自恒等 · 168 层级 / 12 星球 / 4 交通工具系统
+              ⬆️ 全平台最新版 v1.10.7 · UES-OS v3.0 · ∞ Qbps · 量子 3.0 · 0 ms · 8/8 层级统一 · 21 宇宙各自恒等 · 168 层级 / 12 星球 / 4 交通工具系统
             </div>
           </div>
 
@@ -1782,7 +1782,7 @@ select option{background:#040b1a;color:var(--cyan)}
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
               <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">UES-OS v3.0 · 最新版</div>
-              <div style="font-size:9px;color:#52C41A;margin-top:2px">✅ 已升级至最新版 · 构建 v1.10.5 · 2026-11-26</div>
+              <div style="font-size:9px;color:#52C41A;margin-top:2px">✅ 已升级至最新版 · 构建 v1.10.7 · 2026-11-26</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -4139,7 +4139,7 @@ select option{background:#040b1a;color:var(--cyan)}
         </div>
       </div>
       <div class="panel wide" id="uesEachEqPanel">
-        <div class="panel-hdr"><div class="panel-title"><span class="ico">🌐</span>每个宇宙恒等 · 21 宇宙 × 8 层级</div><div class="panel-badge" id="uesEachEqBadge" style="background:rgba(82,196,26,0.2);color:#52C41A">0/21 宇宙</div></div>
+        <div class="panel-hdr"><div class="panel-title"><span class="ico">🌐</span>每个宇宙恒等 · 21 宇宙 × 8 层级 · 与含地球宇宙一致</div><div class="panel-badge" id="uesEachEqBadge" style="background:rgba(82,196,26,0.2);color:#52C41A">0/21 宇宙</div></div>
         <div style="padding:14px">
           <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:12px;padding:8px 10px;background:rgba(82,196,26,0.08);border:1px solid rgba(82,196,26,0.3);border-radius:6px">
             <span id="uesEachEqStatus" style="font-size:11px;color:#52C41A">⚪ 已恒等 0/21 宇宙 · 0/168 层级 · 实时保存</span>
@@ -6473,7 +6473,7 @@ select option{background:#040b1a;color:var(--cyan)}
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
               <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">UES-OS v3.0 · 最新版</div>
-              <div style="font-size:9px;color:#52C41A;margin-top:2px">✅ 已升级至最新版 · 构建 v1.10.5 · 2026-11-26</div>
+              <div style="font-size:9px;color:#52C41A;margin-top:2px">✅ 已升级至最新版 · 构建 v1.10.7 · 2026-11-26</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -10332,11 +10332,11 @@ setInterval(function(){
   setTimeout(render, 500);
 })();
 
-/* ===== 每个宇宙 × 每个层级 · 天气为晴（9 宇宙 × 8 层级） ===== */
+/* ===== 每个宇宙 × 每个层级 · 天气为晴（21 宇宙 × 8 层级 · 与含地球宇宙一致） ===== */
 (function(){
   var box = document.getElementById('universeWeatherLevels');
   if (!box) return;
-  var UNIVERSES = [
+  var BASE = [
     {icon:'🌌', name:'主宇宙 · 现在时刻'},
     {icon:'🤖', name:'平行宇宙-A · 机械纪元'},
     {icon:'🪄', name:'平行宇宙-B · 魔法纪元'},
@@ -10347,18 +10347,49 @@ setInterval(function(){
     {icon:'🌊', name:'梦境时空 · 意识海洋'},
     {icon:'🔮', name:'混沌时空 · 万有可能'}
   ];
+  var PICO = {'地球':'🌍','火星':'🔴','开普勒-442b':'🪐','伊甸星':'🌿','赛博坦':'⚙️','织女星II':'💎','新地球':'🌐','北极星III':'⭐','月球':'🌕','超级地球':'🌏','海洋星球':'🌊','高山星球':'⛰️'};
   var LEVELS = ['宇宙','星系','星球','文明','国家','地区','个人','未分层级'];
+  var PLANET_MATTER = ['地球','火星','开普勒-442b','伊甸星','赛博坦','织女星II','新地球','北极星III','月球','超级地球','海洋星球','高山星球'];
+  var MATTER = ['岩石','金属','水','大气','土壤','矿产','能源','有机物','生命元素'];
+  function names(){
+    var out=[],seen={};
+    try{
+      var sel=document.getElementById('uesImmigTarget');
+      if(sel){ for(var i=0;i<sel.options.length;i++){ var v=sel.options[i].value; if(v&&!seen[v]){ seen[v]=1; out.push(v); } } }
+    }catch(e){}
+    if(out.length<21){
+      out=[]; seen={};
+      BASE.forEach(function(u){ if(!seen[u.name]){ seen[u.name]=1; out.push(u.name); } });
+      var ps=[];
+      try{ ps=(typeof planets!=='undefined')?planets.map(function(x){return x.name;}):[]; }catch(e){ ps=[]; }
+      ['月球','超级地球','海洋星球','高山星球'].forEach(function(n){ if(ps.indexOf(n)<0) ps.push(n); });
+      ps.forEach(function(n){ var full=n+'宇宙'; if(!seen[full]){ seen[full]=1; out.push(full); } });
+    }
+    return out.slice(0,21);
+  }
+  function iconOf(n,i){
+    if(PICO[n]) return PICO[n];
+    var nm=n.replace(/宇宙$/,'');
+    if(PICO[nm]) return PICO[nm];
+    if(i<BASE.length) return BASE[i].icon;
+    return '🪐';
+  }
   function render(){
-    box.innerHTML = UNIVERSES.map(function(u){
-      var chips = LEVELS.map(function(lv){
+    var list=names();
+    box.innerHTML=list.map(function(n,i){
+      var chips=LEVELS.map(function(lv){
         return '<span style="display:inline-block;font-size:9px;padding:2px 6px;margin:2px;border-radius:10px;background:rgba(250,173,20,0.14);border:1px solid rgba(250,173,20,0.32);color:#FAAD14">'+lv+' ☀️晴 50°C</span>';
       }).join('');
-      return '<div style="background:rgba(0,0,0,0.25);border:1px solid rgba(250,173,20,0.22);border-radius:8px;padding:8px 10px">'
-        + '<div style="font-size:11px;font-weight:bold;color:var(--text);margin-bottom:4px">'+u.icon+' '+u.name+'</div>'
-        + '<div>'+chips+'</div></div>';
+      return '<div data-uw="'+n+'" style="background:rgba(0,0,0,0.25);border:1px solid rgba(250,173,20,0.22);border-radius:8px;padding:8px 10px">'
+        + '<div style="display:flex;align-items:center;gap:6px;margin-bottom:4px"><span>'+iconOf(n,i)+'</span><div style="font-size:11px;font-weight:bold;color:var(--text);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+n+'</div><span style="font-size:9px;color:#52C41A">☀️ 太阳 ×1 · 晴 50°C</span></div>'
+        + '<div>'+chips+'</div>'
+        + '<div title="'+MATTER.join(' / ')+'" style="margin-top:4px;font-size:9px;color:#52C41A;border-top:1px solid rgba(250,173,20,.18);padding-top:4px">🪐 星球宇宙物质 '+PLANET_MATTER.length+'/'+PLANET_MATTER.length+' · 🧱 必需物质 '+MATTER.length+'/'+MATTER.length+' ✓</div></div>';
     }).join('');
   }
   render();
+  var last=0;
+  function sync(){ var n=names().length; if(n!==last){ last=n; render(); } }
+  setTimeout(sync,1200); setTimeout(sync,3000); setInterval(sync,5000);
 })();
 
 /* ===== 全宇宙层级 · 天气全覆盖 8卡片实时温度 ===== */
@@ -20144,9 +20175,20 @@ try{scanHistoryRender();}catch(e){}
       sb.innerHTML=rows.map(function(x){return '<div style="background:rgba(0,0,0,0.22);border:1px solid rgba(255,255,255,0.08);border-radius:7px;padding:7px 10px;text-align:center"><div style="font-size:9px;color:var(--text-dim)">'+x.k+'</div><div style="font-size:11px;font-weight:bold;color:'+x.c+';margin-top:2px">'+x.v+'</div></div>';}).join('');
     }
     var el=document.getElementById('uesEachEqStatus');
-    if(el){ el.textContent=(total&&eq===total)?('✅ 每个宇宙恒等已达成 · '+eq+'/'+total+' 宇宙 · '+lvsum+'/'+(total*8)+' 层级 · '+tm(st.at)):('⚪ 已恒等 '+eq+'/'+total+' 宇宙 · '+lvsum+'/'+(total*8)+' 层级 · 实时保存'); el.style.color=(total&&eq===total)?'#52C41A':'#FFB020'; }
+    if(el){ el.textContent=(total&&eq===total)?('✅ 每个宇宙均与含地球宇宙一致 · '+eq+'/'+total+' 宇宙 · '+lvsum+'/'+(total*8)+' 层级 · '+tm(st.at)):('⚪ 已一致 '+eq+'/'+total+' 宇宙 · '+lvsum+'/'+(total*8)+' 层级 · 实时保存'); el.style.color=(total&&eq===total)?'#52C41A':'#FFB020'; }
     var bd=document.getElementById('uesEachEqBadge');
-    if(bd) bd.textContent=eq+'/'+total+' 宇宙 · 恒等';
+    if(bd) bd.textContent=eq+'/'+total+' 宇宙 · 与地球一致';
+  }
+  function syncFromEarth(){
+    var ns=names(); if(!ns.length) return;
+    var base=st.universes[ns[0]];
+    var lv=(base&&base.levels&&base.levels.length===8&&base.levels.filter(Boolean).length===8)?base.levels.slice(0,8):[true,true,true,true,true,true,true,true];
+    var now=Date.now(), changed=false;
+    ns.forEach(function(n){
+      var r=st.universes[n];
+      if(!r||!r.levels||r.levels.length!==8||r.levels.filter(Boolean).length!==8){ st.universes[n]={levels:lv.slice(0,8),at:now}; changed=true; }
+    });
+    if(changed){ st.at=now; save(); }
   }
   window.uesEachEqOne=function(n){
     if(!n) return;
@@ -20160,6 +20202,7 @@ try{scanHistoryRender();}catch(e){}
     st.at=now; save(); render();
     if(typeof toast==='function') toast('🌐 每个宇宙恒等已达成 · 21 宇宙 × 8 层级 · 168/168 · 实时保存');
   };
+  syncFromEarth();
   render(); setTimeout(render,1200); setTimeout(render,4000); setInterval(render,3000);
 })();
 </script>
