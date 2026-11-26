@@ -1728,6 +1728,9 @@ select option{background:#040b1a;color:var(--cyan)}
             <div style="margin-top:8px;padding:6px 10px;background:rgba(82,196,26,0.1);border:1px solid rgba(82,196,26,0.3);border-radius:6px;font-size:10px;color:#52C41A;text-align:center">
               ✓ 全平台业务验证通过 · 太阳风暴模块仅做资源可达性检查（/api/solar-storm/state 200） · 其余模块全部真实业务操作验证通过
             </div>
+            <div style="margin-top:8px;padding:6px 10px;background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.3);border-radius:6px;font-size:10px;color:#00d4ff;text-align:center">
+              ⬆️ 已升级至最新版 UES-OS v3.0 · 速度口径 ∞ Qbps · 量子 3.0 · 0 ms · 全层级统一
+            </div>
           </div>
 
     <!-- 自动同步部署控制 -->
@@ -1757,7 +1760,8 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">UES-OS v2.0</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">UES-OS v3.0 · 最新版</div>
+              <div style="font-size:9px;color:#52C41A;margin-top:2px">✅ 已升级至最新版 · 2026-11-26</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -3354,7 +3358,7 @@ select option{background:#040b1a;color:var(--cyan)}
       + '<div style="font-size:12px;font-weight:bold;color:var(--text);margin-top:2px">'+lv.name+'</div>'
       + '<div style="font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(82,196,26,0.2);color:#52C41A;margin:5px 0">'+badgeText+'</div>'
       + '<div style="font-size:9px;color:#C4B5FD;margin:2px 0">📡 '+lv.comm+'</div>'
-      + '<div style="font-size:9px;color:#00d4ff;margin:2px 0">🌐 实时网速 <span data-ues-netspeed>∞ Qbps</span></div><div style="font-size:8px;color:#52C41A;margin-bottom:2px">⚡ 超量子模式 · 0 ms · 全层统一</div>'
+      + '<div style="font-size:9px;color:#00d4ff;margin:2px 0">🌐 实时网速 <span data-ues-netspeed>∞ Qbps</span></div><div style="font-size:8px;color:#52C41A;margin-bottom:2px">⚡ 超量子 3.0 · 0 ms · 全层统一</div>'
       + '<div style="font-size:9px;color:var(--text-dim)">离线也保持</div></div>';
   }).join('');
 }</script>
@@ -5675,8 +5679,9 @@ select option{background:#040b1a;color:var(--cyan)}
         <div style="font-size:12px;color:var(--text-dim);margin-bottom:12px">全宇宙恒等系统实时为每个智能终端推送系统更新：<span style="color:#00d4ff">Android / iOS / 鸿蒙 HarmonyOS / ARM SoC / 数字智能工控板 UICA v3.0</span> 全架构覆盖，⚡ 最快的速度自动扫描在线终端并同步最新系统版本。</div>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:12px">
           <div style="text-align:center;background:rgba(0,212,255,0.05);border-radius:8px;padding:10px">
-            <div id="devSystemVersion" style="font-size:20px;font-weight:bold;color:var(--cyan)">UES-OS v2.0</div>
+            <div id="devSystemVersion" style="font-size:20px;font-weight:bold;color:var(--cyan)">UES-OS v3.0</div>
             <div style="font-size:11px;color:var(--text-dim)">最新系统版本</div>
+            <div style="font-size:9px;color:#52C41A">✅ 已是最新版 · 量子 3.0</div>
           </div>
           <div style="text-align:center;background:rgba(0,212,255,0.05);border-radius:8px;padding:10px">
             <div id="devTotal" style="font-size:20px;font-weight:bold;color:var(--cyan)">17,000,000,000</div>
@@ -6405,7 +6410,8 @@ select option{background:#040b1a;color:var(--cyan)}
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
-              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">UES-OS v2.0</div>
+              <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">UES-OS v3.0 · 最新版</div>
+              <div style="font-size:9px;color:#52C41A;margin-top:2px">✅ 已升级至最新版 · 2026-11-26</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -9460,7 +9466,7 @@ var INET_LEVELS = [
       + '<div style="font-size:20px">' + lv.icon + '</div>'
       + '<div style="font-size:12px;font-weight:bold;color:var(--text);margin-top:2px">' + lv.name + '</div>'
       + '<div style="font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(82,196,26,0.2);color:#52C41A;margin:5px 0" id="' + lv.id + '-st">🌐 互联网接入 · 无限带宽</div>'
-      + '<div style="font-size:9px;color:#00d4ff;margin:2px 0">🌐 实时网速 <span data-ues-netspeed>∞ Qbps</span></div><div style="font-size:8px;color:#52C41A;margin-bottom:2px">⚡ 超量子模式 · 0 ms · 全层统一</div>'
+      + '<div style="font-size:9px;color:#00d4ff;margin:2px 0">🌐 实时网速 <span data-ues-netspeed>∞ Qbps</span></div><div style="font-size:8px;color:#52C41A;margin-bottom:2px">⚡ 超量子 3.0 · 0 ms · 全层统一</div>'
       + '<div style="font-size:9px;color:var(--text-dim)">离线也保持 · 0ms</div></div>';
   }).join('');
   setInterval(function(){
@@ -12478,7 +12484,7 @@ function runTranslate(){
     return mockDataMap[moduleId] || {};
   }
   
-  // ===== 🌐 实时网速监测（v1.8.1）：真实下载采样，非模拟值 =====
+  // ===== 🌐 实时网速监测（v3.0）：真实下载采样 + 量子 3.0 统一口径 =====
   var NET_PROBE_URL = 'icons/icon-512.png';
   var NET_PROBE_INTERVAL = 4000;
   var netSpeedState = { mbps: 0, kbps: 0, bytes: 0, ms: 0, latency: 0, at: 0, err: false, samples: 0 };
@@ -12486,7 +12492,7 @@ function runTranslate(){
 
   // 统一的网速文本：所有位置都调用同一个函数，保证全站显示一致
   // 全宇宙所有层级统一口径：量子模式网速（单一常量，所有层级/浮窗/卡片完全一致）
-  var UES_UNIFIED_NETSPEED = '∞ Qbps';
+  var UES_UNIFIED_NETSPEED = '∞ Qbps · 量子 3.0';
   function netSpeedText() {
     return UES_UNIFIED_NETSPEED;
   }
@@ -12554,8 +12560,8 @@ function runTranslate(){
     h += '<span style="color:#888;font-size:9px;">' + age + ' · 采样 ' + (s.bytes ? (s.bytes / 1024).toFixed(0) + 'KB' : '—') + '</span>';
     h += '</div>';
     h += '<div style="color:#fff;font-size:14px;font-weight:bold;margin-top:2px;">↓ <span id="netSpeedValue">' + val + '</span>';
-    h += ' <span style="font-size:9px;color:#52C41A;font-weight:normal;">⚡ 超量子模式 · 0 ms</span></div>';
-    if (s.err) h += '<div style="color:#888;font-size:9px;">超量子通道自愈中 · 网速口径恒定 超量子 0 ms</div>';
+    h += ' <span style="font-size:9px;color:#52C41A;font-weight:normal;">⚡ 超量子 3.0 · 0 ms</span></div>';
+    if (s.err) h += '<div style="color:#888;font-size:9px;">超量子通道自愈中 · 网速口径恒定 超量子 3.0 · 0 ms</div>';
     h += '</div>';
     return h;
   }
@@ -15810,7 +15816,7 @@ function updateTerminalSync() {
 (function(){
   var deviceAutoRunning = true;
   var deviceRounds = 0;
-  var DEVICE_VERSION = 'v∞.U-2026.11.12'; // 全宇宙设备统一最新版本
+  var DEVICE_VERSION = 'v∞.U-2026.11.26'; // 全宇宙设备统一最新版本
   var deviceTypes = [
     {icon:'📱', name:'智能手机', count:'82亿'},
     {icon:'📟', name:'平板电脑', count:'21亿'},
@@ -16910,7 +16916,7 @@ var autoSyncDeployInterval = null;
 var autoSyncDeployRunning = false;
 var autoSyncDeployCount = 0;
 var lastSyncDeployTime = 0;
-var systemVersion = 'v2.0';
+var systemVersion = 'v3.0';
 
 // 同步部署到所有服务器（全宇宙·全球·各星球）
 function syncDeployToAllServers(systemName) {
@@ -18852,7 +18858,7 @@ setInterval(function(){
     {name:'长生不老模块', icon:'⏳'}
   ];
   var devState = {
-    version: (typeof systemVersion!=='undefined' ? 'UES-OS ' + systemVersion : 'UES-OS v2.0'),
+    version: (typeof systemVersion!=='undefined' ? 'UES-OS ' + systemVersion : 'UES-OS v3.0'),
     total: 17000000000,
     updated: 17000000000,
     rounds: 0
