@@ -3101,6 +3101,16 @@ select option{background:#040b1a;color:var(--cyan)}
     <div class="panel wide"><div class="panel-hdr"><div class="panel-title"><span class="ico">🌌</span>全宇宙 · 所有星球状态</div><div class="panel-badge">全天候守护</div></div>
       <div class="radar-wrap"><div class="radar"><div class="radar-cross"></div><div class="radar-sweep"></div><div class="radar-dot" style="top:30%;left:60%"></div><div class="radar-dot" style="top:55%;left:35%;background:var(--cyan);box-shadow:0 0 6px var(--cyan)"></div></div>
       <div class="radar-stats"><div class="radar-stat"><span class="k">地震 / 海啸</span><span class="v">0</span></div><div class="radar-stat"><span class="k">台风 / 洪水</span><span class="v">0</span></div><div class="radar-stat"><span class="k">火山 / 干旱</span><span class="v">0</span></div><div class="radar-stat"><span class="k">一切自然灾害</span><span class="v">0</span></div><div class="radar-stat"><span class="k">护盾强度</span><span class="v">∞</span></div></div></div></div>
+
+    <div class="panel wide">
+      <div class="panel-hdr"><div class="panel-title"><span class="ico">🪐</span>每个星球都是一个宇宙</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A" id="planetUniBadge">8/8 独立宇宙运行中</div></div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:10px 14px 0">
+        <div onclick="confirmAllPlanetUniverses()" style="padding:6px 12px;border-radius:5px;background:rgba(0,212,255,0.15);border:1px solid rgba(0,212,255,0.35);color:#00d4ff;font-size:11px;cursor:pointer">🌌 一键确认全部星球为独立宇宙</div>
+        <span id="planetUniStatus" style="font-size:11px;color:#52C41A">✅ 8/8 星球已是独立宇宙 · 各自独立时间线 / 气候 / 算力 · 实时运行</span>
+      </div>
+      <div id="planetUniGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(196px,1fr));gap:10px;padding:12px 14px 14px"></div>
+    </div>
+
     <div class="panel wide"><div class="panel-hdr"><div class="panel-title"><span class="ico">♻️</span>全宇宙无限资源再生引擎</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">ONLINE · 全宇宙模式</div></div>
       <div style="padding:16px">
         <!-- 资源总览 -->
@@ -4584,46 +4594,16 @@ select option{background:#040b1a;color:var(--cyan)}
     <div class="panel wide"><div class="panel-hdr"><div class="panel-title"><span class="ico">🌌</span>全宇宙星球合作</div><button class="btn green" style="padding:4px 10px;font-size:10px" onclick="planetScan()">🔍 全宇宙星球巡检</button></div>
       <div style="padding:16px">
         <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:12px;font-size:11px">
-          <span>合作星球：<b style="color:var(--cyan)">1000亿颗</b></span>
+          <span>合作星球：<b style="color:var(--cyan)">1000亿颗</b>（每颗 = 1 个宇宙）</span>
+          <span>宇宙总数：<b style="color:#C4B5FD">1000亿 + 9</b></span>
           <span>宜居星球：<b style="color:#52C41A">800亿颗</b></span>
           <span>灾害星球：<b style="color:#52C41A">0</b></span>
           <span>资源再生：<b style="color:#52C41A">100%</b></span>
           <span>已开发：<b style="color:var(--cyan)">500亿颗</b></span>
         </div>
         
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;margin-bottom:12px">
-          <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;text-align:center">
-            <div style="font-size:24px">🌍</div>
-            <div style="font-size:11px;font-weight:bold;color:var(--text);margin:4px 0">地球</div>
-            <div style="font-size:10px;color:#52C41A">● 完美居住</div>
-          </div>
-          <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;text-align:center">
-            <div style="font-size:24px">🔴</div>
-            <div style="font-size:11px;font-weight:bold;color:var(--text);margin:4px 0">火星</div>
-            <div style="font-size:10px;color:#52C41A">● 已改造完成</div>
-          </div>
-          <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;text-align:center">
-            <div style="font-size:24px">🌕</div>
-            <div style="font-size:11px;font-weight:bold;color:var(--text);margin:4px 0">月球</div>
-            <div style="font-size:10px;color:#52C41A">● 基地运行</div>
-          </div>
-          <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;text-align:center">
-            <div style="font-size:24px">💚</div>
-            <div style="font-size:11px;font-weight:bold;color:var(--text);margin:4px 0">超级地球</div>
-            <div style="font-size:10px;color:#52C41A">● 宜居</div>
-          </div>
-          <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;text-align:center">
-            <div style="font-size:24px">🌊</div>
-            <div style="font-size:11px;font-weight:bold;color:var(--text);margin:4px 0">海洋星球</div>
-            <div style="font-size:10px;color:#52C41A">● 已开发</div>
-          </div>
-          <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;text-align:center">
-            <div style="font-size:24px">🏔️</div>
-            <div style="font-size:11px;font-weight:bold;color:var(--text);margin:4px 0">高山星球</div>
-            <div style="font-size:10px;color:#52C41A">● 已开发</div>
-          </div>
-        </div>
-        
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;margin-bottom:12px" id="planetUniverseGrid"></div>
+
         <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px">
           <div style="font-size:12px;font-weight:bold;color:var(--text);margin-bottom:8px">🏠 居住设施状态</div>
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:6px;font-size:11px">
@@ -4788,7 +4768,16 @@ select option{background:#040b1a;color:var(--cyan)}
             <option value="永恒时空 · 时间静止">⏳ 永恒时空 · 时间静止</option>
             <option value="梦境时空 · 意识海洋">🌊 梦境时空 · 意识海洋</option>
             <option value="混沌时空 · 万有可能">🔮 混沌时空 · 万有可能</option>
-
+            <optgroup label="🪐 星球宇宙（每个星球 = 一个宇宙）">
+              <option value="地球宇宙">🌍 地球宇宙</option>
+              <option value="火星宇宙">🔴 火星宇宙</option>
+              <option value="开普勒-442b宇宙">🪐 开普勒-442b宇宙</option>
+              <option value="伊甸星宇宙">🌿 伊甸星宇宙</option>
+              <option value="赛博坦宇宙">⚙️ 赛博坦宇宙</option>
+              <option value="织女星II宇宙">💎 织女星II宇宙</option>
+              <option value="新地球宇宙">🌐 新地球宇宙</option>
+              <option value="北极星III宇宙">⭐ 北极星III宇宙</option>
+            </optgroup>
           </select>
           <button class="btn cyan" style="padding:6px 12px;font-size:11px" onclick="migrateShips()">🌌 移民全部飞船</button>
           <span id="shipMigrateStatus" style="font-size:10px;color:var(--text-dim)">🛸 尚未移民</span>
@@ -4842,7 +4831,16 @@ select option{background:#040b1a;color:var(--cyan)}
             <option value="永恒时空 · 时间静止">⏳ 永恒时空 · 时间静止</option>
             <option value="梦境时空 · 意识海洋">🌊 梦境时空 · 意识海洋</option>
             <option value="混沌时空 · 万有可能">🔮 混沌时空 · 万有可能</option>
-
+            <optgroup label="🪐 星球宇宙（每个星球 = 一个宇宙）">
+              <option value="地球宇宙">🌍 地球宇宙</option>
+              <option value="火星宇宙">🔴 火星宇宙</option>
+              <option value="开普勒-442b宇宙">🪐 开普勒-442b宇宙</option>
+              <option value="伊甸星宇宙">🌿 伊甸星宇宙</option>
+              <option value="赛博坦宇宙">⚙️ 赛博坦宇宙</option>
+              <option value="织女星II宇宙">💎 织女星II宇宙</option>
+              <option value="新地球宇宙">🌐 新地球宇宙</option>
+              <option value="北极星III宇宙">⭐ 北极星III宇宙</option>
+            </optgroup>
           </select>
           <button class="btn cyan" style="padding:6px 12px;font-size:11px" onclick="migrateRoadsters()">🌌 移民全部 Roadster</button>
           <span id="roadsterMigrateStatus" style="font-size:10px;color:var(--text-dim)">🛸 尚未移民</span>
@@ -8774,6 +8772,90 @@ var transportState = { levels:{}, updated:0 };
   };
   load(); build(); render();
   setInterval(function(){ transportTick(); }, 3000);
+})();
+
+/* ===== 合作星球 · 每个合作星球 = 一个独立宇宙 ===== */
+var UES_PLANET_UNIVERSES = [
+  {id:'PU-01', icon:'🌍', planet:'地球',      name:'地球宇宙'},
+  {id:'PU-02', icon:'🔴', planet:'火星',      name:'火星宇宙'},
+  {id:'PU-03', icon:'🌕', planet:'月球',      name:'月球宇宙'},
+  {id:'PU-04', icon:'💚', planet:'超级地球',  name:'超级地球宇宙'},
+  {id:'PU-05', icon:'🌊', planet:'海洋星球',  name:'海洋星球宇宙'},
+  {id:'PU-06', icon:'🏔️', planet:'高山星球',  name:'高山星球宇宙'}
+];
+(function(){
+  var KEY='ues_planet_universes';
+  var GRID=document.getElementById('planetUniverseGrid');
+  var state={};
+  try{ state=JSON.parse(localStorage.getItem(KEY)||'{}')||{}; }catch(e){ state={}; }
+  var now=Date.now();
+  UES_PLANET_UNIVERSES.forEach(function(p){
+    if(!state[p.name]) state[p.name]={planet:p.planet, universe:p.name, createdAt:now, migratedAt:0, layers:8};
+  });
+  function save(){ try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){} }
+  save();
+
+  function sysCount(name){
+    var n=0;
+    ['ues_ships_migrate','ues_roadsters_migrate','ues_transport_universe','ues_spacetravel_universe'].forEach(function(k){
+      try{ var o=JSON.parse(localStorage.getItem(k)||'null'); if(o && o.universe===name) n++; }catch(e){}
+    });
+    return n;
+  }
+
+  function render(){
+    if(!GRID) return;
+    GRID.innerHTML=UES_PLANET_UNIVERSES.map(function(p,i){
+      var st=state[p.name]||{};
+      var n=sysCount(p.name);
+      var done=n>=4;
+      var tag=st.migratedAt
+        ? '✅ 已移民 · '+n+'/4 系统 · '+new Date(st.migratedAt).toLocaleTimeString('zh-CN',{hour12:false})
+        : '🛸 待移民 · 0/4 系统';
+      return '<div data-pUni="'+i+'" style="background:rgba(139,92,246,0.07);border:1px solid rgba(139,92,246,0.3);border-radius:9px;padding:10px;text-align:center">'
+        + '<div style="font-size:22px">'+p.icon+'</div>'
+        + '<div style="font-size:12px;font-weight:bold;color:var(--text);margin:3px 0 1px">'+p.name+'</div>'
+        + '<div style="font-size:9px;color:#C4B5FD">🌌 独立宇宙 · '+p.id+' · '+st.layers+'/8 层级</div>'
+        + '<div style="font-size:9px;color:var(--text-dim);margin-top:2px">原始星球：'+p.planet+'</div>'
+        + '<div data-pUni-tag style="font-size:9px;color:'+(done?'#52C41A':'var(--text-dim)')+';margin-top:5px">'+tag+'</div>'
+        + '<div onclick="uesMigrateToPlanetUniverse('+i+')" style="margin-top:6px;padding:5px 8px;border-radius:5px;background:rgba(139,92,246,0.16);border:1px solid rgba(139,92,246,0.45);color:#C4B5FD;font-size:10px;font-weight:bold;cursor:pointer">🌌 全部交通工具移民到此宇宙</div>'
+        + '</div>';
+    }).join('');
+  }
+
+  window.uesMigrateToPlanetUniverse=function(i){
+    var p=UES_PLANET_UNIVERSES[i]; if(!p) return;
+    var t=Date.now();
+    try{ var sReg=JSON.parse(localStorage.getItem('ues_ships')||'{}'); localStorage.setItem('ues_ships_migrate', JSON.stringify({universe:p.name, at:t, count:Object.keys(sReg).length})); }catch(e){}
+    try{ var rReg=JSON.parse(localStorage.getItem('ues_roadsters')||'{}'); localStorage.setItem('ues_roadsters_migrate', JSON.stringify({universe:p.name, at:t, count:Object.keys(rReg).length})); }catch(e){}
+    try{ localStorage.setItem('ues_transport_universe', JSON.stringify({universe:p.name, at:t})); }catch(e){}
+    try{ localStorage.setItem('ues_spacetravel_universe', JSON.stringify({universe:p.name, at:t})); }catch(e){}
+    if(typeof renderShipMigrateStatus==='function') renderShipMigrateStatus();
+    if(typeof renderRoadsterMigrateStatus==='function') renderRoadsterMigrateStatus();
+    if(typeof transportMigrateAll==='function') transportMigrateAll();
+    if(typeof spaceTravelMigrateAll==='function') spaceTravelMigrateAll();
+    state[p.name]=state[p.name]||{planet:p.planet, universe:p.name, createdAt:t, layers:8};
+    state[p.name].migratedAt=t;
+    state[p.name].layers=8;
+    save(); render();
+    if(typeof toast==='function') toast('🌌 已将全部交通工具移民至「'+p.name+'」· 8/8 层级 · 飞船 / Roadster / 调度 / 星际交通全量就位 · 实时保存');
+  };
+
+  function fillPlanetOptions(){
+    ['shipMigrateUniverse','roadsterMigrateUniverse'].forEach(function(id){
+      var sel=document.getElementById(id); if(!sel) return;
+      if(sel.querySelector('optgroup[data-planet-universes]')) return;
+      var g=document.createElement('optgroup'); g.setAttribute('data-planet-universes','1');
+      g.label='🪐 合作星球宇宙（每星球 = 1 宇宙）';
+      UES_PLANET_UNIVERSES.forEach(function(p){
+        var o=document.createElement('option'); o.value=p.name; o.textContent=p.icon+' '+p.name; g.appendChild(o);
+      });
+      sel.appendChild(g);
+    });
+  }
+  fillPlanetOptions();
+  render();
+  setInterval(render, 4000);
 })();
 
 function outdoorRegsRender(){
@@ -19758,6 +19840,71 @@ try{scanHistoryRender();}catch(e){}
   }
   renderStats(); renderGrid(); loadBackend(); live();
   setInterval(live,1000);
+})();
+</script>
+
+
+<script>
+/* ===== 每个星球都是一个宇宙 ===== */
+(function(){
+  var KEY='ues_planet_universes';
+  var PS=[]; try{ PS=(typeof planets!=='undefined')?planets:[]; }catch(e){ PS=[]; }
+  var st={planets:{},updatedAt:0};
+  try{ var raw=localStorage.getItem(KEY); if(raw){ var d=JSON.parse(raw)||{}; st.planets=d.planets||{}; st.updatedAt=d.updatedAt||0; } }catch(e){}
+  PS.forEach(function(p){ if(!st.planets[p.name]) st.planets[p.name]={universe:true,at:Date.now(),migratedAt:0}; else st.planets[p.name].universe=true; });
+  function save(){ try{ localStorage.setItem(KEY, JSON.stringify(st)); }catch(e){} }
+  function saveCur(){ try{ localStorage.setItem(KEY, JSON.stringify(st)); }catch(e){} }
+  save();
+  function uniId(i){ return 'U-PU-'+String(i+1).padStart(2,'0'); }
+  function tm(ts){ try{ return new Date(ts).toLocaleTimeString('zh-CN',{hour12:false}); }catch(e){ return '--:--:--'; } }
+  function card(p,i){
+    var u=st.planets[p.name]||{};
+    var mig = u.migratedAt ? ('✅ 已接收移民 · '+tm(u.migratedAt)) : '🛸 等待移民';
+    return '<div data-pu="'+p.name+'" style="background:rgba(0,212,255,0.05);border:1px solid '+p.color+'55;border-radius:10px;padding:10px">'
+      + '<div style="display:flex;justify-content:space-between;align-items:center;gap:6px">'
+      + '<div style="font-size:11px;font-weight:bold;color:var(--text)">'+p.ico+' '+p.name+'宇宙</div>'
+      + '<span style="font-size:9px;color:#52C41A;background:rgba(82,196,26,0.12);padding:1px 6px;border-radius:8px">● 独立宇宙</span></div>'
+      + '<div style="font-size:9px;color:var(--text-dim);margin-top:3px">'+uniId(i)+' · '+p.civ+'文明 · '+p.pop+'存在</div>'
+      + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-top:6px;font-size:9px;color:var(--text-dim)">'
+      + '<span>🪜 层级 <b style="color:#52C41A">8/8</b></span><span>⏳ 时间线 <b style="color:#00d4ff">×1.00</b></span>'
+      + '<span>🌡️ 气候 <b style="color:#00d4ff">50°C</b></span><span>⚛️ 算力 <b style="color:#52C41A">100%</b></span></div>'
+      + '<div style="font-size:9px;color:#00d4ff;margin-top:5px">🛸 本宇宙飞船 ∞ · 🏎️ Roadster ∞ · ⏱ +<span data-pu-tick="1">0</span>s</div>'
+      + '<div style="font-size:9px;color:#52C41A;margin-top:3px">'+mig+'</div>'
+      + '<div onclick="migrateToPlanetUniverse(&quot;'+p.name+'&quot;)" style="margin-top:7px;text-align:center;padding:5px;border-radius:5px;background:rgba(0,212,255,0.12);border:1px solid rgba(0,212,255,0.35);color:#00d4ff;font-size:10px;cursor:pointer">🌌 移民至此星球宇宙</div>'
+      + '</div>';
+  }
+  function render(){
+    var grid=document.getElementById('planetUniGrid'); if(!grid) return;
+    grid.innerHTML=PS.map(card).join('');
+    var n=PS.length, on=PS.filter(function(p){return st.planets[p.name]&&st.planets[p.name].universe;}).length;
+    var b=document.getElementById('planetUniBadge'); if(b) b.textContent=on+'/'+n+' 独立宇宙运行中';
+    var s=document.getElementById('planetUniStatus');
+    if(s) s.textContent='✅ '+on+'/'+n+' 星球已是独立宇宙 · 各自独立时间线 / 气候 / 算力 · 实时运行';
+  }
+  window.renderPlanetUniverses=render;
+  window.confirmAllPlanetUniverses=function(){
+    var now=Date.now();
+    PS.forEach(function(p){ st.planets[p.name]=st.planets[p.name]||{}; st.planets[p.name].universe=true; st.planets[p.name].at=now; });
+    st.updatedAt=now; save(); render();
+    if(typeof toast==='function') toast('🌌 8/8 星球已确认为独立宇宙 · 独立时间线 / 气候 / 算力 · 实时运行');
+  };
+  window.migrateToPlanetUniverse=function(name){
+    var p=PS.filter(function(x){return x.name===name;})[0]; if(!p) return;
+    var now=Date.now();
+    st.planets[name]=st.planets[name]||{}; st.planets[name].universe=true; st.planets[name].migratedAt=now; save();
+    var shipCount=0, roadCount=0;
+    try{ shipCount=Object.keys(JSON.parse(localStorage.getItem('ues_ships')||'{}')).length; }catch(e){}
+    try{ roadCount=Object.keys(JSON.parse(localStorage.getItem('ues_roadsters')||'{}')).length; }catch(e){}
+    try{ localStorage.setItem('ues_ships_migrate', JSON.stringify({universe:name+'宇宙',at:now,count:shipCount})); }catch(e){}
+    try{ localStorage.setItem('ues_roadsters_migrate', JSON.stringify({universe:name+'宇宙',at:now,count:roadCount})); }catch(e){}
+    if(typeof renderShipMigrateStatus==='function') renderShipMigrateStatus();
+    if(typeof renderRoadsterMigrateStatus==='function') renderRoadsterMigrateStatus();
+    render();
+    if(typeof toast==='function') toast('🌌 全部飞船与 Roadster 已移民至「'+name+'宇宙」· 该星球即独立宇宙 · 实时保存');
+  };
+  var ticks=0;
+  setInterval(function(){ ticks++; var ns=document.querySelectorAll('[data-pu-tick]'); for(var i=0;i<ns.length;i++) ns[i].textContent=ticks; },1000);
+  render();
 })();
 </script>
 
