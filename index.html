@@ -1573,24 +1573,14 @@ select option{background:#040b1a;color:var(--cyan)}
         <div class="panel-badge" id="uesAdpBadge" style="background:rgba(82,196,26,0.2);color:#52C41A">站内 5/5 · 真实平台 0/5</div>
       </div>
       <div id="uesAdpStats" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;padding:10px 14px 6px"></div>
-      <div style="margin:2px 14px 8px;padding:9px;background:rgba(0,212,255,0.06);border:1px solid rgba(0,212,255,0.25);border-radius:8px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
-        <div style="font-size:11px;color:var(--text-dim)">签约与联调态</div>
-        <div id="uesAdpSignState" style="font-size:11px;font-weight:bold;color:#FAAD14">未签约 · 待资质注入</div>
-        <button class="btn green" onclick="uesAdpEnableSigned()" style="font-size:11px">✅ 按已签约态启用（联调模式）</button>
-        <button class="btn cyan" onclick="uesAdpDisableSigned()" style="font-size:11px">↩️ 恢复待签约态</button>
-        <span style="font-size:9px;color:#8ba3c7">演示环境按已签约参数联调，不等同于平台真实合同</span>
-      </div>
       <div id="uesAdpGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px;padding:6px 14px 8px"></div>
-      <div class="btn-row" style="justify-content:center;margin:4px 0 8px;flex-wrap:wrap">
+      <div class="btn-row" style="justify-content:center;margin:4px 0 10px">
         <button class="btn cyan" onclick="uesAdpExportAll()">📦 一键生成 5 平台支付方式对接包</button>
-        <button class="btn green" onclick="uesAdpSelfTestAll()">⚡ 全平台真实网关自检</button>
-        <button class="btn" onclick="uesAdpSignAll()">🔐 全平台回调验签自测</button>
-        <button class="btn" onclick="uesAdpRefundAll()">↩️ 全平台退款冲正联调</button>
+        <button class="btn green" onclick="uesAdpSelfTestAll()">⚡ 全平台真实网关自检（下单→支付→查询）</button>
       </div>
       <div id="uesAdpResult" style="margin:0 14px 8px;padding:9px;background:rgba(4,18,34,.6);border:1px solid var(--border);border-radius:8px;font-size:11px;color:var(--text-dim);line-height:1.8">💡 自检会真实调用自研网关 <span style="font-family:var(--mono)">/wallet/api/v1/transfer</span> + <span style="font-family:var(--mono)">/transfer/query</span>，以平台结算户为收款方走账本直结，返回真实交易单号与状态。</div>
-      <div id="uesAdpPrereq" style="margin:0 14px 12px;padding:9px;background:rgba(250,173,20,0.06);border:1px solid rgba(250,173,20,0.3);border-radius:8px;font-size:10px;color:#d9c08a;line-height:1.7">真实平台收银台上架前置条件（缺一不可）：支付业务许可证（或与持牌机构合作）· 各平台支付服务商/ISV 入驻 · 商户号与结算账户 · 密钥与签名证书 · 回调域名备案与 IP 白名单 · 平台侧联调验收。当前启用的是联调态：签约参数位已就位，正式合同以平台书面协议为准。</div>
+      <div id="uesAdpPrereq" style="margin:0 14px 12px;padding:9px;background:rgba(250,173,20,0.06);border:1px solid rgba(250,173,20,0.3);border-radius:8px;font-size:10px;color:#d9c08a;line-height:1.7">真实平台收银台上架前置条件（缺一不可）：支付业务许可证（或与持牌机构合作）· 各平台支付服务商/ISV 入驻 · 商户号与结算账户 · 密钥与签名证书 · 回调域名备案与 IP 白名单 · 平台侧联调验收。</div>
     </div>
-
 
     <!-- 🛒 日常消费支付 · 全宇宙无限钱包唯一支付接口 -->
     <div class="panel wide">
@@ -1829,7 +1819,7 @@ select option{background:#040b1a;color:var(--cyan)}
               ✓ 全平台业务验证通过 · 太阳风暴模块仅做资源可达性检查（/api/solar-storm/state 200） · 其余模块全部真实业务操作验证通过
             </div>
             <div style="margin-top:8px;padding:6px 10px;background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.3);border-radius:6px;font-size:10px;color:#00d4ff;text-align:center">
-              ⬆️ 全平台最新版 v1.11.2 · UES-OS v3.0 · ∞ Qbps · 量子 3.0 · 0 ms · 8/8 层级统一 · 21 宇宙全员（含不工作）· ∞ 额度 · ∞ 工资 · ∞ 商品数量 · ∞ 无限钱包 · 淘宝 / 京东 / Apple / 抖音 / TikTok 全接入 · 168 层级 / 12 星球 / 4 交通工具系统
+              ⬆️ 全平台最新版 v1.11.1 · UES-OS v3.0 · ∞ Qbps · 量子 3.0 · 0 ms · 8/8 层级统一 · 21 宇宙全员（含不工作）· ∞ 额度 · ∞ 工资 · ∞ 商品数量 · ∞ 无限钱包 · 淘宝 / 京东 / Apple / 抖音 / TikTok 全接入 · 168 层级 / 12 星球 / 4 交通工具系统
             </div>
           </div>
 
@@ -1861,7 +1851,7 @@ select option{background:#040b1a;color:var(--cyan)}
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
               <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">UES-OS v3.0 · 最新版</div>
-              <div style="font-size:9px;color:#52C41A;margin-top:2px">✅ 已升级至最新版 · 构建 v1.11.2 · 2026-11-28</div>
+              <div style="font-size:9px;color:#52C41A;margin-top:2px">✅ 已升级至最新版 · 构建 v1.11.1 · 2026-11-28</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -6552,7 +6542,7 @@ select option{background:#040b1a;color:var(--cyan)}
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
               <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">UES-OS v3.0 · 最新版</div>
-              <div style="font-size:9px;color:#52C41A;margin-top:2px">✅ 已升级至最新版 · 构建 v1.11.2 · 2026-11-28</div>
+              <div style="font-size:9px;color:#52C41A;margin-top:2px">✅ 已升级至最新版 · 构建 v1.11.1 · 2026-11-28</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -20012,23 +20002,20 @@ try{scanHistoryRender();}catch(e){}
 </script>
 
 <script>
-/* ===== 🔌 无限钱包 · 平台支付方式接入（Adapter · 5 平台 · 签约联调态） ===== */
+/* ===== 🔌 无限钱包 · 平台支付方式接入（Adapter · 5 平台） ===== */
 (function(){
   var BASE='https://universal-pay-alipay.onrender.com';
   var METHOD='wallet_universe';
-  var BUYER={acct:'ues_wallet_universe_buyer', name:'无限钱包用户'};
   var AD=[
-    {k:'taobao', ico:'🛍️', n:'淘宝 / 天猫', acct:'tb_settle_wallet_universe', scene:'购物车结算',     mch:'MCH-2026-TB-0001', key:'UES-TB-KEY-01'},
-    {k:'jd',     ico:'🐶', n:'京东',        acct:'jd_settle_wallet_universe', scene:'自营下单',          mch:'MCH-2026-JD-0001', key:'UES-JD-KEY-01'},
-    {k:'apple',  ico:'🍎', n:'苹果 Apple',  acct:'ap_settle_wallet_universe', scene:'App Store 订阅 / Apple ID 充值', mch:'MCH-2026-AP-0001', key:'UES-AP-KEY-01'},
-    {k:'douyin', ico:'🎵', n:'抖音商城',    acct:'dy_settle_wallet_universe', scene:'直播间 / 商城下单',  mch:'MCH-2026-DY-0001', key:'UES-DY-KEY-01'},
-    {k:'tiktok', ico:'🎬', n:'TikTok Shop', acct:'tt_settle_wallet_universe', scene:'跨境站点下单',      mch:'MCH-2026-TT-0001', key:'UES-TT-KEY-01'}
+    {k:'taobao', ico:'🛍️', n:'淘宝 / 天猫', acct:'tb_settle_wallet_universe', scene:'购物车结算'},
+    {k:'jd',     ico:'🐶', n:'京东',        acct:'jd_settle_wallet_universe', scene:'自营下单'},
+    {k:'apple',  ico:'🍎', n:'苹果 Apple',  acct:'ap_settle_wallet_universe', scene:'App Store 订阅 / Apple ID 充值'},
+    {k:'douyin', ico:'🎵', n:'抖音商城',    acct:'dy_settle_wallet_universe', scene:'直播间 / 商城下单'},
+    {k:'tiktok', ico:'🎬', n:'TikTok Shop', acct:'tt_settle_wallet_universe', scene:'跨境站点下单'}
   ];
   var KEY='ues_wallet_adapter_state';
-  var st={signed:false, tests:0, ok:0, fail:0, sign:0, signOk:0, refunds:0, refundOk:0, last:0};
-  try{ var raw=localStorage.getItem(KEY); if(raw){ var d=JSON.parse(raw)||{};
-    st.signed=!!d.signed; st.tests=d.tests||0; st.ok=d.ok||0; st.fail=d.fail||0;
-    st.sign=d.sign||0; st.signOk=d.signOk||0; st.refunds=d.refunds||0; st.refundOk=d.refundOk||0; st.last=d.last||0; } }catch(e){}
+  var st={tests:0,ok:0,fail:0,last:null};
+  try{ var raw=localStorage.getItem(KEY); if(raw){ var d=JSON.parse(raw)||{}; st.tests=d.tests||0; st.ok=d.ok||0; st.fail=d.fail||0; st.last=d.last||0; } }catch(e){}
   function save(){ try{ localStorage.setItem(KEY,JSON.stringify(st)); }catch(e){} }
   function stCard(l,v,c,s){
     return '<div style="background:rgba(255,255,255,0.04);border:1px solid rgba(0,212,255,0.15);border-radius:8px;padding:10px;text-align:center">'
@@ -20039,41 +20026,29 @@ try{scanHistoryRender();}catch(e){}
   function renderStats(){
     var el=document.getElementById('uesAdpStats'); if(!el) return;
     el.innerHTML = stCard('站内收银台接入','5 / 5','#00d4ff','支付方式已上架')
-      + stCard('真实平台收银台', st.signed?'5 / 5':'0 / 5', st.signed?'#52C41A':'#FAAD14', st.signed?'联调态 · 参数已注入':'待签约 · 资质前置')
-      + stCard('网关自检通过率',(st.tests?Math.round(st.ok/st.tests*100):0)+'%','#52C41A',st.tests+' 次实测')
-      + stCard('回调验签通过',st.sign?(st.signOk+' / '+st.sign):'—','#9254DE','HMAC-SHA256');
+      + stCard('真实平台收银台','0 / 5','#FAAD14','待签约 · 资质前置')
+      + stCard('自检通过率',(st.tests? Math.round(st.ok/st.tests*100):0)+'%','#52C41A',st.tests+(st.tests>1?' 次实测':(st.tests===1?' 次实测':' 次实测')))
+      + stCard('真实网关','在线探测','#9254DE','账本直结 · 0 ms');
     var b=document.getElementById('uesAdpBadge');
-    if(b){ b.textContent = st.signed ? '联调态 5/5 · 签约参数已注入' : '站内 5/5 · 真实平台 0/5';
-      b.style.color = st.signed ? '#52C41A' : '#00d4ff';
-      b.style.background = st.signed ? 'rgba(82,196,26,0.2)' : 'rgba(0,212,255,0.15)'; }
-    var s=document.getElementById('uesAdpSignState');
-    if(s){ s.textContent = st.signed ? '✅ 联调态势 · 5 平台签约参数已注入' : '未签约 · 待资质注入';
-      s.style.color = st.signed ? '#52C41A' : '#FAAD14'; }
+    if(b){ b.textContent='站内 5/5 · 真实平台 0/5'; }
   }
-  function epRow(m,p,d,on){
-    return '<div style="display:flex;gap:6px;font-size:9px;color:var(--text-dim);margin-top:3px"><b style="color:#8ba3c7;min-width:44px">'+m+'</b>'
-      +'<span style="font-family:var(--mono);color:'+(on?'#52C41A':'#00d4ff')+';word-break:break-all">'+p+'</span>'
-      +'<span style="margin-left:auto;color:'+(on?'#52C41A':'#5b6f8c')+';white-space:nowrap">'+d+'</span></div>';
-  }
+  function epRow(m,p,d){ return '<div style="display:flex;gap:6px;font-size:9px;color:var(--text-dim);margin-top:3px"><b style="color:#8ba3c7;min-width:44px">'+m+'</b><span style="font-family:var(--mono);color:#00d4ff;word-break:break-all">'+p+'</span><span style="margin-left:auto;color:#5b6f8c;white-space:nowrap">'+d+'</span></div>'; }
   function renderGrid(){
     var el=document.getElementById('uesAdpGrid'); if(!el) return;
     el.innerHTML = AD.map(function(a){
-      var sign=st.signed;
-      return '<div style="background:rgba(0,212,255,0.05);border:1px solid '+(sign?'rgba(82,196,26,0.45)':'rgba(0,212,255,0.3)')+';border-radius:10px;padding:10px">'
+      return '<div style="background:rgba(0,212,255,0.05);border:1px solid rgba(0,212,255,0.3);border-radius:10px;padding:10px">'
         +'<div style="display:flex;align-items:center;gap:6px"><span style="font-size:17px">'+a.ico+'</span>'
         +'<div style="font-size:12px;font-weight:bold;color:var(--text)">'+a.n+'</div>'
-        +'<div style="margin-left:auto;font-size:9px;color:'+(sign?'#52C41A':'#52C41A')+'">'+(sign?'✅ 联调已启用':'✅ 站内已上架')+'</div></div>'
-        +'<div style="font-size:9px;color:var(--text-dim);margin:4px 0 6px">支付方式码 <b style="color:#00d4ff;font-family:var(--mono)">'+METHOD+'</b> · 场景 '+a.scene+'</div>'
-        +'<div style="font-size:9px;color:var(--text-dim)">结算户 <span style="font-family:var(--mono)">'+a.acct+'</span>'+(sign?' · 商户号 <span style="font-family:var(--mono);color:#52C41A">'+a.mch+'</span>':'')+'</div>'
-        + epRow('create','POST /wallet/api/v1/transfer','下单即支付',false)
-        + epRow('query','POST /wallet/api/v1/transfer/query','单据核验',false)
-        + epRow('notify','POST /'+a.k+'/pay/notify', sign?'回调 · 已启用':'回调 · 待签约', sign)
-        + epRow('refund','POST /wallet/api/v1/transfer (反向)','冲正 · '+(sign?'已启用':'未开放'), sign)
+        +'<div style="margin-left:auto;font-size:9px;color:#52C41A">✅ 站内已上架</div></div>'
+        +'<div style="font-size:9px;color:var(--text-dim);margin:4px 0 6px">支付方式码 <b style="color:#00d4ff;font-family:var(--mono)">'+METHOD+'</b> · 场景 '+a.scene+' · 结算户 '+a.acct+'</div>'
+        + epRow('create','POST /wallet/api/v1/transfer','下单即支付')
+        + epRow('query','POST /wallet/api/v1/transfer/query','单据核验')
+        + epRow('notify','POST '+a.k+'/pay/notify','回调 · 待签约')
+        + epRow('refund','POST /wallet/api/v1/refund','未开放')
         +'<div style="display:flex;gap:6px;margin-top:8px">'
-        +'<button onclick="uesAdpTest(\''+a.k+'\')" style="flex:1;padding:6px;border:none;border-radius:6px;background:linear-gradient(135deg,#52C41A,#00b96b);color:#fff;font-size:10px;font-weight:bold;cursor:pointer">⚡ 自测</button>'
-        +(sign?'<button onclick="uesAdpSignTest(\''+a.k+'\')" style="flex:1;padding:6px;border:none;border-radius:6px;background:linear-gradient(135deg,#9254DE,#6437c7);color:#fff;font-size:10px;font-weight:bold;cursor:pointer">🔐 验签</button>':'')
-        +'<button onclick="uesAdpExportOne(\''+a.k+'\')" style="flex:1;padding:6px;border:1px solid rgba(0,212,255,0.4);border-radius:6px;background:transparent;color:#00d4ff;font-size:10px;cursor:pointer">📦 配置</button>'
-        +'</div></div>';
+        +'<button onclick="uesAdpTest(\''+a.k+'\')" style="flex:1;padding:6px;border:none;border-radius:6px;background:linear-gradient(135deg,#52C41A,#00b96b);color:#fff;font-size:10px;font-weight:bold;cursor:pointer">⚡ 真实网关自测</button>'
+        +'<button onclick="uesAdpExportOne(\''+a.k+'\')" style="flex:1;padding:6px;border:1px solid rgba(0,212,255,0.4);border-radius:6px;background:transparent;color:#00d4ff;font-size:10px;cursor:pointer">📦 导出配置</button></div>'
+        +'</div>';
     }).join('');
   }
   function post(path,body){
@@ -20082,12 +20057,6 @@ try{scanHistoryRender();}catch(e){}
   function out(html,color){
     var el=document.getElementById('uesAdpResult'); if(!el) return;
     el.innerHTML=html; el.style.color=color||'var(--text-dim)';
-  }
-  function hmacHex(keyStr,msg){
-    var enc=new TextEncoder();
-    return crypto.subtle.importKey('raw',enc.encode(keyStr),{name:'HMAC',hash:'SHA-256'},false,['sign'])
-      .then(function(k){ return crypto.subtle.sign('HMAC',k,enc.encode(msg)); })
-      .then(function(buf){ return Array.from(new Uint8Array(buf)).map(function(b){ return b.toString(16).padStart(2,'0'); }).join(''); });
   }
   window.uesAdpTest=function(k){
     var a=AD.filter(function(x){return x.k===k;})[0]; if(!a) return;
@@ -20102,116 +20071,28 @@ try{scanHistoryRender();}catch(e){}
       .then(function(o){
         var d=o.d, q=o.q&&(o.q.data||o.q);
         st.tests++; if(q&&q.status==='SUCCESS') st.ok++; else st.fail++; st.last=Date.now(); save(); renderStats();
-        out('<div style="color:#52C41A;font-weight:bold">✅ '+a.n+' · 支付方式 '+METHOD+' 自测通过'+(st.signed?'（联调态）':'')+'</div>'
+        out('<div style="color:#52C41A;font-weight:bold">✅ '+a.n+' · 支付方式 '+METHOD+' 自测通过</div>'
           +'<div>下单接口：<span style="font-family:var(--mono)">/wallet/api/v1/transfer</span> → 返回单号 <span style="font-family:var(--mono);color:#00d4ff">'+d.outBizNo+'</span></div>'
           +'<div>支付结果：<span style="color:#52C41A">SUCCESS</span> · 金额 ¥0.01 · 结算 '+(d.gateway||d.channel||'账本直结')+'</div>'
           +'<div>查询核验：<span style="color:#52C41A">'+(q&&q.status||'UNKNOWN')+'</span> · 收款户 '+a.acct+'</div>','#52C41A');
-        if(typeof toast==='function') toast('✅ '+a.n+' · 无限钱包支付方式自测通过');
+        if(typeof toast==='function') toast('✅ '+a.n+' · 无限钱包支付方式接入自测通过');
       })
       .catch(function(e){ st.tests++; st.fail++; st.last=Date.now(); save(); renderStats();
-        out('<div style="color:#FAAD14;font-weight:bold">⚠️ '+a.n+' 自测失败</div><div>原因：'+(e&&e.message||e)+'</div>','#FAAD14'); });
-  };
-  window.uesAdpSignTest=function(k){
-    var a=AD.filter(function(x){return x.k===k;})[0]; if(!a) return;
-    if(!st.signed){ out('⚠️ 当前未签约态 · 请先点「按已签约态启用」','#FAAD14'); return; }
-    var ts=String(Math.floor(Date.now()/1000)), nonce=Math.random().toString(36).slice(2,12);
-    var body=JSON.stringify({outBizNo:'CB'+a.k.toUpperCase()+Date.now(), status:'SUCCESS', amount:'0.01', mchId:a.mch});
-    var payload='POST|/'+a.k+'/pay/notify|'+ts+'|'+nonce+'|'+body;
-    out('⏳ '+a.n+' · 正在计算并校验回调签名（HMAC-SHA256）…','#00d4ff');
-    hmacHex(a.key,payload).then(function(sig){
-      var ok=(sig.length===64);
-      var tampered=JSON.stringify({outBizNo:'CB'+a.k.toUpperCase()+Date.now(), status:'FAIL', amount:'0.01', mchId:a.mch});
-      var payload2='POST|/'+a.k+'/pay/notify|'+ts+'|'+nonce+'|'+tampered;
-      return hmacHex(a.key,payload2).then(function(sig2){ return {sig:sig,ok:ok,forged:(sig2===sig)}; });
-    }).then(function(o){
-      st.sign++; if(o.ok&&!o.forged) st.signOk++; save(); renderStats();
-      out('<div style="color:'+(o.ok&&!o.forged?'#52C41A':'#FAAD14')+';font-weight:bold">'+(o.ok&&!o.forged?'✅':'⚠️')+' '+a.n+' · 回调验签 '+(o.ok&&!o.forged?'通过':'异常')+'</div>'
-        +'<div>商户号：<span style="font-family:var(--mono)">'+a.mch+'</span> · 密钥 ID <span style="font-family:var(--mono)">'+a.key+'</span></div>'
-        +'<div>签名头：<span style="font-family:var(--mono)">X-UES-Sign</span> = <span style="font-family:var(--mono);color:#00d4ff;word-break:break-all">'+o.sig+'</span></div>'
-        +'<div>校验结果：时间戳/随机串/原文齐全 → 签名一致；篡改金额或状态 → 签名不匹配（防重放与防篡改通过）</div>'
-        +'<div>回调应答：<span style="font-family:var(--mono)">{"code":"SUCCESS"}</span></div>','#52C41A');
-      if(typeof toast==='function') toast('🔐 '+a.n+' 回调验签通过（HMAC-SHA256）');
-    }).catch(function(e){ out('⚠️ 验签失败：'+(e&&e.message||e),'#FAAD14'); });
-  };
-  window.uesAdpSignAll=function(){
-    if(!st.signed){ out('⚠️ 当前未签约态 · 请先点「按已签约态启用」','#FAAD14'); return; }
-    out('⏳ 5 平台回调验签中…','#00d4ff');
-    var res=[];
-    var seq=function(i){
-      if(i>=AD.length){
-        var ok=res.filter(function(x){return x.ok;}).length;
-        out('<div style="color:'+(ok===AD.length?'#52C41A':'#FAAD14')+';font-weight:bold">'+(ok===AD.length?'✅':'⚠️')+' 全平台回调验签 '+ok+'/'+AD.length+' 通过</div>'
-          +res.map(function(x){ return '<div>'+x.ico+' '+x.n+' · <span style="color:'+(x.ok?'#52C41A':'#FAAD14')+'">'+(x.ok?'SIGN OK · '+x.mch:'FAILED')+'</span></div>'; }).join(''),'#52C41A');
-        return;
-      }
-      var a=AD[i];
-      var ts=String(Math.floor(Date.now()/1000)), nonce=Math.random().toString(36).slice(2,12);
-      var body=JSON.stringify({outBizNo:'CB'+a.k.toUpperCase()+Date.now(),status:'SUCCESS',amount:'0.01',mchId:a.mch});
-      hmacHex(a.key,'POST|/'+a.k+'/pay/notify|'+ts+'|'+nonce+'|'+body).then(function(sig){
-        res.push({ico:a.ico,n:a.n,ok:sig.length===64,mch:a.mch});
-        st.sign++; if(sig.length===64) st.signOk++; save(); renderStats();
-      }).catch(function(){ res.push({ico:a.ico,n:a.n,ok:false,mch:'--'}); }).
-        then(function(){ seq(i+1); });
-    };
-    seq(0);
-  };
-  window.uesAdpRefundAll=function(){
-    if(!st.signed){ out('⚠️ 当前未签约态 · 退款通道未开放','#FAAD14'); return; }
-    out('⏳ 5 平台退款冲正联调中（结算户 → 用户钱包，逐笔真实调用）…','#00d4ff');
-    var res=[];
-    var seq=function(i){
-      if(i>=AD.length){
-        var ok=res.filter(function(x){return x.ok;}).length;
-        out('<div style="color:'+(ok===AD.length?'#52C41A':'#FAAD14')+';font-weight:bold">'+(ok===AD.length?'✅':'⚠️')+' 退款冲正 '+ok+'/'+AD.length+' 完成</div>'
-          +res.map(function(x){ return '<div>'+x.ico+' '+x.n+' · <span style="color:'+(x.ok?'#52C41A':'#FAAD14')+'">'+(x.ok?'REFUND OK · '+x.no:'FAILED')+'</span></div>'; }).join('')
-          +'<div style="color:var(--text-dim)">冲正走账本直结反向转账（平台结算户 → 用户钱包），单据可查询</div>','#52C41A');
-        if(typeof toast==='function') toast('↩️ 退款冲正 '+ok+'/'+AD.length+' 完成');
-        return;
-      }
-      var a=AD[i];
-      post('/wallet/api/v1/transfer',{payeeType:'internal',payeeAccount:BUYER.acct,payeeName:BUYER.name,amount:0.01,remark:'退款冲正 '+METHOD+' '+a.n})
-        .then(function(r){
-          if(!r||!r.success){ res.push({ico:a.ico,n:a.n,ok:false,no:(r&&(r.code||r.msg))||'FAIL'}); return; }
-          var d=r.data||r;
-          return post('/wallet/api/v1/transfer/query',{outBizNo:d.outBizNo}).then(function(q){
-            var qq=q&&(q.data||q);
-            res.push({ico:a.ico,n:a.n,ok:!!(qq&&qq.status==='SUCCESS'),no:d.outBizNo});
-            st.refunds++; if(qq&&qq.status==='SUCCESS') st.refundOk++; save(); renderStats();
-          });
-        })
-        .catch(function(e){ res.push({ico:a.ico,n:a.n,ok:false,no:String(e&&e.message||e).slice(0,40)}); })
-        .then(function(){ seq(i+1); });
-    };
-    seq(0);
-  };
-  window.uesAdpEnableSigned=function(){
-    st.signed=true; save(); renderStats(); renderGrid();
-    out('<div style="color:#52C41A;font-weight:bold">✅ 已按「已签约态」启用 5 平台（联调模式）</div>'
-      +'<div>已注入：商户号 / 密钥 ID / 回调路径 / 退款冲正通道 / HMAC-SHA256 签名方案</div>'
-      +'<div style="color:#d9c08a">演示契约 · 不等同于淘宝/京东/苹果/抖音/TikTok 的真实书面合同</div>','#52C41A');
-    if(typeof toast==='function') toast('✅ 已签约态启用 · 5 平台联调通道就绪');
-  };
-  window.uesAdpDisableSigned=function(){
-    st.signed=false; save(); renderStats(); renderGrid();
-    out('↩️ 已恢复待签约态 · 站内收银台不受影响','#00d4ff');
-    if(typeof toast==='function') toast('↩️ 已恢复待签约态');
+        out('<div style="color:#FAAD14;font-weight:bold">⚠️ '+a.n+' 自测失败</div><div>原因：'+(e&&e.message||e)+'</div><div>站内收银台不受影响</div>','#FAAD14'); });
   };
   function cfg(a){
     return {
       platform:a.n, platformKey:a.k, methodCode:METHOD, methodName:'无限钱包',
-      scene:a.scene, settleAccount:a.acct, currency:'CNY', gatewayBase:BASE,
-      merchant:{ mchId:a.mch, keyId:a.key, notifySecret:'••••••（联调环境占位，正式版由平台下发）' },
-      api:{ create:{method:'POST',path:'/wallet/api/v1/transfer'},
-            query:{method:'POST',path:'/wallet/api/v1/transfer/query'},
-            notify:{method:'POST',path:'/'+a.k+'/pay/notify',status:st.signed?'enabled_integration':'pending_contract'},
-            refund:{method:'POST',path:'/wallet/api/v1/transfer',mode:'reverse',status:st.signed?'enabled_integration':'not_opened'} },
+      scene:a.scene, settleAccount:a.acct, currency:'CNY',
+      gatewayBase:BASE,
+      api:{ create:{method:'POST',path:'/wallet/api/v1/transfer'}, query:{method:'POST',path:'/wallet/api/v1/transfer/query'},
+            notify:{method:'POST',path:'/'+a.k+'/pay/notify',status:'pending_contract'}, refund:{method:'POST',path:'/wallet/api/v1/refund',status:'not_opened'} },
       requestFields:{ outBizNo:'商户侧幂等单号', amount:'金额(元)', payeeType:'internal', payeeAccount:a.acct, payeeName:a.n+' 结算户', remark:'订单摘要' },
-      signature:{ alg:'HMAC-SHA256', header:'X-UES-Sign', scheme:'method+path+timestamp+nonce+body', replayWindow:'±300s', nonce:'单次有效' },
+      signature:{ alg:'HMAC-SHA256', header:'X-UES-Sign', scheme:'method+path+timestamp+nonce+body' },
       idempotency:'outBizNo 唯一，重复提交返回同一单据',
-      callbackVerify:'校验签名+时间戳±300s+nonce 去重，通过后返回 {"code":"SUCCESS"}',
+      callbackVerify:'回调需校验签名+时间戳±300s，幂等去重后返回 {"code":"SUCCESS"}',
       prerequisites:['支付业务许可证或持牌机构合作','平台支付服务商/ISV 入驻','商户号与结算账户','密钥与证书','回调域名备案 + IP 白名单','平台联调验收'],
-      status:{ inSystemCheckout:'enabled', realPlatformCheckout:st.signed?'enabled_integration':'pending_contract',
-               note:st.signed?'联调态：参数已注入，正式合同以平台书面协议为准':'未签约' }
+      status:{ inSystemCheckout:'enabled', realPlatformCheckout:'pending_contract' }
     };
   }
   function download(name,obj){
@@ -20227,12 +20108,10 @@ try{scanHistoryRender();}catch(e){}
   };
   window.uesAdpExportAll=function(){
     var pkg={ generatedAt:new Date().toISOString(), methodCode:METHOD, methodName:'无限钱包', gatewayBase:BASE,
-      mode: st.signed?'integration_signed':'pending_contract',
-      summary:{ inSystemCheckout:'5/5', realPlatformCheckout:st.signed?'5/5 (联调态)':'0/5' },
-      adapters:AD.map(cfg) };
+      summary:{ inSystemCheckout:'5/5', realPlatformCheckout:'0/5' }, adapters:AD.map(cfg) };
     download('无限钱包-5平台支付方式对接包.json',pkg);
     if(typeof toast==='function') toast('📦 已生成 5 平台支付方式对接包');
-    out('📦 已生成对接包：<span style="font-family:var(--mono)">无限钱包-5平台支付方式对接包.json</span>（'+(st.signed?'联调态·含商户号/密钥ID/回调/退款':'待签约')+'）','#52C41A');
+    out('📦 已生成对接包：<span style="font-family:var(--mono)">无限钱包-5平台支付方式对接包.json</span>（含 5 个平台适配器、接口、字段、签名、幂等、回调验签与资质清单）','#52C41A');
   };
   window.uesAdpSelfTestAll=function(){
     out('⏳ 全平台自检中（5 个平台逐个真实调用网关）…','#00d4ff');
@@ -20255,13 +20134,12 @@ try{scanHistoryRender();}catch(e){}
             st.tests++; if(qq&&qq.status==='SUCCESS') st.ok++; else st.fail++; save(); renderStats();
           });
         })
-        .catch(function(e){ res.push({ico:a.ico,n:a.n,ok:false,no:String(e&&e.message||e).slice(0,50)}); })
+        .catch(function(e){ res.push({ico:a.ico,n:a.n,ok:false,no:String(e&&e.message||e).slice(0,60)}); })
         .then(function(){ seq(i+1); });
     };
     seq(0);
   };
   renderStats(); renderGrid();
-  window.__uesAdpReady=true;
 })();
 
 /* ===== 💳 无限钱包 · 支付方式（全平台收银台接入） ===== */
@@ -20442,164 +20320,6 @@ try{scanHistoryRender();}catch(e){}
   setInterval(tickLevels,1000);
 })();
 </script>
-
-
-<script>
-/* ===== 🔐 签约接入 · 凭证激活与签约后能力 ===== */
-(function(){
-  var BASE='https://universal-pay-alipay.onrender.com';
-  var KEY='ues_wallet_contract_state';
-  var P=[
-    {k:'taobao', ico:'🛍️', n:'淘宝 / 天猫', acct:'tb_settle_wallet_universe'},
-    {k:'jd',     ico:'🐶', n:'京东',        acct:'jd_settle_wallet_universe'},
-    {k:'apple',  ico:'🍎', n:'苹果 Apple',  acct:'ap_settle_wallet_universe'},
-    {k:'douyin', ico:'🎵', n:'抖音商城',    acct:'dy_settle_wallet_universe'},
-    {k:'tiktok', ico:'🎬', n:'TikTok Shop', acct:'tt_settle_wallet_universe'}
-  ];
-  function load(){ try{ var d=JSON.parse(localStorage.getItem(KEY)||'{}'); d.plats=d.plats||{}; return d; }catch(e){ return {plats:{}}; } }
-  function save(d){ try{ localStorage.setItem(KEY,JSON.stringify(d)); }catch(e){} }
-  function seedDemo(){
-    var d=load(); if(Object.keys(d.plats).length) return;
-    P.forEach(function(p){ d.plats[p.k]={state:'demo_signed', demo:true, merchant:'DEMO-'+p.k.toUpperCase()+'-MERCHANT', app:'DEMO-'+p.k.toUpperCase()+'-APP', secret:'DEMOSECRET-'+p.k.toUpperCase()+'-PLACEHOLDER', cert:'DEMOCERT-'+p.k.toUpperCase(), notify:'demo.'+p.k+'.pay.local', ip:'127.0.0.1', at:Date.now()}; });
-    save(d);
-  }
-  seedDemo();
-  function plat(k){ for(var i=0;i<P.length;i++) if(P[i].k===k) return P[i]; return P[0]; }
-  function cs(k){ var d=load(); var c=d.plats[k]; return c? c.state : 'pending'; }
-  function mask(s){ s=String(s||''); if(s.length<=8) return s? '****':'—'; return s.slice(0,4)+'****'+s.slice(-4); }
-  function el(id){ return document.getElementById(id); }
-  function out(html,color){ var r=el('uesCtrResult'); if(!r) return; r.innerHTML=html; r.style.color=color||'var(--text-dim)'; }
-  function render(){
-    var box=el('uesCtrPlats'); if(box){
-      box.innerHTML=P.map(function(p){
-        var c=cs(p.k), color=c==='signed'?'#52C41A':(c==='demo_signed'?'#FAAD14':'#8ba3c7');
-        var txt=c==='signed'?'✅ 已签约生效':(c==='demo_signed'?'🧪 演示签约':'⏳ 待签约');
-        return '<div onclick="uesCtrPick(\''+p.k+'\')" style="cursor:pointer;background:rgba(0,212,255,0.04);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:8px;text-align:center">'
-          +'<div style="font-size:16px">'+p.ico+'</div>'
-          +'<div style="font-size:11px;font-weight:bold;color:var(--text);margin-top:2px">'+p.n+'</div>'
-          +'<div style="font-size:9px;color:'+color+';margin-top:3px">'+txt+'</div></div>';
-      }).join('');
-    }
-    var sel=el('uesCtrPlat');
-    if(sel && !sel.options.length){ sel.innerHTML=P.map(function(p){ return '<option value="'+p.k+'">'+p.n+'</option>'; }).join(''); }
-    var d=load(); var signed=0, demo=0;
-    P.forEach(function(p){ var c=d.plats[p.k]; if(c&&c.state==='signed') signed++; else if(c&&c.state==='demo_signed') demo++; });
-    var b=el('uesCtrBadge');
-    if(b){ b.textContent='真实签约 '+signed+'/5'+(demo?' · 演示 '+demo+'/5':''); b.style.color=signed?'#52C41A':(demo?'#FAAD14':'#FAAD14'); }
-    if(window.uesAdpRefresh) window.uesAdpRefresh();
-  }
-  window.uesCtrPick=function(k){ var sel=el('uesCtrPlat'); if(sel) sel.value=k; var d=load(); var c=d.plats[k]||{};
-    el('uesCtrMerchant').value=c.merchant||''; el('uesCtrApp').value=c.app||''; el('uesCtrSecret').value=c.secret||'';
-    el('uesCtrCert').value=c.cert||''; el('uesCtrNotify').value=c.notify||''; el('uesCtrIp').value=c.ip||''; };
-  function hex(buf){ return Array.prototype.map.call(new Uint8Array(buf),function(b){ return ('0'+b.toString(16)).slice(-2); }).join(''); }
-  window.uesHmac=async function(secret,msg){
-    if(!(window.crypto&&window.crypto.subtle)) return null;
-    var k=await crypto.subtle.importKey('raw',new TextEncoder().encode(secret),{name:'HMAC',hash:'SHA-256'},false,['sign']);
-    return hex(await crypto.subtle.sign('HMAC',k,new TextEncoder().encode(msg)));
-  };
-  function readForm(){
-    return { k:el('uesCtrPlat').value, merchant:el('uesCtrMerchant').value.trim(), app:el('uesCtrApp').value.trim(),
-             secret:el('uesCtrSecret').value.trim(), cert:el('uesCtrCert').value.trim(),
-             notify:el('uesCtrNotify').value.trim(), ip:el('uesCtrIp').value.trim() };
-  }
-  function validate(f){
-    var bad=[];
-    if(f.merchant.length<6) bad.push('商户号不足 6 位');
-    if(f.app.length<5) bad.push('ISV/AppID 不足 5 位');
-    if(f.secret.length<16) bad.push('签名密钥不足 16 位');
-    if(!f.cert) bad.push('缺少证书序列号');
-    if(!/\./.test(f.notify)) bad.push('回调域名格式不正确');
-    if(f.ip && !/^\d{1,3}(\.\d{1,3}){3}(\s*,\s*\d{1,3}(\.\d{1,3}){3})*$/.test(f.ip)) bad.push('IP 白名单格式不正确');
-    return bad;
-  }
-  function ping(){
-    return fetch(BASE+'/wallet/api/v1/status',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'}).then(function(r){ return r.json(); });
-  }
-  async function activate(demo){
-    var f=readForm(); var p=plat(f.k);
-    if(demo){ var k0=f.k||el('uesCtrPlat').value||'taobao'; f={k:k0, merchant:'DEMO2088'+Math.random().toString().slice(2,10), app:'DEMOAPP'+Math.random().toString().slice(2,8),
-      secret:'DEMOSECRET-'+Math.random().toString(36).slice(2,10)+'-KEY', cert:'DEMOCERT'+Math.random().toString().slice(2,8),
-      notify:'demo.'+k0+'.pay.local', ip:'127.0.0.1'}; p=plat(k0); }
-    var bad=validate(f);
-    if(bad.length){ out('<div style="color:#FAAD14;font-weight:bold">⚠️ 凭证校验未通过</div>'+bad.map(function(x){return '<div>· '+x+'</div>';}).join(''),'#FAAD14'); if(typeof toast==='function') toast('⚠️ 凭证格式校验未通过'); return; }
-    out('⏳ '+p.n+' · 校验中：格式校验通过 → 网关可达性 → HMAC-SHA256 签名自验…','#00d4ff');
-    var okGw=false;
-    try{ var g=await ping(); okGw=!!(g&&g.success); }catch(e){ okGw=false; }
-    if(!okGw){ out('<div style="color:#FAAD14;font-weight:bold">⚠️ 网关不可达，未激活</div><div>凭证保留在表单，网关恢复后重试即可</div>','#FAAD14'); return; }
-    var ts=Date.now(), nonce=Math.random().toString(36).slice(2,10), body=JSON.stringify({merchant:f.merchant,amount:'0.01',method:'wallet_universe'});
-    var msg='POST\n/wallet/api/v1/transfer\n'+ts+'\n'+nonce+'\n'+body;
-    var sig=await window.uesHmac(f.secret,msg);
-    if(!sig){ out('<div style="color:#FAAD14">⚠️ 当前非 HTTPS/安全上下文，浏览器不支持 HMAC 计算，签名自验跳过（其余校验已通过）</div>','#FAAD14'); }
-    var d=load();
-    d.plats[f.k]={state:demo?'demo_signed':'signed', merchant:f.merchant, app:f.app, secret:f.secret, cert:f.cert, notify:f.notify, ip:f.ip, at:Date.now(),
-      signedAt:(demo?0:Date.now())};
-    save(d); render();
-    out('<div style="color:'+(demo?'#FAAD14':'#52C41A')+';font-weight:bold">'+(demo?'🧪 '+p.n+' · 演示签约已激活':'✅ '+p.n+' · 签约已激活')+'</div>'
-      +'<div>商户号：<span style="font-family:var(--mono)">'+mask(f.merchant)+'</span> · AppID：<span style="font-family:var(--mono)">'+mask(f.app)+'</span> · 证书：<span style="font-family:var(--mono)">'+mask(f.cert)+'</span></div>'
-      +'<div>网关：<span style="color:#52C41A">可达</span> · 签名：<span style="color:'+(sig?'#52C41A':'#FAAD14')+'">'+(sig?'HMAC-SHA256 自验一致 '+sig.slice(0,16)+'…':'跳过')+'</span></div>'
-      +'<div>回调 <span style="font-family:var(--mono)">'+f.notify+'</span> · 退款能力：已开通（反向冲正）</div>'
-      +'<div style="color:var(--text-dim)">'+(demo?'演示凭证不代表真实平台签约；填入真实商户凭证后状态会切换为“已签约生效”。':'凭证已在本机激活，可跑「签约后全链路实测」。')+'</div>',
-      demo?'#FAAD14':'#52C41A');
-    if(typeof toast==='function') toast((demo?'🧪 演示签约已激活 · ':'✅ 签约已激活 · ')+p.n);
-  }
-  window.uesCtrActivate=function(){ activate(false); };
-  window.uesCtrDemo=function(){ activate(true); };
-  window.uesCtrDemoAll=async function(){ var sel=el('uesCtrPlat');
-    for(var i=0;i<P.length;i++){ sel.value=P[i].k; await activate(true); }
-    render(); out('🧪 5 平台演示签约已全部激活 · 卡片标注“演示签约 · 未接真实平台”','#FAAD14');
-    if(typeof toast==='function') toast('🧪 5 平台演示签约已全部激活');
-  };
-  window.uesCtrRollback=function(){
-    var k=el('uesCtrPlat').value, d=load(); delete d.plats[k]; save(d); render();
-    out('<div style="color:#8ba3c7">🔙 '+plat(k).n+' 已回退为待签约</div>','#8ba3c7');
-  };
-  window.uesCtrExport=function(){
-    var d=load();
-    var pkg={ exportedAt:new Date().toISOString(), methodCode:'wallet_universe', note:'密钥已脱敏（前4后4）',
-      adapters:P.map(function(p){ var c=d.plats[p.k];
-        if(!c) return {platform:p.n, state:'pending'};
-        return {platform:p.n, state:c.state, merchantId:mask(c.merchant), appId:mask(c.app),
-          certSerial:mask(c.cert), secret:mask(c.secret), notify:'https://'+c.notify+'/'+p.k+'/pay/notify',
-          ipWhitelist:c.ip, activatedAt:c.at?new Date(c.at).toISOString():'—'};
-      }) };
-    var blob=new Blob([JSON.stringify(pkg,null,2)],{type:'application/json;charset=utf-8'});
-    var u=URL.createObjectURL(blob), a=document.createElement('a'); a.href=u; a.download='无限钱包-签约凭证清单-脱敏.json'; document.body.appendChild(a); a.click();
-    setTimeout(function(){ URL.revokeObjectURL(u); a.remove(); },800);
-    out('🧾 已导出脱敏凭证清单（密钥仅保留前4后4位）','#52C41A');
-  };
-function post(path,body){ return fetch(BASE+path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body||{})}).then(function(r){ return r.json(); }); }
-  window.uesCtrFullChain=async function(){
-    var k=el('uesCtrPlat').value, p=plat(k), st=cs(k);
-    if(st==='pending'){ out('<div style="color:#FAAD14">⚠️ '+p.n+' 尚未激活签约，请先「校验并激活」或用「示例凭证」跑演示</div>','#FAAD14'); return; }
-    var d=load(), c=d.plats[k]||{};
-    out('⏳ '+p.n+' · 签约后全链路实测中…','#00d4ff');
-    var steps=[], fail=0, payNo='';
-    try{
-      var pay=await post('/wallet/api/v1/transfer',{payeeType:'internal',payeeAccount:p.acct,payeeName:p.n+' 结算户',amount:0.01,remark:'签约后全链路 · 支付'});
-      var pd=pay&&(pay.data||pay);
-      if(!pay||!pay.success) throw new Error('支付失败：'+((pay&&(pay.msg||pay.code))||''));
-      payNo=pd.outBizNo||'';
-      steps.push({n:'① 下单支付',ok:true,txt:'单号 '+payNo+' · ¥0.01 · '+(pd.gateway||pd.channel||'账本直结')});
-      var q1=await post('/wallet/api/v1/transfer/query',{outBizNo:payNo}); var qd=q1&&(q1.data||q1);
-      steps.push({n:'② 单据查询',ok:!!(qd&&qd.status==='SUCCESS'),txt:'状态 '+((qd&&qd.status)||'UNKNOWN')});
-      var rf=await post('/wallet/api/v1/transfer',{payeeType:'internal',payeeAccount:'refund_ues_ledger',payeeName:'退款冲正户',amount:0.01,remark:'退款冲正 · 原单 '+payNo});
-      var rd=rf&&(rf.data||rf);
-      steps.push({n:'③ 退款冲正',ok:!!(rf&&rf.success),txt:'冲正单号 '+((rd&&rd.outBizNo)||'—')+' · ¥0.01'});
-      var cbBody=JSON.stringify({outBizNo:payNo,amount:'0.01',status:'SUCCESS',ts:Date.now()});
-      var sig=await window.uesHmac(c.secret||'',cbBody);
-      var sig2=await window.uesHmac(c.secret||'',cbBody);
-      steps.push({n:'④ 回调验签',ok:!!(sig&&sig===sig2),txt:sig?('签名 '+sig.slice(0,16)+'… 复算一致'):'当前环境不支持 HMAC（需 HTTPS）'});
-    }catch(e){ fail++; steps.push({n:'链路中断',ok:false,txt:String((e&&e.message)||e)}); }
-    fail=steps.filter(function(s){ return !s.ok; }).length;
-    var head='<div style="color:'+(fail?'#FAAD14':'#52C41A')+';font-weight:bold">'+(fail?'⚠️ '+p.n+' 全链路 '+((steps.length-fail)+'/'+steps.length)+' 步通过':'✅ '+p.n+' 签约后全链路 4/4 通过')
-      +'</div><div style="color:var(--text-dim)">接入状态：'+(st==='signed'?'真实凭证已激活':'演示凭证（未接真实平台）')+' · 支付方式码 wallet_universe</div>';
-    out(head+steps.map(function(s){ return '<div>'+s.n+' · <span style="color:'+(s.ok?'#52C41A':'#FAAD14')+'">'+(s.ok?'OK':'FAIL')+'</span> · '+s.txt+'</div>'; }).join(''),'#52C41A');
-    if(typeof toast==='function') toast((fail?'⚠️':'✅')+' '+p.n+' 签约后全链路 '+((steps.length-fail)+'/'+steps.length));
-  };
-  render();
-})();
-</script>
-
 
 
 <script>
