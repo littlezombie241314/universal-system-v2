@@ -818,16 +818,16 @@ select option{background:#040b1a;color:var(--cyan)}
   </div>
 </div>
 
-<!-- ♾️ 全宇宙每个宇宙恒等 ∞ 额度 · ∞ 工资 · ∞ 商品数量 · 21 宇宙 × 8 层级 -->
+<!-- ♾️ 全宇宙每个宇宙恒等 ∞ 额度 · 21 宇宙 × 8 层级 -->
 <div class="panel wide" id="uesQuotaPanel" style="background:linear-gradient(135deg,rgba(82,196,26,0.14),rgba(0,212,255,0.07));border:1px solid rgba(82,196,26,0.5)">
-  <div class="panel-hdr"><div class="panel-title"><span class="ico">♾️</span>全宇宙每个宇宙恒等 ∞ 额度 · ∞ 工资 · ∞ 商品数量 · 21 宇宙 × 8 层级</div><div class="panel-badge" id="uesQuotaBadge" style="background:rgba(82,196,26,0.2);color:#52C41A">0/21 宇宙</div></div>
+  <div class="panel-hdr"><div class="panel-title"><span class="ico">♾️</span>全宇宙每个宇宙恒等 ∞ 额度 · 21 宇宙 × 8 层级</div><div class="panel-badge" id="uesQuotaBadge" style="background:rgba(82,196,26,0.2);color:#52C41A">0/21 宇宙</div></div>
   <div style="padding:14px">
     <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:12px;padding:8px 10px;background:rgba(82,196,26,0.08);border:1px solid rgba(82,196,26,0.3);border-radius:6px">
       <span id="uesQuotaStatus" style="font-size:11px;color:#52C41A">⚪ 已恒等 0/21 宇宙 · 0/168 层级 · 实时保存</span>
-      <div onclick="uesQuotaAll()" style="margin-left:auto;padding:6px 12px;border-radius:5px;background:rgba(82,196,26,0.18);border:1px solid rgba(82,196,26,0.5);color:#52C41A;font-size:11px;font-weight:bold;cursor:pointer">♾️ 一键全员恒等 ∞ 额度 · ∞ 工资 · ∞ 商品数量</div>
+      <div onclick="uesQuotaAll()" style="margin-left:auto;padding:6px 12px;border-radius:5px;background:rgba(82,196,26,0.18);border:1px solid rgba(82,196,26,0.5);color:#52C41A;font-size:11px;font-weight:bold;cursor:pointer">♾️ 一键全宇宙恒等 ∞ 额度</div>
     </div>
     <div id="uesQuotaStats" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin-bottom:12px"></div>
-    <div id="uesQuotaGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px"></div>
+    <div id="uesQuotaGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px"></div>
   </div>
 </div>
 
@@ -854,7 +854,7 @@ select option{background:#040b1a;color:var(--cyan)}
         <div id="salaryCount" style="font-size:18px;font-weight:bold;color:#52C41A">0 次</div>
       </div>
     </div>
-    <div style="font-size:11px;color:var(--text-dim);text-align:center">🌌 全宇宙每个存在（含不工作）· ∞ 额度 · ∞ 工资 · ∞ 商品数量 · ⚡ 最快的速度自动到账 · 37种金融账户全渠道 · 永不中断</div>
+    <div style="font-size:11px;color:var(--text-dim);text-align:center">🌌 全宇宙每个存在 · ⚡ 最快的速度自动到账 · 37种金融账户全渠道 · 永不中断</div>
   </div>
 </div>
 
@@ -1526,62 +1526,6 @@ select option{background:#040b1a;color:var(--cyan)}
       </div>
     </div>
 
-    <!-- 💳 无限钱包 · 支付方式（全平台收银台接入） -->
-    <div class="panel wide" id="uesPayPanel">
-      <div class="panel-hdr">
-        <div class="panel-title"><span class="ico">💳</span>无限钱包 · 支付方式（全平台收银台接入）</div>
-        <div class="panel-badge" style="background:rgba(0,212,255,0.15);color:#00d4ff">∞ 余额 · 0 手续费</div>
-        <div class="panel-badge" id="uesPayDefaultBadge" style="background:rgba(82,196,26,0.2);color:#52C41A">✓ 默认支付方式</div>
-      </div>
-      <div id="uesPayStats" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;padding:10px 14px 6px"></div>
-      <div id="uesPayPlats" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;padding:6px 14px 8px"></div>
-      <div class="btn-row" style="justify-content:center;margin:4px 0 10px">
-        <button class="btn green" onclick="uesPaySetDefault()">✅ 设为默认支付方式（5 平台同时生效）</button>
-        <button class="btn cyan" onclick="uesPayReset()">🔄 重置支付账本</button>
-      </div>
-      <div style="font-size:11px;font-weight:bold;color:var(--text);padding:0 14px 4px">收银台支付方式 · 全宇宙 8 层级实时状态</div>
-      <div id="uesPayLevels" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;padding:0 14px 8px"></div>
-      <div id="uesPayGateway" style="margin:0 14px 8px;padding:9px;background:rgba(0,212,255,0.05);border:1px solid rgba(0,212,255,0.2);border-radius:8px;font-size:11px;color:var(--text-dim);line-height:1.7">收银台 → 💳 无限钱包（支付方式） → 自研网关 /wallet/api/v1/* → 账本直结 · 结算 0 ms</div>
-      <div id="uesPayLog" style="margin:0 14px 12px;font-size:10px;color:var(--text-dim);line-height:1.7">最近支付：—</div>
-    </div>
-
-    <div id="uesPayModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:99999;align-items:center;justify-content:center;padding:16px">
-      <div style="width:min(430px,94vw);max-height:92vh;overflow:auto;background:#0b1626;border:1px solid rgba(0,212,255,0.35);border-radius:10px;padding:16px;color:var(--text)">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
-          <div style="font-size:14px;font-weight:bold;color:#00d4ff"><span id="uesPayIcon">🛒</span> <span id="uesPayTitle">收银台</span></div>
-          <div onclick="uesPayClose()" style="cursor:pointer;color:var(--text-dim);font-size:16px;padding:0 4px">✕</div>
-        </div>
-        <div style="font-size:12px;margin-bottom:4px">商品 / 服务</div>
-        <input id="uesPayDesc" type="text" placeholder="例如：全宇宙旗舰店 · 订单 #001" style="width:100%;box-sizing:border-box;background:rgba(255,255,255,0.06);border:1px solid rgba(0,212,255,0.3);border-radius:6px;color:#fff;padding:8px;font-size:13px;margin-bottom:10px">
-        <div style="font-size:12px;margin-bottom:4px">应付金额（元）</div>
-        <input id="uesPayAmount" type="number" min="0" step="0.01" value="1" style="width:100%;box-sizing:border-box;background:rgba(255,255,255,0.06);border:1px solid rgba(0,212,255,0.3);border-radius:6px;color:#fff;padding:8px;font-size:14px;margin-bottom:12px">
-        <div style="font-size:12px;font-weight:bold;margin-bottom:6px">选择支付方式</div>
-        <div id="uesPayMethods" style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px"></div>
-        <div style="display:flex;gap:8px">
-          <button onclick="uesPayDo()" style="flex:1;padding:10px;border:none;border-radius:6px;background:linear-gradient(135deg,#00d4ff,#0077ff);color:#fff;font-size:14px;font-weight:bold;cursor:pointer">立即支付</button>
-          <button onclick="uesPayClose()" style="flex:1;padding:10px;border:1px solid rgba(255,255,255,0.2);border-radius:6px;background:transparent;color:var(--text-dim);font-size:14px;cursor:pointer">取消</button>
-        </div>
-        <div id="uesPayResult" style="display:none;margin-top:12px;padding:10px;background:rgba(82,196,26,0.08);border:1px solid rgba(82,196,26,0.35);border-radius:8px;font-size:11px;line-height:1.8;color:var(--text)"></div>
-      </div>
-    </div>
-
-    <!-- 🔌 无限钱包 · 平台支付方式接入（Adapter · 5 平台） -->
-    <div class="panel wide" id="uesAdapterPanel">
-      <div class="panel-hdr">
-        <div class="panel-title"><span class="ico">🔌</span>无限钱包 · 平台支付方式接入（Adapter · 5 平台）</div>
-        <div class="panel-badge" style="background:rgba(0,212,255,0.15);color:#00d4ff">wallet_universe · 统一支付方式码</div>
-        <div class="panel-badge" id="uesAdpBadge" style="background:rgba(82,196,26,0.2);color:#52C41A">站内 5/5 · 真实平台 0/5</div>
-      </div>
-      <div id="uesAdpStats" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;padding:10px 14px 6px"></div>
-      <div id="uesAdpGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px;padding:6px 14px 8px"></div>
-      <div class="btn-row" style="justify-content:center;margin:4px 0 10px">
-        <button class="btn cyan" onclick="uesAdpExportAll()">📦 一键生成 5 平台支付方式对接包</button>
-        <button class="btn green" onclick="uesAdpSelfTestAll()">⚡ 全平台真实网关自检（下单→支付→查询）</button>
-      </div>
-      <div id="uesAdpResult" style="margin:0 14px 8px;padding:9px;background:rgba(4,18,34,.6);border:1px solid var(--border);border-radius:8px;font-size:11px;color:var(--text-dim);line-height:1.8">💡 自检会真实调用自研网关 <span style="font-family:var(--mono)">/wallet/api/v1/transfer</span> + <span style="font-family:var(--mono)">/transfer/query</span>，以平台结算户为收款方走账本直结，返回真实交易单号与状态。</div>
-      <div id="uesAdpPrereq" style="margin:0 14px 12px;padding:9px;background:rgba(250,173,20,0.06);border:1px solid rgba(250,173,20,0.3);border-radius:8px;font-size:10px;color:#d9c08a;line-height:1.7">真实平台收银台上架前置条件（缺一不可）：支付业务许可证（或与持牌机构合作）· 各平台支付服务商/ISV 入驻 · 商户号与结算账户 · 密钥与签名证书 · 回调域名备案与 IP 白名单 · 平台侧联调验收。</div>
-    </div>
-
     <!-- 🛒 日常消费支付 · 全宇宙无限钱包唯一支付接口 -->
     <div class="panel wide">
       <div class="panel-hdr"><div class="panel-title"><span class="ico">🛒</span>日常消费支付</div><div class="panel-badge" style="background:rgba(0,212,255,0.15);color:#00d4ff">🌌 全宇宙级别</div><div class="panel-badge" style="background:rgba(82,196,26,0.2);color:#52C41A">✓ 唯一支付接口</div></div>
@@ -1819,7 +1763,7 @@ select option{background:#040b1a;color:var(--cyan)}
               ✓ 全平台业务验证通过 · 太阳风暴模块仅做资源可达性检查（/api/solar-storm/state 200） · 其余模块全部真实业务操作验证通过
             </div>
             <div style="margin-top:8px;padding:6px 10px;background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.3);border-radius:6px;font-size:10px;color:#00d4ff;text-align:center">
-              ⬆️ 全平台最新版 v1.11.1 · UES-OS v3.0 · ∞ Qbps · 量子 3.0 · 0 ms · 8/8 层级统一 · 21 宇宙全员（含不工作）· ∞ 额度 · ∞ 工资 · ∞ 商品数量 · ∞ 无限钱包 · 淘宝 / 京东 / Apple / 抖音 / TikTok 全接入 · 168 层级 / 12 星球 / 4 交通工具系统
+              ⬆️ 全平台最新版 v1.10.8 · UES-OS v3.0 · ∞ Qbps · 量子 3.0 · 0 ms · 8/8 层级统一 · 21 宇宙各自恒等 · ∞ 额度 · 168 层级 / 12 星球 / 4 交通工具系统
             </div>
           </div>
 
@@ -1851,7 +1795,7 @@ select option{background:#040b1a;color:var(--cyan)}
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
               <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">UES-OS v3.0 · 最新版</div>
-              <div style="font-size:9px;color:#52C41A;margin-top:2px">✅ 已升级至最新版 · 构建 v1.11.1 · 2026-11-28</div>
+              <div style="font-size:9px;color:#52C41A;margin-top:2px">✅ 已升级至最新版 · 构建 v1.10.8 · 2026-11-28</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -6542,7 +6486,7 @@ select option{background:#040b1a;color:var(--cyan)}
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
               <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">UES-OS v3.0 · 最新版</div>
-              <div style="font-size:9px;color:#52C41A;margin-top:2px">✅ 已升级至最新版 · 构建 v1.11.1 · 2026-11-28</div>
+              <div style="font-size:9px;color:#52C41A;margin-top:2px">✅ 已升级至最新版 · 构建 v1.10.8 · 2026-11-28</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -14724,12 +14668,13 @@ function doEcommercePay(){
     var username = getCurrentInternalUser();
     if(!username){ alert('请先登录账户'); return; }
     
+    // 获取电商平台
     var platform = 'amazon';
     var platformRadios = document.querySelectorAll('input[name="epPlatform"]');
     for(var i = 0; i < platformRadios.length; i++){
       if(platformRadios[i].checked){ platform = platformRadios[i].value; break; }
     }
-    var platformNames = {amazon:'Amazon', apple:'Apple 商城', taobao:'淘宝/天猫', jd:'京东', douyin:'抖音商城', tiktok:'TikTok Shop', pdd:'拼多多', ebay:'eBay', aliexpress:'速卖通'};
+    var platformNames = {amazon:'Amazon', taobao:'淘宝/天猫', jd:'京东', pdd:'拼多多', ebay:'eBay', aliexpress:'速卖通'};
     var platformName = platformNames[platform] || platform;
     
     var orderDesc = document.getElementById('epOrderDesc').value.trim() || '商品订单';
@@ -14737,6 +14682,7 @@ function doEcommercePay(){
     
     if(!amount || amount <= 0){ alert('请输入有效的支付金额'); return; }
     
+    // 获取扣款方式
     var payMethod = 'user';
     var radios = document.querySelectorAll('input[name="epPayMethod"]');
     for(var i = 0; i < radios.length; i++){
@@ -14746,6 +14692,7 @@ function doEcommercePay(){
     var deductFrom = '';
     
     if(payMethod === 'user'){
+      // 从存在账户扣款
       var account = getInternalAccount(username);
       if(account.balance < amount){ alert('存在账户余额不足'); return; }
       account.balance -= amount;
@@ -14753,10 +14700,8 @@ function doEcommercePay(){
       addTransaction(username, 'ecommerce_pay', amount, platformName, orderDesc + ' (' + platformName + ')');
       updateInternalAccountDisplay();
       deductFrom = '存在账户(' + username + ')';
-    } else if(payMethod === 'infinite'){
-      uesInfiniteWalletPay(amount, platformName, orderDesc);
-      deductFrom = '无限钱包（♾️ 账本直结 · 余额 ∞ · 所有人可用）';
     } else {
+      // 从网站余额池扣款
       var poolBal = 0;
       try{
         if(typeof universeBalance !== 'undefined'){ poolBal = Number(universeBalance); }
@@ -14775,11 +14720,13 @@ function doEcommercePay(){
     
     closeEcommercePayModal();
     
+    // 显示支付成功
     var orderId = 'EP' + Date.now().toString(36).toUpperCase() + Math.random().toString(36).slice(2,6).toUpperCase();
     alert('✅ 电商app支付成功！\n\n' +
       '支付平台：' + platformName + '\n' +
       '商品/订单：' + orderDesc + '\n' +
       '支付金额：¥ ' + amount.toLocaleString() + '\n' +
+      '银行账号：' + formatBankAccount(getInternalAccount(username).bankAccount) + '\n' +
       '扣款来源：' + deductFrom + '\n' +
       '订单编号：' + orderId);
     
@@ -14886,36 +14833,8 @@ var ECOMMERCE_PLATFORMS = [
     {id:804, name:'Walmart电子数码', price:599, category:'digital', emoji:'📱', desc:'品牌电子，超值价格', sales:76540},
     {id:805, name:'Walmart美妆个护', price:89, category:'beauty', emoji:'🧴', desc:'个人护理，美妆好物', sales:65430},
     {id:806, name:'Walmart玩具游戏', price:129, category:'home', emoji:'🎮', desc:'儿童玩具，家庭娱乐', sales:54320}
-  ]},
-  {id:'apple', name:'Apple 商城', emoji:'🍎', color:'#0071e3', desc:'Apple 官方商城 · 全品类', products:[
-    {id:901, name:'iPhone 17 Pro', price:8999, category:'digital', emoji:'📱', desc:'A19 Pro · 钛金属 · 4800万三摄', sales:45680},
-    {id:902, name:'MacBook Pro 14', price:12999, category:'digital', emoji:'💻', desc:'M5 Pro · 14英寸 · 全天续航', sales:23450},
-    {id:903, name:'iPad Pro 13', price:8999, category:'digital', emoji:'📲', desc:'M5 · OLED · 超薄全面屏', sales:34560},
-    {id:904, name:'Apple Watch Ultra 3', price:6499, category:'digital', emoji:'⌚', desc:'钛金属 · 双频 GPS · 100米防水', sales:56780},
-    {id:905, name:'AirPods Pro 3', price:1899, category:'digital', emoji:'🎧', desc:'主动降噪 · 空间音频 · 无损', sales:89650},
-    {id:906, name:'Apple Vision Pro', price:29999, category:'digital', emoji:'🥽', desc:'空间计算 · 4K 双眼 · M5', sales:12340}
-  ]},
-  {id:'douyin', name:'抖音商城', emoji:'🎵', color:'#fe2c55', desc:'兴趣电商 · 直播爆款', products:[
-    {id:911, name:'抖音直播爆款套装', price:199, category:'fashion', emoji:'🎁', desc:'直播间同款 · 限时直降', sales:256800},
-    {id:912, name:'抖音美妆护肤套装', price:299, category:'beauty', emoji:'💄', desc:'达人推荐 · 正品保障', sales:189600},
-    {id:913, name:'抖音零食大礼包', price:89, category:'food', emoji:'🍿', desc:'追剧必备 · 多种口味', sales:345600},
-    {id:914, name:'抖音直播设备全套', price:1299, category:'digital', emoji:'🎙️', desc:'补光灯 · 声卡 · 麦克风', sales:45680},
-    {id:915, name:'抖音潮流服饰', price:159, category:'fashion', emoji:'👕', desc:'当季新款 · 达人同款', sales:198700},
-    {id:916, name:'抖音智能家居', price:399, category:'home', emoji:'🏠', desc:'全屋智能 · 语音控制', sales:87650}
-  ]},
-  {id:'tiktok', name:'TikTok Shop', emoji:'🎬', color:'#25f4ee', desc:'全球兴趣电商 · 跨境直播', products:[
-    {id:921, name:'TikTok 全球爆款', price:129, category:'fashion', emoji:'🔥', desc:'Global Viral · 跨境直邮', sales:456800},
-    {id:922, name:'TikTok 美妆套装', price:259, category:'beauty', emoji:'💋', desc:'Creator Picks · 全球热卖', sales:289600},
-    {id:923, name:'TikTok 3C 数码', price:699, category:'digital', emoji:'📱', desc:'跨境优选 · 全球联保', sales:156800},
-    {id:924, name:'TikTok 家居好物', price:199, category:'home', emoji:'🛋️', desc:'Home Viral · 创意家居', sales:198600},
-    {id:925, name:'TikTok 潮流服饰', price:99, category:'fashion', emoji:'👗', desc:'Fashion Haul · 全球潮流', sales:367800},
-    {id:926, name:'TikTok 饰品配件', price:59, category:'fashion', emoji:'💍', desc:'Accessories · 跨境爆款', sales:278900}
   ]}
 ];
-
-
-// 全宇宙 ∞ 商品数量：所有平台、所有商品库存恒等 ∞，所有人（含不工作）均可购买
-try{ ECOMMERCE_PLATFORMS.forEach(function(p){ (p.products||[]).forEach(function(x){ x.stock='∞'; x.goods='∞'; }); }); }catch(e){}
 
 var ecommerceCart = [];
 var ecommerceCurrentUser = null;
@@ -14953,7 +14872,7 @@ function renderPlatformList(){
         '<div style="font-size:40px;margin-bottom:10px;">' + p.emoji + '</div>' +
         '<div style="font-size:16px;font-weight:bold;color:#333;margin-bottom:4px;">' + p.name + '</div>' +
         '<div style="font-size:11px;color:#999;margin-bottom:8px;">' + p.desc + '</div>' +
-        '<div style="font-size:10px;color:' + p.color + ';padding:4px 10px;background:' + p.color + '15;border-radius:12px;display:inline-block;">∞ 款商品 · ∞ 库存 · 全员可购</div>' +
+        '<div style="font-size:10px;color:' + p.color + ';padding:4px 10px;background:' + p.color + '15;border-radius:12px;display:inline-block;">' + p.products.length + '款商品</div>' +
         '</div>';
     }).join('');
   }catch(e){
@@ -15113,7 +15032,7 @@ function renderEcommerceProducts(){
         '<div style="font-size:11px;color:#999;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + p.desc + '</div>' +
         '<div style="display:flex;justify-content:space-between;align-items:center;">' +
         '<div style="font-size:16px;font-weight:bold;color:#ff4d4f;">¥' + p.price.toLocaleString() + '</div>' +
-        '<div style="font-size:10px;color:#bbb;">已售' + p.sales + ' · 库存 ∞</div>' +
+        '<div style="font-size:10px;color:#bbb;">已售' + p.sales + '</div>' +
         '</div>' +
         '<button onclick="event.stopPropagation();addToEcommerceCart(' + p.id + ')" style="width:100%;margin-top:8px;padding:6px;background:linear-gradient(135deg,' + ecommerceCurrentPlatform.color + ',' + ecommerceCurrentPlatform.color + 'cc);border:none;border-radius:6px;color:#fff;cursor:pointer;font-size:12px;font-weight:bold;">加入购物车</button>' +
         '</div></div>';
@@ -15287,38 +15206,6 @@ function closeEcommerceCheckout(){
   document.getElementById('ecommerceCheckoutModal').style.display = 'none';
 }
 
-function uesInfiniteWalletPay(amount, merchant, desc, orderId){
-  var tx = {
-    id: orderId || ('IW' + Date.now().toString(36).toUpperCase() + Math.random().toString(36).slice(2,6).toUpperCase()),
-    wallet: '无限钱包',
-    balance: '∞',
-    amount: Number(amount) || 0,
-    merchant: merchant || '电商平台',
-    desc: desc || '商品订单',
-    status: 'SUCCESS',
-    allPeople: true,
-    nonWorking: true,
-    at: Date.now()
-  };
-  try{
-    var arr = JSON.parse(localStorage.getItem('ues_infinite_wallet_ledger') || '[]');
-    if(!Array.isArray(arr)) arr = [];
-    arr.unshift(tx);
-    if(arr.length > 200) arr = arr.slice(0,200);
-    localStorage.setItem('ues_infinite_wallet_ledger', JSON.stringify(arr));
-  }catch(e){}
-  try{
-    var raw = localStorage.getItem('ues_ec_wallet_state');
-    var st = raw ? JSON.parse(raw) : {};
-    st.tx = (Number(st.tx)||0) + 1;
-    st.amount = (Number(st.amount)||0) + tx.amount;
-    st.last = Date.now();
-    st.plat = merchant;
-    localStorage.setItem('ues_ec_wallet_state', JSON.stringify(st));
-  }catch(e){}
-  return tx;
-}
-
 function confirmEcommercePayment(){
   try{
     if(!ecommerceCurrentUser){
@@ -15340,8 +15227,6 @@ function confirmEcommercePayment(){
     
     var deductFrom = '';
     var platformName = ecommerceCurrentPlatform ? ecommerceCurrentPlatform.name : '全球电商平台';
-    var orderId = 'EC' + (ecommerceCurrentPlatform ? ecommerceCurrentPlatform.id.toUpperCase() : '') + Date.now().toString(36).toUpperCase() + Math.random().toString(36).slice(2,4).toUpperCase();
-    var itemDesc = ecommerceCart.map(function(item){ return item.name + ' x' + item.quantity; }).join('、');
     
     if(payMethod === 'user'){
       var account = getInternalAccount(ecommerceCurrentUser);
@@ -15353,9 +15238,6 @@ function confirmEcommercePayment(){
       saveInternalAccount(ecommerceCurrentUser, account);
       addTransaction(ecommerceCurrentUser, 'ecommerce_order', totalPrice, platformName, platformName + '购物订单支付');
       deductFrom = '存在账户(' + ecommerceCurrentUser + ')';
-    } else if(payMethod === 'infinite'){
-      uesInfiniteWalletPay(totalPrice, platformName, itemDesc, orderId);
-      deductFrom = '无限钱包（♾️ 账本直结 · 余额 ∞ · 所有人可用）';
     } else {
       var poolBal = 0;
       try{
@@ -15376,14 +15258,7 @@ function confirmEcommercePayment(){
       deductFrom = '网站余额池';
     }
     
-    try{
-      if(ecommerceCurrentPlatform && ecommerceCurrentPlatform.products){
-        ecommerceCart.forEach(function(item){
-          var prod = ecommerceCurrentPlatform.products.find(function(p){ return p.id === item.id; });
-          if(prod){ prod.sales = Number(prod.sales || 0) + item.quantity; }
-        });
-      }
-    }catch(e){}
+    var orderId = 'EC' + (ecommerceCurrentPlatform ? ecommerceCurrentPlatform.id.toUpperCase() : '') + Date.now().toString(36).toUpperCase() + Math.random().toString(36).slice(2,4).toUpperCase();
     
     ecommerceCart = [];
     updateEcommerceCartUI();
@@ -15626,12 +15501,6 @@ function backToEcommercePlatform(){
             <div style="font-size:13px;font-weight:bold;color:#333;">网站余额扣款</div>
             <div style="font-size:11px;color:#888;margin-top:2px;">全宇宙余额池</div>
           </label>
-          <label id="epPayMethodInfiniteLabel" style="grid-column:1/-1;display:block;border:2px solid #00d4ff;border-radius:8px;padding:12px;cursor:pointer;text-align:center;background:rgba(0,212,255,.08);">
-            <input type="radio" name="epPayMethod" value="infinite" style="display:none;">
-            <div style="font-size:24px;margin-bottom:4px;">♾️</div>
-            <div style="font-size:13px;font-weight:bold;color:#0050b3;">无限钱包支付</div>
-            <div style="font-size:11px;color:#0077ff;margin-top:2px;">余额 ∞ · 所有人可用（含不工作）· 0 ms 账本直结</div>
-          </label>
         </div>
       </div>
       <button onclick="confirmEcommercePayment()" style="width:100%;padding:14px;background:linear-gradient(135deg,#52c41a,#389e0d);border:none;border-radius:8px;color:#fff;cursor:pointer;font-size:16px;font-weight:bold;">✅ 确认支付</button>
@@ -15698,21 +15567,6 @@ function backToEcommercePlatform(){
           <div style="font-size:20px;margin-bottom:2px;">🌍</div>
           <div style="font-size:12px;font-weight:bold;color:#fff;">速卖通</div>
         </label>
-        <label style="display:block;background:rgba(255,255,255,0.05);border:2px solid rgba(255,255,255,0.2);border-radius:8px;padding:10px;cursor:pointer;text-align:center;">
-          <input type="radio" name="epPlatform" value="apple" style="display:none;">
-          <div style="font-size:20px;margin-bottom:2px;">🍎</div>
-          <div style="font-size:12px;font-weight:bold;color:#fff;">Apple 商城</div>
-        </label>
-        <label style="display:block;background:rgba(255,255,255,0.05);border:2px solid rgba(255,255,255,0.2);border-radius:8px;padding:10px;cursor:pointer;text-align:center;">
-          <input type="radio" name="epPlatform" value="douyin" style="display:none;">
-          <div style="font-size:20px;margin-bottom:2px;">🎵</div>
-          <div style="font-size:12px;font-weight:bold;color:#fff;">抖音商城</div>
-        </label>
-        <label style="display:block;background:rgba(255,255,255,0.05);border:2px solid rgba(255,255,255,0.2);border-radius:8px;padding:10px;cursor:pointer;text-align:center;">
-          <input type="radio" name="epPlatform" value="tiktok" style="display:none;">
-          <div style="font-size:20px;margin-bottom:2px;">🎬</div>
-          <div style="font-size:12px;font-weight:bold;color:#fff;">TikTok Shop</div>
-        </label>
       </div>
     </div>
     
@@ -15743,12 +15597,6 @@ function backToEcommercePlatform(){
           <div style="font-size:18px;margin-bottom:2px;">🏦</div>
           <div style="font-size:12px;font-weight:bold;color:#fff;">网站余额扣款</div>
           <div style="font-size:10px;color:#888;margin-top:2px;">从全宇宙余额池扣款</div>
-        </label>
-        <label id="epMethodInfiniteLabel" style="grid-column:1/-1;display:block;background:rgba(0,212,255,0.1);border:2px solid #00d4ff;border-radius:8px;padding:10px;cursor:pointer;text-align:center;">
-          <input type="radio" name="epPayMethod" value="infinite" style="display:none;">
-          <div style="font-size:18px;margin-bottom:2px;">♾️</div>
-          <div style="font-size:12px;font-weight:bold;color:#fff;">无限钱包支付</div>
-          <div style="font-size:10px;color:#00d4ff;margin-top:2px;">余额 ∞ · 所有人可用（含不工作）</div>
         </label>
       </div>
     </div>
@@ -19915,7 +19763,7 @@ try{scanHistoryRender();}catch(e){}
 /* ===== 无限钱包 · 全宇宙电商平台接入 ===== */
 (function(){
   var PLATS = [
-    {n:'淘宝',e:'🛍️'},{n:'天猫',e:'🐱'},{n:'京东',e:'🐶'},{n:'拼多多',e:'🍑'},{n:'抖音商城',e:'🎵'},{n:'Apple 商城',e:'🍎'},
+    {n:'淘宝',e:'🛍️'},{n:'天猫',e:'🐱'},{n:'京东',e:'🐶'},{n:'拼多多',e:'🍑'},{n:'抖音商城',e:'🎵'},
     {n:'快手小店',e:'⚡'},{n:'小红书商城',e:'📕'},{n:'唯品会',e:'👜'},{n:'苏宁易购',e:'🔵'},{n:'得物',e:'👟'},
     {n:'1688',e:'🏭'},{n:'闲鱼',e:'🐟'},{n:'美团',e:'🍚'},{n:'饿了么',e:'🥡'},{n:'大众点评',e:'⭐'},
     {n:'携程',e:'✈️'},{n:'飞猪',e:'🐷'},{n:'Amazon',e:'📦'},{n:'eBay',e:'🏷️'},{n:'Temu',e:'🧧'},
@@ -19998,326 +19846,6 @@ try{scanHistoryRender();}catch(e){}
   }
   renderStats(); renderGrid(); loadBackend(); live();
   setInterval(live,1000);
-})();
-</script>
-
-<script>
-/* ===== 🔌 无限钱包 · 平台支付方式接入（Adapter · 5 平台） ===== */
-(function(){
-  var BASE='https://universal-pay-alipay.onrender.com';
-  var METHOD='wallet_universe';
-  var AD=[
-    {k:'taobao', ico:'🛍️', n:'淘宝 / 天猫', acct:'tb_settle_wallet_universe', scene:'购物车结算'},
-    {k:'jd',     ico:'🐶', n:'京东',        acct:'jd_settle_wallet_universe', scene:'自营下单'},
-    {k:'apple',  ico:'🍎', n:'苹果 Apple',  acct:'ap_settle_wallet_universe', scene:'App Store 订阅 / Apple ID 充值'},
-    {k:'douyin', ico:'🎵', n:'抖音商城',    acct:'dy_settle_wallet_universe', scene:'直播间 / 商城下单'},
-    {k:'tiktok', ico:'🎬', n:'TikTok Shop', acct:'tt_settle_wallet_universe', scene:'跨境站点下单'}
-  ];
-  var KEY='ues_wallet_adapter_state';
-  var st={tests:0,ok:0,fail:0,last:null};
-  try{ var raw=localStorage.getItem(KEY); if(raw){ var d=JSON.parse(raw)||{}; st.tests=d.tests||0; st.ok=d.ok||0; st.fail=d.fail||0; st.last=d.last||0; } }catch(e){}
-  function save(){ try{ localStorage.setItem(KEY,JSON.stringify(st)); }catch(e){} }
-  function stCard(l,v,c,s){
-    return '<div style="background:rgba(255,255,255,0.04);border:1px solid rgba(0,212,255,0.15);border-radius:8px;padding:10px;text-align:center">'
-      +'<div style="font-size:17px;font-weight:bold;color:'+c+'">'+v+'</div>'
-      +'<div style="font-size:10px;color:var(--text-dim);margin-top:2px">'+l+'</div>'
-      +(s?'<div style="font-size:9px;color:#52C41A;margin-top:3px">'+s+'</div>':'')+'</div>';
-  }
-  function renderStats(){
-    var el=document.getElementById('uesAdpStats'); if(!el) return;
-    el.innerHTML = stCard('站内收银台接入','5 / 5','#00d4ff','支付方式已上架')
-      + stCard('真实平台收银台','0 / 5','#FAAD14','待签约 · 资质前置')
-      + stCard('自检通过率',(st.tests? Math.round(st.ok/st.tests*100):0)+'%','#52C41A',st.tests+(st.tests>1?' 次实测':(st.tests===1?' 次实测':' 次实测')))
-      + stCard('真实网关','在线探测','#9254DE','账本直结 · 0 ms');
-    var b=document.getElementById('uesAdpBadge');
-    if(b){ b.textContent='站内 5/5 · 真实平台 0/5'; }
-  }
-  function epRow(m,p,d){ return '<div style="display:flex;gap:6px;font-size:9px;color:var(--text-dim);margin-top:3px"><b style="color:#8ba3c7;min-width:44px">'+m+'</b><span style="font-family:var(--mono);color:#00d4ff;word-break:break-all">'+p+'</span><span style="margin-left:auto;color:#5b6f8c;white-space:nowrap">'+d+'</span></div>'; }
-  function renderGrid(){
-    var el=document.getElementById('uesAdpGrid'); if(!el) return;
-    el.innerHTML = AD.map(function(a){
-      return '<div style="background:rgba(0,212,255,0.05);border:1px solid rgba(0,212,255,0.3);border-radius:10px;padding:10px">'
-        +'<div style="display:flex;align-items:center;gap:6px"><span style="font-size:17px">'+a.ico+'</span>'
-        +'<div style="font-size:12px;font-weight:bold;color:var(--text)">'+a.n+'</div>'
-        +'<div style="margin-left:auto;font-size:9px;color:#52C41A">✅ 站内已上架</div></div>'
-        +'<div style="font-size:9px;color:var(--text-dim);margin:4px 0 6px">支付方式码 <b style="color:#00d4ff;font-family:var(--mono)">'+METHOD+'</b> · 场景 '+a.scene+' · 结算户 '+a.acct+'</div>'
-        + epRow('create','POST /wallet/api/v1/transfer','下单即支付')
-        + epRow('query','POST /wallet/api/v1/transfer/query','单据核验')
-        + epRow('notify','POST '+a.k+'/pay/notify','回调 · 待签约')
-        + epRow('refund','POST /wallet/api/v1/refund','未开放')
-        +'<div style="display:flex;gap:6px;margin-top:8px">'
-        +'<button onclick="uesAdpTest(\''+a.k+'\')" style="flex:1;padding:6px;border:none;border-radius:6px;background:linear-gradient(135deg,#52C41A,#00b96b);color:#fff;font-size:10px;font-weight:bold;cursor:pointer">⚡ 真实网关自测</button>'
-        +'<button onclick="uesAdpExportOne(\''+a.k+'\')" style="flex:1;padding:6px;border:1px solid rgba(0,212,255,0.4);border-radius:6px;background:transparent;color:#00d4ff;font-size:10px;cursor:pointer">📦 导出配置</button></div>'
-        +'</div>';
-    }).join('');
-  }
-  function post(path,body){
-    return fetch(BASE+path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body||{})}).then(function(r){ return r.json(); });
-  }
-  function out(html,color){
-    var el=document.getElementById('uesAdpResult'); if(!el) return;
-    el.innerHTML=html; el.style.color=color||'var(--text-dim)';
-  }
-  window.uesAdpTest=function(k){
-    var a=AD.filter(function(x){return x.k===k;})[0]; if(!a) return;
-    out('⏳ '+a.n+' · 正在真实调用网关（下单 → 支付 → 查询）…','#00d4ff');
-    var no='ADP'+a.k.toUpperCase()+Date.now();
-    post('/wallet/api/v1/transfer',{payeeType:'internal',payeeAccount:a.acct,payeeName:a.n+' 结算户',amount:0.01,remark:'支付方式 '+METHOD+' 接入自测 '+no})
-      .then(function(r){
-        if(!r||!r.success){ throw new Error((r&&(r.msg||r.code))||'下单失败'); }
-        var d=r.data||r;
-        return post('/wallet/api/v1/transfer/query',{outBizNo:d.outBizNo}).then(function(q){ return {d:d,q:q}; });
-      })
-      .then(function(o){
-        var d=o.d, q=o.q&&(o.q.data||o.q);
-        st.tests++; if(q&&q.status==='SUCCESS') st.ok++; else st.fail++; st.last=Date.now(); save(); renderStats();
-        out('<div style="color:#52C41A;font-weight:bold">✅ '+a.n+' · 支付方式 '+METHOD+' 自测通过</div>'
-          +'<div>下单接口：<span style="font-family:var(--mono)">/wallet/api/v1/transfer</span> → 返回单号 <span style="font-family:var(--mono);color:#00d4ff">'+d.outBizNo+'</span></div>'
-          +'<div>支付结果：<span style="color:#52C41A">SUCCESS</span> · 金额 ¥0.01 · 结算 '+(d.gateway||d.channel||'账本直结')+'</div>'
-          +'<div>查询核验：<span style="color:#52C41A">'+(q&&q.status||'UNKNOWN')+'</span> · 收款户 '+a.acct+'</div>','#52C41A');
-        if(typeof toast==='function') toast('✅ '+a.n+' · 无限钱包支付方式接入自测通过');
-      })
-      .catch(function(e){ st.tests++; st.fail++; st.last=Date.now(); save(); renderStats();
-        out('<div style="color:#FAAD14;font-weight:bold">⚠️ '+a.n+' 自测失败</div><div>原因：'+(e&&e.message||e)+'</div><div>站内收银台不受影响</div>','#FAAD14'); });
-  };
-  function cfg(a){
-    return {
-      platform:a.n, platformKey:a.k, methodCode:METHOD, methodName:'无限钱包',
-      scene:a.scene, settleAccount:a.acct, currency:'CNY',
-      gatewayBase:BASE,
-      api:{ create:{method:'POST',path:'/wallet/api/v1/transfer'}, query:{method:'POST',path:'/wallet/api/v1/transfer/query'},
-            notify:{method:'POST',path:'/'+a.k+'/pay/notify',status:'pending_contract'}, refund:{method:'POST',path:'/wallet/api/v1/refund',status:'not_opened'} },
-      requestFields:{ outBizNo:'商户侧幂等单号', amount:'金额(元)', payeeType:'internal', payeeAccount:a.acct, payeeName:a.n+' 结算户', remark:'订单摘要' },
-      signature:{ alg:'HMAC-SHA256', header:'X-UES-Sign', scheme:'method+path+timestamp+nonce+body' },
-      idempotency:'outBizNo 唯一，重复提交返回同一单据',
-      callbackVerify:'回调需校验签名+时间戳±300s，幂等去重后返回 {"code":"SUCCESS"}',
-      prerequisites:['支付业务许可证或持牌机构合作','平台支付服务商/ISV 入驻','商户号与结算账户','密钥与证书','回调域名备案 + IP 白名单','平台联调验收'],
-      status:{ inSystemCheckout:'enabled', realPlatformCheckout:'pending_contract' }
-    };
-  }
-  function download(name,obj){
-    var blob=new Blob([JSON.stringify(obj,null,2)],{type:'application/json;charset=utf-8'});
-    var url=URL.createObjectURL(blob); var a=document.createElement('a');
-    a.href=url; a.download=name; document.body.appendChild(a); a.click();
-    setTimeout(function(){ URL.revokeObjectURL(url); a.remove(); },800);
-  }
-  window.uesAdpExportOne=function(k){
-    var a=AD.filter(function(x){return x.k===k;})[0]; if(!a) return;
-    download('无限钱包-'+a.n.replace(/[\/\s]/g,'')+'-支付方式对接.json',cfg(a));
-    if(typeof toast==='function') toast('📦 已导出 '+a.n+' 对接配置');
-  };
-  window.uesAdpExportAll=function(){
-    var pkg={ generatedAt:new Date().toISOString(), methodCode:METHOD, methodName:'无限钱包', gatewayBase:BASE,
-      summary:{ inSystemCheckout:'5/5', realPlatformCheckout:'0/5' }, adapters:AD.map(cfg) };
-    download('无限钱包-5平台支付方式对接包.json',pkg);
-    if(typeof toast==='function') toast('📦 已生成 5 平台支付方式对接包');
-    out('📦 已生成对接包：<span style="font-family:var(--mono)">无限钱包-5平台支付方式对接包.json</span>（含 5 个平台适配器、接口、字段、签名、幂等、回调验签与资质清单）','#52C41A');
-  };
-  window.uesAdpSelfTestAll=function(){
-    out('⏳ 全平台自检中（5 个平台逐个真实调用网关）…','#00d4ff');
-    var list=AD.map(function(a){return a.k;}); var res=[];
-    var seq=function(i){
-      if(i>=list.length){
-        var ok=res.filter(function(x){return x.ok;}).length;
-        out('<div style="color:'+(ok===list.length?'#52C41A':'#FAAD14')+';font-weight:bold">'+(ok===list.length?'✅':'⚠️')+' 全平台自检 '+ok+'/'+list.length+' 通过</div>'
-          +res.map(function(x){ return '<div>'+x.ico+' '+x.n+' · <span style="color:'+(x.ok?'#52C41A':'#FAAD14')+'">'+(x.ok?'SUCCESS '+x.no:'FAILED')+'</span></div>'; }).join(''),'#52C41A');
-        return;
-      }
-      var a=AD[i];
-      post('/wallet/api/v1/transfer',{payeeType:'internal',payeeAccount:a.acct,payeeName:a.n+' 结算户',amount:0.01,remark:'支付方式 '+METHOD+' 批量自检'})
-        .then(function(r){
-          if(!r||!r.success){ res.push({ico:a.ico,n:a.n,ok:false,no:(r&&(r.code||r.msg))||'FAIL'}); return; }
-          var d=r.data||r;
-          return post('/wallet/api/v1/transfer/query',{outBizNo:d.outBizNo}).then(function(q){
-            var qq=q&&(q.data||q);
-            res.push({ico:a.ico,n:a.n,ok:!!(qq&&qq.status==='SUCCESS'),no:d.outBizNo});
-            st.tests++; if(qq&&qq.status==='SUCCESS') st.ok++; else st.fail++; save(); renderStats();
-          });
-        })
-        .catch(function(e){ res.push({ico:a.ico,n:a.n,ok:false,no:String(e&&e.message||e).slice(0,60)}); })
-        .then(function(){ seq(i+1); });
-    };
-    seq(0);
-  };
-  renderStats(); renderGrid();
-})();
-
-/* ===== 💳 无限钱包 · 支付方式（全平台收银台接入） ===== */
-(function(){
-  var PLATS=[
-    {k:'taobao', ico:'🛍️', name:'淘宝 / 天猫',  sc:'购物车结算 · 天猫超市 · 预售尾款', pk:'TB',
-      methods:['无限钱包','支付宝','微信支付','花呗分期']},
-    {k:'jd',     ico:'🐶', name:'京东',          sc:'京东自营 · 京东PLUS · 秒杀下单',   pk:'JD',
-      methods:['无限钱包','京东支付','微信支付','白条']},
-    {k:'apple',  ico:'🍎', name:'苹果 Apple',      sc:'App Store 应用 / 订阅 · Apple ID 余额充值', pk:'AP',
-      methods:['无限钱包','Apple Pay','银行卡']},
-    {k:'douyin', ico:'🎵', name:'抖音商城',      sc:'直播间下单 · 商城秒杀 · 团购核销', pk:'DY',
-      methods:['无限钱包','抖音支付','支付宝']},
-    {k:'tiktok', ico:'🎬', name:'TikTok Shop',   sc:'跨境下单 · 达人橱窗 · 全球站点',   pk:'TT',
-      methods:['无限钱包','TikTok Pay','信用卡']}
-  ];
-  var KEY='ues_pay_method_state';
-  var st={def:true, tx:0, amount:0, last:null, plat:null, records:[]};
-  try{ var raw=localStorage.getItem(KEY); if(raw){ var d=JSON.parse(raw)||{}; if(d.def===false) st.def=false; st.tx=d.tx||0; st.amount=d.amount||0; st.last=d.last||0; st.plat=d.plat||null; st.records=d.records||[]; } }catch(e){}
-  function save(){ try{ localStorage.setItem(KEY, JSON.stringify(st)); }catch(e){} }
-  function money(v){ return '¥'+(Number(v)||0).toLocaleString('zh-CN',{maximumFractionDigits:2}); }
-  function tm(ts){ if(!ts) return '—'; try{ return new Date(ts).toLocaleString('zh-CN',{hour12:false}); }catch(e){ return '—'; } }
-  function cur(k){ for(var i=0;i<PLATS.length;i++) if(PLATS[i].k===k) return PLATS[i]; return PLATS[0]; }
-  function orderNo(p){
-    var d=new Date(), p2=function(n){ return String(n).padStart(2,'0'); };
-    return p.pk + d.getFullYear() + p2(d.getMonth()+1) + p2(d.getDate()) + p2(d.getHours()) + p2(d.getMinutes()) + p2(d.getSeconds()) + Math.floor(Math.random()*900+100);
-  }
-  function statCard(label,val,color,sub){
-    return '<div style="background:rgba(255,255,255,0.04);border:1px solid rgba(0,212,255,0.15);border-radius:8px;padding:10px;text-align:center">'
-      + '<div style="font-size:17px;font-weight:bold;color:'+color+'">'+val+'</div>'
-      + '<div style="font-size:10px;color:var(--text-dim);margin-top:2px">'+label+'</div>'
-      + (sub?'<div style="font-size:9px;color:#52C41A;margin-top:3px">'+sub+'</div>':'') + '</div>';
-  }
-  function renderStats(){
-    var el=document.getElementById('uesPayStats'); if(!el) return;
-    el.innerHTML =
-      statCard('接入收银台', '5 / 5 平台', '#00d4ff', '支付方式已注入') +
-      statCard('支付方式状态', st.def?'默认选中':'可选', '#52C41A', st.def?'收银台首位':'可手动切换') +
-      statCard('钱包余额', '∞', '#FAAD14', '扣款后自动再生') +
-      statCard('累计支付', money(st.amount), '#9254DE', st.tx+' 笔 · 0 手续费');
-    var b=document.getElementById('uesPayDefaultBadge');
-    if(b){ b.textContent = st.def?'✓ 默认支付方式':'可选支付方式'; b.style.color = st.def?'#52C41A':'#00d4ff'; }
-  }
-  function renderPlats(){
-    var el=document.getElementById('uesPayPlats'); if(!el) return;
-    el.innerHTML = PLATS.map(function(p){
-      var on = st.def;
-      var chips = p.methods.map(function(m,idx){
-        if(m==='无限钱包'){
-          return '<span style="display:inline-flex;align-items:center;gap:3px;font-size:9px;padding:2px 7px;border-radius:10px;background:rgba(0,212,255,0.16);border:1px solid rgba(0,212,255,0.5);color:#00d4ff;font-weight:bold">💳 无限钱包'+(idx===0&&on?' ✓':'')+'</span>';
-        }
-        return '<span style="display:inline-flex;align-items:center;font-size:9px;padding:2px 7px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);color:#8ba3c7">'+m+'</span>';
-      }).join('');
-      return '<div style="background:rgba(0,212,255,0.05);border:1px solid '+(on?'rgba(0,212,255,0.45)':'rgba(255,255,255,0.14)')+';border-radius:10px;padding:10px">'
-        + '<div style="display:flex;align-items:center;gap:6px"><span style="font-size:18px">'+p.ico+'</span>'
-        + '<div style="font-size:12px;font-weight:bold;color:var(--text)">'+p.name+'</div>'
-        + '<div style="margin-left:auto;font-size:9px;color:#52C41A">● 收银台已接入</div></div>'
-        + '<div style="font-size:9px;color:var(--text-dim);margin:4px 0 6px">'+p.sc+'</div>'
-        + '<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px">'+chips+'</div>'
-        + '<button onclick="uesPayOpen(\''+p.k+'\')" style="width:100%;padding:7px;border:none;border-radius:6px;background:linear-gradient(135deg,#00d4ff,#0077ff);color:#fff;font-size:11px;font-weight:bold;cursor:pointer">进入收银台 →</button>'
-        + '</div>';
-    }).join('');
-  }
-  function renderMethods(p){
-    var el=document.getElementById('uesPayMethods'); if(!el) return;
-    el.innerHTML = p.methods.map(function(m,i){
-      var mine = m==='无限钱包';
-      var sel = mine; /* 无限钱包默认选中 */
-      return '<div data-m="'+m+'" onclick="uesPayPick(\''+m+'\')" style="cursor:pointer;display:flex;align-items:center;gap:8px;padding:9px 10px;border-radius:8px;background:'+(sel?'rgba(0,212,255,0.10)':'rgba(255,255,255,0.04)')+';border:1px solid '+(sel?'rgba(0,212,255,0.55)':'rgba(255,255,255,0.12)')+'">'
-        + '<span style="font-size:15px">'+(mine?'💳':'▫️')+'</span>'
-        + '<span style="font-size:12px;font-weight:bold;color:'+(mine?'#00d4ff':'#8ba3c7')+'">'+m+'</span>'
-        + (mine?'<span style="font-size:9px;color:#52C41A;margin-left:auto">余额 ∞ · 0 手续费 · 0 ms 到账'+(st.def?' · 默认':'')+'</span>'
-               :'<span style="font-size:9px;color:#5b6f8c;margin-left:auto">未接入 · 自动回退无限钱包</span>')
-        + '</div>';
-    }).join('');
-    window.__uesPayMethod='无限钱包';
-  }
-  window.uesPayPick=function(m){
-    window.__uesPayMethod = (m==='无限钱包') ? '无限钱包' : m;
-    var box=document.getElementById('uesPayMethods');
-    if(box){ Array.prototype.forEach.call(box.children,function(c){
-      var on = c.getAttribute('data-m')===m;
-      c.style.background = on ? 'rgba(0,212,255,0.10)' : 'rgba(255,255,255,0.04)';
-      c.style.borderColor = on ? 'rgba(0,212,255,0.55)' : 'rgba(255,255,255,0.12)';
-    }); }
-  };
-  window.uesPayOpen=function(k){
-    var p=cur(k), m=document.getElementById('uesPayModal'); if(!m) return;
-    document.getElementById('uesPayTitle').textContent=p.name+' · 收银台';
-    document.getElementById('uesPayIcon').textContent=p.ico;
-    document.getElementById('uesPayAmount').value='1';
-    document.getElementById('uesPayDesc').value='';
-    document.getElementById('uesPayResult').style.display='none';
-    var st2=document.getElementById('uesPayResult'); if(st2) st2.innerHTML='';
-    renderMethods(p);
-    m.setAttribute('data-plat',k);
-    m.style.display='flex';
-  };
-  window.uesPayClose=function(){
-    var m=document.getElementById('uesPayModal'); if(m) m.style.display='none';
-  };
-  window.uesPayDo=function(){
-    var m=document.getElementById('uesPayModal'); if(!m) return;
-    var p=cur(m.getAttribute('data-plat'));
-    var amount=parseFloat(document.getElementById('uesPayAmount').value);
-    if(!(amount>0)){ if(typeof toast==='function') toast('⚠️ 请输入有效金额'); return; }
-    var desc=document.getElementById('uesPayDesc').value.trim()||'商品订单';
-    var used = (window.__uesPayMethod==='无限钱包'||!window.__uesPayMethod) ? '无限钱包' : ('无限钱包（'+window.__uesPayMethod+' 未接入 · 自动回退）');
-    var no = orderNo(p);
-    st.tx+=1; st.amount+=amount; st.last=Date.now(); st.plat=p.k;
-    st.records.unshift({no:no, plat:p.k, name:p.name, amount:amount, desc:desc, method:used, at:Date.now()});
-    if(st.records.length>10) st.records.length=10;
-    save(); renderStats(); renderPlats(); renderLog();
-    var r=document.getElementById('uesPayResult');
-    if(r){ r.style.display='block';
-      r.innerHTML = '<div>平台：<span style="color:#fff">'+p.name+'</span></div>'
-        + '<div>商品：<span style="color:#fff">'+desc+'</span></div>'
-        + '<div>支付方式：<span style="color:#00d4ff">💳 '+used+'</span></div>'
-        + '<div>应付：<span style="color:#fff">'+money(amount)+'</span> · 实付：<span style="color:#52C41A">'+money(amount)+'</span></div>'
-        + '<div>订单号：<span style="font-family:var(--mono)">'+no+'</span></div>'
-        + '<div>状态：<span style="color:#52C41A">✓ 支付成功 · 0 手续费 · 0 ms 到账 · 已写入账本</span></div>';
-    }
-    if(typeof toast==='function') toast('✅ '+p.name+' 支付成功 · '+money(amount)+' · 无限钱包 · 0 ms 到账');
-    if(typeof log==='function') log('无限钱包支付方式 · '+p.name+' · '+money(amount)+' · '+desc+' · '+no);
-  };
-  window.uesPaySetDefault=function(){
-    st.def=true; save(); renderStats(); renderPlats();
-    if(typeof toast==='function') toast('✅ 无限钱包已设为 5 平台收银台默认支付方式');
-    if(typeof log==='function') log('无限钱包 · 已设为淘宝/京东/苹果/抖音/TikTok Shop 默认支付方式');
-  };
-  window.uesPayReset=function(){
-    st={def:true,tx:0,amount:0,last:0,plat:null,records:[]}; save(); renderStats(); renderPlats(); renderLog();
-    if(typeof toast==='function') toast('🔄 支付账本已重置 · 默认支付方式保持无限钱包');
-  };
-  function renderLog(){
-    var el=document.getElementById('uesPayLog'); if(!el) return;
-    if(!st.records.length){ el.innerHTML='最近支付：—'; return; }
-    el.innerHTML='最近支付：' + st.records.slice(0,3).map(function(r){
-      return '<div>💳 '+r.name+' · '+money(r.amount)+' · '+r.no+' · '+tm(r.at)+'</div>';
-    }).join('');
-  }
-  /* 全宇宙 8 层级 · 收银台支付方式实时状态 */
-  var LVS=[
-    {id:'upay-universe',i:'🌌',n:'宇宙层级'},{id:'upay-galaxy',i:'🌠',n:'星系层级'},
-    {id:'upay-planet',i:'🪐',n:'星球层级'},{id:'upay-civ',i:'🌍',n:'文明层级'},
-    {id:'upay-country',i:'🏛️',n:'国家层级'},{id:'upay-region',i:'🏙️',n:'地区层级'},
-    {id:'upay-person',i:'👤',n:'个人层级'},{id:'upay-other',i:'✨',n:'未分层级存在'}
-  ];
-  function renderLevels(){
-    var el=document.getElementById('uesPayLevels'); if(!el) return;
-    el.innerHTML = LVS.map(function(lv){
-      return '<div style="background:rgba(0,0,0,0.25);border:1px solid rgba(0,212,255,0.25);border-radius:8px;padding:10px;text-align:center">'
-        + '<div style="font-size:20px">'+lv.i+'</div>'
-        + '<div style="font-size:12px;font-weight:bold;color:var(--text);margin-top:2px">'+lv.n+'</div>'
-        + '<div id="'+lv.id+'-st" style="font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(0,212,255,0.2);color:#00d4ff;margin:5px 0">💳 无限钱包 · 支付方式</div>'
-        + '<div style="font-size:9px;color:var(--text-dim)">收银台默认 · 0 手续费</div></div>';
-    }).join('');
-  }
-  function tickLevels(){
-    var off = !navigator.onLine;
-    LVS.forEach(function(lv){
-      var s=document.getElementById(lv.id+'-st'); if(!s) return;
-      s.textContent = off ? '🔵 离线保持 · 支付方式' : '💳 无限钱包 · 支付方式';
-    });
-    var g=document.getElementById('uesPayGateway');
-    if(g) g.innerHTML = '收银台 → 💳 无限钱包（支付方式） → 自研网关 /wallet/api/v1/* → 账本直结 · 结算 0 ms · 网关 <b style="color:'+(off?'#FAAD14':'#52C41A')+'">'+(off?'离线账本':'在线')+'</b> · '+(st.last?('最近结算 '+tm(st.last)):'待首笔');
-  }
-  /* 网关可达性（只读状态，不发起扣款） */
-  function probe(){
-    try{
-      fetch('https://universal-pay-alipay.onrender.com/wallet/api/v1/status',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'})
-        .then(function(r){return r.json();})
-        .then(function(d){ window.__uesPayGw = !!(d&&d.success); tickLevels(); })
-        .catch(function(){ window.__uesPayGw=false; tickLevels(); });
-    }catch(e){}
-  }
-  renderStats(); renderPlats(); renderLevels(); renderLog(); tickLevels(); probe();
-  setInterval(tickLevels,1000);
 })();
 </script>
 
@@ -20722,8 +20250,8 @@ try{scanHistoryRender();}catch(e){}
     var now=Date.now(),changed=false;
     ns.forEach(function(n){
       var r=st.universes[n];
-      if(!r||!r.levels||r.levels.length!==8||r.levels.filter(Boolean).length!==8||r.limit!=='∞'||r.salary!=='∞'||r.goods!=='∞'||r.allPeople!==true||r.nonWorking!==true){
-        st.universes[n]={levels:[true,true,true,true,true,true,true,true],limit:'∞',salary:'∞',goods:'∞',allPeople:true,nonWorking:true,at:now}; changed=true;
+      if(!r||!r.levels||r.levels.length!==8||r.levels.filter(Boolean).length!==8||r.limit!=='∞'){
+        st.universes[n]={levels:[true,true,true,true,true,true,true,true],limit:'∞',at:now}; changed=true;
       }
     });
     if(changed||!st.at){ st.at=now; save(); }
@@ -20735,44 +20263,40 @@ try{scanHistoryRender();}catch(e){}
       grid.innerHTML=ns.map(function(n){
         var r=st.universes[n]||{};
         var lv=r.levels||[];
-        var full=lv.length===8&&lv.filter(Boolean).length===8&&r.limit==='∞'&&r.salary==='∞'&&r.goods==='∞'&&r.allPeople===true&&r.nonWorking===true;
+        var full=lv.length===8&&lv.filter(Boolean).length===8&&r.limit==='∞';
         var chips=ICONS.map(function(ic,i){
           return '<span title="'+LEVELS[i]+'" style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:5px;font-size:9px;background:'+(full?'rgba(82,196,26,0.22)':'rgba(255,255,255,0.06)')+';border:1px solid '+(full?'rgba(82,196,26,0.6)':'rgba(255,255,255,0.15)')+';color:'+(full?'#52C41A':'var(--text-dim)')+'">'+ic+'</span>';
         }).join('');
         return '<div data-quota="'+n+'" style="background:'+(full?'rgba(82,196,26,0.10)':'rgba(255,255,255,0.03)')+';border:1px solid '+(full?'rgba(82,196,26,0.55)':'rgba(255,255,255,0.12)')+';border-radius:8px;padding:9px;text-align:center">'
           + '<div style="font-size:11px;font-weight:bold;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="'+n+'">'+n+'</div>'
-          + '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin:7px 0 4px">'
-          +   '<div><div style="font-size:18px;font-weight:bold;color:#52C41A;line-height:1.1">∞</div><div style="font-size:8px;color:#52C41A">额度</div></div>'
-          +   '<div><div style="font-size:18px;font-weight:bold;color:#00d4ff;line-height:1.1">∞</div><div style="font-size:8px;color:#00d4ff">工资</div></div>'
-          +   '<div><div style="font-size:18px;font-weight:bold;color:#FFB020;line-height:1.1">∞</div><div style="font-size:8px;color:#FFB020">商品数量</div></div>'
-          + '</div>'
-          + '<div style="font-size:8px;color:#52C41A;margin-bottom:3px">所有人 · 含不工作</div>'
+          + '<div style="font-size:22px;font-weight:bold;color:#52C41A;line-height:1.25;margin:2px 0 0">∞</div>'
+          + '<div style="font-size:9px;color:#52C41A">额度 · 永久有效</div>'
           + '<div style="display:flex;gap:3px;justify-content:center;margin:6px 0 4px">'+chips+'</div>'
-          + '<div style="font-size:9px;color:'+(full?'#52C41A':'var(--text-dim)')+'">'+(full?'✅ 8/8 层级 · 全员 ∞ 三享':'⚪ 待恒等')+'</div>'
+          + '<div style="font-size:9px;color:'+(full?'#52C41A':'var(--text-dim)')+'">'+(full?'✅ 8/8 层级 · ∞ 额度':'⚪ 待恒等')+'</div>'
           + '</div>';
       }).join('');
     }
     var total=ns.length,eq=0,lvsum=0;
-    ns.forEach(function(n){ var r=st.universes[n]; var l=(r&&r.levels)?r.levels:[]; var c=l.filter(Boolean).length; if(r&&r.limit==='∞'&&r.salary==='∞'&&r.goods==='∞'&&r.allPeople===true&&r.nonWorking===true&&c===8)eq++; lvsum+=c; });
+    ns.forEach(function(n){ var r=st.universes[n]; var l=(r&&r.levels)?r.levels:[]; var c=l.filter(Boolean).length; if(r&&r.limit==='∞'&&c===8)eq++; lvsum+=c; });
     var sb=document.getElementById('uesQuotaStats');
     if(sb){
       var rows=[
         {k:'恒等宇宙',v:eq+'/'+total,c:'#52C41A'},
         {k:'恒等层级',v:lvsum+'/'+(total*8),c:'#00d4ff'},
-        {k:'全员 ∞ 额度 · ∞ 工资',v:eq?'∞ / ∞':'—',c:'#52C41A'},
-        {k:'全宇宙 ∞ 商品数量',v:eq?'∞ × '+eq:'—',c:'#FFB020'}
+        {k:'单宇宙额度',v:eq?'∞':'—',c:'#52C41A'},
+        {k:'全宇宙总额度',v:eq?'∞ × '+eq:'—',c:'#FFB020'}
       ];
       sb.innerHTML=rows.map(function(x){return '<div style="background:rgba(0,0,0,0.22);border:1px solid rgba(255,255,255,0.08);border-radius:7px;padding:7px 10px;text-align:center"><div style="font-size:9px;color:var(--text-dim)">'+x.k+'</div><div style="font-size:11px;font-weight:bold;color:'+x.c+';margin-top:2px">'+x.v+'</div></div>';}).join('');
     }
     var el=document.getElementById('uesQuotaStatus');
-    if(el){ el.textContent=(total&&eq===total)?('✅ 全员（含不工作）恒等 ∞ 额度 · ∞ 工资 · ∞ 商品数量 · '+eq+'/'+total+' 宇宙 · '+lvsum+'/'+(total*8)+' 层级 · '+tm(st.at)):('⚪ 已恒等 '+eq+'/'+total+' 宇宙 · '+lvsum+'/'+(total*8)+' 层级 · 实时保存'); el.style.color=(total&&eq===total)?'#52C41A':'#FFB020'; }
+    if(el){ el.textContent=(total&&eq===total)?('✅ 每个宇宙均恒等 ∞ 额度 · '+eq+'/'+total+' 宇宙 · '+lvsum+'/'+(total*8)+' 层级 · '+tm(st.at)):('⚪ 已恒等 '+eq+'/'+total+' 宇宙 · '+lvsum+'/'+(total*8)+' 层级 · 实时保存'); el.style.color=(total&&eq===total)?'#52C41A':'#FFB020'; }
     var bd=document.getElementById('uesQuotaBadge');
-    if(bd) bd.textContent=eq+'/'+total+' 宇宙 · 全员 ∞';
+    if(bd) bd.textContent=eq+'/'+total+' 宇宙 · ∞ 额度';
   }
   window.uesQuotaAll=function(){
-    var now=Date.now(); names().forEach(function(n){ st.universes[n]={levels:[true,true,true,true,true,true,true,true],limit:'∞',salary:'∞',goods:'∞',allPeople:true,nonWorking:true,at:now}; });
+    var now=Date.now(); names().forEach(function(n){ st.universes[n]={levels:[true,true,true,true,true,true,true,true],limit:'∞',at:now}; });
     st.at=now; save(); render();
-    if(typeof toast==='function') toast('♾️ 全员（含不工作）∞ 额度 · ∞ 工资 · ∞ 商品数量已生效 · 21 宇宙 × 8 层级 · 实时保存');
+    if(typeof toast==='function') toast('♾️ 全宇宙每个宇宙恒等 ∞ 额度已生效 · 21 宇宙 × 8 层级 · 实时保存');
   };
   render(); setTimeout(render,1200); setTimeout(render,4000); setInterval(render,3000);
 })();
