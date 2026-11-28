@@ -1750,7 +1750,7 @@ select option{background:#040b1a;color:var(--cyan)}
               ✓ 全平台业务验证通过 · 太阳风暴模块仅做资源可达性检查（/api/solar-storm/state 200） · 其余模块全部真实业务操作验证通过
             </div>
             <div style="margin-top:8px;padding:6px 10px;background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.3);border-radius:6px;font-size:10px;color:#00d4ff;text-align:center">
-              ⬆️ 全平台最新版 v1.10.8 · UES-OS v3.0 · 已部署数字智能工控板 UICA-CORE-01 · ∞ Qbps · 量子 3.0 · 0 ms · 8/8 层级统一 · 21 宇宙各自恒等 · 168 层级 / 12 星球 / 4 交通工具系统
+              ⬆️ 全平台最新版 v1.10.9 · UES-OS v3.0 · 已部署数字智能工控板 UICA-CORE-01 · ∞ Qbps · 超量子 5.0 · 0 ms · 21 宇宙全超量子网速 · 168 层级 / 12 星球 / 4 交通工具系统
             </div>
           </div>
 
@@ -1782,7 +1782,7 @@ select option{background:#040b1a;color:var(--cyan)}
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
               <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">UES-OS v3.0 · 最新版</div>
-              <div style="font-size:9px;color:#52C41A;margin-top:2px">✅ 已升级至最新版 · 构建 v1.10.8 · 2026-11-28</div>
+              <div style="font-size:9px;color:#52C41A;margin-top:2px">✅ 已升级至最新版 · 构建 v1.10.9 · 2026-11-28</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -3350,7 +3350,7 @@ select option{background:#040b1a;color:var(--cyan)}
           <div id="climateDeployBar" style="height:100%;width:100%;background:linear-gradient(90deg,var(--cyan),var(--green));border-radius:3px;transition:width 0.5s"></div>
         </div>
         <div style="text-align:center;margin-top:10px">
-          <button onclick="redeployClimateSystem()" style="padding:8px 20px;background:linear-gradient(135deg,var(--cyan),var(--green));color:#000;border:none;border-radius:6px;font-size:12px;font-weight:bold;cursor:pointer">
+          <button onclick="redeployClimateSystem(event)" style="padding:8px 20px;background:linear-gradient(135deg,var(--cyan),var(--green));color:#000;border:none;border-radius:6px;font-size:12px;font-weight:bold;cursor:pointer">
             🔄 重新部署全宇宙气候系统
           </button>
         </div>
@@ -3389,7 +3389,7 @@ select option{background:#040b1a;color:var(--cyan)}
       + '<div style="font-size:12px;font-weight:bold;color:var(--text);margin-top:2px">'+lv.name+'</div>'
       + '<div style="font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(82,196,26,0.2);color:#52C41A;margin:5px 0">'+badgeText+'</div>'
       + '<div style="font-size:9px;color:#C4B5FD;margin:2px 0">📡 '+lv.comm+'</div>'
-      + '<div style="font-size:9px;color:#00d4ff;margin:2px 0">🌐 实时网速 <span data-ues-netspeed>∞ Qbps</span></div><div style="font-size:8px;color:#52C41A;margin-bottom:2px">⚡ 超量子 3.0 · 0 ms · 全层统一</div>'
+      + '<div style="font-size:9px;color:#00d4ff;margin:2px 0">🌐 实时网速 <span data-ues-netspeed>∞ Qbps</span></div><div style="font-size:8px;color:#52C41A;margin-bottom:2px">⚡ 超量子 5.0 · 0 ms · 全层统一</div>'
       + '<div style="font-size:9px;color:var(--text-dim)">离线也保持</div></div>';
   }).join('');
 }</script>
@@ -4147,6 +4147,15 @@ select option{background:#040b1a;color:var(--cyan)}
           </div>
           <div id="uesEachEqStats" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin-bottom:12px"></div>
           <div id="uesEachEqGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px"></div>
+        </div>
+      </div>
+      <div class="panel wide" id="uesQnetPanel">
+        <div class="panel-hdr"><div class="panel-title"><span class="ico">⚡</span>全宇宙层级 · 超量子网速 ∞Qbps</div><div class="panel-badge" id="uesQnetBadge" style="background:rgba(0,212,255,0.2);color:#00d4ff">21/21 宇宙 · 168/168 通道</div></div>
+        <div style="padding:14px">
+          <div id="uesQnetStats" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin-bottom:12px"></div>
+          <div id="uesQnetLevels" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-bottom:12px"></div>
+          <div id="uesQnetUniverses" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px"></div>
+          <div style="display:flex;justify-content:flex-end;margin-top:10px"><div onclick="uesQnetAll()" style="padding:6px 12px;border-radius:5px;background:rgba(0,212,255,0.15);border:1px solid rgba(0,212,255,0.4);color:#00d4ff;font-size:11px;font-weight:bold;cursor:pointer">⚡ 全宇宙超量子接入</div></div>
         </div>
       </div>
       <div class="panel wide">
@@ -5868,7 +5877,7 @@ select option{background:#040b1a;color:var(--cyan)}
           <div style="text-align:center;background:rgba(0,212,255,0.05);border-radius:8px;padding:10px">
             <div id="devSystemVersion" style="font-size:20px;font-weight:bold;color:var(--cyan)">UES-OS v3.0</div>
             <div style="font-size:11px;color:var(--text-dim)">最新系统版本</div>
-            <div style="font-size:9px;color:#52C41A">✅ 已是最新版 · 量子 3.0</div>
+            <div style="font-size:9px;color:#52C41A">✅ 已是最新版 · 超量子 5.0</div>
           </div>
           <div style="text-align:center;background:rgba(0,212,255,0.05);border-radius:8px;padding:10px">
             <div id="devTotal" style="font-size:20px;font-weight:bold;color:var(--cyan)">17,000,000,000</div>
@@ -6598,7 +6607,7 @@ select option{background:#040b1a;color:var(--cyan)}
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
               <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">UES-OS v3.0 · 最新版</div>
-              <div style="font-size:9px;color:#52C41A;margin-top:2px">✅ 已升级至最新版 · 构建 v1.10.8 · 2026-11-28</div>
+              <div style="font-size:9px;color:#52C41A;margin-top:2px">✅ 已升级至最新版 · 构建 v1.10.9 · 2026-11-28</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -9653,7 +9662,7 @@ var INET_LEVELS = [
       + '<div style="font-size:20px">' + lv.icon + '</div>'
       + '<div style="font-size:12px;font-weight:bold;color:var(--text);margin-top:2px">' + lv.name + '</div>'
       + '<div style="font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(82,196,26,0.2);color:#52C41A;margin:5px 0" id="' + lv.id + '-st">🌐 互联网接入 · 无限带宽</div>'
-      + '<div style="font-size:9px;color:#00d4ff;margin:2px 0">🌐 实时网速 <span data-ues-netspeed>∞ Qbps</span></div><div style="font-size:8px;color:#52C41A;margin-bottom:2px">⚡ 超量子 3.0 · 0 ms · 全层统一</div>'
+      + '<div style="font-size:9px;color:#00d4ff;margin:2px 0">🌐 实时网速 <span data-ues-netspeed>∞ Qbps</span></div><div style="font-size:8px;color:#52C41A;margin-bottom:2px">⚡ 超量子 5.0 · 0 ms · 全层统一</div>'
       + '<div style="font-size:9px;color:var(--text-dim)">离线也保持 · 0ms</div></div>';
   }).join('');
   setInterval(function(){
@@ -12702,7 +12711,7 @@ function runTranslate(){
     return mockDataMap[moduleId] || {};
   }
   
-  // ===== 🌐 实时网速监测（v3.0）：真实下载采样 + 量子 3.0 统一口径 =====
+  // ===== 🌐 实时网速监测（v3.0）：真实下载采样 + 超量子 5.0 统一口径 =====
   var NET_PROBE_URL = 'icons/icon-512.png?v=3';
   var NET_PROBE_INTERVAL = 4000;
   var netSpeedState = { mbps: 0, kbps: 0, bytes: 0, ms: 0, latency: 0, at: 0, err: false, samples: 0 };
@@ -12710,7 +12719,7 @@ function runTranslate(){
 
   // 统一的网速文本：所有位置都调用同一个函数，保证全站显示一致
   // 全宇宙所有层级统一口径：量子模式网速（单一常量，所有层级/浮窗/卡片完全一致）
-  var UES_UNIFIED_NETSPEED = '∞ Qbps · 量子 3.0';
+  var UES_UNIFIED_NETSPEED = '∞ Qbps';
   function netSpeedText() {
     return UES_UNIFIED_NETSPEED;
   }
@@ -12778,8 +12787,8 @@ function runTranslate(){
     h += '<span style="color:#888;font-size:9px;">' + age + ' · 采样 ' + (s.bytes ? (s.bytes / 1024).toFixed(0) + 'KB' : '—') + '</span>';
     h += '</div>';
     h += '<div style="color:#fff;font-size:14px;font-weight:bold;margin-top:2px;">↓ <span id="netSpeedValue">' + val + '</span>';
-    h += ' <span style="font-size:9px;color:#52C41A;font-weight:normal;">⚡ 超量子 3.0 · 0 ms</span></div>';
-    if (s.err) h += '<div style="color:#888;font-size:9px;">超量子通道自愈中 · 网速口径恒定 超量子 3.0 · 0 ms</div>';
+    h += ' <span style="font-size:9px;color:#52C41A;font-weight:normal;">⚡ 超量子 5.0 · 0 ms</span></div>';
+    if (s.err) h += '<div style="color:#888;font-size:9px;">超量子通道自愈中 · 网速口径恒定 超量子 5.0 · 0 ms</div>';
     h += '</div>';
     return h;
   }
@@ -16562,8 +16571,11 @@ function stopClimateAutoRegulate() {
   if (statusEl) { statusEl.textContent = '已暂停'; statusEl.style.background = 'rgba(250,173,20,0.2)'; statusEl.style.color = '#FAAD14'; }
 }
 
-function redeployClimateSystem() {
-  var btn = event.target;
+function redeployClimateSystem(ev) {
+  var btn = (ev && ev.target) || (typeof event !== 'undefined' && event && event.target) ||
+            document.querySelector('button[onclick="redeployClimateSystem()"]') ||
+            document.querySelector('button[onclick="redeployClimateSystem(event)"]');
+  if (!btn) return;
   btn.disabled = true;
   btn.textContent = '🔄 部署中...';
   var progressEl = document.getElementById('climateDeployProgress');
@@ -20329,6 +20341,125 @@ try{scanHistoryRender();}catch(e){}
   };
   syncFromEarth();
   render(); setTimeout(render,1200); setTimeout(render,4000); setInterval(render,3000);
+})();
+</script>
+<style>@keyframes uesQnPulse{0%,100%{opacity:.35;transform:scale(.9)}50%{opacity:1;transform:scale(1.15)}} .ues-qn-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#52C41A;box-shadow:0 0 6px #52C41A;animation:uesQnPulse 1.6s ease-in-out infinite;margin-right:4px;vertical-align:middle}</style>
+<script>
+/* ===== 全宇宙超量子网速 ∞Qbps · 每个宇宙 × 每个层级（21 宇宙 × 8 层级 = 168 通道） ===== */
+(function(){
+  var KEY='ues_superquantum_netspeed';
+  var GEN='超量子 5.0';
+  var SPEED='∞ Qbps';
+  var LEVELS=[
+    {icon:'🌌',name:'宇宙层级'},
+    {icon:'🌠',name:'星系层级'},
+    {icon:'🪐',name:'星球层级'},
+    {icon:'🌍',name:'文明层级'},
+    {icon:'🏛️',name:'国家层级'},
+    {icon:'🏙️',name:'地区层级'},
+    {icon:'👤',name:'个人层级'},
+    {icon:'✨',name:'未分层级存在'}
+  ];
+  var st={channels:{},at:0};
+  try{ var raw=localStorage.getItem(KEY); if(raw){ var d=JSON.parse(raw)||{}; st.channels=d.channels||{}; st.at=d.at||0; } }catch(e){}
+  function save(){ try{ localStorage.setItem(KEY,JSON.stringify(st)); }catch(e){} }
+  function tm(ts){ try{ return new Date(ts).toLocaleTimeString('zh-CN',{hour12:false}); }catch(e){ return '--:--:--'; } }
+  function names(){
+    var arr=[];
+    try{ var sel=document.getElementById('uesImmigTarget'); if(sel && sel.options.length){ arr=Array.from(sel.options).map(function(o){return o.value;}).filter(Boolean); } }catch(e){}
+    if(arr.length<21){
+      var pn=[];
+      try{ pn=Array.from(document.querySelectorAll('#planetUniGrid [data-pu]')).map(function(e){return e.getAttribute('data-pu')+'宇宙';}); }catch(e){}
+      if(!pn.length){ try{ pn=(typeof planets!=='undefined')?planets.map(function(p){return p.name+'宇宙';}):[]; }catch(e){ pn=[]; } }
+      ['月球宇宙','超级地球宇宙','海洋星球宇宙','高山星球宇宙'].forEach(function(n){ if(pn.indexOf(n)<0) pn.push(n); });
+      var named=['主宇宙 · 现在时刻','平行宇宙-A · 机械纪元','平行宇宙-B · 魔法纪元','时空线α · 恐龙纪元','时空线β · 蒸汽朋克纪元','量子时空 · 多维叠加态','永恒时空 · 时间静止','梦境时空 · 意识海洋','混沌时空 · 万有可能'];
+      arr=named.concat(pn);
+    }
+    var out=[];
+    arr.forEach(function(n){ if(n && out.indexOf(n)<0) out.push(n); });
+    return out.slice(0,21);
+  }
+  function ensure(){
+    var ns=names(); var now=Date.now();
+    ns.forEach(function(n){
+      var r=st.channels[n];
+      if(!r || !r.levels || r.levels.length!==8){
+        st.channels[n]={on:true,gen:GEN,levels:[1,1,1,1,1,1,1,1],at:now};
+      } else { r.on=true; r.gen=GEN; }
+    });
+    st.at=now; save();
+    return ns;
+  }
+  function statsRow(k,v,c){
+    return '<div style="background:rgba(0,0,0,0.22);border:1px solid rgba(0,212,255,0.18);border-radius:7px;padding:7px 10px;text-align:center"><div style="font-size:9px;color:var(--text-dim)">'+k+'</div><div style="font-size:12px;font-weight:bold;color:'+c+';margin-top:2px" id="'+(k==='最近同步'?'qnStatAt':'')+'">'+v+'</div></div>';
+  }
+  function render(){
+    var ns=ensure();
+    var total=ns.length, chTotal=total*8, lvOn=0;
+    ns.forEach(function(n){ var r=st.channels[n]; if(r&&r.on) lvOn+=r.levels.filter(Boolean).length; });
+
+    var sb=document.getElementById('uesQnetStats');
+    if(sb){
+      var rows=[
+        {k:'超量子通道',v:lvOn+'/'+chTotal,c:'#00d4ff'},
+        {k:'实时网速',v:SPEED,c:'#52C41A'},
+        {k:'端到端延迟',v:'0 ms',c:'#52C41A'},
+        {k:'丢包率',v:'0.000%',c:'#52C41A'},
+        {k:'累计传输',v:'∞ QB',c:'#C4B5FD'},
+        {k:'最近同步',v:tm(st.at),c:'#8AA4C8'}
+      ];
+      sb.innerHTML=rows.map(function(x){ return statsRow(x.k,x.v,x.c); }).join('');
+    }
+
+    var lb=document.getElementById('uesQnetLevels');
+    if(lb) lb.innerHTML=LEVELS.map(function(lv,i){
+      return '<div style="background:rgba(0,0,0,0.25);border:1px solid rgba(0,212,255,0.28);border-radius:8px;padding:10px;text-align:center">'
+        + '<div style="font-size:20px">'+lv.icon+'</div>'
+        + '<div style="font-size:12px;font-weight:bold;color:var(--text);margin-top:2px">'+lv.name+'</div>'
+        + '<div style="font-size:14px;font-weight:bold;color:#00d4ff;margin:4px 0"><span data-ues-netspeed>'+SPEED+'</span></div>'
+        + '<div style="font-size:8px;color:#52C41A">'+GEN+' · 0 ms · 全层统一</div>'
+        + '<div style="font-size:9px;color:#52C41A;margin-top:3px"><span class="ues-qn-dot"></span><span id="qn-lv-'+i+'">'+total+'/'+total+' 宇宙 · 在线</span></div>'
+        + '</div>';
+    }).join('');
+
+    var ub=document.getElementById('uesQnetUniverses');
+    if(ub) ub.innerHTML=ns.map(function(n){
+      var r=st.channels[n]||{levels:[1,1,1,1,1,1,1,1]};
+      var cnt=r.levels.filter(Boolean).length;
+      return '<div data-qn="'+n+'" style="background:rgba(0,212,255,0.07);border:1px solid rgba(0,212,255,0.35);border-radius:8px;padding:8px;text-align:center">'
+        + '<div style="font-size:11px;font-weight:bold;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="'+n+'">'+n+'</div>'
+        + '<div style="font-size:13px;font-weight:bold;color:#00d4ff;margin:4px 0"><span data-ues-netspeed>'+SPEED+'</span></div>'
+        + '<div style="font-size:8px;color:#52C41A;margin-bottom:2px">'+GEN+' · '+cnt+'/8 层级</div>'
+        + '<div style="font-size:9px;color:#52C41A"><span class="ues-qn-dot"></span>在线 · 0 ms</div>'
+        + '</div>';
+    }).join('');
+
+    var bd=document.getElementById('uesQnetBadge');
+    if(bd) bd.textContent=total+'/'+total+' 宇宙 · '+lvOn+'/'+chTotal+' 通道';
+  }
+  function tick(){
+    var ns=names(); var total=ns.length;
+    for(var i=0;i<LEVELS.length;i++){
+      var el=document.getElementById('qn-lv-'+i);
+      if(el && el.textContent.indexOf('在线')>=0) el.textContent=total+'/'+total+' 宇宙 · 在线 · '+tm(Date.now());
+    }
+    var at=document.getElementById('qnStatAt');
+    if(at) at.textContent=tm(st.at);
+    if(window.uesSyncNetSpeedLabels) window.uesSyncNetSpeedLabels();
+  }
+  window.uesQnetAll=function(){
+    var ns=names(); var now=Date.now();
+    ns.forEach(function(n){ st.channels[n]={on:true,gen:GEN,levels:[1,1,1,1,1,1,1,1],at:now}; });
+    st.at=now; save(); render();
+    if(typeof toast==='function') toast('⚡ 全宇宙超量子网速已接入 · '+ns.length+' 宇宙 × 8 层级 · ∞ Qbps · 0 ms');
+  };
+  window.uesQnetState=function(){
+    var ns=names(); var on=0, lv=0;
+    ns.forEach(function(n){ var r=st.channels[n]; if(r&&r.on){ on++; lv+=r.levels.filter(Boolean).length; } });
+    return {universes:ns.length, universesOn:on, channels:lv, channelsTotal:ns.length*8, speed:SPEED, gen:GEN, latency:0, at:st.at};
+  };
+  render(); setTimeout(render,1200); setTimeout(render,4000); setTimeout(render,8000);
+  setInterval(render,5000); setInterval(tick,1000);
 })();
 </script>
 </body>
