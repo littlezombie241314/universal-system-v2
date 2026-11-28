@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>数字智能工控板 · UICA v3.0 远程登录</title>
+<title>数字智能工控板 · MUIA v3.1 远程登录</title>
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=3">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
@@ -85,11 +85,11 @@ input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,229,255,.12)}
       <img class="gate-logo" src="icons/icon-192.png?v=3" alt="UICA">
       <div>
         <div class="gate-title">数字智能工控板</div>
-        <div class="gate-sub">UICA v3.0 · UIOS v3.0 远程运维入口</div>
+        <div class="gate-sub">MUIA v3.1 · MUOS v3.1 联邦式远程运维入口</div>
       </div>
     </div>
     <label for="boardId">工控板编号</label>
-    <input id="boardId" value="UICA-CORE-01" autocomplete="off" spellcheck="false">
+    <input id="boardId" value="MUIA-CORE-01" autocomplete="off" spellcheck="false">
     <label for="userName">操作人账号</label>
     <input id="userName" placeholder="输入用户名（小僵免验证）" autocomplete="off" spellcheck="false">
     <div class="err" id="loginErr"></div>
@@ -104,7 +104,7 @@ input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,229,255,.12)}
     <img src="icons/icon-192.png?v=3" alt="UICA">
     <div>
       <h1>数字智能工控板 · 远程控制台</h1>
-      <p>BLUE-GOLD STAR CLOUD CORE · UIOS v3.0 DIGITAL TWIN</p>
+      <p>BLUE-GOLD META CORE · MUOS v3.1 FEDERATED DIGITAL TWIN</p>
     </div>
     <a href="#" id="switchUser" style="margin-left:auto;font-size:11px;color:#7b93ad;text-decoration:none;border:1px solid rgba(0,214,255,.22);padding:5px 10px;border-radius:20px">切换账号</a>
     <div class="badge" id="linkBadge"><span class="dot warn" id="linkDot"></span><span id="linkText">链路检测中</span></div>
@@ -115,12 +115,12 @@ input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,229,255,.12)}
     <div class="kv">操作人 <b id="kvUser">-</b></div>
     <div class="kv">在线时长 <b id="kvUptime">00:00:00</b></div>
     <div class="kv">会话标识 <b id="kvSession">-</b></div>
-    <div class="kv">运行系统 <b>UIOS v3.0</b></div>
+    <div class="kv">运行系统 <b>MUOS v3.1</b></div>
   </div>
 
   <div class="grid">
     <div class="panel">
-      <div class="panel-h"><span class="t">八层级嵌套恒等算力架构</span><span class="tag" id="layerTag">UICA v3.0</span></div>
+      <div class="panel-h"><span class="t">MUIA v3.1 · 母核 + 宇宙分区联邦架构</span><span class="tag" id="layerTag">MUIA v3.1</span></div>
       <div class="layers" id="layerGrid"></div>
     </div>
 
@@ -130,16 +130,20 @@ input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,229,255,.12)}
     </div>
 
     <div class="panel">
-      <div class="panel-h"><span class="t">宇宙恒等系统 · 部署到本板</span><span class="tag" id="uniTag">0/21 宇宙</span></div>
+      <div class="panel-h"><span class="t">每个宇宙恒等系统 · Universe Kernel 实例</span><span class="tag" id="uniTag">0/21 分区</span></div>
       <div class="chips" id="uniChips"></div>
       <div class="ops" style="margin-top:10px">
-        <button class="op" id="btnUniDeploy">🚀 一键部署全部宇宙</button>
-        <button class="op" id="btnUniSync">🔁 逐环同步</button>
+        <button class="op" id="btnUniDeploy">🚀 一键部署全部宇宙分区</button>
+        <button class="op" id="btnUniSync">🔗 跨宇宙桥接确认</button>
+        <button class="op" id="btnRoot">◆ 母核签发总根</button>
+        <button class="op" id="btnMap">🗺️ 映射表同步</button>
+        <button class="op" id="btnIso">♻️ 单宇宙故障隔离</button>
+        <button class="op" id="btnV3">📥 v3.0 单宇宙配置导入</button>
       </div>
       <div class="rows" style="margin-top:10px">
-        <div class="row"><span class="name">已同步层级</span><span class="val" id="uniLayers">0/168</span></div>
-        <div class="row"><span class="name">逐环同步轮次</span><span class="val" id="uniRounds">0</span></div>
-        <div class="row"><span class="name">镜像差异</span><span class="val" id="uniMirror">—</span></div>
+        <div class="row"><span class="name">本地八层级同步</span><span class="val" id="uniLayers">0/168</span></div>
+        <div class="row"><span class="name">桥接确认轮次</span><span class="val" id="uniRounds">0</span></div>
+        <div class="row"><span class="name">母核映射表</span><span class="val" id="uniMirror">—</span></div>
       </div>
     </div>
 
@@ -167,6 +171,8 @@ input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,229,255,.12)}
       <div class="rows" style="margin-top:10px">
         <div class="row"><span class="name">双活副本</span><span class="val" id="haState">-</span></div>
         <div class="row"><span class="name">自愈重建</span><span class="val" id="healState">-</span></div>
+        <div class="row"><span class="name">母级 Meta Kernel</span><span class="val" id="metaKernel">总根/仲裁/映射表</span></div>
+        <div class="row"><span class="name">子级 Universe Kernel</span><span class="val" id="uniKernel">0 实例</span></div>
       </div>
     </div>
 
@@ -187,7 +193,7 @@ input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,229,255,.12)}
       <div class="ops">
         <button class="op" id="btnSync">全层同步</button>
         <button class="op" id="btnCheck">系统自检</button>
-        <button class="op warn" id="btnRestart">重启恒等内核</button>
+        <button class="op warn" id="btnRestart">重启母核内核（演练）</button>
         <button class="op" id="btnDrop">断连重连测试</button>
         <button class="op" id="btnLogout">退出登录</button>
       </div>
@@ -205,15 +211,11 @@ input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,229,255,.12)}
 (function(){
   'use strict';
   var LAYERS=[
-    {k:'core', n:'核心', name:'蓝金星云恒等核', job:'算力与恒等印签统一签发'},
-    {k:'ring1', n:'第一环', name:'宇宙层', job:'跨维度身份互认'},
-    {k:'ring2', n:'第二环', name:'星系层', job:'星系级身份分发'},
-    {k:'ring3', n:'第三环', name:'恒星系层', job:'区域内身份同步'},
-    {k:'ring4', n:'第四环', name:'行星层', job:'行星内多域身份联邦'},
-    {k:'ring5', n:'第五环', name:'生态层', job:'生物与非生物实体接入'},
-    {k:'ring6', n:'第六环', name:'社会层', job:'组织与账户恒等映射'},
-    {k:'ring7', n:'第七环', name:'个体层', job:'个体身份与授权关系'},
-    {k:'ring8', n:'第八环', name:'比特层', job:'数字实体与合约锚定'}
+    {k:'core', n:'母核', name:'蓝金星云母核 · 六边形', job:'总根签发 / 跨宇宙仲裁 / 映射表'},
+    {k:'uni', n:'宇宙分区', name:'21 个独立宇宙泡', job:'独立身份空间 / 规则域 / 故障域'},
+    {k:'bridge', n:'跨宇宙桥', name:'金色光桥 · 恒等映射通道', job:'印签 / 互认凭证 / 状态摘要'},
+    {k:'shield', n:'支撑平面', name:'三层防护 + 自进化光圈', job:'边界 / 加密 / 运行 · AI 调度'},
+    {k:'kernel', n:'双级内核', name:'Meta Kernel + Universe Kernel', job:'母级 / 子级 · 一宇宙一实例'}
   ];
   var state={user:'',board:'',t0:0,timer:null,layers:[],link:'checking',retryTimer:null,restarting:false};
   var $=function(id){return document.getElementById(id);};
@@ -229,7 +231,7 @@ input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,229,255,.12)}
   }
   function pad(n){return n<10?'0'+n:''+n;}
   function fmtDur(ms){var s=Math.floor(ms/1000);return pad(Math.floor(s/3600))+':'+pad(Math.floor(s%3600/60))+':'+pad(s%60);}
-  function sid(){return 'UICA-'+Math.random().toString(16).slice(2,6).toUpperCase()+'-'+Math.random().toString(16).slice(2,6).toUpperCase();}
+  function sid(){return 'MUIA-'+Math.random().toString(16).slice(2,6).toUpperCase()+'-'+Math.random().toString(16).slice(2,6).toUpperCase();}
 
   // ---------- 登录 ----------
   function doLogin(){
@@ -237,7 +239,7 @@ input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,229,255,.12)}
     var user=($('userName').value||'').trim();
     var err=$('loginErr');
     err.textContent='';
-    if(!/^UICA-[A-Z0-9]{2,}-[A-Z0-9]{2,}$/.test(board)){err.textContent='工控板编号格式应为 UICA-XXX-01';return;}
+    if(!/^MUIA-[A-Z0-9]{2,}-[A-Z0-9]{2,}$/.test(board)){err.textContent='工控板编号格式应为 MUIA-XXX-01';return;}
     if(!user){err.textContent='请输入操作人账号';return;}
     var accounts={};
     try{accounts=JSON.parse(localStorage.getItem('internalAccounts')||'{}');}catch(e){accounts={};}
@@ -350,7 +352,7 @@ input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,229,255,.12)}
   function doSyncAll(){
     state.layers.forEach(function(s){s.sync+=rnd(400,1400);s.lat=rnd(4,24);});
     tickLayers();
-    log('八层级逐环同步完成 · 全层最终一致（宇宙→星系→恒星系→行星→生态→社会→个体→比特）','ok');
+    log('21 个宇宙分区本地八层级同步完成 · 各泡内最终一致 · 互不阻塞','ok');
   }
   function doSelfCheck(){
     var cpu=$('tmCpu').textContent,gpu=$('tmGpu').textContent;
@@ -362,7 +364,7 @@ input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,229,255,.12)}
     state.restarting=true;
     var b=$('btnRestart');b.disabled=true;
     var n=3;
-    log('重启恒等内核 · 3 秒自愈倒计时开始','warn');
+    log('重启母核内核（演练）· 各宇宙分区独立运行不受影响 · 3 秒自愈倒计时','warn');
     var t=setInterval(function(){
       n--;
       if(n>0){log('自愈重建中... 剩余 '+n+' 秒','warn');return;}
@@ -370,7 +372,7 @@ input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,229,255,.12)}
       state.layers.forEach(function(s){s.online=true;s.lat=rnd(4,18);s.sync+=rnd(100,300);});
       tickLayers();
       state.restarting=false;b.disabled=false;
-      log('恒等内核重启完成 · 双活副本接管 · 八层状态已恢复','ok');
+      log('母核内核重启完成 · 双活副本接管 · 21 宇宙分区维持在线 · 映射表已恢复','ok');
     },1000);
   }
   function doDrop(){
@@ -412,12 +414,17 @@ input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,229,255,.12)}
     $('modTag').textContent=MODULES.length+' 模块';
   }
 
-  // ---------- 宇宙恒等系统 · 部署到本板 ----------
+  // ---------- 每个宇宙恒等系统 · Universe Kernel 实例 ----------
   var UNI_KEY='ues_board_deploy';
   var UNI=['主宇宙 · 现在时刻','平行宇宙-A · 机械纪元','平行宇宙-B · 魔法纪元','时空线α · 恐龙纪元','时空线β · 蒸汽朋克纪元','量子时空 · 多维叠加态','永恒时空 · 时间静止','梦境时空 · 意识海洋','混沌时空 · 万有可能','地球宇宙','火星宇宙','开普勒-442b宇宙','伊甸星宇宙','赛博坦宇宙','织女星II宇宙','新地球宇宙','北极星III宇宙','月球宇宙','超级地球宇宙','海洋星球宇宙','高山星球宇宙'];
+  function kernelId(n){var h=0;for(var i=0;i<n.length;i++){h=(h*31+n.charCodeAt(i))>>>0;}return 'UK-'+('0000'+h.toString(16).toUpperCase()).slice(-4);}
   function uniState(){
-    var st={universes:{},rounds:0,heals:0,mirrorAt:0,at:0};
-    try{var d=JSON.parse(localStorage.getItem(UNI_KEY)||'{}')||{};st.universes=d.universes||{};st.rounds=d.rounds||0;st.heals=d.heals||0;st.mirrorAt=d.mirrorAt||0;st.at=d.at||0;}catch(e){}
+    var st={universes:{},bridges:0,root:false,heals:0,mirrorAt:0,imported:0,at:0};
+    try{
+      var d=JSON.parse(localStorage.getItem(UNI_KEY)||'{}')||{};
+      st.universes=d.universes||{};st.bridges=d.bridges||d.rounds||0;st.root=!!d.root;
+      st.heals=d.heals||0;st.mirrorAt=d.mirrorAt||0;st.imported=d.imported||0;st.at=d.at||0;
+    }catch(e){}
     return st;
   }
   function uniSave(st){try{localStorage.setItem(UNI_KEY,JSON.stringify(st));}catch(e){}}
@@ -425,21 +432,41 @@ input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,229,255,.12)}
     var st=uniState(),dep=0,lvsum=0;
     UNI.forEach(function(n){var r=st.universes[n],l=(r&&r.levels)?r.levels:[],c=l.filter(Boolean).length;if(c===8)dep++;lvsum+=c;});
     var g=$('uniChips');
-    if(g){g.innerHTML=UNI.map(function(n){var r=st.universes[n],l=(r&&r.levels)?r.levels:[],c=l.filter(Boolean).length,full=(c===8);return '<span class="chip'+(full?' ok':'')+'" title="'+c+'/8 层级">'+(full?'✅ ':'⚪ ')+n+'</span>';}).join('');}
-    if($('uniTag'))$('uniTag').textContent=dep+'/'+UNI.length+' 宇宙';
+    if(g){g.innerHTML=UNI.map(function(n){var r=st.universes[n],l=(r&&r.levels)?r.levels:[],c=l.filter(Boolean).length,full=(c===8);return '<span class="chip'+(full?' ok':'')+'" title="'+(full?'独立 Universe Kernel '+kernelId(n)+' · 8/8 层级':'本地层级 '+c+'/8')+'">'+(full?'✅ ':'⚪ ')+n+'</span>';}).join('');}
+    if($('uniTag'))$('uniTag').textContent=dep+'/'+UNI.length+' 分区';
     if($('uniLayers'))$('uniLayers').textContent=lvsum+'/'+(UNI.length*8);
-    if($('uniRounds'))$('uniRounds').textContent=st.rounds;
-    if($('uniMirror'))$('uniMirror').textContent=st.mirrorAt?('0 帧 · '+new Date(st.mirrorAt).toLocaleTimeString('zh-CN',{hour12:false})):'—';
+    if($('uniRounds'))$('uniRounds').textContent=st.bridges;
+    if($('uniMirror'))$('uniMirror').textContent=st.mirrorAt?('21 条 · 0 差异 · '+new Date(st.mirrorAt).toLocaleTimeString('zh-CN',{hour12:false})):'—';
+    if($('uniKernel'))$('uniKernel').textContent=dep+' 实例';
+    if($('metaKernel'))$('metaKernel').textContent=st.root?'总根已签发 · 仲裁在线':'待签发总根';
   }
   function uniDeployAll(){
     var st=uniState(),now=Date.now();
-    UNI.forEach(function(n){st.universes[n]={levels:[true,true,true,true,true,true,true,true],at:now};});
-    st.at=now;st.rounds=(st.rounds||0)+1;uniSave(st);uniRender();
-    log('一键部署完成 · '+UNI.length+'/'+UNI.length+' 宇宙 × 8 层级 = '+(UNI.length*8)+' 层已落在本板 UICA-CORE-01','ok');
+    UNI.forEach(function(n){st.universes[n]={levels:[true,true,true,true,true,true,true,true],at:now,kernel:kernelId(n),idSpace:'self',rules:'local',fault:'isolated'};});
+    st.at=now;st.root=true;st.bridges=(st.bridges||0)+1;uniSave(st);uniRender();
+    log('母核总根签发完成 · '+UNI.length+' 个宇宙泡各拉起独立 Universe Kernel 实例 · 1 宇宙 = 1 实例','ok');
+    log('金色光桥确认 · '+UNI.length+' 份恒等印签 + 互认凭证 + 状态摘要回流母核 · 因果一致','ok');
+    log('部署完成 · '+UNI.length+'/'+UNI.length+' 宇宙分区 × 8 层级 = '+(UNI.length*8)+' 层落在本板 MUIA-CORE-01','ok');
   }
   function uniSync(){
-    var st=uniState();st.rounds=(st.rounds||0)+1;st.at=Date.now();uniSave(st);uniRender();
-    log('逐环同步 · 核心→宇宙→星系→恒星系→行星→生态→社会→个体→比特 · 第 '+st.rounds+' 轮 · 全层最终一致','ok');
+    var st=uniState();st.bridges=(st.bridges||0)+1;st.at=Date.now();uniSave(st);uniRender();
+    log('跨宇宙桥接 · 第 '+st.bridges+' 轮 · 只传印签 / 互认凭证 / 状态摘要 · 不全量同步 · 0 阻塞','ok');
+  }
+  function uniRoot(){
+    var st=uniState();st.root=true;st.at=Date.now();uniSave(st);uniRender();
+    log('母核签发统一恒等总根 · 全局唯一身份源 · 21 宇宙分区共享同一总根','ok');
+  }
+  function uniMap(){
+    var st=uniState();st.mirrorAt=Date.now();st.at=st.mirrorAt;uniSave(st);uniRender();
+    log('母核映射表同步 · 21 宇宙 ↔ 全局只读总账 · 0 差异','ok');
+  }
+  function uniIso(){
+    var st=uniState();st.heals=(st.heals||0)+1;st.at=Date.now();uniSave(st);uniRender();
+    log('单宇宙故障隔离演练 · 仅重启本泡内核 · 母核与其他 20 宇宙不受影响 · 3 秒恢复','warn');
+  }
+  function uniV3(){
+    var st=uniState();st.imported=(st.imported||0)+1;st.at=Date.now();uniSave(st);uniRender();
+    log('v3.0 单宇宙八层级配置整体导入「主宇宙」泡 · 历史身份与数据完整保留','ok');
   }
 
   // ---------- 免登录直通 ----------
@@ -472,7 +499,7 @@ input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,229,255,.12)}
     if(state.retryTimer)clearTimeout(state.retryTimer);
     $('consoleView').hidden=true;
     $('loginView').hidden=false;
-    $('boardId').value=state.board||'UICA-CORE-01';
+    $('boardId').value=state.board||'MUIA-CORE-01';
     $('userName').value=state.user||'';
   });
 
@@ -484,6 +511,10 @@ input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,229,255,.12)}
   $('btnLogout').addEventListener('click',doLogout);
   $('btnUniDeploy').addEventListener('click',uniDeployAll);
   $('btnUniSync').addEventListener('click',uniSync);
+  $('btnRoot').addEventListener('click',uniRoot);
+  $('btnMap').addEventListener('click',uniMap);
+  $('btnIso').addEventListener('click',uniIso);
+  $('btnV3').addEventListener('click',uniV3);
 
   // 免登录：无会话也直接进入数字智能工控板控制台（小僵白名单直通）
   var lastUser=sessionStorage.getItem('uica_remote_user');
@@ -492,8 +523,8 @@ input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,229,255,.12)}
     enterConsole(lastUser,lastBoard);
     log('会话恢复 · '+lastBoard+' · '+lastUser,'info');
   }else{
-    enterConsole('小僵','UICA-CORE-01');
-    log('免登录通道 · 小僵白名单直通 · 工控板 UICA-CORE-01','ok');
+    enterConsole('小僵','MUIA-CORE-01');
+    log('免登录通道 · 小僵白名单直通 · 工控板 MUIA-CORE-01','ok');
   }
 })();
 </script>
