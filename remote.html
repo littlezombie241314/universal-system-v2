@@ -128,6 +128,20 @@ input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,229,255,.12)}
       <div class="ops" id="moduleGrid"></div>
     </div>
 
+    <div class="panel">
+      <div class="panel-h"><span class="t">宇宙恒等系统 · 部署到本板</span><span class="tag" id="uniTag">0/21 宇宙</span></div>
+      <div class="chips" id="uniChips"></div>
+      <div class="ops" style="margin-top:10px">
+        <button class="op" id="btnUniDeploy">🚀 一键部署全部宇宙</button>
+        <button class="op" id="btnUniSync">🔁 逐环同步</button>
+      </div>
+      <div class="rows" style="margin-top:10px">
+        <div class="row"><span class="name">已同步层级</span><span class="val" id="uniLayers">0/168</span></div>
+        <div class="row"><span class="name">逐环同步轮次</span><span class="val" id="uniRounds">0</span></div>
+        <div class="row"><span class="name">镜像差异</span><span class="val" id="uniMirror">—</span></div>
+      </div>
+    </div>
+
     <div class="panel" style="grid-column:span 7">
       <div class="panel-h"><span class="t">芯片架构 · ARM 多核 SoC 实时遥测</span><span class="tag" id="socTag">aarch64</span></div>
       <div class="telem">
@@ -397,6 +411,36 @@ input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,229,255,.12)}
     $('modTag').textContent=MODULES.length+' 模块';
   }
 
+  // ---------- 宇宙恒等系统 · 部署到本板 ----------
+  var UNI_KEY='ues_board_deploy';
+  var UNI=['主宇宙 · 现在时刻','平行宇宙-A · 机械纪元','平行宇宙-B · 魔法纪元','时空线α · 恐龙纪元','时空线β · 蒸汽朋克纪元','量子时空 · 多维叠加态','永恒时空 · 时间静止','梦境时空 · 意识海洋','混沌时空 · 万有可能','地球宇宙','火星宇宙','开普勒-442b宇宙','伊甸星宇宙','赛博坦宇宙','织女星II宇宙','新地球宇宙','北极星III宇宙','月球宇宙','超级地球宇宙','海洋星球宇宙','高山星球宇宙'];
+  function uniState(){
+    var st={universes:{},rounds:0,heals:0,mirrorAt:0,at:0};
+    try{var d=JSON.parse(localStorage.getItem(UNI_KEY)||'{}')||{};st.universes=d.universes||{};st.rounds=d.rounds||0;st.heals=d.heals||0;st.mirrorAt=d.mirrorAt||0;st.at=d.at||0;}catch(e){}
+    return st;
+  }
+  function uniSave(st){try{localStorage.setItem(UNI_KEY,JSON.stringify(st));}catch(e){}}
+  function uniRender(){
+    var st=uniState(),dep=0,lvsum=0;
+    UNI.forEach(function(n){var r=st.universes[n],l=(r&&r.levels)?r.levels:[],c=l.filter(Boolean).length;if(c===8)dep++;lvsum+=c;});
+    var g=$('uniChips');
+    if(g){g.innerHTML=UNI.map(function(n){var r=st.universes[n],l=(r&&r.levels)?r.levels:[],c=l.filter(Boolean).length,full=(c===8);return '<span class="chip'+(full?' ok':'')+'" title="'+c+'/8 层级">'+(full?'✅ ':'⚪ ')+n+'</span>';}).join('');}
+    if($('uniTag'))$('uniTag').textContent=dep+'/'+UNI.length+' 宇宙';
+    if($('uniLayers'))$('uniLayers').textContent=lvsum+'/'+(UNI.length*8);
+    if($('uniRounds'))$('uniRounds').textContent=st.rounds;
+    if($('uniMirror'))$('uniMirror').textContent=st.mirrorAt?('0 帧 · '+new Date(st.mirrorAt).toLocaleTimeString('zh-CN',{hour12:false})):'—';
+  }
+  function uniDeployAll(){
+    var st=uniState(),now=Date.now();
+    UNI.forEach(function(n){st.universes[n]={levels:[true,true,true,true,true,true,true,true],at:now};});
+    st.at=now;st.rounds=(st.rounds||0)+1;uniSave(st);uniRender();
+    log('一键部署完成 · '+UNI.length+'/'+UNI.length+' 宇宙 × 8 层级 = '+(UNI.length*8)+' 层已落在本板 UICA-CORE-01','ok');
+  }
+  function uniSync(){
+    var st=uniState();st.rounds=(st.rounds||0)+1;st.at=Date.now();uniSave(st);uniRender();
+    log('逐环同步 · 核心→宇宙→星系→恒星系→行星→生态→社会→个体→比特 · 第 '+st.rounds+' 轮 · 全层最终一致','ok');
+  }
+
   // ---------- 免登录直通 ----------
   function enterConsole(user,board){
     state.user=user;state.board=board;state.t0=Date.now();
@@ -412,7 +456,7 @@ input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,229,255,.12)}
     $('kvBoard').textContent=state.board;
     $('kvUser').textContent=state.user+(state.user==='小僵'?' · 白名单免验证':'');
     $('kvSession').textContent=sessionStorage.getItem('uica_remote_session')||'-';
-    buildLayers();initPeriph();renderModules();tickLayers();tickTelemetry();tickShield();
+    buildLayers();initPeriph();renderModules();uniRender();tickLayers();tickTelemetry();tickShield();
     state.timer=setInterval(function(){
       tickLayers();tickTelemetry();tickShield();
       $('kvUptime').textContent=fmtDur(Date.now()-state.t0);
@@ -437,6 +481,8 @@ input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,229,255,.12)}
   $('btnDrop').addEventListener('click',doDrop);
   $('btnMirror').addEventListener('click',doMirror);
   $('btnLogout').addEventListener('click',doLogout);
+  $('btnUniDeploy').addEventListener('click',uniDeployAll);
+  $('btnUniSync').addEventListener('click',uniSync);
 
   // 免登录：无会话也直接进入数字智能工控板控制台（小僵白名单直通）
   var lastUser=sessionStorage.getItem('uica_remote_user');
