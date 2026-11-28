@@ -1,0 +1,20 @@
+name: deploy-vercel
+on:
+  workflow_dispatch:
+  push:
+    branches: [master]
+    paths:
+      - "vercel-prebuilt/**"
+      - ".github/deploy_vercel.py"
+      - ".github/workflows/vercel-deploy.yml"
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy prebuilt output
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_PROJECT: prj_v7W5RM5K01gTKAwDA1q5SZPgjK7D
+        run: python .github/deploy_vercel.py
