@@ -15,7 +15,7 @@ files = []
 for root, _dirs, names in os.walk(OUT):
     for name in names:
         path = os.path.join(root, name)
-        rel = os.path.relpath(path, "vercel-prebuilt")
+        rel = ".vercel/output/" + os.path.relpath(path, OUT)
         data = open(path, "rb").read()
         files.append((rel, len(data), hashlib.sha1(data).hexdigest(), data))
 
