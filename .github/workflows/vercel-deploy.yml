@@ -21,9 +21,14 @@ jobs:
           mkdir -p .vercel
           cp -r vercel-prebuilt/output .vercel/output
           python - <<'PY'
-          import json, os
+          import json, requests
+          r = requests.post('https://api.vercel.com/v1/anonymous/projects?surface=cli', json={}, timeout=90)
+          r.raise_for_status()
           with open('.vercel/anonymous.json','w') as f:
-              json.dump({'projectId': os.environ['VERCEL_PROJECT'], 'token': os.environ['VERCEL_TOKEN']}, f)
+              json.dump(r.json(), f)
           PY
       - name: Deploy with Vercel CLI
+        env:
+          CI: "false"
+          GITHUB_ACTIONS: ""
         run: npx --yes vercel@61.1.0 deploy --prebuilt --temporary --yes --force
