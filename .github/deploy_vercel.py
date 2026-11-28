@@ -33,12 +33,20 @@ for rel, size, sha, data in files:
 print("upload complete", flush=True)
 
 payload = {
-    "name": "universal-system-v2",
-    "project": PROJECT,
-    "prebuilt": True,
-    "manual": True,
-    "build": {"env": {"VERCEL_MANUAL_PROVISIONING": "1"}},
     "version": 2,
+    "routes": [
+        {"src": "/api/(.*)", "dest": "/api/index.js"},
+        {"src": "/(.*)", "dest": "/$1"},
+    ],
+    "outputDirectory": ".",
+    "env": {},
+    "build": {"env": {}},
+    "name": PROJECT,
+    "project": PROJECT,
+    "meta": {},
+    "target": "production",
+    "projectSettings": {"sourceFilesOutsideRootDirectory": True, "outputDirectory": "."},
+    "source": "cli",
     "files": [{"file": rel, "size": size, "mode": 0o100644, "sha": sha}
               for rel, size, sha, _ in files],
 }
