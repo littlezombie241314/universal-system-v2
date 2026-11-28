@@ -26,6 +26,4 @@ jobs:
               json.dump({'projectId': os.environ['VERCEL_PROJECT'], 'token': os.environ['VERCEL_TOKEN']}, f)
           PY
       - name: Deploy with Vercel CLI
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: npx --yes vercel@61.1.0 deploy --prebuilt --yes --force
