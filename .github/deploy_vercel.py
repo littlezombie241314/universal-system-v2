@@ -36,6 +36,8 @@ payload = {
     "name": "universal-system-v2",
     "project": PROJECT,
     "prebuilt": True,
+    "manual": True,
+    "build": {"env": {"VERCEL_MANUAL_PROVISIONING": "1"}},
     "version": 2,
     "files": [{"file": rel, "size": size, "mode": 0o100644, "sha": sha}
               for rel, size, sha, _ in files],
