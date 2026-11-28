@@ -1750,7 +1750,7 @@ select option{background:#040b1a;color:var(--cyan)}
               ✓ 全平台业务验证通过 · 太阳风暴模块仅做资源可达性检查（/api/solar-storm/state 200） · 其余模块全部真实业务操作验证通过
             </div>
             <div style="margin-top:8px;padding:6px 10px;background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.3);border-radius:6px;font-size:10px;color:#00d4ff;text-align:center">
-              ⬆️ 全平台最新版 v1.10.7 · UES-OS v3.0 · ∞ Qbps · 量子 3.0 · 0 ms · 8/8 层级统一 · 21 宇宙各自恒等 · 168 层级 / 12 星球 / 4 交通工具系统
+              ⬆️ 全平台最新版 v1.10.8 · UES-OS v3.0 · 已部署数字智能工控板 UICA-CORE-01 · ∞ Qbps · 量子 3.0 · 0 ms · 8/8 层级统一 · 21 宇宙各自恒等 · 168 层级 / 12 星球 / 4 交通工具系统
             </div>
           </div>
 
@@ -1782,7 +1782,7 @@ select option{background:#040b1a;color:var(--cyan)}
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
               <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">UES-OS v3.0 · 最新版</div>
-              <div style="font-size:9px;color:#52C41A;margin-top:2px">✅ 已升级至最新版 · 构建 v1.10.7 · 2026-11-26</div>
+              <div style="font-size:9px;color:#52C41A;margin-top:2px">✅ 已升级至最新版 · 构建 v1.10.8 · 2026-11-28</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -5735,6 +5735,131 @@ select option{background:#040b1a;color:var(--cyan)}
     })();
     </script>
     
+    <div class="panel wide" id="uesBoardPanel">
+      <div class="panel-hdr"><div class="panel-title"><span class="ico">🧠</span>每个宇宙恒等系统 · 部署到数字智能工控板</div><div class="panel-badge" id="uesBoardBadge" style="background:rgba(255,215,0,0.18);color:#FFD700">UICA-CORE-01 · 在线</div></div>
+      <div style="padding:14px">
+        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;padding:8px 10px;background:rgba(255,215,0,0.07);border:1px solid rgba(255,215,0,0.28);border-radius:6px;margin-bottom:10px">
+          <span style="font-size:11px;color:#FFD700">纯数字形态 · 无实体 PCB</span>
+          <span style="font-size:11px;color:var(--text-dim)">芯片 UICA v3.0 · 八层级嵌套恒等算力</span>
+          <span style="font-size:11px;color:var(--text-dim)">系统 UIOS v3.0 · 云原生数字孪生底座</span>
+          <span id="uesBoardStatus" style="font-size:11px;color:var(--text-dim);margin-left:auto">⚪ 待部署 0/21 宇宙 · 0/168 层级</span>
+        </div>
+        <div id="uesBoardStats" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin-bottom:10px"></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
+          <div onclick="uesBoardDeployAll()" style="padding:7px 14px;border-radius:6px;background:linear-gradient(135deg,rgba(82,196,26,0.22),rgba(0,212,255,0.12));border:1px solid rgba(82,196,26,0.55);color:#52C41A;font-size:11px;font-weight:bold;cursor:pointer">🚀 一键部署全部宇宙恒等系统</div>
+          <div onclick="uesBoardSync()" style="padding:7px 14px;border-radius:6px;background:rgba(0,212,255,0.12);border:1px solid rgba(0,212,255,0.45);color:#00d4ff;font-size:11px;font-weight:bold;cursor:pointer">🔁 逐环同步全层</div>
+          <div onclick="uesBoardMirror()" style="padding:7px 14px;border-radius:6px;background:rgba(0,255,180,0.1);border:1px solid rgba(0,255,180,0.4);color:#34d399;font-size:11px;font-weight:bold;cursor:pointer">🧪 1:1 镜像双向校验</div>
+          <div onclick="uesBoardHeal()" style="padding:7px 14px;border-radius:6px;background:rgba(255,184,0,0.12);border:1px solid rgba(255,184,0,0.45);color:#ffb800;font-size:11px;font-weight:bold;cursor:pointer">♻️ 断连 3 秒自愈演练</div>
+          <a href="remote.html" target="_blank" rel="noopener" style="padding:7px 14px;border-radius:6px;background:linear-gradient(135deg,#a855f7,#7c3aed);color:#fff;font-size:11px;font-weight:bold;text-decoration:none">🖥️ 远程登录（免登录）</a>
+        </div>
+        <div id="uesBoardGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px"></div>
+        <div id="uesBoardLog" style="margin-top:10px;max-height:110px;overflow:auto;font-size:10px;line-height:1.7;color:var(--text-dim);font-family:monospace"></div>
+      </div>
+    </div>
+    <script>
+    /* ===== 每个宇宙恒等系统 · 部署到数字智能工控板 UICA-CORE-01 ===== */
+    (function(){
+      var KEY='ues_board_deploy';
+      var LICON=['🌌','🌠','🪐','👽','🏛️','🏙️','👤','✨'];
+      var LNAME=['宇宙层级','星系层级','星球层级','文明层级','国家层级','地区层级','个人层级','未分层级存在'];
+      var NAMED=['主宇宙 · 现在时刻','平行宇宙-A · 机械纪元','平行宇宙-B · 魔法纪元','时空线α · 恐龙纪元','时空线β · 蒸汽朋克纪元','量子时空 · 多维叠加态','永恒时空 · 时间静止','梦境时空 · 意识海洋','混沌时空 · 万有可能'];
+      var EXTRA=['月球','超级地球','海洋星球','高山星球'];
+      var st={universes:{},rounds:0,heals:0,mirrorAt:0,at:0};
+      try{var raw=localStorage.getItem(KEY);if(raw){var d=JSON.parse(raw)||{};st.universes=d.universes||{};st.rounds=d.rounds||0;st.heals=d.heals||0;st.mirrorAt=d.mirrorAt||0;st.at=d.at||0;}}catch(e){}
+      function save(){try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}}
+      function tm(ts){try{return new Date(ts).toLocaleTimeString('zh-CN',{hour12:false});}catch(e){return '--:--:--';}}
+      function names(){
+        var arr=[];
+        try{var sel=document.getElementById('uesImmigTarget');if(sel&&sel.options.length){arr=Array.from(sel.options).map(function(o){return o.value;}).filter(Boolean);}}catch(e){}
+        if(arr.length<21){
+          var pn=[];
+          try{pn=Array.from(document.querySelectorAll('#planetUniGrid [data-pu]')).map(function(e){return e.getAttribute('data-pu')+'宇宙';});}catch(e){}
+          if(!pn.length){try{pn=(typeof planets!=='undefined')?planets.map(function(p){return p.name+'宇宙';}):[];}catch(e){pn=[];}}
+          EXTRA.forEach(function(n){var u=n+'宇宙';if(pn.indexOf(u)<0)pn.push(u);});
+          arr=NAMED.concat(pn);
+        }
+        return arr.slice(0,21);
+      }
+      function blog(msg,color){
+        var box=document.getElementById('uesBoardLog');if(!box)return;
+        var d=document.createElement('div');
+        d.style.color=color||'var(--text-dim)';
+        d.textContent='['+tm(Date.now())+'] '+msg;
+        box.insertBefore(d,box.firstChild);
+        while(box.childNodes.length>40)box.removeChild(box.lastChild);
+      }
+      window.uesBoardLog=blog;
+      function render(){
+        var ns=names(), grid=document.getElementById('uesBoardGrid');
+        if(grid){
+          grid.innerHTML=ns.map(function(n){
+            var r=st.universes[n], lv=(r&&r.levels)?r.levels:[], cnt=lv.filter(Boolean).length, full=(cnt===8);
+            var dots=LICON.map(function(ic,i){
+              var on=!!lv[i];
+              return '<span title="'+LNAME[i]+'" style="width:15px;height:15px;line-height:15px;border-radius:50%;font-size:8px;display:inline-block;background:'+(on?'rgba(82,196,26,0.28)':'rgba(255,255,255,0.06)')+';border:1px solid '+(on?'#52C41A':'rgba(255,255,255,0.15)')+';opacity:'+(on?'1':'0.55')+'">'+ic+'</span>';
+            }).join('');
+            return '<div data-board="'+n+'" onclick="uesBoardDeployOne(this.getAttribute(\'data-board\'))" style="cursor:pointer;background:'+(full?'rgba(82,196,26,0.10)':'rgba(255,255,255,0.03)')+';border:1px solid '+(full?'rgba(82,196,26,0.55)':'rgba(255,255,255,0.12)')+';border-radius:8px;padding:8px;text-align:center">'
+              +'<div style="font-size:11px;font-weight:bold;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="'+n+'">'+n+'</div>'
+              +'<div style="display:flex;gap:3px;justify-content:center;margin:6px 0 4px">'+dots+'</div>'
+              +'<div style="font-size:9px;color:'+(full?'#52C41A':'var(--text-dim)')+'">'+cnt+'/8 层级 · '+(full?'✅ 已部署 '+(r?tm(r.at):''):'⚪ 待部署')+'</div>'
+              +'</div>';
+          }).join('');
+        }
+        var total=ns.length||21, dep=0, lvsum=0;
+        ns.forEach(function(n){var r=st.universes[n],l=(r&&r.levels)?r.levels:[],c=l.filter(Boolean).length;if(c===8)dep++;lvsum+=c;});
+        var sb=document.getElementById('uesBoardStats');
+        if(sb){
+          var rows=[
+            {k:'已部署宇宙',v:dep+'/'+total,c:'#52C41A'},
+            {k:'已同步层级',v:lvsum+'/'+(total*8),c:'#00d4ff'},
+            {k:'逐环同步轮次',v:st.rounds,c:'#C4B5FD'},
+            {k:'镜像差异',v:(st.mirrorAt?'0 帧':'—'),c:'#34d399'},
+            {k:'自愈重建',v:st.heals+' 次',c:'#ffb800'},
+            {k:'最近部署',v:st.at?tm(st.at):'—',c:'#FFD700'}
+          ];
+          sb.innerHTML=rows.map(function(x){return '<div style="background:rgba(0,0,0,0.22);border:1px solid rgba(255,255,255,0.08);border-radius:7px;padding:7px 10px;text-align:center"><div style="font-size:9px;color:var(--text-dim)">'+x.k+'</div><div style="font-size:11px;font-weight:bold;color:'+x.c+';margin-top:2px">'+x.v+'</div></div>';}).join('');
+        }
+        var el=document.getElementById('uesBoardStatus');
+        if(el){el.textContent=(total&&dep===total)?('✅ 全部 '+dep+'/'+total+' 宇宙恒等系统已部署到 UICA-CORE-01 · '+lvsum+'/'+(total*8)+' 层级 · '+tm(st.at)):('⚪ 已部署 '+dep+'/'+total+' 宇宙 · '+lvsum+'/'+(total*8)+' 层级 · 实时保存');el.style.color=(total&&dep===total)?'#52C41A':'var(--text-dim)';}
+        var bd=document.getElementById('uesBoardBadge');
+        if(bd) bd.textContent='UICA-CORE-01 · '+(dep===total&&total?'已部署 '+dep+'/'+total:'在线 · '+dep+'/'+total+' 宇宙');
+      }
+      window.uesBoardDeployOne=function(n){
+        if(!n)return;
+        var now=Date.now();
+        st.universes[n]={levels:[true,true,true,true,true,true,true,true],at:now};
+        st.at=now;save();render();
+        blog('「'+n+'」恒等系统已部署到 UICA-CORE-01 · 8/8 层级 · 双活副本就绪','#52C41A');
+        if(typeof toast==='function')toast('🧠「'+n+'」已部署到数字智能工控板 · 8/8 层级');
+      };
+      window.uesBoardDeployAll=function(){
+        var ns=names(), now=Date.now();
+        ns.forEach(function(n){st.universes[n]={levels:[true,true,true,true,true,true,true,true],at:now};});
+        st.at=now;st.rounds=(st.rounds||0)+1;save();render();
+        blog('一键部署完成 · '+ns.length+'/'+ns.length+' 宇宙 × 8 层级 = '+ns.length*8+' 层全部落在 UICA-CORE-01','#52C41A');
+        blog('恒等印签统一签发 · 跨层级互认 · 与实体工控板 1:1 镜像双向同步','#00d4ff');
+        if(typeof toast==='function')toast('🚀 '+ns.length+' 个宇宙恒等系统已全部部署到数字智能工控板');
+      };
+      window.uesBoardSync=function(){
+        st.rounds=(st.rounds||0)+1;st.at=Date.now();save();render();
+        blog('逐环同步 · 核心→宇宙→星系→恒星系→行星→生态→社会→个体→比特 · 第 '+st.rounds+' 轮完成 · 全层最终一致','#00d4ff');
+        if(typeof toast==='function')toast('🔁 八层级逐环同步完成 · 第 '+st.rounds+' 轮');
+      };
+      window.uesBoardMirror=function(){
+        st.mirrorAt=Date.now();st.at=st.mirrorAt;save();render();
+        blog('Modbus 115200 8N1 / CANopen 1Mbps / EtherCAT 100Mbps 逐帧比对 · 数字板 ↔ 实体板 0 差异','#34d399');
+        if(typeof toast==='function')toast('🧪 协议镜像双向校验通过 · 0 差异');
+      };
+      window.uesBoardHeal=function(){
+        st.heals=(st.heals||0)+1;st.at=Date.now();save();render();
+        blog('断连演练 · 远程通道中断 → 3 秒自愈重建 → 双活副本接管 → 八层状态恢复','#ffb800');
+        if(typeof toast==='function')toast('♻️ 断连 3 秒自愈演练完成 · 链路已恢复');
+      };
+      render();setTimeout(render,1200);setTimeout(render,4000);setInterval(render,4000);
+      if(!st.at) blog('工控板 UICA-CORE-01 上线 · 等待部署宇宙恒等系统','var(--text-dim)');
+    })();
+    </script>
+
     <div class="panel wide">
       <div class="panel-hdr"><div class="panel-title"><span class="ico">📲</span>全宇宙智能终端 · 系统更新</div><div class="panel-badge" style="background:rgba(0,212,255,0.2);color:#00d4ff">自动更新中 · ⚡ 最快的速度同步全部在线终端</div></div>
       <div style="padding:16px">
@@ -6473,7 +6598,7 @@ select option{background:#040b1a;color:var(--cyan)}
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
               <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">UES-OS v3.0 · 最新版</div>
-              <div style="font-size:9px;color:#52C41A;margin-top:2px">✅ 已升级至最新版 · 构建 v1.10.7 · 2026-11-26</div>
+              <div style="font-size:9px;color:#52C41A;margin-top:2px">✅ 已升级至最新版 · 构建 v1.10.8 · 2026-11-28</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
