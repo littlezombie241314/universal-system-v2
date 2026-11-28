@@ -9,3 +9,10 @@ alipay-backend/.env.example
 !.dev.vars.example
 .env*
 !.env.example
+
+# 安全：禁止提交/发布后端私钥与生产环境文件
+alipay-backend/certs/
+alipay-backend/keys/
+alipay-backend/deploy_env_prod.txt
+*.pem
+*.key

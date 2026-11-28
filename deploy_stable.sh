@@ -21,7 +21,7 @@ APP_DIR="$(cd "$(dirname "$0")" && pwd)"
 PUBLISH_DIR="/tmp/uv2_publish"
 LOCAL_HTML="$APP_DIR/index.html"
 EXPECTED_MD5="${EXPECTED_MD5:-$(md5sum "$LOCAL_HTML" 2>/dev/null | awk '{print $1}')}"
-CF_TOKEN="${CF_TOKEN:-cfut_0fC32gyeeBWhTtZ81NNcY9YDc3wD1VA8LOJRpZep9000634a}"
+CF_TOKEN="${CF_TOKEN:-$(cat "$HOME/.ues_cf_token" 2>/dev/null)}"
 CF_ACCOUNT="46d9f2f07b15e133ac141b593d60f241"
 CF_WORKER="universal-equality"
 DOUBAO_APP_ID="app_17f4htz1kfy"
@@ -69,8 +69,13 @@ prepare() {
   # 先生成构建戳，保证 Surge/Pages/Worker/GitHub 用的是同一份指纹
   printf '<!doctype html><meta charset="utf-8"><title>build stamp</title><pre>build=%s\nversion=%s\ntime=%s</pre>\n' \
     "$EXPECTED_MD5" "$(grep -o 'ues-v[0-9.]*' "$APP_DIR/sw.js" | head -1)" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > "$APP_DIR/build-stamp.html"
+  rm -rf "$PUBLISH_DIR"
   mkdir -p "$PUBLISH_DIR"
-  rsync -a --exclude '.git' --exclude '.gitignore' --exclude 'index_backup_wormhole.html' --exclude '.github' "$APP_DIR/" "$PUBLISH_DIR/"
+  # 只发布静态白名单，绝不把后端证书、生产 env、部署脚本打进公开静态站
+  for f in index.html sw.js manifest.json favicon-16.png favicon-32.png favicon.ico solar-storm-state.json remote.html social-register.html build-stamp.html; do
+    [ -f "$APP_DIR/$f" ] && cp -p "$APP_DIR/$f" "$PUBLISH_DIR/$f"
+  done
+  cp -a "$APP_DIR/assets" "$APP_DIR/icons" "$PUBLISH_DIR/" 2>/dev/null || true
   local md5
   md5="$(md5sum "$PUBLISH_DIR/index.html" | awk '{print $1}')"
   if [ "$md5" != "$EXPECTED_MD5" ]; then
