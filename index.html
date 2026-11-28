@@ -3350,7 +3350,7 @@ select option{background:#040b1a;color:var(--cyan)}
           <div id="climateDeployBar" style="height:100%;width:100%;background:linear-gradient(90deg,var(--cyan),var(--green));border-radius:3px;transition:width 0.5s"></div>
         </div>
         <div style="text-align:center;margin-top:10px">
-          <button onclick="redeployClimateSystem()" style="padding:8px 20px;background:linear-gradient(135deg,var(--cyan),var(--green));color:#000;border:none;border-radius:6px;font-size:12px;font-weight:bold;cursor:pointer">
+          <button onclick="redeployClimateSystem(event)" style="padding:8px 20px;background:linear-gradient(135deg,var(--cyan),var(--green));color:#000;border:none;border-radius:6px;font-size:12px;font-weight:bold;cursor:pointer">
             🔄 重新部署全宇宙气候系统
           </button>
         </div>
@@ -16571,8 +16571,11 @@ function stopClimateAutoRegulate() {
   if (statusEl) { statusEl.textContent = '已暂停'; statusEl.style.background = 'rgba(250,173,20,0.2)'; statusEl.style.color = '#FAAD14'; }
 }
 
-function redeployClimateSystem() {
-  var btn = event.target;
+function redeployClimateSystem(ev) {
+  var btn = (ev && ev.target) || (typeof event !== 'undefined' && event && event.target) ||
+            document.querySelector('button[onclick="redeployClimateSystem()"]') ||
+            document.querySelector('button[onclick="redeployClimateSystem(event)"]');
+  if (!btn) return;
   btn.disabled = true;
   btn.textContent = '🔄 部署中...';
   var progressEl = document.getElementById('climateDeployProgress');
