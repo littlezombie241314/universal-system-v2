@@ -818,6 +818,19 @@ select option{background:#040b1a;color:var(--cyan)}
   </div>
 </div>
 
+<!-- ♾️ 全宇宙每个宇宙恒等 ∞ 额度 · 21 宇宙 × 8 层级 -->
+<div class="panel wide" id="uesQuotaPanel" style="background:linear-gradient(135deg,rgba(82,196,26,0.14),rgba(0,212,255,0.07));border:1px solid rgba(82,196,26,0.5)">
+  <div class="panel-hdr"><div class="panel-title"><span class="ico">♾️</span>全宇宙每个宇宙恒等 ∞ 额度 · 21 宇宙 × 8 层级</div><div class="panel-badge" id="uesQuotaBadge" style="background:rgba(82,196,26,0.2);color:#52C41A">0/21 宇宙</div></div>
+  <div style="padding:14px">
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:12px;padding:8px 10px;background:rgba(82,196,26,0.08);border:1px solid rgba(82,196,26,0.3);border-radius:6px">
+      <span id="uesQuotaStatus" style="font-size:11px;color:#52C41A">⚪ 已恒等 0/21 宇宙 · 0/168 层级 · 实时保存</span>
+      <div onclick="uesQuotaAll()" style="margin-left:auto;padding:6px 12px;border-radius:5px;background:rgba(82,196,26,0.18);border:1px solid rgba(82,196,26,0.5);color:#52C41A;font-size:11px;font-weight:bold;cursor:pointer">♾️ 一键全宇宙恒等 ∞ 额度</div>
+    </div>
+    <div id="uesQuotaStats" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin-bottom:12px"></div>
+    <div id="uesQuotaGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px"></div>
+  </div>
+</div>
+
 
 
 <!-- 💰 全宇宙工资⚡ 最快的速度自动发放 -->
@@ -1750,7 +1763,7 @@ select option{background:#040b1a;color:var(--cyan)}
               ✓ 全平台业务验证通过 · 太阳风暴模块仅做资源可达性检查（/api/solar-storm/state 200） · 其余模块全部真实业务操作验证通过
             </div>
             <div style="margin-top:8px;padding:6px 10px;background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.3);border-radius:6px;font-size:10px;color:#00d4ff;text-align:center">
-              ⬆️ 全平台最新版 v1.10.7 · UES-OS v3.0 · ∞ Qbps · 量子 3.0 · 0 ms · 8/8 层级统一 · 21 宇宙各自恒等 · 168 层级 / 12 星球 / 4 交通工具系统
+              ⬆️ 全平台最新版 v1.10.8 · UES-OS v3.0 · ∞ Qbps · 量子 3.0 · 0 ms · 8/8 层级统一 · 21 宇宙各自恒等 · ∞ 额度 · 168 层级 / 12 星球 / 4 交通工具系统
             </div>
           </div>
 
@@ -1782,7 +1795,7 @@ select option{background:#040b1a;color:var(--cyan)}
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
               <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">UES-OS v3.0 · 最新版</div>
-              <div style="font-size:9px;color:#52C41A;margin-top:2px">✅ 已升级至最新版 · 构建 v1.10.7 · 2026-11-26</div>
+              <div style="font-size:9px;color:#52C41A;margin-top:2px">✅ 已升级至最新版 · 构建 v1.10.8 · 2026-11-28</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -6473,7 +6486,7 @@ select option{background:#040b1a;color:var(--cyan)}
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">系统版本</div>
               <div style="font-size:12px;color:var(--cyan);font-family:monospace;margin-top:4px;">UES-OS v3.0 · 最新版</div>
-              <div style="font-size:9px;color:#52C41A;margin-top:2px">✅ 已升级至最新版 · 构建 v1.10.7 · 2026-11-26</div>
+              <div style="font-size:9px;color:#52C41A;margin-top:2px">✅ 已升级至最新版 · 构建 v1.10.8 · 2026-11-28</div>
             </div>
             <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
               <div style="font-size:11px;color:var(--text-dim);">防篡改等级</div>
@@ -20203,6 +20216,88 @@ try{scanHistoryRender();}catch(e){}
     if(typeof toast==='function') toast('🌐 每个宇宙恒等已达成 · 21 宇宙 × 8 层级 · 168/168 · 实时保存');
   };
   syncFromEarth();
+  render(); setTimeout(render,1200); setTimeout(render,4000); setInterval(render,3000);
+})();
+</script>
+
+<script>
+/* ===== 全宇宙每个宇宙恒等 ∞ 额度（21 宇宙 × 8 层级） ===== */
+(function(){
+  var KEY='ues_universe_quota';
+  var ICONS=['🌌','🌠','🪐','👽','🏛️','🏙️','👤','✨'];
+  var LEVELS=['宇宙层级','星系层级','星球层级','文明层级','国家层级','地区层级','个人层级','未分层级存在'];
+  var st={universes:{},at:0};
+  try{ var raw=localStorage.getItem(KEY); if(raw){ var d=JSON.parse(raw)||{}; st.universes=d.universes||{}; st.at=d.at||0; } }catch(e){}
+  function save(){ try{ localStorage.setItem(KEY,JSON.stringify(st)); }catch(e){} }
+  function tm(ts){ try{ return new Date(ts).toLocaleTimeString('zh-CN',{hour12:false}); }catch(e){ return '--:--:--'; } }
+  function names(){
+    var arr=[];
+    try{ arr=Array.from(document.querySelectorAll('#uesEachEqGrid [data-eq]')).map(function(e){return e.getAttribute('data-eq');}).filter(Boolean); }catch(e){}
+    if(arr.length<21){ try{ var sel=document.getElementById('uesImmigTarget'); if(sel&&sel.options.length){ arr=Array.from(sel.options).map(function(o){return o.value;}).filter(Boolean); } }catch(e){} }
+    if(arr.length<21){
+      var named=['主宇宙 · 现在时刻','平行宇宙-A · 机械纪元','平行宇宙-B · 魔法纪元','时空线α · 恐龙纪元','时空线β · 蒸汽朋克纪元','量子时空 · 多维叠加态','永恒时空 · 时间静止','梦境时空 · 意识海洋','混沌时空 · 万有可能'];
+      var pn=[];
+      try{ pn=Array.from(document.querySelectorAll('#planetUniGrid [data-pu]')).map(function(e){return e.getAttribute('data-pu')+'宇宙';}); }catch(e){}
+      if(!pn.length){ try{ pn=(typeof planets!=='undefined')?planets.map(function(p){return p.name+'宇宙';}):[]; }catch(e){ pn=[]; } }
+      ['月球宇宙','超级地球宇宙','海洋星球宇宙','高山星球宇宙'].forEach(function(n){ if(pn.indexOf(n)<0) pn.push(n); });
+      arr=named.concat(pn);
+    }
+    var out=[],seen={};
+    arr.forEach(function(n){ if(n&&!seen[n]){ seen[n]=1; out.push(n); } });
+    return out.slice(0,21);
+  }
+  function ensure(ns){
+    var now=Date.now(),changed=false;
+    ns.forEach(function(n){
+      var r=st.universes[n];
+      if(!r||!r.levels||r.levels.length!==8||r.levels.filter(Boolean).length!==8||r.limit!=='∞'){
+        st.universes[n]={levels:[true,true,true,true,true,true,true,true],limit:'∞',at:now}; changed=true;
+      }
+    });
+    if(changed||!st.at){ st.at=now; save(); }
+  }
+  function render(){
+    var ns=names(); ensure(ns);
+    var grid=document.getElementById('uesQuotaGrid');
+    if(grid){
+      grid.innerHTML=ns.map(function(n){
+        var r=st.universes[n]||{};
+        var lv=r.levels||[];
+        var full=lv.length===8&&lv.filter(Boolean).length===8&&r.limit==='∞';
+        var chips=ICONS.map(function(ic,i){
+          return '<span title="'+LEVELS[i]+'" style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:5px;font-size:9px;background:'+(full?'rgba(82,196,26,0.22)':'rgba(255,255,255,0.06)')+';border:1px solid '+(full?'rgba(82,196,26,0.6)':'rgba(255,255,255,0.15)')+';color:'+(full?'#52C41A':'var(--text-dim)')+'">'+ic+'</span>';
+        }).join('');
+        return '<div data-quota="'+n+'" style="background:'+(full?'rgba(82,196,26,0.10)':'rgba(255,255,255,0.03)')+';border:1px solid '+(full?'rgba(82,196,26,0.55)':'rgba(255,255,255,0.12)')+';border-radius:8px;padding:9px;text-align:center">'
+          + '<div style="font-size:11px;font-weight:bold;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="'+n+'">'+n+'</div>'
+          + '<div style="font-size:22px;font-weight:bold;color:#52C41A;line-height:1.25;margin:2px 0 0">∞</div>'
+          + '<div style="font-size:9px;color:#52C41A">额度 · 永久有效</div>'
+          + '<div style="display:flex;gap:3px;justify-content:center;margin:6px 0 4px">'+chips+'</div>'
+          + '<div style="font-size:9px;color:'+(full?'#52C41A':'var(--text-dim)')+'">'+(full?'✅ 8/8 层级 · ∞ 额度':'⚪ 待恒等')+'</div>'
+          + '</div>';
+      }).join('');
+    }
+    var total=ns.length,eq=0,lvsum=0;
+    ns.forEach(function(n){ var r=st.universes[n]; var l=(r&&r.levels)?r.levels:[]; var c=l.filter(Boolean).length; if(r&&r.limit==='∞'&&c===8)eq++; lvsum+=c; });
+    var sb=document.getElementById('uesQuotaStats');
+    if(sb){
+      var rows=[
+        {k:'恒等宇宙',v:eq+'/'+total,c:'#52C41A'},
+        {k:'恒等层级',v:lvsum+'/'+(total*8),c:'#00d4ff'},
+        {k:'单宇宙额度',v:eq?'∞':'—',c:'#52C41A'},
+        {k:'全宇宙总额度',v:eq?'∞ × '+eq:'—',c:'#FFB020'}
+      ];
+      sb.innerHTML=rows.map(function(x){return '<div style="background:rgba(0,0,0,0.22);border:1px solid rgba(255,255,255,0.08);border-radius:7px;padding:7px 10px;text-align:center"><div style="font-size:9px;color:var(--text-dim)">'+x.k+'</div><div style="font-size:11px;font-weight:bold;color:'+x.c+';margin-top:2px">'+x.v+'</div></div>';}).join('');
+    }
+    var el=document.getElementById('uesQuotaStatus');
+    if(el){ el.textContent=(total&&eq===total)?('✅ 每个宇宙均恒等 ∞ 额度 · '+eq+'/'+total+' 宇宙 · '+lvsum+'/'+(total*8)+' 层级 · '+tm(st.at)):('⚪ 已恒等 '+eq+'/'+total+' 宇宙 · '+lvsum+'/'+(total*8)+' 层级 · 实时保存'); el.style.color=(total&&eq===total)?'#52C41A':'#FFB020'; }
+    var bd=document.getElementById('uesQuotaBadge');
+    if(bd) bd.textContent=eq+'/'+total+' 宇宙 · ∞ 额度';
+  }
+  window.uesQuotaAll=function(){
+    var now=Date.now(); names().forEach(function(n){ st.universes[n]={levels:[true,true,true,true,true,true,true,true],limit:'∞',at:now}; });
+    st.at=now; save(); render();
+    if(typeof toast==='function') toast('♾️ 全宇宙每个宇宙恒等 ∞ 额度已生效 · 21 宇宙 × 8 层级 · 实时保存');
+  };
   render(); setTimeout(render,1200); setTimeout(render,4000); setInterval(render,3000);
 })();
 </script>
